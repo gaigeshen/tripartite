@@ -10,6 +10,7 @@
     <modules>
         <module>tripartite-core</module>
         <module>tripartite-wangdian</module>
+        <module>tripartite-ding</module>
     </modules>
 
     <packaging>pom</packaging>
