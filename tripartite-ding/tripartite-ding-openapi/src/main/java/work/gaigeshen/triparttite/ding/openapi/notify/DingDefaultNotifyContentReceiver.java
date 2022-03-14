@@ -62,10 +62,10 @@ public class DingDefaultNotifyContentReceiver extends AbstractNotifyContentRecei
       throw new NotifyContentIncorrectException("could not find request body: " + content);
     }
     JsonNode encryptJsonNode = JacksonUtils.toJsonNode(bodyString).get("encrypt");
-    if (Objects.isNull(encryptJsonNode)) {
+    if (Objects.isNull(encryptJsonNode) || !encryptJsonNode.isTextual()) {
       throw new NotifyContentIncorrectException("could not find [encrypt] field of request body: " + content);
     }
-    String encrypted = JacksonUtils.toJson(encryptJsonNode);
+    String encrypted = encryptJsonNode.textValue();
     if (!Objects.equals(genSignature(dingConfig, timestamp, nonce, encrypted), signature)) {
       throw new NotifyContentIncorrectException("invalid signature: " + content);
     }

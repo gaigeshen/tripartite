@@ -27,15 +27,15 @@ public abstract class AbstractNotifyContent implements NotifyContent {
     if (Objects.isNull(values) || values.length == 0) {
       throw new IllegalArgumentException("values cannot be null or empty");
     }
-    headers.put(name, values);
+    headers.put(name.toLowerCase(), values);
   }
 
   @Override
-  public boolean containsHeader(String name) {
+  public final boolean containsHeader(String name) {
     if (Objects.isNull(name)) {
       throw new IllegalArgumentException("name cannot be null");
     }
-    return headers.containsKey(name);
+    return headers.containsKey(name.toLowerCase());
   }
 
   @Override
@@ -43,7 +43,7 @@ public abstract class AbstractNotifyContent implements NotifyContent {
     if (Objects.isNull(name)) {
       throw new IllegalArgumentException("name cannot be null");
     }
-    return headers.get(name);
+    return headers.get(name.toLowerCase());
   }
 
   @Override
