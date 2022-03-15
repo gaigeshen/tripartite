@@ -55,7 +55,6 @@
         <logback.version>1.2.4</logback.version>
         <spring.web.version>5.3.12</spring.web.version>
         <javax.servlet.api.version>3.1.0</javax.servlet.api.version>
-        <junit.version>4.13.2</junit.version>
         <spring.boot.version>2.5.4</spring.boot.version>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
@@ -124,11 +123,6 @@
                 <groupId>javax.servlet</groupId>
                 <artifactId>javax.servlet-api</artifactId>
                 <version>${javax.servlet.api.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>junit</groupId>
-                <artifactId>junit</artifactId>
-                <version>${junit.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
