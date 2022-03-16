@@ -4,7 +4,7 @@ import work.gaigeshen.triparttite.core.parameter.Parameters;
 import work.gaigeshen.triparttite.core.parameter.typed.converter.BooleanFormatterParameterConverter;
 import work.gaigeshen.triparttite.core.parameter.typed.converter.DateFormatterParameterConverter;
 import work.gaigeshen.triparttite.core.parameter.typed.converter.DefaultParameterConverter;
-import work.gaigeshen.triparttite.core.parameter.typed.converter.GsonJsonParameterConverter;
+import work.gaigeshen.triparttite.core.parameter.typed.converter.DefaultJsonParameterConverter;
 import work.gaigeshen.triparttite.core.parameter.typed.converter.ParameterConverter;
 
 import java.lang.reflect.Constructor;
@@ -82,8 +82,8 @@ public class ParameterResolver {
       else if (Objects.equals(metadata.converter(), DateFormatterParameterConverter.class)) {
         converter = DateFormatterParameterConverter.INSTANCE;
       }
-      else if (Objects.equals(metadata.converter(), GsonJsonParameterConverter.class)) {
-        converter = GsonJsonParameterConverter.INSTANCE;
+      else if (Objects.equals(metadata.converter(), DefaultJsonParameterConverter.class)) {
+        converter = DefaultJsonParameterConverter.INSTANCE;
       }
       else {
         try {

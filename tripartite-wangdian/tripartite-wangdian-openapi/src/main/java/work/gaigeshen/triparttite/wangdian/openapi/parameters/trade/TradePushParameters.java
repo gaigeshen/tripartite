@@ -2,7 +2,7 @@ package work.gaigeshen.triparttite.wangdian.openapi.parameters.trade;
 
 import work.gaigeshen.triparttite.core.parameter.converter.Parameters;
 import work.gaigeshen.triparttite.core.parameter.typed.Parameter;
-import work.gaigeshen.triparttite.core.parameter.typed.converter.GsonJsonParameterConverter;
+import work.gaigeshen.triparttite.core.parameter.typed.converter.DefaultJsonParameterConverter;
 import work.gaigeshen.triparttite.wangdian.openapi.parameters.WangdianParameters;
 import work.gaigeshen.triparttite.wangdian.openapi.parameters.WangdianParametersCustomizer;
 
@@ -21,7 +21,7 @@ public class TradePushParameters implements WangdianParameters {
   @Parameter
   public String shop_no;
 
-  @Parameter(converter = GsonJsonParameterConverter.class)
+  @Parameter(converter = DefaultJsonParameterConverter.class)
   public Collection<Trade> trade_list;
 
 
