@@ -50,12 +50,27 @@ public class GsonJsonCodec implements JsonCodec {
   }
 
   @Override
-  public Map<String, Object> decode(String json) {
+  public Map<String, Object> decodeObject(String json) {
+    if (Objects.isNull(json)) {
+      throw new IllegalArgumentException("json cannot be null");
+    }
     JsonElement jsonElement = JsonParser.parseString(json);
     if (!(jsonElement instanceof JsonObject)) {
       throw new IllegalArgumentException("could not decode json to map instance: " + json);
     }
     return convertObject(jsonElement.getAsJsonObject());
+  }
+
+  @Override
+  public Collection<Object> decodeArray(String json) {
+    if (Objects.isNull(json)) {
+      throw new IllegalArgumentException("json cannot be null");
+    }
+    JsonElement jsonElement = JsonParser.parseString(json);
+    if (!(jsonElement instanceof JsonArray)) {
+      throw new IllegalArgumentException("could not decode json to list instance: " + json);
+    }
+    return convertArray(jsonElement.getAsJsonArray());
   }
 
   private Map<String, Object> convertObject(JsonObject jsonObject) {

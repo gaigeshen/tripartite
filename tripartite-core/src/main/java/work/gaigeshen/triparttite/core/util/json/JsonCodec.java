@@ -1,5 +1,6 @@
 package work.gaigeshen.triparttite.core.util.json;
 
+import java.util.Collection;
 import java.util.Map;
 
 /**
@@ -42,6 +43,14 @@ public interface JsonCodec {
    * @param json 字符串不能为空
    * @return 映射类型的对象实例不能为空
    */
-  Map<String, Object> decode(String json);
+  Map<String, Object> decodeObject(String json);
+
+  /**
+   * 将字符串解码为集合类型的对象实例
+   *
+   * @param json 字符串不能为空
+   * @return 集合类型的对象实例不能为空
+   */
+  Collection<Object> decodeArray(String json);
 
 }
