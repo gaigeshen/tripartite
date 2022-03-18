@@ -21,6 +21,9 @@ public class WangdianParametersCustomizer implements ParametersCustomizer {
 
   @Override
   public void beforeConvert(Object rawParameters, Object config) throws ParametersCustomizingException {
+    if (!supports(config)) {
+      throw new ParametersCustomizingException("please call [supports] method first");
+    }
     if (rawParameters instanceof TradePushParameters) {
       TradePushParameters tradePushParameters = (TradePushParameters) rawParameters;
       if (Objects.isNull(tradePushParameters.shop_no)) {
@@ -39,6 +42,9 @@ public class WangdianParametersCustomizer implements ParametersCustomizer {
 
   @Override
   public void customize(Parameters parameters, Object rawParameters, Object config) throws ParametersCustomizingException {
+    if (!supports(config)) {
+      throw new ParametersCustomizingException("please call [supports] method first");
+    }
     WangdianConfig wangdianConfig = (WangdianConfig) config;
     parameters.put("sid", wangdianConfig.getSellerId());
     parameters.put("appkey", wangdianConfig.getAppKey());
