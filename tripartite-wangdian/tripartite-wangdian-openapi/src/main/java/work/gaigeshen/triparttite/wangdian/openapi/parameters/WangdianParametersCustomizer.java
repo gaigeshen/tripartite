@@ -34,7 +34,12 @@ public class WangdianParametersCustomizer implements ParametersCustomizer {
       SalesRefundPushParameters salesRefundPushParameters = (SalesRefundPushParameters) rawParameters;
       if (Objects.nonNull(salesRefundPushParameters.api_refund_list)) {
         for (SalesRefundPushParameters.Refund refund : salesRefundPushParameters.api_refund_list) {
-          refund.shop_no = ((WangdianConfig) config).getShopNo();
+          if (Objects.isNull(refund.shop_no)) {
+            refund.shop_no = ((WangdianConfig) config).getShopNo();
+          }
+          if (Objects.isNull(refund.platform_id)) {
+            refund.platform_id = 127;
+          }
         }
       }
     }
