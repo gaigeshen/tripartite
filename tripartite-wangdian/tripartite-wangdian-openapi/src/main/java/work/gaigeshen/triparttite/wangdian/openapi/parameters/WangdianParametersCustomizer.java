@@ -7,6 +7,7 @@ import work.gaigeshen.triparttite.core.parameter.converter.ParametersCustomizer;
 import work.gaigeshen.triparttite.core.parameter.converter.ParametersCustomizingException;
 import work.gaigeshen.triparttite.core.util.TimestampUtils;
 import work.gaigeshen.triparttite.wangdian.openapi.config.WangdianConfig;
+import work.gaigeshen.triparttite.wangdian.openapi.parameters.refund.SalesRefundPushParameters;
 import work.gaigeshen.triparttite.wangdian.openapi.parameters.trade.TradePushParameters;
 
 import java.util.Objects;
@@ -24,6 +25,14 @@ public class WangdianParametersCustomizer implements ParametersCustomizer {
       TradePushParameters tradePushParameters = (TradePushParameters) rawParameters;
       if (Objects.isNull(tradePushParameters.shop_no)) {
         tradePushParameters.shop_no = ((WangdianConfig) config).getShopNo();
+      }
+    }
+    if (rawParameters instanceof SalesRefundPushParameters) {
+      SalesRefundPushParameters salesRefundPushParameters = (SalesRefundPushParameters) rawParameters;
+      if (Objects.nonNull(salesRefundPushParameters.api_refund_list)) {
+        for (SalesRefundPushParameters.Refund refund : salesRefundPushParameters.api_refund_list) {
+          refund.shop_no = ((WangdianConfig) config).getShopNo();
+        }
       }
     }
   }
