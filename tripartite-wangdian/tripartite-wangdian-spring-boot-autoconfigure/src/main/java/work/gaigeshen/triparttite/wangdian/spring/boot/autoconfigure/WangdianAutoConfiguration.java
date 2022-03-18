@@ -34,6 +34,7 @@ public class WangdianAutoConfiguration {
 
     builder.setServerHost(wangdianProperties.getServerHost());
     builder.setSellerId(wangdianProperties.getSellerId());
+    builder.setShopNo(wangdianProperties.getShopNo());
     builder.setAppKey(wangdianProperties.getAppKey());
     builder.setAppSecret(wangdianProperties.getAppSecret());
 

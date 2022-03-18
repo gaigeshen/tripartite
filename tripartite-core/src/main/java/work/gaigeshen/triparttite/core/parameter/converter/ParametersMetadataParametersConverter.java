@@ -26,8 +26,14 @@ public class ParametersMetadataParametersConverter implements ParametersConverte
     ParametersConverter converter = metadata.getConverter();
     ParametersCustomizer customizer = metadata.getCustomizer();
 
+    boolean supports = customizer.supports(config);
+    if (supports) {
+      customizer.beforeConvert(parameters, config);
+    }
     Parameters converted = converter.convert(parameters);
-    customizer.customize(converted, parameters, config);
+    if (supports) {
+      customizer.customize(converted, parameters, config);
+    }
     return converted;
   }
 

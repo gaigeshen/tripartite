@@ -27,7 +27,7 @@ public class ParametersResolver {
     return CLASS_MAPPING_METADATA.computeIfAbsent(parametersClass, cls -> {
       Parameters metadata = cls.getAnnotation(Parameters.class);
       if (Objects.isNull(metadata)) {
-        return new Metadata(JsonParametersConverter.INSTANCE, DefaultParametersCustomizer.INSTANCE);
+        return new Metadata(ParametersParametersConverter.INSTANCE, DefaultParametersCustomizer.INSTANCE);
       }
       Class<? extends ParametersConverter> converter = metadata.converter();
       if (ParametersMetadataParametersConverter.class.isAssignableFrom(converter)) {

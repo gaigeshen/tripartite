@@ -21,6 +21,11 @@ public class WangdianProperties {
   private String sellerId;
 
   /**
+   * 特定场景下的默认店铺编号（必填）
+   */
+  private String shopNo;
+
+  /**
    * 旺店通接口账号（必填）
    */
   private String appKey;
@@ -44,6 +49,14 @@ public class WangdianProperties {
 
   public void setSellerId(String sellerId) {
     this.sellerId = sellerId;
+  }
+
+  public String getShopNo() {
+    return shopNo;
+  }
+
+  public void setShopNo(String shopNo) {
+    this.shopNo = shopNo;
   }
 
   public String getAppKey() {

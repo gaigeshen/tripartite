@@ -20,6 +20,11 @@ public class WangdianConfig {
   private final String sellerId;
 
   /**
+   * 店铺编号
+   */
+  private final String shopNo;
+
+  /**
    * 接口账号
    */
   private final String appKey;
@@ -32,6 +37,7 @@ public class WangdianConfig {
   private WangdianConfig(Builder builder) {
     this.serverHost = builder.serverHost;
     this.sellerId = builder.sellerId;
+    this.shopNo = builder.shopNo;
     this.appKey = builder.appKey;
     this.appSecret = builder.appSecret;
   }
@@ -46,6 +52,10 @@ public class WangdianConfig {
 
   public String getSellerId() {
     return sellerId;
+  }
+
+  public String getShopNo() {
+    return shopNo;
   }
 
   public String getAppKey() {
@@ -87,6 +97,8 @@ public class WangdianConfig {
 
     private String sellerId;
 
+    private String shopNo;
+
     private String appKey;
 
     private String appSecret;
@@ -97,6 +109,10 @@ public class WangdianConfig {
 
     public void setSellerId(String sellerId) {
       this.sellerId = sellerId;
+    }
+
+    public void setShopNo(String shopNo) {
+      this.shopNo = shopNo;
     }
 
     public void setAppKey(String appKey) {
@@ -113,6 +129,9 @@ public class WangdianConfig {
       }
       if (Objects.isNull(sellerId)) {
         throw new WangdianConfigException("sellerId is required");
+      }
+      if (Objects.isNull(shopNo)) {
+        throw new WangdianConfigException("shopNo is required");
       }
       if (Objects.isNull(appKey)) {
         throw new WangdianConfigException("appKey is required");
