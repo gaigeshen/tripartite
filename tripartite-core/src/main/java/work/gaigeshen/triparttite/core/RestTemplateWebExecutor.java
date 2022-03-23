@@ -34,6 +34,7 @@ import java.util.*;
 
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
+import static org.springframework.http.MediaType.*;
 
 /**
  *
@@ -51,6 +52,7 @@ public class RestTemplateWebExecutor implements WebExecutor {
     if (Objects.isNull(template)) {
       throw new IllegalArgumentException("restTemplate cannot be null");
     }
+    template.getInterceptors().add(0, new LoggerInterceptor());
     this.restTemplate = template;
   }
 
@@ -272,14 +274,14 @@ public class RestTemplateWebExecutor implements WebExecutor {
     }
     HttpHeaders hHeaders = new HttpHeaders();
     if (parameters.getType() == Parameters.Type.JSON) {
-      hHeaders.setContentType(MediaType.APPLICATION_JSON);
+      hHeaders.setContentType(APPLICATION_JSON);
       return restTemplate.httpEntityCallback(new HttpEntity<>(extractParameters(parameters), hHeaders));
     } else {
       if (parameters.getType() == Parameters.Type.PARAMETERS) {
-        hHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        hHeaders.setContentType(APPLICATION_FORM_URLENCODED);
       }
       else if (parameters.getType() == Parameters.Type.MULTIPART_PARAMETERS) {
-        hHeaders.setContentType(MediaType.MULTIPART_FORM_DATA);
+        hHeaders.setContentType(MULTIPART_FORM_DATA);
       }
       MultiValueMap<String, Object> converted = new LinkedMultiValueMap<>();
       for (Parameter<?> parameter : parameters) {
@@ -385,14 +387,8 @@ public class RestTemplateWebExecutor implements WebExecutor {
 
     @Override
     public ClientHttpResponse intercept(HttpRequest httpRequest, byte[] body, ClientHttpRequestExecution execution) throws IOException {
-      log.info(">>>> URI: [{}] {}", httpRequest.getMethod(), httpRequest.getURI());
-      log.info(">>>> Headers: {}", httpRequest.getHeaders());
-      log.info(">>>> Body: {}", new String(body, StandardCharsets.UTF_8));
       if (!interceptors.hasInterceptors()) {
-        ClientHttpResponse httpResponse = execution.execute(httpRequest, body);
-        log.info("<<<< Status: {}", httpResponse.getStatusCode());
-        log.info("<<<< Headers: {}", httpResponse.getHeaders());
-        return httpResponse;
+        return execution.execute(httpRequest, body);
       }
       HttpRequestRequest request = new HttpRequestRequest(httpRequest, body);
       Interceptor.Response response = interceptors.intercept(request, new HttpRequestExecution(execution));
@@ -400,12 +396,43 @@ public class RestTemplateWebExecutor implements WebExecutor {
         throw new WebExecutionException("response from interceptor cannot be null");
       }
       if (response instanceof HttpResponseResponse) {
-        HttpResponseResponse httpResponse = (HttpResponseResponse) response;
-        log.info("<<<< Status: {}", httpResponse.getStatusCode());
-        log.info("<<<< Headers: {}", httpResponse.getHeaders());
-        return httpResponse;
+        return (HttpResponseResponse) response;
       }
       throw new WebExecutionException("please don't produce response instance by interceptor");
+    }
+  }
+
+  /**
+   *
+   * @author gaigeshen
+   */
+  private static class LoggerInterceptor implements ClientHttpRequestInterceptor {
+
+    @Override
+    public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution) throws IOException {
+      ClientHttpResponse response = execution.execute(request, body);
+
+      log.info(">>>> URI: [{}] {}", request.getMethod(), request.getURI());
+      log.info(">>>> Headers: {}", request.getHeaders());
+      log.info(">>>> Body: {}", new String(body, StandardCharsets.UTF_8));
+
+      log.info("<<<< Status: {}", response.getStatusCode());
+      log.info("<<<< Headers: {}", response.getHeaders());
+
+      if (!(response instanceof HttpResponseResponse)) {
+        return response;
+      }
+      MediaType contentType = response.getHeaders().getContentType();
+      if (Objects.isNull(contentType)) {
+        return response;
+      }
+      if (contentType.isPresentIn(Arrays.asList(APPLICATION_JSON, TEXT_PLAIN, TEXT_XML, TEXT_HTML, TEXT_MARKDOWN))) {
+        HttpResponseResponse httpResponse = (HttpResponseResponse) response;
+        String responseBody = httpResponse.bodyString(StandardCharsets.UTF_8);
+        httpResponse.buffered(responseBody.getBytes(StandardCharsets.UTF_8));
+        log.info("<<<< Body: {}", responseBody);
+      }
+      return response;
     }
   }
 
