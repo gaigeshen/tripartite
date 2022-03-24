@@ -86,7 +86,7 @@ public class RestTemplateWebExecutor implements WebExecutor {
       throw new IllegalArgumentException("interceptors cannot be null");
     }
     Interceptors newInterceptors = new Interceptors(interceptors);
-    restTemplate.getInterceptors().add(0, new HttpInterceptorInterceptors(newInterceptors));
+    restTemplate.getInterceptors().add(new HttpInterceptorInterceptors(newInterceptors));
   }
 
   @Override
