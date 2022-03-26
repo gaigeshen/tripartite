@@ -1,3 +1,3 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  work.gaigeshen.triparttite.pay.spring.boot.autoconfigure.AlipayAutoConfiguration,\
-  work.gaigeshen.triparttite.pay.spring.boot.autoconfigure.WechatAutoConfiguration
+  work.gaigeshen.tripartite.pay.spring.boot.autoconfigure.AlipayAutoConfiguration,\
+  work.gaigeshen.tripartite.pay.spring.boot.autoconfigure.WechatAutoConfiguration
