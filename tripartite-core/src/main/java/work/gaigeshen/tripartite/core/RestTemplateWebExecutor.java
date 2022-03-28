@@ -580,6 +580,11 @@ public class RestTemplateWebExecutor implements WebExecutor {
     public HttpHeaders getHeaders() {
       return httpResponse.getHeaders();
     }
+
+    @Override
+    public String toString() {
+      return getClass() + " include " + httpResponse;
+    }
   }
 
   /**

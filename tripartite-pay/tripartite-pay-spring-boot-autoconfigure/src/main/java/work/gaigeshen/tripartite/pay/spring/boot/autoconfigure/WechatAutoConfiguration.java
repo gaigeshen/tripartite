@@ -12,7 +12,6 @@ import work.gaigeshen.tripartite.core.notify.AbstractNotifyContentProcessor;
 import work.gaigeshen.tripartite.pay.wechat.*;
 import work.gaigeshen.tripartite.pay.wechat.config.AutoUpdateWechatCertificates;
 import work.gaigeshen.tripartite.pay.wechat.config.WechatConfig;
-import work.gaigeshen.tripartite.pay.wechat.interceptor.DefaultWechatInterceptor;
 import work.gaigeshen.tripartite.pay.wechat.notify.WechatNotifyBody;
 import work.gaigeshen.tripartite.pay.wechat.notify.WechatNotifyBodyFilter;
 import work.gaigeshen.tripartite.pay.wechat.notify.WechatNotifyBodyReceiver;
@@ -99,7 +98,7 @@ public class WechatAutoConfiguration {
       }
       WechatConfig wechatConfig = builder.build();
 
-      DefaultWechatClient wechatClient = DefaultWechatClient.create(wechatConfig, new DefaultWechatInterceptor(wechatConfig));
+      DefaultWechatClient wechatClient = DefaultWechatClient.create(wechatConfig, new WechatRequestResponseInterceptor(wechatConfig));
       wechatClients.add(wechatClient);
 
       Integer updatePeriodSeconds = certificates.getCertificateUpdatePeriodSeconds();

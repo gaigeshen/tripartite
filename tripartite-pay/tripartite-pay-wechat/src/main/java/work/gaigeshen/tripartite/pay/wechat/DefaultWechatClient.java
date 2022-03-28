@@ -3,12 +3,13 @@ package work.gaigeshen.tripartite.pay.wechat;
 import work.gaigeshen.tripartite.core.RestTemplateWebExecutor;
 import work.gaigeshen.tripartite.core.WebException;
 import work.gaigeshen.tripartite.core.WebExecutor;
+import work.gaigeshen.tripartite.core.interceptor.AbstractInterceptor;
 import work.gaigeshen.tripartite.core.parameter.Parameter;
 import work.gaigeshen.tripartite.core.parameter.Parameters;
+import work.gaigeshen.tripartite.core.parameter.converter.ParametersMetadataParametersConverter;
 import work.gaigeshen.tripartite.core.response.consumer.ResponseConsumer;
 import work.gaigeshen.tripartite.core.response.converter.ResponseConverter;
 import work.gaigeshen.tripartite.pay.wechat.config.WechatConfig;
-import work.gaigeshen.tripartite.pay.wechat.interceptor.AbstractWechatInterceptor;
 import work.gaigeshen.tripartite.pay.wechat.parameters.WechatParametersBuilder;
 import work.gaigeshen.tripartite.pay.wechat.parameters.basic.WechatAppOrderParameters;
 import work.gaigeshen.tripartite.pay.wechat.parameters.basic.WechatH5OrderParameters;
@@ -42,27 +43,28 @@ public class DefaultWechatClient implements WechatClient {
 
   private final WebExecutor executor;
 
-  public DefaultWechatClient(WechatConfig config, WebExecutor executor) {
+  protected DefaultWechatClient(WechatConfig config, WebExecutor executor) {
     if (Objects.isNull(config)) {
-      throw new IllegalArgumentException("wechat config cannot be null");
+      throw new IllegalArgumentException("config cannot be null");
     }
     if (Objects.isNull(executor)) {
-      throw new IllegalArgumentException("wechat web executor cannot be null");
+      throw new IllegalArgumentException("web executor cannot be null");
     }
     this.config = config;
     this.executor = executor;
   }
 
-  public static DefaultWechatClient create(WechatConfig config, WebExecutor executor) {
-    return new DefaultWechatClient(config, executor);
-  }
-
-  public static DefaultWechatClient create(WechatConfig config, AbstractWechatInterceptor... interceptors) {
+  public static DefaultWechatClient create(WechatConfig config, AbstractInterceptor... interceptors) {
     if (Objects.isNull(interceptors)) {
-      throw new IllegalArgumentException("wechat interceptors cannot be null");
+      throw new IllegalArgumentException("interceptors cannot be null");
     }
     RestTemplateWebExecutor executor = RestTemplateWebExecutor.create();
     executor.setInterceptors(interceptors);
+    executor.setParametersConverter(new ParametersMetadataParametersConverter(config));
+    return new DefaultWechatClient(config, executor);
+  }
+
+  public static DefaultWechatClient create(WechatConfig config, WebExecutor executor) {
     return new DefaultWechatClient(config, executor);
   }
 
@@ -184,7 +186,7 @@ public class DefaultWechatClient implements WechatClient {
       throw new IllegalArgumentException("uri cannot be null");
     }
     try {
-      return executor.execute(config.getServerHost() + "/" + uri, builder.build(config), responseClass, uriVariables);
+      return executor.execute(config.getServerHost() + uri, builder.build(config), responseClass, uriVariables);
     } catch (WebException e) {
       throw new WechatClientException(e.getMessage(), e);
     }
@@ -199,7 +201,7 @@ public class DefaultWechatClient implements WechatClient {
       throw new IllegalArgumentException("uri cannot be null");
     }
     try {
-      return executor.execute(config.getServerHost() + "/" + uri, converter, uriVariables);
+      return executor.execute(config.getServerHost() + uri, converter, uriVariables);
     } catch (WebException e) {
       throw new WechatClientException(e.getMessage(), e);
     }
@@ -214,7 +216,7 @@ public class DefaultWechatClient implements WechatClient {
       throw new IllegalArgumentException("uri cannot be null");
     }
     try {
-      executor.execute(config.getServerHost() + "/" + uri, consumer, uriVariables);
+      executor.execute(config.getServerHost() + uri, consumer, uriVariables);
     } catch (WebException e) {
       throw new WechatClientException(e.getMessage(), e);
     }
@@ -232,7 +234,7 @@ public class DefaultWechatClient implements WechatClient {
       throw new IllegalArgumentException("uri cannot be null");
     }
     try {
-      return executor.execute(config.getServerHost() + "/" + uri, builder.build(config), converter, uriVariables);
+      return executor.execute(config.getServerHost() + uri, builder.build(config), converter, uriVariables);
     } catch (WebException e) {
       throw new WechatClientException(e.getMessage(), e);
     }
@@ -250,7 +252,7 @@ public class DefaultWechatClient implements WechatClient {
       throw new IllegalArgumentException("uri cannot be null");
     }
     try {
-      executor.execute(config.getServerHost() + "/" + uri, builder.build(config), consumer, uriVariables);
+      executor.execute(config.getServerHost() + uri, builder.build(config), consumer, uriVariables);
     } catch (WebException e) {
       throw new WechatClientException(e.getMessage(), e);
     }
