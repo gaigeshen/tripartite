@@ -90,6 +90,11 @@ public class RestTemplateWebExecutor implements WebExecutor {
   }
 
   @Override
+  public ParametersConverter getParametersConverter() {
+    return parametersConverter;
+  }
+
+  @Override
   public <T> T execute(String url, Class<T> responseClass, Object... uriVariables) throws WebException {
     if (Objects.isNull(url)) {
       throw new IllegalArgumentException("url and parameters cannot be null");

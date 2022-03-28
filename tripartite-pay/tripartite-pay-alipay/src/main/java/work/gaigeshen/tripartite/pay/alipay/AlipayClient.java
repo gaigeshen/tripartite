@@ -1,5 +1,6 @@
 package work.gaigeshen.tripartite.pay.alipay;
 
+import work.gaigeshen.tripartite.core.parameter.Parameters;
 import work.gaigeshen.tripartite.core.response.consumer.ResponseConsumer;
 import work.gaigeshen.tripartite.core.response.converter.ResponseConverter;
 import work.gaigeshen.tripartite.pay.alipay.config.AlipayConfig;
@@ -112,6 +113,15 @@ public interface AlipayClient {
     DefaultAlipayParameters parameters = new DefaultAlipayParameters("alipay.trade.fastpay.refund.query", parameter);
     return execute(parameters, AlipayTradeRefundQueryResponse.class);
   }
+
+  /**
+   * 将原始请求参数对象转换为请求参数
+   *
+   * @param parameters 原始请求参数不能为空
+   * @return 请求参数不为空
+   * @throws AlipayClientException 无法执行转换操作
+   */
+  Parameters convertParameters(AlipayParameters parameters) throws AlipayClientException;
 
   /**
    * 此方法接受任何请求参数，然后执行请求并返回对应的响应结果

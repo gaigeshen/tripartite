@@ -1,8 +1,9 @@
 package work.gaigeshen.tripartite.core;
 
-import work.gaigeshen.tripartite.core.response.consumer.ResponseConsumer;
 import work.gaigeshen.tripartite.core.parameter.Parameters;
+import work.gaigeshen.tripartite.core.parameter.converter.ParametersConverter;
 import work.gaigeshen.tripartite.core.parameter.creator.ParametersCreator;
+import work.gaigeshen.tripartite.core.response.consumer.ResponseConsumer;
 import work.gaigeshen.tripartite.core.response.converter.ResponseConverter;
 
 /**
@@ -11,6 +12,8 @@ import work.gaigeshen.tripartite.core.response.converter.ResponseConverter;
  * @author gaigeshen
  */
 public interface WebExecutor {
+
+  ParametersConverter getParametersConverter();
 
   <T> T execute(String url, Class<T> responseClass, Object... uriVariables) throws WebException;
 

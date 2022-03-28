@@ -4,6 +4,8 @@ import work.gaigeshen.tripartite.core.RestTemplateWebExecutor;
 import work.gaigeshen.tripartite.core.WebException;
 import work.gaigeshen.tripartite.core.WebExecutor;
 import work.gaigeshen.tripartite.core.interceptor.AbstractInterceptor;
+import work.gaigeshen.tripartite.core.parameter.Parameters;
+import work.gaigeshen.tripartite.core.parameter.converter.ParametersConverter;
 import work.gaigeshen.tripartite.core.parameter.converter.ParametersMetadataParametersConverter;
 import work.gaigeshen.tripartite.core.response.consumer.ResponseConsumer;
 import work.gaigeshen.tripartite.core.response.converter.ResponseConverter;
@@ -52,6 +54,18 @@ public class DefaultAlipayClient implements AlipayClient {
   @Override
   public AlipayConfig getAlipayConfig() {
     return config;
+  }
+
+  @Override
+  public Parameters convertParameters(AlipayParameters parameters) throws AlipayClientException {
+    if (Objects.isNull(parameters)) {
+      throw new IllegalArgumentException("parameters cannot be null");
+    }
+    ParametersConverter parametersConverter = executor.getParametersConverter();
+    if (Objects.isNull(parametersConverter)) {
+      throw new AlipayClientException("could not convert parameters because missing converter: " + parameters);
+    }
+    return parametersConverter.convert(parameters);
   }
 
   @Override
