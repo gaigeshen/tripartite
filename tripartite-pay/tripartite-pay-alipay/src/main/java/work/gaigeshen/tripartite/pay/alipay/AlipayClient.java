@@ -23,14 +23,42 @@ public interface AlipayClient {
   AlipayConfig getAlipayConfig();
 
   /**
+   * 交易预创建
+   *
+   * @param parameter 交易预创建请求参数不能为空
+   * @return 交易预创建结果不会为空
+   * @throws AlipayClientException 执行请求或者执行业务发生异常
+   */
+  default AlipayTradePreCreateResponse preCreateTrade(AlipayTradePreCreateContentParameter parameter)
+          throws AlipayClientException {
+    DefaultAlipayParameters parameters = new DefaultAlipayParameters("alipay.trade.precreate", parameter);
+    return execute(parameters, AlipayTradePreCreateResponse.class);
+  }
+
+  /**
+   * 交易支付
+   *
+   * @param parameter 交易支付请求参数不能为空
+   * @return 交易支付结果不会为空
+   * @throws AlipayClientException 执行请求或者执行业务发生异常
+   */
+  default AlipayTradePayResponse payTrade(AlipayTradePayContentParameter parameter)
+          throws AlipayClientException {
+    DefaultAlipayParameters parameters = new DefaultAlipayParameters("alipay.trade.pay", parameter);
+    return execute(parameters, AlipayTradePayResponse.class);
+  }
+
+  /**
    * 交易查询
    *
    * @param parameter 交易查询请求参数不能为空
    * @return 交易查询结果不会为空
    * @throws AlipayClientException 执行请求或者执行业务发生异常
    */
-  default AlipayTradeQueryResponse queryTrade(AlipayTradeQueryContentParameter parameter) throws AlipayClientException{
-    return execute(new DefaultAlipayParameters("alipay.trade.query", parameter), AlipayTradeQueryResponse.class);
+  default AlipayTradeQueryResponse queryTrade(AlipayTradeQueryContentParameter parameter)
+          throws AlipayClientException {
+    DefaultAlipayParameters parameters = new DefaultAlipayParameters("alipay.trade.query", parameter);
+    return execute(parameters, AlipayTradeQueryResponse.class);
   }
 
   /**
@@ -40,8 +68,10 @@ public interface AlipayClient {
    * @return 交易退款结果不会为空
    * @throws AlipayClientException 执行请求或者执行业务发生异常
    */
-  default AlipayTradeRefundResponse refundTrade(AlipayTradeRefundContentParameter parameter) throws AlipayClientException {
-    return execute(new DefaultAlipayParameters("alipay.trade.refund", parameter), AlipayTradeRefundResponse.class);
+  default AlipayTradeRefundResponse refundTrade(AlipayTradeRefundContentParameter parameter)
+          throws AlipayClientException {
+    DefaultAlipayParameters parameters = new DefaultAlipayParameters("alipay.trade.refund", parameter);
+    return execute(parameters, AlipayTradeRefundResponse.class);
   }
 
   /**
@@ -51,8 +81,10 @@ public interface AlipayClient {
    * @return 交易关闭结果不会为空
    * @throws AlipayClientException 执行请求或者执行业务发生异常
    */
-  default AlipayTradeCloseResponse closeTrade(AlipayTradeCloseContentParameter parameter) throws AlipayClientException {
-    return execute(new DefaultAlipayParameters("alipay.trade.close", parameter), AlipayTradeCloseResponse.class);
+  default AlipayTradeCloseResponse closeTrade(AlipayTradeCloseContentParameter parameter)
+          throws AlipayClientException {
+    DefaultAlipayParameters parameters = new DefaultAlipayParameters("alipay.trade.close", parameter);
+    return execute(parameters, AlipayTradeCloseResponse.class);
   }
 
   /**
@@ -62,8 +94,10 @@ public interface AlipayClient {
    * @return 交易撤销结果不会为空
    * @throws AlipayClientException 执行请求或者执行业务发生异常
    */
-  default AlipayTradeCancelResponse cancelTrade(AlipayTradeCancelContentParameter parameter) throws AlipayClientException {
-    return execute(new DefaultAlipayParameters("alipay.trade.cancel", parameter), AlipayTradeCancelResponse.class);
+  default AlipayTradeCancelResponse cancelTrade(AlipayTradeCancelContentParameter parameter)
+          throws AlipayClientException {
+    DefaultAlipayParameters parameters = new DefaultAlipayParameters("alipay.trade.cancel", parameter);
+    return execute(parameters, AlipayTradeCancelResponse.class);
   }
 
   /**
@@ -73,8 +107,10 @@ public interface AlipayClient {
    * @return 交易退款查询结果不会为空
    * @throws AlipayClientException 执行请求或者执行业务发生异常
    */
-  default AlipayTradeRefundQueryResponse queryTradeRefund(AlipayTradeRefundQueryContentParameter parameter) throws AlipayClientException {
-    return execute(new DefaultAlipayParameters("alipay.trade.fastpay.refund.query", parameter), AlipayTradeRefundQueryResponse.class);
+  default AlipayTradeRefundQueryResponse queryTradeRefund(AlipayTradeRefundQueryContentParameter parameter)
+          throws AlipayClientException {
+    DefaultAlipayParameters parameters = new DefaultAlipayParameters("alipay.trade.fastpay.refund.query", parameter);
+    return execute(parameters, AlipayTradeRefundQueryResponse.class);
   }
 
   /**

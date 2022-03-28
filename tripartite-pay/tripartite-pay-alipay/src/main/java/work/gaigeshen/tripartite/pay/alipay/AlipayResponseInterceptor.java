@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
+ * 支付宝响应结果拦截器
  *
  * @author gaigeshen
  */
@@ -42,7 +43,7 @@ public class AlipayResponseInterceptor extends AbstractInterceptor {
     String sign = (String) decodedResponse.get("sign");
     String alipayCertSN = (String) decodedResponse.get("alipay_cert_sn");
     if (Objects.isNull(sign) || Objects.isNull(alipayCertSN)) {
-      throw new InterceptingException("sign or or alipay cert SN not found: " + rawResponse);
+      throw new InterceptingException("sign or alipay cert SN not found: " + rawResponse);
     }
     for (Map.Entry<String, Object> entry : decodedResponse.entrySet()) {
       if (entry.getKey().endsWith("_response")) {

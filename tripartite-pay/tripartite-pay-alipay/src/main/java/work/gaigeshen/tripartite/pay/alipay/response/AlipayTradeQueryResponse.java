@@ -29,8 +29,4 @@ public class AlipayTradeQueryResponse extends AbstractAlipayResponse {
   public String buyer_user_id;
 
   public String buyer_user_type;
-
-  public String credit_pay_mode;
-
-  public String credit_biz_order_id;
 }
