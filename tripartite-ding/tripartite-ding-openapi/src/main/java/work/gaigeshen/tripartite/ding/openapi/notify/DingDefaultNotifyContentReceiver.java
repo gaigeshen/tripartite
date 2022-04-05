@@ -1,15 +1,14 @@
 package work.gaigeshen.tripartite.ding.openapi.notify;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import work.gaigeshen.tripartite.core.notify.AbstractNotifyContentReceiver;
 import work.gaigeshen.tripartite.core.notify.DefaultNotifyContent;
 import work.gaigeshen.tripartite.core.notify.NotifyContentIncorrectException;
-import work.gaigeshen.tripartite.core.util.JacksonUtils;
-import work.gaigeshen.tripartite.ding.openapi.config.DingConfig;
+import work.gaigeshen.tripartite.core.util.json.JsonCodec;
 import work.gaigeshen.tripartite.ding.openapi.DingCompositeClients;
+import work.gaigeshen.tripartite.ding.openapi.config.DingConfig;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
@@ -18,6 +17,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.Arrays;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -61,11 +61,11 @@ public class DingDefaultNotifyContentReceiver extends AbstractNotifyContentRecei
     if (Objects.isNull(bodyString)) {
       throw new NotifyContentIncorrectException("could not find request body: " + content);
     }
-    JsonNode encryptJsonNode = JacksonUtils.toJsonNode(bodyString).get("encrypt");
-    if (Objects.isNull(encryptJsonNode) || !encryptJsonNode.isTextual()) {
+    Map<String, Object> bodyDecoded = JsonCodec.instance().decodeObject(bodyString);
+    String encrypted = (String) bodyDecoded.get("encrypt");
+    if (Objects.isNull(encrypted)) {
       throw new NotifyContentIncorrectException("could not find [encrypt] field of request body: " + content);
     }
-    String encrypted = encryptJsonNode.textValue();
     if (!Objects.equals(genSignature(dingConfig, timestamp, nonce, encrypted), signature)) {
       throw new NotifyContentIncorrectException("invalid signature: " + content);
     }
