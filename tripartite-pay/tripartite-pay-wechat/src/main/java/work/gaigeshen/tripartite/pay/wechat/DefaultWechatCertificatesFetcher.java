@@ -1,13 +1,13 @@
 package work.gaigeshen.tripartite.pay.wechat;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import work.gaigeshen.tripartite.core.response.converter.StringResponseConverter;
-import work.gaigeshen.tripartite.core.util.JacksonUtils;
 import work.gaigeshen.tripartite.pay.wechat.config.AutoUpdateWechatCertificates;
 import work.gaigeshen.tripartite.pay.wechat.config.WechatSecretKey;
+import work.gaigeshen.tripartite.pay.wechat.response.WechatResponse;
 
 import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Objects;
 
 /**
  * 获取微信平台证书内容的默认实现，需要依赖微信支付客户端
@@ -38,35 +38,53 @@ public class DefaultWechatCertificatesFetcher implements AutoUpdateWechatCertifi
   @Override
   public Collection<String> fetchCertificates() {
 
-    String response = wechatClient.execute(StringResponseConverter.INSTANCE, CERTIFICATES_URI);
-
-    JsonNode dataJsonNode = JacksonUtils.toJsonNode(response).get("data");
-
-    JsonNode certificatesJsonNode = dataJsonNode.get("data");
-    if (Objects.isNull(certificatesJsonNode)) {
-      return Collections.emptySet();
-    }
     Collection<String> result = new HashSet<>();
-    for (JsonNode certificateJsonNode : certificatesJsonNode) {
-      JsonNode encryptCertificateJsonNode = certificateJsonNode.get("encrypt_certificate");
-      if (Objects.isNull(encryptCertificateJsonNode)) {
+
+    WechatCertificatesResponse response = wechatClient.execute(WechatCertificatesResponse.class, CERTIFICATES_URI);
+
+    if (Objects.isNull(response.data) || response.data.isEmpty()) {
+      return result;
+    }
+    for (WechatCertificatesResponse.Certificate certificate : response.data) {
+      if (Objects.isNull(certificate.encrypt_certificate)) {
         continue;
       }
-      JsonNode nonce = encryptCertificateJsonNode.get("nonce");
-      JsonNode associatedData = encryptCertificateJsonNode.get("associated_data");
-      JsonNode ciphertext = encryptCertificateJsonNode.get("ciphertext");
+      String nonce = certificate.encrypt_certificate.nonce;
+      String associatedData = certificate.encrypt_certificate.associated_data;
+      String ciphertext = certificate.encrypt_certificate.ciphertext;
       if (Objects.isNull(nonce) || Objects.isNull(associatedData) || Objects.isNull(ciphertext)) {
         continue;
       }
-      if (!nonce.isTextual() || !associatedData.isTextual() || !ciphertext.isTextual()) {
-        continue;
-      }
-      byte[] nonceBytes = nonce.textValue().getBytes(StandardCharsets.UTF_8);
-      byte[] associatedDataBytes = associatedData.textValue().getBytes(StandardCharsets.UTF_8);
+      byte[] nonceBytes = nonce.getBytes(StandardCharsets.UTF_8);
+      byte[] associatedDataBytes = associatedData.getBytes(StandardCharsets.UTF_8);
 
-      byte[] decrypted = secretKey.decrypt(ciphertext.textValue(), nonceBytes, associatedDataBytes);
+      byte[] decrypted = secretKey.decrypt(ciphertext, nonceBytes, associatedDataBytes);
       result.add(new String(decrypted, StandardCharsets.UTF_8));
     }
     return result;
   }
+
+  /**
+   *
+   * @author gaigeshen
+   */
+  public static class WechatCertificatesResponse implements WechatResponse {
+
+    public Collection<Certificate> data;
+
+    public static class Certificate {
+      public String serial_no;
+      public String effective_time;
+      public String expire_time;
+      public EncryptCertificate encrypt_certificate;
+    }
+
+    public static class EncryptCertificate {
+      public String algorithm;
+      public String nonce;
+      public String associated_data;
+      public String ciphertext;
+    }
+  }
+
 }

@@ -281,11 +281,8 @@ public class DefaultWangdianClient implements WangdianClient {
     if (Objects.isNull(parameters)) {
       throw new IllegalArgumentException("parameters cannot be null");
     }
-    if (Objects.isNull(responseClass)) {
-      throw new IllegalArgumentException("response class cannot be null");
-    }
-    if (Objects.isNull(uri)) {
-      throw new IllegalArgumentException("uri cannot be null");
+    if (Objects.isNull(responseClass) || Objects.isNull(uri)) {
+      throw new IllegalArgumentException("response class and uri cannot be null");
     }
     try {
       R response = executor.execute(config.getServerHost() + uri, parameters, responseClass);

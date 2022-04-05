@@ -6,7 +6,7 @@ import work.gaigeshen.tripartite.pay.wechat.response.WechatResponse;
  *
  * @author gaigeshen
  */
-public class WechatOrderRefundQueryResponse implements WechatResponse {
+public class WechatQueryOrderRefundResponse implements WechatResponse {
 
   public String refund_id;
 

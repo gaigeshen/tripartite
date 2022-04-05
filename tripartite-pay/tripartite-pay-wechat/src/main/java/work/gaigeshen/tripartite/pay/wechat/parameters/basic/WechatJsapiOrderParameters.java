@@ -1,16 +1,23 @@
 package work.gaigeshen.tripartite.pay.wechat.parameters.basic;
 
+import work.gaigeshen.tripartite.core.parameter.converter.JsonParametersConverter;
+import work.gaigeshen.tripartite.core.parameter.converter.Parameters;
 import work.gaigeshen.tripartite.pay.wechat.parameters.WechatParameters;
+import work.gaigeshen.tripartite.pay.wechat.parameters.WechatParametersCustomizer;
 
 /**
  *
  * @author gaigeshen
  */
+@Parameters(
+        converter = JsonParametersConverter.class,
+        customizer = WechatParametersCustomizer.class
+)
 public class WechatJsapiOrderParameters implements WechatParameters {
 
   public String description;
 
-  public String outTradeNo;
+  public String out_trade_no;
 
   public String time_expire;
 

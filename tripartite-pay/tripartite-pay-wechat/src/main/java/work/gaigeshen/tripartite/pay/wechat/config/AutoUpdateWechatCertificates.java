@@ -35,13 +35,6 @@ public class AutoUpdateWechatCertificates extends WechatCertificatesDecorator {
   }
 
   /**
-   * 创建此微信平台证书，包装默认的微信平台证书，默认的微信平台证书不含任何证书
-   */
-  public AutoUpdateWechatCertificates() {
-    this(new DefaultWechatCertificates());
-  }
-
-  /**
    * 开始更新方法，调用此方法开始执行更新微信平台证书
    *
    * @param fetcher 微信平台证书获取器不能为空
