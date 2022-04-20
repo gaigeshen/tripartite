@@ -10,7 +10,6 @@
     <modelVersion>4.0.0</modelVersion>
     <packaging>pom</packaging>
     <modules>
-        <module>tripartite-wangdian-demo</module>
         <module>tripartite-wangdian-openapi</module>
         <module>tripartite-wangdian-spring-boot-autoconfigure</module>
         <module>tripartite-wangdian-spring-boot-starter</module>
