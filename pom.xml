@@ -191,6 +191,14 @@
                 </executions>
             </plugin>
             <plugin>
+                <artifactId>maven-wrapper-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <distributionType>bin</distributionType>
+                    <includeDebugScript>false</includeDebugScript>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>com.amashchenko.maven.plugin</groupId>
                 <artifactId>gitflow-maven-plugin</artifactId>
                 <version>1.15.0</version>
