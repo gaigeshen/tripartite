@@ -54,7 +54,7 @@ public class WechatRequestResponseInterceptor extends AbstractInterceptor {
             + "\",signature=\"" + privateKey.sign(signContent.toString().getBytes(StandardCharsets.UTF_8)) + "\"";
 
     Headers headers = request.headers();
-    headers.putValue("User-Agent", "PayFramework/all");
+    headers.putValue("User-Agent", "Tripartite/1.0.0");
     headers.putValue("Authorization", "WECHATPAY2-SHA256-RSA2048 " + signInfo);
   }
 
