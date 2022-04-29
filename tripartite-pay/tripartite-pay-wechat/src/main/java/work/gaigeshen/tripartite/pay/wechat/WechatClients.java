@@ -69,4 +69,12 @@ public interface WechatClients {
    * @throws WechatClientNotFountException 没有找到指定的微信支付客户端
    */
   WechatClient getClient(Predicate<WechatConfig> predicate) throws WechatClientNotFountException;
+
+  /**
+   * 查询微信支付客户端，此方法只会返回首个微信支付客户端，如果不存在任何客户端则会抛出异常
+   *
+   * @return 微信支付客户端不为空
+   * @throws WechatClientNotFountException 没有找到指定的微信支付客户端
+   */
+  WechatClient getClient() throws WechatClientNotFountException;
 }

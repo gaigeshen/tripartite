@@ -45,6 +45,15 @@ public class DefaultWechatClients implements WechatClients {
     return wechatClient;
   }
 
+  @Override
+  public WechatClient getClient() throws WechatClientNotFountException {
+    WechatClient wechatClient = findWechatClient(cfg -> true);
+    if (Objects.isNull(wechatClient)) {
+      throw new WechatClientNotFountException("could not find wechat client");
+    }
+    return wechatClient;
+  }
+
   private WechatClient findWechatClient(Predicate<WechatConfig> predicate) {
     if (Objects.isNull(predicate)) {
       throw new IllegalArgumentException("predicate cannot be null");

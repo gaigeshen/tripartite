@@ -56,4 +56,11 @@ public interface AlipayClients {
    */
   AlipayClient getClient(Predicate<AlipayConfig> predicate) throws AlipayClientNotFoundException;
 
+  /**
+   * 查询支付宝客户端，此方法只会返回首个支付宝客户端，如果不存在任何客户端则会抛出异常
+   *
+   * @return 支付宝客户端不为空
+   * @throws AlipayClientNotFoundException 没有找到对应的支付宝客户端
+   */
+  AlipayClient getClient() throws AlipayClientNotFoundException;
 }

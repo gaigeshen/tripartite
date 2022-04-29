@@ -40,6 +40,15 @@ public class DefaultAlipayClients implements AlipayClients {
     return alipayClient;
   }
 
+  @Override
+  public AlipayClient getClient() throws AlipayClientNotFoundException {
+    AlipayClient alipayClient = findAlipayClient(cfg -> true);
+    if (Objects.isNull(alipayClient)) {
+      throw new AlipayClientNotFoundException("could not find alipay client");
+    }
+    return alipayClient;
+  }
+
   private AlipayClient findAlipayClient(Predicate<AlipayConfig> predicate) {
     if (Objects.isNull(predicate)) {
       throw new IllegalArgumentException("predicate cannot be null");
