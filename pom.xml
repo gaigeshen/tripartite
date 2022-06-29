@@ -12,6 +12,7 @@
         <module>tripartite-wangdian</module>
         <module>tripartite-ding</module>
         <module>tripartite-pay</module>
+        <module>tripartite-doudian</module>
     </modules>
 
     <packaging>pom</packaging>
