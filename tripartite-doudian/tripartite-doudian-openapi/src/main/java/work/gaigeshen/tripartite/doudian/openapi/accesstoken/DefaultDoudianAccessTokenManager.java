@@ -161,7 +161,7 @@ public class DefaultDoudianAccessTokenManager implements DoudianAccessTokenManag
               + (ex.hasCurrentAccessToken() ? ", current access token is " + ex.getCurrentAccessToken() : ""), ex);
       if (ex.isCanRetry() && ex.hasCurrentAccessToken()) {
         try {
-          createAndScheduleUpdateTask(ex.getCurrentAccessToken(), 10000);
+          createAndScheduleUpdateTask(ex.getCurrentAccessToken(), 10);
         } catch (Exception e) {
           log.warn("Could not reschedule update task, current access token is " + ex.getCurrentAccessToken(), e);
         }
