@@ -157,7 +157,7 @@ public class DefaultDoudianAccessTokenManager implements DoudianAccessTokenManag
     @Override
     public void handleFailed(DoudianAccessTokenUpdateException ex) {
       log.warn("Access token update failed"
-              + (ex.isCanRetry() ? ", retry again 10 seconds later" : "")
+              + (ex.isCanRetry() && ex.hasCurrentAccessToken() ? ", retry again 10 seconds later" : "")
               + (ex.hasCurrentAccessToken() ? ", current access token is " + ex.getCurrentAccessToken() : ""), ex);
       if (ex.isCanRetry() && ex.hasCurrentAccessToken()) {
         try {
