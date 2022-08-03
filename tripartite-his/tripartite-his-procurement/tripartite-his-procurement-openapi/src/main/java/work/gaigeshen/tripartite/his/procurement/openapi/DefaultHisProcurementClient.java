@@ -6,10 +6,9 @@ import work.gaigeshen.tripartite.core.WebExecutor;
 import work.gaigeshen.tripartite.core.interceptor.AbstractInterceptor;
 import work.gaigeshen.tripartite.core.parameter.converter.ParametersMetadataParametersConverter;
 import work.gaigeshen.tripartite.his.procurement.openapi.config.HisProcurementConfig;
-import work.gaigeshen.tripartite.his.procurement.openapi.parameters.DefaultHisProcurementParameters;
 import work.gaigeshen.tripartite.his.procurement.openapi.parameters.HisProcurementParameters;
-import work.gaigeshen.tripartite.his.procurement.openapi.parameters.inputdata.*;
-import work.gaigeshen.tripartite.his.procurement.openapi.response.*;
+import work.gaigeshen.tripartite.his.procurement.openapi.response.AbstractHisProcurementResponse;
+import work.gaigeshen.tripartite.his.procurement.openapi.response.HisProcurementResponse;
 
 import java.util.Objects;
 
@@ -51,48 +50,6 @@ public class DefaultHisProcurementClient implements HisProcurementClient {
   @Override
   public HisProcurementConfig getHisProcurementConfig() {
     return config;
-  }
-
-  @Override
-  public HisProcurementDirectoryAddResponse addDirectory(HisProcurementDirectoryAddInputData inputData)
-          throws HisProcurementClientException {
-    DefaultHisProcurementParameters parameters = new DefaultHisProcurementParameters("ZJ9701", inputData);
-    return execute(parameters, HisProcurementDirectoryAddResponse.class, config.getServiceUri());
-  }
-
-  @Override
-  public HisProcurementDirectoryListResponse listDirectory(HisProcurementDirectoryListInputData inputData)
-          throws HisProcurementClientException {
-    DefaultHisProcurementParameters parameters = new DefaultHisProcurementParameters("ZJ9700", inputData);
-    return execute(parameters, HisProcurementDirectoryListResponse.class, config.getServiceUri());
-  }
-
-  @Override
-  public HisProcurementDirectoryUsedListResponse listUsedDirectory(HisProcurementDirectoryUsedListInputData inputData)
-          throws HisProcurementClientException {
-    DefaultHisProcurementParameters parameters = new DefaultHisProcurementParameters("ZJ9702", inputData);
-    return execute(parameters, HisProcurementDirectoryUsedListResponse.class, config.getServiceUri());
-  }
-
-  @Override
-  public HisProcurementPurchaseOrderCreateResponse createPurchaseOrder(HisProcurementPurchaseOrderCreateInputData inputData)
-          throws HisProcurementClientException {
-    DefaultHisProcurementParameters parameters = new DefaultHisProcurementParameters("ZJ9704", inputData);
-    return execute(parameters, HisProcurementPurchaseOrderCreateResponse.class, config.getServiceUri());
-  }
-
-  @Override
-  public HisProcurementPurchaseOrderSendResponse sendPurchaseOrder(HisProcurementPurchaseOrderSendInputData inputData)
-          throws HisProcurementClientException {
-    DefaultHisProcurementParameters parameters = new DefaultHisProcurementParameters("ZJ9706", inputData);
-    return execute(parameters, HisProcurementPurchaseOrderSendResponse.class, config.getServiceUri());
-  }
-
-  @Override
-  public HisProcurementPurchaseOrderCancelResponse cancelPurchaseOrder(HisProcurementPurchaseOrderCancelInputData inputData)
-          throws HisProcurementClientException {
-    DefaultHisProcurementParameters parameters = new DefaultHisProcurementParameters("ZJ9707", inputData);
-    return execute(parameters, HisProcurementPurchaseOrderCancelResponse.class, config.getServiceUri());
   }
 
   @Override

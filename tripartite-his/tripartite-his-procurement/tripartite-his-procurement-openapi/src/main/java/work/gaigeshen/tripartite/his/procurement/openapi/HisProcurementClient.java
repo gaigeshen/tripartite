@@ -1,6 +1,7 @@
 package work.gaigeshen.tripartite.his.procurement.openapi;
 
 import work.gaigeshen.tripartite.his.procurement.openapi.config.HisProcurementConfig;
+import work.gaigeshen.tripartite.his.procurement.openapi.parameters.DefaultHisProcurementParameters;
 import work.gaigeshen.tripartite.his.procurement.openapi.parameters.HisProcurementParameters;
 import work.gaigeshen.tripartite.his.procurement.openapi.parameters.inputdata.*;
 import work.gaigeshen.tripartite.his.procurement.openapi.response.*;
@@ -26,7 +27,11 @@ public interface HisProcurementClient {
    * @return 响应结果不为空
    * @throws HisProcurementClientException 执行请求或者执行业务发生异常
    */
-  HisProcurementDirectoryAddResponse addDirectory(HisProcurementDirectoryAddInputData inputData) throws HisProcurementClientException;
+  default HisProcurementDirectoryAddResponse addDirectory(HisProcurementDirectoryAddInputData inputData)
+          throws HisProcurementClientException {
+    return execute(new DefaultHisProcurementParameters("ZJ9701", inputData), HisProcurementDirectoryAddResponse.class,
+            getHisProcurementConfig().getServiceUri());
+  }
 
   /**
    * 获取挂网目录
@@ -35,7 +40,11 @@ public interface HisProcurementClient {
    * @return 响应结果不为空
    * @throws HisProcurementClientException 执行请求或者执行业务发生异常
    */
-  HisProcurementDirectoryListResponse listDirectory(HisProcurementDirectoryListInputData inputData) throws HisProcurementClientException;
+  default HisProcurementDirectoryListResponse listDirectory(HisProcurementDirectoryListInputData inputData)
+          throws HisProcurementClientException {
+    return execute(new DefaultHisProcurementParameters("ZJ9700", inputData), HisProcurementDirectoryListResponse.class,
+            getHisProcurementConfig().getServiceUri());
+  }
 
   /**
    * 获取常用目录
@@ -44,7 +53,11 @@ public interface HisProcurementClient {
    * @return 响应结果不为空
    * @throws HisProcurementClientException 执行请求或者执行业务发生异常
    */
-  HisProcurementDirectoryUsedListResponse listUsedDirectory(HisProcurementDirectoryUsedListInputData inputData) throws HisProcurementClientException;
+  default HisProcurementDirectoryUsedListResponse listUsedDirectory(HisProcurementDirectoryUsedListInputData inputData)
+          throws HisProcurementClientException {
+    return execute(new DefaultHisProcurementParameters("ZJ9702", inputData), HisProcurementDirectoryUsedListResponse.class,
+            getHisProcurementConfig().getServiceUri());
+  }
 
   /**
    * 创建采购订单
@@ -53,7 +66,11 @@ public interface HisProcurementClient {
    * @return 响应结果不为空
    * @throws HisProcurementClientException 执行请求或者执行业务发生异常
    */
-  HisProcurementPurchaseOrderCreateResponse createPurchaseOrder(HisProcurementPurchaseOrderCreateInputData inputData) throws HisProcurementClientException;
+  default HisProcurementPurchaseOrderCreateResponse createPurchaseOrder(HisProcurementPurchaseOrderCreateInputData inputData)
+          throws HisProcurementClientException {
+    return execute(new DefaultHisProcurementParameters("ZJ9704", inputData), HisProcurementPurchaseOrderCreateResponse.class,
+            getHisProcurementConfig().getServiceUri());
+  }
 
   /**
    * 保存或发送采购订单
@@ -62,7 +79,11 @@ public interface HisProcurementClient {
    * @return 响应结果不为空
    * @throws HisProcurementClientException 执行请求或者执行业务发生异常
    */
-  HisProcurementPurchaseOrderSendResponse sendPurchaseOrder(HisProcurementPurchaseOrderSendInputData inputData) throws HisProcurementClientException;
+  default HisProcurementPurchaseOrderSendResponse sendPurchaseOrder(HisProcurementPurchaseOrderSendInputData inputData)
+          throws HisProcurementClientException {
+    return execute(new DefaultHisProcurementParameters("ZJ9706", inputData), HisProcurementPurchaseOrderSendResponse.class,
+            getHisProcurementConfig().getServiceUri());
+  }
 
   /**
    * 撤销采购订单
@@ -71,7 +92,11 @@ public interface HisProcurementClient {
    * @return 响应结果不为空
    * @throws HisProcurementClientException 执行请求或者执行业务发生异常
    */
-  HisProcurementPurchaseOrderCancelResponse cancelPurchaseOrder(HisProcurementPurchaseOrderCancelInputData inputData) throws HisProcurementClientException;
+  default HisProcurementPurchaseOrderCancelResponse cancelPurchaseOrder(HisProcurementPurchaseOrderCancelInputData inputData)
+          throws HisProcurementClientException {
+    return execute(new DefaultHisProcurementParameters("ZJ9707", inputData), HisProcurementPurchaseOrderCancelResponse.class,
+            getHisProcurementConfig().getServiceUri());
+  }
 
   /**
    * 此方法接受任何请求参数，然后执行请求并返回对应的响应结果
@@ -83,6 +108,7 @@ public interface HisProcurementClient {
    * @return 响应结果不会为空
    * @throws HisProcurementClientException 执行请求或者执行业务发生异常
    */
-  <R extends HisProcurementResponse> R execute(HisProcurementParameters parameters, Class<R> responseClass, String uri) throws HisProcurementClientException;
+  <R extends HisProcurementResponse> R execute(HisProcurementParameters parameters, Class<R> responseClass, String uri)
+          throws HisProcurementClientException;
 
 }
