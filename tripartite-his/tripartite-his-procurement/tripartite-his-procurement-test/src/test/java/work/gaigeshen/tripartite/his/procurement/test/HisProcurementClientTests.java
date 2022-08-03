@@ -57,6 +57,4 @@ public class HisProcurementClientTests {
     Assertions.assertNotNull(response.dataList);
     Assertions.assertEquals(2, response.dataList.size());
   }
-
-
 }

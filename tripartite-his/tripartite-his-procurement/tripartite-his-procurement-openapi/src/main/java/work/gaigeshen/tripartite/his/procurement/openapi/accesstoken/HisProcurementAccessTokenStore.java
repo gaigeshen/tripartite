@@ -48,7 +48,7 @@ public interface HisProcurementAccessTokenStore {
   default HisProcurementAccessToken findByAccount(String account, boolean required) throws HisProcurementAccessTokenException, HisProcurementAccessTokenNotFoundException {
     HisProcurementAccessToken accessToken = findByAccount(account);
     if (required && Objects.isNull(accessToken)) {
-      throw new HisProcurementAccessTokenNotFoundException("Could not find access token with account: " + account);
+      throw new HisProcurementAccessTokenNotFoundException("Could not find access token for account: " + account);
     }
     return accessToken;
   }
