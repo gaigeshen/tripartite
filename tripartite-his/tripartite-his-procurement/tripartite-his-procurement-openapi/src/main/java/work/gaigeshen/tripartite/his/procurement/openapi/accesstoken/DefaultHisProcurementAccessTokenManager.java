@@ -9,7 +9,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 /**
- * 访问令牌管理器实现，创建此管理器的时候，会同时为存储器中所有的访问令牌创建并调度更新任务，这些任务的执行时间早于访问令牌过期时间半小时
+ * 访问令牌管理器实现，创建此管理器的时候，会同时为存储器中所有的访问令牌创建并调度更新任务，这些任务的执行时间早于访问令牌过期时间十分钟
  *
  * @author gaigeshen
  */
@@ -110,7 +110,7 @@ public class DefaultHisProcurementAccessTokenManager implements HisProcurementAc
   }
 
   private void createAndScheduleUpdateTask(HisProcurementAccessToken accessToken) {
-    long executionTimestamp = accessToken.getExpiresTimestamp() - 1800;
+    long executionTimestamp = accessToken.getExpiresTimestamp() - 600;
     createAndScheduleUpdateTask(accessToken, executionTimestamp - System.currentTimeMillis() / 1000);
   }
 

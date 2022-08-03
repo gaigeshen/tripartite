@@ -8,7 +8,11 @@ import java.util.Objects;
  */
 public class HisProcurementConfig {
 
-  private final String serverUrl;
+  private final String serverHost;
+
+  private final String accessTokenUri;
+
+  private final String serviceUri;
 
   private final String account;
 
@@ -17,7 +21,9 @@ public class HisProcurementConfig {
   private final String authCode;
 
   private HisProcurementConfig(Builder builder) {
-    this.serverUrl = builder.serverUrl;
+    this.serverHost = builder.serverHost;
+    this.accessTokenUri = builder.accessTokenUri;
+    this.serviceUri = builder.serviceUri;
     this.account = builder.account;
     this.appCode = builder.appCode;
     this.authCode = builder.authCode;
@@ -27,8 +33,16 @@ public class HisProcurementConfig {
     return new Builder();
   }
 
-  public String getServerUrl() {
-    return serverUrl;
+  public String getServerHost() {
+    return serverHost;
+  }
+
+  public String getAccessTokenUri() {
+    return accessTokenUri;
+  }
+
+  public String getServiceUri() {
+    return serviceUri;
   }
 
   public String getAccount() {
@@ -61,7 +75,7 @@ public class HisProcurementConfig {
 
   @Override
   public String toString() {
-    return "HisProcurementConfig: " + account + "/" + appCode;
+    return "HisProcurementConfig: " + account;
   }
 
   /**
@@ -70,7 +84,11 @@ public class HisProcurementConfig {
    */
   public static class Builder {
 
-    private String serverUrl;
+    private String serverHost;
+
+    private String accessTokenUri;
+
+    private String serviceUri;
 
     private String account;
 
@@ -78,8 +96,16 @@ public class HisProcurementConfig {
 
     private String authCode;
 
-    public void setServerUrl(String serverUrl) {
-      this.serverUrl = serverUrl;
+    public void setServerHost(String serverHost) {
+      this.serverHost = serverHost;
+    }
+
+    public void setAccessTokenUri(String accessTokenUri) {
+      this.accessTokenUri = accessTokenUri;
+    }
+
+    public void setServiceUri(String serviceUri) {
+      this.serviceUri = serviceUri;
     }
 
     public void setAccount(String account) {
@@ -95,8 +121,14 @@ public class HisProcurementConfig {
     }
 
     public HisProcurementConfig build() {
-      if (Objects.isNull(serverUrl)) {
-        throw new HisProcurementConfigException("'serverUrl' not found");
+      if (Objects.isNull(serverHost)) {
+        throw new HisProcurementConfigException("'serverHost' not found");
+      }
+      if (Objects.isNull(accessTokenUri)) {
+        throw new HisProcurementConfigException("'accessTokenUri' not found");
+      }
+      if (Objects.isNull(serviceUri)) {
+        throw new HisProcurementConfigException("'serviceUri' not found");
       }
       if (Objects.isNull(account)) {
         throw new HisProcurementConfigException("'account' not found");

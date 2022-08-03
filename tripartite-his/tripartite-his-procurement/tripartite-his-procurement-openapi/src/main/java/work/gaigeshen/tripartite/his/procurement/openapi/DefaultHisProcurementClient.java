@@ -5,16 +5,16 @@ import work.gaigeshen.tripartite.core.WebException;
 import work.gaigeshen.tripartite.core.WebExecutor;
 import work.gaigeshen.tripartite.core.interceptor.AbstractInterceptor;
 import work.gaigeshen.tripartite.core.parameter.converter.ParametersMetadataParametersConverter;
-import work.gaigeshen.tripartite.core.response.consumer.ResponseConsumer;
-import work.gaigeshen.tripartite.core.response.converter.ResponseConverter;
 import work.gaigeshen.tripartite.his.procurement.openapi.config.HisProcurementConfig;
+import work.gaigeshen.tripartite.his.procurement.openapi.parameters.DefaultHisProcurementParameters;
 import work.gaigeshen.tripartite.his.procurement.openapi.parameters.HisProcurementParameters;
-import work.gaigeshen.tripartite.his.procurement.openapi.response.AbstractHisProcurementResponse;
-import work.gaigeshen.tripartite.his.procurement.openapi.response.HisProcurementResponse;
+import work.gaigeshen.tripartite.his.procurement.openapi.parameters.inputdata.*;
+import work.gaigeshen.tripartite.his.procurement.openapi.response.*;
 
 import java.util.Objects;
 
 /**
+ *
  * @author gaigeshen
  */
 public class DefaultHisProcurementClient implements HisProcurementClient {
@@ -54,7 +54,50 @@ public class DefaultHisProcurementClient implements HisProcurementClient {
   }
 
   @Override
-  public <R extends HisProcurementResponse> R execute(HisProcurementParameters parameters, Class<R> responseClass) throws HisProcurementClientException {
+  public HisProcurementDirectoryAddResponse addDirectory(HisProcurementDirectoryAddInputData inputData)
+          throws HisProcurementClientException {
+    DefaultHisProcurementParameters parameters = new DefaultHisProcurementParameters("ZJ9701", inputData);
+    return execute(parameters, HisProcurementDirectoryAddResponse.class, config.getServiceUri());
+  }
+
+  @Override
+  public HisProcurementDirectoryListResponse listDirectory(HisProcurementDirectoryListInputData inputData)
+          throws HisProcurementClientException {
+    DefaultHisProcurementParameters parameters = new DefaultHisProcurementParameters("ZJ9700", inputData);
+    return execute(parameters, HisProcurementDirectoryListResponse.class, config.getServiceUri());
+  }
+
+  @Override
+  public HisProcurementDirectoryUsedListResponse listUsedDirectory(HisProcurementDirectoryUsedListInputData inputData)
+          throws HisProcurementClientException {
+    DefaultHisProcurementParameters parameters = new DefaultHisProcurementParameters("ZJ9702", inputData);
+    return execute(parameters, HisProcurementDirectoryUsedListResponse.class, config.getServiceUri());
+  }
+
+  @Override
+  public HisProcurementPurchaseOrderCreateResponse createPurchaseOrder(HisProcurementPurchaseOrderCreateInputData inputData)
+          throws HisProcurementClientException {
+    DefaultHisProcurementParameters parameters = new DefaultHisProcurementParameters("ZJ9704", inputData);
+    return execute(parameters, HisProcurementPurchaseOrderCreateResponse.class, config.getServiceUri());
+  }
+
+  @Override
+  public HisProcurementPurchaseOrderSendResponse sendPurchaseOrder(HisProcurementPurchaseOrderSendInputData inputData)
+          throws HisProcurementClientException {
+    DefaultHisProcurementParameters parameters = new DefaultHisProcurementParameters("ZJ9706", inputData);
+    return execute(parameters, HisProcurementPurchaseOrderSendResponse.class, config.getServiceUri());
+  }
+
+  @Override
+  public HisProcurementPurchaseOrderCancelResponse cancelPurchaseOrder(HisProcurementPurchaseOrderCancelInputData inputData)
+          throws HisProcurementClientException {
+    DefaultHisProcurementParameters parameters = new DefaultHisProcurementParameters("ZJ9707", inputData);
+    return execute(parameters, HisProcurementPurchaseOrderCancelResponse.class, config.getServiceUri());
+  }
+
+  @Override
+  public <R extends HisProcurementResponse> R execute(HisProcurementParameters parameters, Class<R> responseClass, String uri)
+          throws HisProcurementClientException {
     if (Objects.isNull(parameters)) {
       throw new IllegalArgumentException("parameters cannot be null");
     }
@@ -62,39 +105,8 @@ public class DefaultHisProcurementClient implements HisProcurementClient {
       throw new IllegalArgumentException("response class cannot be null");
     }
     try {
-      R response = executor.execute(config.getServerUrl(), parameters, responseClass);
+      R response = executor.execute(config.getServerHost() + uri, parameters, responseClass);
       return validateResponse(response);
-    } catch (WebException e) {
-      throw new HisProcurementClientException(e.getMessage(), e);
-    }
-  }
-
-  @Override
-  public <R extends HisProcurementResponse> R execute(HisProcurementParameters parameters, ResponseConverter<R> converter) throws HisProcurementClientException {
-    if (Objects.isNull(parameters)) {
-      throw new IllegalArgumentException("parameters cannot be null");
-    }
-    if (Objects.isNull(converter)) {
-      throw new IllegalArgumentException("response converter cannot be null");
-    }
-    try {
-      R response = executor.execute(config.getServerUrl(), parameters, converter);
-      return validateResponse(response);
-    } catch (WebException e) {
-      throw new HisProcurementClientException(e.getMessage(), e);
-    }
-  }
-
-  @Override
-  public void execute(HisProcurementParameters parameters, ResponseConsumer consumer) throws HisProcurementClientException {
-    if (Objects.isNull(parameters)) {
-      throw new IllegalArgumentException("parameters cannot be null");
-    }
-    if (Objects.isNull(consumer)) {
-      throw new IllegalArgumentException("response consumer cannot be null");
-    }
-    try {
-      executor.execute(config.getServerUrl(), parameters, consumer);
     } catch (WebException e) {
       throw new HisProcurementClientException(e.getMessage(), e);
     }

@@ -75,8 +75,9 @@ public class HisProcurementAccessToken {
       return this;
     }
 
-    public void setAccount(String account) {
+    public Builder setAccount(String account) {
       this.account = account;
+      return this;
     }
 
     public Builder setExpiresIn(long expiresIn) {
