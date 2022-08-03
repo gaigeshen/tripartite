@@ -13,6 +13,7 @@
         <module>tripartite-ding</module>
         <module>tripartite-pay</module>
         <module>tripartite-doudian</module>
+        <module>tripartite-his</module>
     </modules>
 
     <packaging>pom</packaging>
