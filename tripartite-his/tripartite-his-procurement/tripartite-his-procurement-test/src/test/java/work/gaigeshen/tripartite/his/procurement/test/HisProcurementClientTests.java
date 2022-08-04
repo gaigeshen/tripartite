@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import work.gaigeshen.tripartite.his.procurement.openapi.HisProcurementClient;
+import work.gaigeshen.tripartite.his.procurement.openapi.HisProcurementClients;
 import work.gaigeshen.tripartite.his.procurement.openapi.config.HisProcurementConfig;
 import work.gaigeshen.tripartite.his.procurement.openapi.parameters.inputdata.*;
 import work.gaigeshen.tripartite.his.procurement.openapi.response.*;
@@ -20,11 +21,11 @@ import java.util.ArrayList;
 public class HisProcurementClientTests {
 
   @Autowired
-  private HisProcurementClient hisProcurementClient;
+  private HisProcurementClients hisProcurementClients;
 
   @Test
   public void getHisProcurementConfigTest() {
-    HisProcurementConfig config = hisProcurementClient.getHisProcurementConfig();
+    HisProcurementConfig config = hisProcurementClients.getClient().getHisProcurementConfig();
     Assertions.assertNotNull(config);
   }
 
@@ -34,7 +35,7 @@ public class HisProcurementClientTests {
     inputData.current = 1;
     inputData.size = 10;
 
-    HisProcurementDirectoryListResponse response = hisProcurementClient.listDirectory(inputData);
+    HisProcurementDirectoryListResponse response = hisProcurementClients.getClient().listDirectory(inputData);
     Assertions.assertNotNull(response.dataList);
     Assertions.assertEquals(1, response.currentPageNumber);
   }
@@ -52,7 +53,7 @@ public class HisProcurementClientTests {
     listItem2.pubonlnId = "100000000000000004";
     inputData.list.add(listItem2);
 
-    HisProcurementDirectoryAddResponse response = hisProcurementClient.addDirectory(inputData);
+    HisProcurementDirectoryAddResponse response = hisProcurementClients.getClient().addDirectory(inputData);
     Assertions.assertNotNull(response.dataList);
     Assertions.assertEquals(2, response.dataList.size());
   }
@@ -63,14 +64,15 @@ public class HisProcurementClientTests {
     inputData.current = 1;
     inputData.size = 10;
 
-    HisProcurementDirectoryUsedListResponse response = hisProcurementClient.listUsedDirectory(inputData);
+    HisProcurementDirectoryUsedListResponse response = hisProcurementClients.getClient().listUsedDirectory(inputData);
     Assertions.assertNotNull(response.dataList);
     Assertions.assertEquals(1, response.currentPageNumber);
   }
 
   @Test
   public void createPurchaseOrderTest() {
-    HisProcurementConfig config = hisProcurementClient.getHisProcurementConfig();
+    HisProcurementClient client = hisProcurementClients.getClient();
+    HisProcurementConfig config = client.getHisProcurementConfig();
 
     HisProcurementPurchaseOrderCreateInputData inputData = new HisProcurementPurchaseOrderCreateInputData();
     inputData.medinsCode = config.getAccount();
@@ -102,41 +104,44 @@ public class HisProcurementClientTests {
     listItem2.hospPurcDetlId = "20220804004";
     inputData.list.add(listItem2);
 
-    HisProcurementPurchaseOrderCreateResponse response = hisProcurementClient.createPurchaseOrder(inputData);
+    HisProcurementPurchaseOrderCreateResponse response = client.createPurchaseOrder(inputData);
     Assertions.assertNotNull(response.dataList);
     Assertions.assertEquals(2, response.dataList.size());
   }
 
   @Test
   public void sendPurchaseOrderTest() {
-    HisProcurementConfig config = hisProcurementClient.getHisProcurementConfig();
+    HisProcurementClient client = hisProcurementClients.getClient();
+    HisProcurementConfig config = client.getHisProcurementConfig();
 
     HisProcurementPurchaseOrderSendInputData inputData = new HisProcurementPurchaseOrderSendInputData();
     inputData.medinsCode = config.getAccount();
     inputData.purcCode = "1555104239597301761";
     inputData.chkStas = 4;
 
-    HisProcurementPurchaseOrderSendResponse response = hisProcurementClient.sendPurchaseOrder(inputData);
+    HisProcurementPurchaseOrderSendResponse response = client.sendPurchaseOrder(inputData);
     Assertions.assertNotNull(response.ordDetlIdList);
     Assertions.assertEquals(2, response.ordDetlIdList.size());
   }
 
   @Test
   public void cancelPurchaseOrderTest() {
-    HisProcurementConfig config = hisProcurementClient.getHisProcurementConfig();
+    HisProcurementClient client = hisProcurementClients.getClient();
+    HisProcurementConfig config = client.getHisProcurementConfig();
 
     HisProcurementPurchaseOrderCancelInputData inputData = new HisProcurementPurchaseOrderCancelInputData();
     inputData.medinsCode = config.getAccount();
     inputData.purcCode = "1554995965749248001";
 
-    HisProcurementPurchaseOrderCancelResponse response = hisProcurementClient.cancelPurchaseOrder(inputData);
+    HisProcurementPurchaseOrderCancelResponse response = client.cancelPurchaseOrder(inputData);
     Assertions.assertNotNull(response.PurcCode);
     Assertions.assertEquals(response.PurcCode, inputData.purcCode);
   }
 
   @Test
   public void listPurchaseOrderTest() {
-    HisProcurementConfig config = hisProcurementClient.getHisProcurementConfig();
+    HisProcurementClient client = hisProcurementClients.getClient();
+    HisProcurementConfig config = client.getHisProcurementConfig();
 
     HisProcurementPurchaseOrderListInputData inputData = new HisProcurementPurchaseOrderListInputData();
     inputData.medinsCode = config.getAccount();
@@ -144,28 +149,30 @@ public class HisProcurementClientTests {
     inputData.current = 1;
     inputData.size = 10;
 
-    HisProcurementPurchaseOrderListResponse response = hisProcurementClient.listPurchaseOrder(inputData);
+    HisProcurementPurchaseOrderListResponse response = client.listPurchaseOrder(inputData);
     Assertions.assertNotNull(response.dataList);
     Assertions.assertEquals(1, response.currentPageNumber);
   }
 
   @Test
   public void takeDeliveryTest() {
-    HisProcurementConfig config = hisProcurementClient.getHisProcurementConfig();
+    HisProcurementClient client = hisProcurementClients.getClient();
+    HisProcurementConfig config = client.getHisProcurementConfig();
 
     HisProcurementTakeDeliveryInputData inputData = new HisProcurementTakeDeliveryInputData();
     inputData.medinsCode = config.getAccount();
     inputData.shpCode = "I_S2332022080400304";
     inputData.shppCnt = new BigDecimal("1");
 
-    HisProcurementTakeDeliveryResponse response = hisProcurementClient.takeDelivery(inputData);
+    HisProcurementTakeDeliveryResponse response = client.takeDelivery(inputData);
     Assertions.assertNotNull(response.shpCode);
     Assertions.assertEquals(inputData.shpCode, response.shpCode);
   }
 
   @Test
   public void applyReturnTest() {
-    HisProcurementConfig config = hisProcurementClient.getHisProcurementConfig();
+    HisProcurementClient client = hisProcurementClients.getClient();
+    HisProcurementConfig config = client.getHisProcurementConfig();
 
     HisProcurementReturnApplyInputData inputData = new HisProcurementReturnApplyInputData();
     inputData.medinsCode = config.getAccount();
@@ -173,13 +180,14 @@ public class HisProcurementClientTests {
     inputData.retnCnt = new BigDecimal("1");
     inputData.medinsRetnRea = "这是退货原因";
 
-    HisProcurementReturnApplyResponse response = hisProcurementClient.applyReturn(inputData);
+    HisProcurementReturnApplyResponse response = client.applyReturn(inputData);
     Assertions.assertNotNull(response.retnCode);
   }
 
   @Test
   public void listReturnTest() {
-    HisProcurementConfig config = hisProcurementClient.getHisProcurementConfig();
+    HisProcurementClient client = hisProcurementClients.getClient();
+    HisProcurementConfig config = client.getHisProcurementConfig();
 
     HisProcurementReturnListInputData inputData = new HisProcurementReturnListInputData();
     inputData.medinsCode = config.getAccount();
@@ -189,14 +197,15 @@ public class HisProcurementClientTests {
     inputData.current = 1;
     inputData.size = 10;
 
-    HisProcurementReturnListResponse response = hisProcurementClient.listReturn(inputData);
+    HisProcurementReturnListResponse response = client.listReturn(inputData);
     Assertions.assertNotNull(response.dataList);
     Assertions.assertEquals(1, response.currentPageNumber);
   }
 
   @Test
   public void listProductDeliveryEnterpriseTest() {
-    HisProcurementConfig config = hisProcurementClient.getHisProcurementConfig();
+    HisProcurementClient client = hisProcurementClients.getClient();
+    HisProcurementConfig config = client.getHisProcurementConfig();
 
     HisProcurementProductDeliveryEnterpriseListInputData inputData = new HisProcurementProductDeliveryEnterpriseListInputData();
     inputData.medinsCode = config.getAccount();
@@ -204,14 +213,15 @@ public class HisProcurementClientTests {
     inputData.current = 1;
     inputData.size = 10;
 
-    HisProcurementProductDeliveryEnterpriseListResponse response = hisProcurementClient.listProductDeliveryEnterprise(inputData);
+    HisProcurementProductDeliveryEnterpriseListResponse response = client.listProductDeliveryEnterprise(inputData);
     Assertions.assertNotNull(response.dataList);
     Assertions.assertEquals(inputData.current, response.currentPageNumber);
   }
 
   @Test
   public void setProductDeliveryEnterpriseTest() {
-    HisProcurementConfig config = hisProcurementClient.getHisProcurementConfig();
+    HisProcurementClient client = hisProcurementClients.getClient();
+    HisProcurementConfig config = client.getHisProcurementConfig();
 
     HisProcurementProductDeliveryEnterpriseSetInputData inputData = new HisProcurementProductDeliveryEnterpriseSetInputData();
     inputData.medinsCode = config.getAccount();
@@ -223,7 +233,7 @@ public class HisProcurementClientTests {
     listItem1.delvEntpName = "配送测试企业";
     inputData.list.add(listItem1);
 
-    HisProcurementProductDeliveryEnterpriseSetResponse response = hisProcurementClient.setProductDeliveryEnterprise(inputData);
+    HisProcurementProductDeliveryEnterpriseSetResponse response = client.setProductDeliveryEnterprise(inputData);
     Assertions.assertNotNull(response.dataList);
     Assertions.assertEquals(1, response.dataList.size());
     Assertions.assertEquals(listItem1.hospListId, response.dataList.iterator().next().hospListId);
@@ -231,20 +241,22 @@ public class HisProcurementClientTests {
 
   @Test
   public void createStatementTest() {
-    HisProcurementConfig config = hisProcurementClient.getHisProcurementConfig();
+    HisProcurementClient client = hisProcurementClients.getClient();
+    HisProcurementConfig config = client.getHisProcurementConfig();
 
     HisProcurementStatementCreateInputData inputData = new HisProcurementStatementCreateInputData();
     inputData.medinsCode = config.getAccount();
     inputData.delvEntpCode = "PS123456789";
     inputData.delvEntpName = "配送测试企业";
 
-    HisProcurementStatementCreateResponse response = hisProcurementClient.createStatement(inputData);
+    HisProcurementStatementCreateResponse response = client.createStatement(inputData);
     Assertions.assertNotNull(response.pryOrdId);
   }
 
   @Test
   public void addStatementDetailTest() {
-    HisProcurementConfig config = hisProcurementClient.getHisProcurementConfig();
+    HisProcurementClient client = hisProcurementClients.getClient();
+    HisProcurementConfig config = client.getHisProcurementConfig();
 
     HisProcurementStatementDetailAddInputData inputData = new HisProcurementStatementDetailAddInputData();
     inputData.medinsCode = config.getAccount();
@@ -261,7 +273,7 @@ public class HisProcurementClientTests {
     listItem2.stogTag = "1";
     inputData.list.add(listItem2);
 
-    HisProcurementStatementDetailAddResponse response = hisProcurementClient.addStatementDetail(inputData);
+    HisProcurementStatementDetailAddResponse response = client.addStatementDetail(inputData);
     Assertions.assertNotNull(response.dataList);
     Assertions.assertEquals(2, response.dataList.size());
     Assertions.assertTrue(response.dataList.contains(listItem1.payyDetlId));
@@ -270,46 +282,50 @@ public class HisProcurementClientTests {
 
   @Test
   public void submitStatementTest() {
-    HisProcurementConfig config = hisProcurementClient.getHisProcurementConfig();
+    HisProcurementClient client = hisProcurementClients.getClient();
+    HisProcurementConfig config = client.getHisProcurementConfig();
 
     HisProcurementStatementSubmitInputData inputData = new HisProcurementStatementSubmitInputData();
     inputData.medinsCode = config.getAccount();
     inputData.payOrdId = "20220804152607";
 
-    HisProcurementStatementSubmitResponse response = hisProcurementClient.submitStatement(inputData);
+    HisProcurementStatementSubmitResponse response = client.submitStatement(inputData);
     Assertions.assertNotNull(response);
   }
 
   @Test
   public void examineStatementTest() {
-    HisProcurementConfig config = hisProcurementClient.getHisProcurementConfig();
+    HisProcurementClient client = hisProcurementClients.getClient();
+    HisProcurementConfig config = client.getHisProcurementConfig();
 
     HisProcurementStatementExamineInputData inputData = new HisProcurementStatementExamineInputData();
     inputData.medinsCode = config.getAccount();
     inputData.payOrdId = "20220804152607";
     inputData.chkStas = 2;
 
-    HisProcurementStatementExamineResponse response = hisProcurementClient.examineStatement(inputData);
+    HisProcurementStatementExamineResponse response = client.examineStatement(inputData);
     Assertions.assertNotNull(response);
   }
 
   @Test
   public void listStorehouseTest() {
-    HisProcurementConfig config = hisProcurementClient.getHisProcurementConfig();
+    HisProcurementClient client = hisProcurementClients.getClient();
+    HisProcurementConfig config = client.getHisProcurementConfig();
 
     HisProcurementStorehouseListInputData inputData = new HisProcurementStorehouseListInputData();
     inputData.orgCode = config.getAccount();
     inputData.current = 1;
     inputData.size = 10;
 
-    HisProcurementStorehouseListResponse response = hisProcurementClient.listStorehouse(inputData);
+    HisProcurementStorehouseListResponse response = client.listStorehouse(inputData);
     Assertions.assertNotNull(response.dataList);
     Assertions.assertEquals(1, response.currentPageNumber);
   }
 
   @Test
   public void saveStorehouseTest() {
-    HisProcurementConfig config = hisProcurementClient.getHisProcurementConfig();
+    HisProcurementClient client = hisProcurementClients.getClient();
+    HisProcurementConfig config = client.getHisProcurementConfig();
 
     HisProcurementStorehouseSaveInputData inputData = new HisProcurementStorehouseSaveInputData();
     inputData.addrId = "1554719062308093954";
@@ -325,7 +341,7 @@ public class HisProcurementClientTests {
     inputData.defFlag = 1;
     inputData.mcsFlag = 1;
 
-    HisProcurementStorehouseSaveResponse response = hisProcurementClient.saveStorehouse(inputData);
+    HisProcurementStorehouseSaveResponse response = client.saveStorehouse(inputData);
     Assertions.assertNotNull(response.addrId);
     Assertions.assertEquals(inputData.addrId, response.addrId);
   }

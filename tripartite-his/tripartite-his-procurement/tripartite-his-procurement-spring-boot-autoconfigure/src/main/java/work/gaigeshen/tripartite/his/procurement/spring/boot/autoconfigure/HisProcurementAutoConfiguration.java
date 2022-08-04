@@ -6,11 +6,12 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import work.gaigeshen.tripartite.his.procurement.openapi.DefaultHisProcurementClient;
-import work.gaigeshen.tripartite.his.procurement.openapi.HisProcurementClient;
-import work.gaigeshen.tripartite.his.procurement.openapi.HisProcurementClientInterceptor;
+import work.gaigeshen.tripartite.his.procurement.openapi.*;
 import work.gaigeshen.tripartite.his.procurement.openapi.accesstoken.*;
 import work.gaigeshen.tripartite.his.procurement.openapi.config.HisProcurementConfig;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  *
@@ -31,7 +32,8 @@ public class HisProcurementAutoConfiguration {
 
   @Bean(destroyMethod = "shutdown")
   public HisProcurementAccessTokenManager hisProcurementAccessTokenManager() {
-    return new DefaultHisProcurementAccessTokenManager(hisProcurementAccessTokenStore(), hisProcurementAccessTokenRefresher());
+    return new DefaultHisProcurementAccessTokenManager(hisProcurementAccessTokenStore(),
+            hisProcurementAccessTokenRefresher());
   }
 
   @Bean
@@ -41,26 +43,39 @@ public class HisProcurementAutoConfiguration {
 
   @Bean
   public HisProcurementAccessTokenRefresher hisProcurementAccessTokenRefresher() {
-    return new DefaultHisProcurementAccessTokenRefresher(oldAccessToken -> hisProcurementClient());
+    return new DefaultHisProcurementAccessTokenRefresher(oat -> {
+      HisProcurementClients hisProcurementClients = hisProcurementClients();
+      HisProcurementConfig procurementConfig = hisProcurementClients.getConfig(oat.getAccount());
+      return HisProcurementAccessTokenClient.create(procurementConfig);
+    });
   }
 
   @Bean
-  public HisProcurementClient hisProcurementClient() {
-    HisProcurementConfig.Builder builder = HisProcurementConfig.builder();
-    builder.setServerHost(hisProcurementProperties.getServerHost());
-    builder.setAccessTokenUri(hisProcurementProperties.getAccessTokenUri());
-    builder.setServiceUri(hisProcurementProperties.getServiceUri());
-    builder.setAccount(hisProcurementProperties.getAccount());
-    builder.setAppCode(hisProcurementProperties.getAppCode());
-    builder.setAuthCode(hisProcurementProperties.getAuthCode());
+  public HisProcurementClients hisProcurementClients() {
 
-    HisProcurementConfig procurementConfig = builder.build();
+    HisProcurementAccessTokenManager accessTokenManager = hisProcurementAccessTokenManager();
 
-    log.info("creating his procurement client: {}", procurementConfig);
+    Collection<HisProcurementClient> hisProcurementClients = new ArrayList<>();
 
-    HisProcurementClientInterceptor interceptor = new HisProcurementClientInterceptor(
-            () -> DefaultHisProcurementClient.create(procurementConfig), this::hisProcurementAccessTokenManager);
-    return DefaultHisProcurementClient.create(procurementConfig, interceptor);
+    for (HisProcurementProperties.Client client : hisProcurementProperties.getClients()) {
+      HisProcurementConfig.Builder builder = HisProcurementConfig.builder();
+      builder.setServerHost(client.getServerHost());
+      builder.setAccessTokenUri(client.getAccessTokenUri());
+      builder.setServiceUri(client.getServiceUri());
+      builder.setAccount(client.getAccount());
+      builder.setAppCode(client.getAppCode());
+      builder.setAuthCode(client.getAuthCode());
+
+      HisProcurementConfig config = builder.build();
+
+      DefaultHisProcurementClient accessTokenClient = HisProcurementAccessTokenClient.create(config);
+      HisProcurementClientAccessTokenInterceptor interceptor = new HisProcurementClientAccessTokenInterceptor(
+              accessTokenClient, accessTokenManager);
+
+      hisProcurementClients.add(DefaultHisProcurementClient.create(config, interceptor));
+      log.info("loaded his procurement client: {}", config);
+    }
+    return new DefaultHisProcurementClients(hisProcurementClients);
   }
 
 }

@@ -1,4 +1,4 @@
-package work.gaigeshen.tripartite.his.procurement.openapi.response.accesstoken;
+package work.gaigeshen.tripartite.his.procurement.openapi.response;
 
 import work.gaigeshen.tripartite.his.procurement.openapi.response.AbstractHisProcurementResponse;
 

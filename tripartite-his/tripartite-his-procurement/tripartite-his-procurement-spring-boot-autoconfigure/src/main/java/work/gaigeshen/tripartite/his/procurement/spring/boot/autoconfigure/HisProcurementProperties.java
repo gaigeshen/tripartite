@@ -2,6 +2,9 @@ package work.gaigeshen.tripartite.his.procurement.spring.boot.autoconfigure;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 /**
  *
  * @author gaigeshen
@@ -9,63 +12,80 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties("his.procurement")
 public class HisProcurementProperties {
 
-  private String serverHost;
+  private Collection<Client> clients = new ArrayList<>();
 
-  private String accessTokenUri;
-
-  private String serviceUri;
-
-  private String account;
-
-  private String appCode;
-
-  private String authCode;
-
-  public String getServerHost() {
-    return serverHost;
+  public Collection<Client> getClients() {
+    return clients;
   }
 
-  public void setServerHost(String serverHost) {
-    this.serverHost = serverHost;
+  public void setClients(Collection<Client> clients) {
+    this.clients = clients;
   }
 
-  public String getAccessTokenUri() {
-    return accessTokenUri;
-  }
+  /**
+   *
+   * @author gaigeshen
+   */
+  public static class Client {
 
-  public void setAccessTokenUri(String accessTokenUri) {
-    this.accessTokenUri = accessTokenUri;
-  }
+    private String serverHost;
 
-  public String getServiceUri() {
-    return serviceUri;
-  }
+    private String accessTokenUri;
 
-  public void setServiceUri(String serviceUri) {
-    this.serviceUri = serviceUri;
-  }
+    private String serviceUri;
 
-  public String getAccount() {
-    return account;
-  }
+    private String account;
 
-  public void setAccount(String account) {
-    this.account = account;
-  }
+    private String appCode;
 
-  public String getAppCode() {
-    return appCode;
-  }
+    private String authCode;
 
-  public void setAppCode(String appCode) {
-    this.appCode = appCode;
-  }
+    public String getServerHost() {
+      return serverHost;
+    }
 
-  public String getAuthCode() {
-    return authCode;
-  }
+    public void setServerHost(String serverHost) {
+      this.serverHost = serverHost;
+    }
 
-  public void setAuthCode(String authCode) {
-    this.authCode = authCode;
+    public String getAccessTokenUri() {
+      return accessTokenUri;
+    }
+
+    public void setAccessTokenUri(String accessTokenUri) {
+      this.accessTokenUri = accessTokenUri;
+    }
+
+    public String getServiceUri() {
+      return serviceUri;
+    }
+
+    public void setServiceUri(String serviceUri) {
+      this.serviceUri = serviceUri;
+    }
+
+    public String getAccount() {
+      return account;
+    }
+
+    public void setAccount(String account) {
+      this.account = account;
+    }
+
+    public String getAppCode() {
+      return appCode;
+    }
+
+    public void setAppCode(String appCode) {
+      this.appCode = appCode;
+    }
+
+    public String getAuthCode() {
+      return authCode;
+    }
+
+    public void setAuthCode(String authCode) {
+      this.authCode = authCode;
+    }
   }
 }

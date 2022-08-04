@@ -2,8 +2,8 @@ package work.gaigeshen.tripartite.his.procurement.openapi.accesstoken;
 
 import work.gaigeshen.tripartite.his.procurement.openapi.HisProcurementClient;
 import work.gaigeshen.tripartite.his.procurement.openapi.config.HisProcurementConfig;
-import work.gaigeshen.tripartite.his.procurement.openapi.parameters.accesstoken.HisProcurementAccessTokenParameters;
-import work.gaigeshen.tripartite.his.procurement.openapi.response.accesstoken.HisProcurementAccessTokenResponse;
+import work.gaigeshen.tripartite.his.procurement.openapi.parameters.HisProcurementAccessTokenParameters;
+import work.gaigeshen.tripartite.his.procurement.openapi.response.HisProcurementAccessTokenResponse;
 
 import java.util.Date;
 import java.util.Objects;
@@ -26,8 +26,10 @@ public class DefaultHisProcurementAccessTokenRefresher implements HisProcurement
   @Override
   public HisProcurementAccessToken refresh(HisProcurementAccessToken oldAccessToken)
           throws HisProcurementAccessTokenRefreshException {
-    HisProcurementClient client = hisProcurementClientSelector.select(oldAccessToken);
-    if (Objects.isNull(client)) {
+    HisProcurementClient client;
+    try {
+      client = hisProcurementClientSelector.select(oldAccessToken);
+    } catch (Exception e) {
       throw new HisProcurementAccessTokenRefreshException("could not find his procurement client: " + oldAccessToken);
     }
     HisProcurementConfig config = client.getHisProcurementConfig();
