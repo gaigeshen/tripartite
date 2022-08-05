@@ -1,5 +1,6 @@
 package work.gaigeshen.tripartite.his.procurement.openapi.response;
 
+import java.math.BigDecimal;
 import java.util.Collection;
 
 /**
@@ -37,11 +38,15 @@ public class HisProcurementDirectoryUsedListResponse extends AbstractHisProcurem
 
     public String hospListId;
 
+    public BigDecimal hospPurcPric;
+
     public String prodentpCode;
 
     public String prodentpName;
 
     public String delventpName;
+
+    public String mcsInfoId;
 
     public String pubonlnRsltId;
 
@@ -50,6 +55,8 @@ public class HisProcurementDirectoryUsedListResponse extends AbstractHisProcurem
     public String primDirectory;
 
     public String prodName;
+
+    public BigDecimal pubonlnPric;
 
     public String delventpCode;
   }
