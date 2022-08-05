@@ -29,4 +29,6 @@ public interface HisProcurementClients {
   HisProcurementClient getClient(Predicate<HisProcurementConfig> predicate) throws HisProcurementClientNotFoundException;
 
   HisProcurementClient getClient() throws HisProcurementClientNotFoundException;
+
+  HisProcurementClient getClientOrCreate(HisProcurementConfig config);
 }

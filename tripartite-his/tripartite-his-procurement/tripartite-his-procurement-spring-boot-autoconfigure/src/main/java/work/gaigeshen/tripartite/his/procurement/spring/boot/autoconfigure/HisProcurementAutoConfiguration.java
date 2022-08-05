@@ -51,9 +51,14 @@ public class HisProcurementAutoConfiguration {
   }
 
   @Bean
+  public HisProcurementClientFactory hisProcurementClientFactory() {
+    return new DefaultHisProcurementClientFactory(hisProcurementAccessTokenManager());
+  }
+
+  @Bean
   public HisProcurementClients hisProcurementClients() {
 
-    HisProcurementAccessTokenManager accessTokenManager = hisProcurementAccessTokenManager();
+    HisProcurementClientFactory hisProcurementClientFactory = hisProcurementClientFactory();
 
     Collection<HisProcurementClient> hisProcurementClients = new ArrayList<>();
 
@@ -68,14 +73,13 @@ public class HisProcurementAutoConfiguration {
 
       HisProcurementConfig config = builder.build();
 
-      DefaultHisProcurementClient accessTokenClient = HisProcurementAccessTokenClient.create(config);
-      HisProcurementClientAccessTokenInterceptor interceptor = new HisProcurementClientAccessTokenInterceptor(
-              accessTokenClient, accessTokenManager);
+      HisProcurementClient procurementClient = hisProcurementClientFactory.create(config);
 
-      hisProcurementClients.add(DefaultHisProcurementClient.create(config, interceptor));
+      hisProcurementClients.add(procurementClient);
+
       log.info("loaded his procurement client: {}", config);
     }
-    return new DefaultHisProcurementClients(hisProcurementClients);
+    return new DefaultHisProcurementClients(hisProcurementClients, hisProcurementClientFactory);
   }
 
 }
