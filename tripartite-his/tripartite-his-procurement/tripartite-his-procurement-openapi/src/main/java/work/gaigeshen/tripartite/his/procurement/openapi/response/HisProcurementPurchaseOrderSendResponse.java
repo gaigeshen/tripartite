@@ -11,15 +11,24 @@ public class HisProcurementPurchaseOrderSendResponse extends AbstractHisProcurem
 
   public String purcPlanCode;
 
-  public Collection<DetailListItem> ordDetlIdList;
+  public Collection<OrdDetlIdListItem> ordDetlIdList;
 
-  public static class DetailListItem {
+  public Collection<OrdIdListItem> ordIdList;
+
+  public static class OrdDetlIdListItem {
 
     public String ordCode;
 
     public String ordDetlId;
 
     public String purcPlanDetId;
+
+    public String ordId;
+  }
+
+  public static class OrdIdListItem {
+
+    public String ordCode;
 
     public String ordId;
   }
