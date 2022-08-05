@@ -6,7 +6,7 @@ import java.util.Collection;
 /**
  * @author gaigeshen
  */
-public class HisProcurementPurchaseOrderListResponse extends AbstractHisProcurementResponse {
+public class HisProcurementOrderListResponse extends AbstractHisProcurementResponse {
 
   public Collection<ListItem> dataList;
 

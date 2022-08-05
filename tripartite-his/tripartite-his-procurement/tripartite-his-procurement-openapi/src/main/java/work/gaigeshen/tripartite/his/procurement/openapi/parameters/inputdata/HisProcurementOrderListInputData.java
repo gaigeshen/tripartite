@@ -6,7 +6,7 @@ import work.gaigeshen.tripartite.his.procurement.openapi.parameters.HisProcureme
  *
  * @author gaigeshen
  */
-public class HisProcurementPurchaseOrderListInputData implements HisProcurementInputData {
+public class HisProcurementOrderListInputData implements HisProcurementInputData {
 
   public String medinsCode;
 

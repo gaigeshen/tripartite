@@ -30,18 +30,18 @@ public class HisProcurementClientTests {
   }
 
   @Test
-  public void listDirectoryTest() {
+  public void listDirectoriesTest() {
     HisProcurementDirectoryListInputData inputData = new HisProcurementDirectoryListInputData();
     inputData.current = 1;
     inputData.size = 10;
 
-    HisProcurementDirectoryListResponse response = hisProcurementClients.getClient().listDirectory(inputData);
+    HisProcurementDirectoryListResponse response = hisProcurementClients.getClient().listDirectories(inputData);
     Assertions.assertNotNull(response.dataList);
     Assertions.assertEquals(1, response.currentPageNumber);
   }
 
   @Test
-  public void addDirectoryTest() {
+  public void addDirectoriesTest() {
     HisProcurementDirectoryAddInputData inputData = new HisProcurementDirectoryAddInputData();
     inputData.list = new ArrayList<>();
 
@@ -53,20 +53,20 @@ public class HisProcurementClientTests {
     listItem2.pubonlnId = "100000000000000004";
     inputData.list.add(listItem2);
 
-    HisProcurementDirectoryAddResponse response = hisProcurementClients.getClient().addDirectory(inputData);
+    HisProcurementDirectoryAddResponse response = hisProcurementClients.getClient().addDirectories(inputData);
     Assertions.assertNotNull(response.dataList);
     Assertions.assertEquals(2, response.dataList.size());
   }
 
   @Test
-  public void listUsedDirectoryTest() {
+  public void listUsedDirectoriesTest() {
     HisProcurementDirectoryUsedListInputData inputData = new HisProcurementDirectoryUsedListInputData();
     inputData.mcsCode = "C02064106501000100550000003";
     inputData.hospListId = "1554991252811169793";
     inputData.current = 1;
     inputData.size = 10;
 
-    HisProcurementDirectoryUsedListResponse response = hisProcurementClients.getClient().listUsedDirectory(inputData);
+    HisProcurementDirectoryUsedListResponse response = hisProcurementClients.getClient().listUsedDirectories(inputData);
     Assertions.assertNotNull(response.dataList);
     Assertions.assertEquals(1, response.currentPageNumber);
   }
@@ -141,17 +141,17 @@ public class HisProcurementClientTests {
   }
 
   @Test
-  public void listPurchaseOrderTest() {
+  public void listOrdersTest() {
     HisProcurementClient client = hisProcurementClients.getClient();
     HisProcurementConfig config = client.getHisProcurementConfig();
 
-    HisProcurementPurchaseOrderListInputData inputData = new HisProcurementPurchaseOrderListInputData();
+    HisProcurementOrderListInputData inputData = new HisProcurementOrderListInputData();
     inputData.medinsCode = config.getAccount();
     inputData.ordId = "1555104313891008514";
     inputData.current = 1;
     inputData.size = 10;
 
-    HisProcurementPurchaseOrderListResponse response = client.listPurchaseOrder(inputData);
+    HisProcurementOrderListResponse response = client.listOrders(inputData);
     Assertions.assertNotNull(response.dataList);
     Assertions.assertEquals(1, response.currentPageNumber);
   }
@@ -187,7 +187,7 @@ public class HisProcurementClientTests {
   }
 
   @Test
-  public void listReturnTest() {
+  public void listReturnsTest() {
     HisProcurementClient client = hisProcurementClients.getClient();
     HisProcurementConfig config = client.getHisProcurementConfig();
 
@@ -199,13 +199,13 @@ public class HisProcurementClientTests {
     inputData.current = 1;
     inputData.size = 10;
 
-    HisProcurementReturnListResponse response = client.listReturn(inputData);
+    HisProcurementReturnListResponse response = client.listReturns(inputData);
     Assertions.assertNotNull(response.dataList);
     Assertions.assertEquals(1, response.currentPageNumber);
   }
 
   @Test
-  public void listProductDeliveryEnterpriseTest() {
+  public void listProductDeliveryEnterprisesTest() {
     HisProcurementClient client = hisProcurementClients.getClient();
     HisProcurementConfig config = client.getHisProcurementConfig();
 
@@ -215,13 +215,13 @@ public class HisProcurementClientTests {
     inputData.current = 1;
     inputData.size = 10;
 
-    HisProcurementProductDeliveryEnterpriseListResponse response = client.listProductDeliveryEnterprise(inputData);
+    HisProcurementProductDeliveryEnterpriseListResponse response = client.listProductDeliveryEnterprises(inputData);
     Assertions.assertNotNull(response.dataList);
     Assertions.assertEquals(inputData.current, response.currentPageNumber);
   }
 
   @Test
-  public void setProductDeliveryEnterpriseTest() {
+  public void setProductDeliveryEnterprisesTest() {
     HisProcurementClient client = hisProcurementClients.getClient();
     HisProcurementConfig config = client.getHisProcurementConfig();
 
@@ -235,7 +235,7 @@ public class HisProcurementClientTests {
     listItem1.delvEntpName = "配送测试企业";
     inputData.list.add(listItem1);
 
-    HisProcurementProductDeliveryEnterpriseSetResponse response = client.setProductDeliveryEnterprise(inputData);
+    HisProcurementProductDeliveryEnterpriseSetResponse response = client.setProductDeliveryEnterprises(inputData);
     Assertions.assertNotNull(response.dataList);
     Assertions.assertEquals(1, response.dataList.size());
     Assertions.assertEquals(listItem1.hospListId, response.dataList.iterator().next().hospListId);
@@ -256,7 +256,7 @@ public class HisProcurementClientTests {
   }
 
   @Test
-  public void addStatementDetailTest() {
+  public void addStatementDetailsTest() {
     HisProcurementClient client = hisProcurementClients.getClient();
     HisProcurementConfig config = client.getHisProcurementConfig();
 
@@ -275,7 +275,7 @@ public class HisProcurementClientTests {
     listItem2.stogTag = "1";
     inputData.list.add(listItem2);
 
-    HisProcurementStatementDetailAddResponse response = client.addStatementDetail(inputData);
+    HisProcurementStatementDetailAddResponse response = client.addStatementDetails(inputData);
     Assertions.assertNotNull(response.dataList);
     Assertions.assertEquals(2, response.dataList.size());
     Assertions.assertTrue(response.dataList.contains(listItem1.payyDetlId));
@@ -310,7 +310,7 @@ public class HisProcurementClientTests {
   }
 
   @Test
-  public void listStorehouseTest() {
+  public void listStorehousesTest() {
     HisProcurementClient client = hisProcurementClients.getClient();
     HisProcurementConfig config = client.getHisProcurementConfig();
 
@@ -319,7 +319,7 @@ public class HisProcurementClientTests {
     inputData.current = 1;
     inputData.size = 10;
 
-    HisProcurementStorehouseListResponse response = client.listStorehouse(inputData);
+    HisProcurementStorehouseListResponse response = client.listStorehouses(inputData);
     Assertions.assertNotNull(response.dataList);
     Assertions.assertEquals(1, response.currentPageNumber);
   }

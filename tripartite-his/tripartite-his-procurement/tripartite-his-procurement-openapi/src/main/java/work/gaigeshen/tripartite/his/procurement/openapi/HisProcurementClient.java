@@ -27,7 +27,7 @@ public interface HisProcurementClient {
    * @return 响应结果不为空
    * @throws HisProcurementClientException 执行请求或者执行业务发生异常
    */
-  default HisProcurementDirectoryAddResponse addDirectory(HisProcurementDirectoryAddInputData inputData)
+  default HisProcurementDirectoryAddResponse addDirectories(HisProcurementDirectoryAddInputData inputData)
           throws HisProcurementClientException {
     return execute(new DefaultHisProcurementParameters("ZJ9701", inputData), HisProcurementDirectoryAddResponse.class,
             getHisProcurementConfig().getServiceUri());
@@ -40,7 +40,7 @@ public interface HisProcurementClient {
    * @return 响应结果不为空
    * @throws HisProcurementClientException 执行请求或者执行业务发生异常
    */
-  default HisProcurementDirectoryListResponse listDirectory(HisProcurementDirectoryListInputData inputData)
+  default HisProcurementDirectoryListResponse listDirectories(HisProcurementDirectoryListInputData inputData)
           throws HisProcurementClientException {
     return execute(new DefaultHisProcurementParameters("ZJ9700", inputData), HisProcurementDirectoryListResponse.class,
             getHisProcurementConfig().getServiceUri());
@@ -53,7 +53,7 @@ public interface HisProcurementClient {
    * @return 响应结果不为空
    * @throws HisProcurementClientException 执行请求或者执行业务发生异常
    */
-  default HisProcurementDirectoryUsedListResponse listUsedDirectory(HisProcurementDirectoryUsedListInputData inputData)
+  default HisProcurementDirectoryUsedListResponse listUsedDirectories(HisProcurementDirectoryUsedListInputData inputData)
           throws HisProcurementClientException {
     return execute(new DefaultHisProcurementParameters("ZJ9702", inputData), HisProcurementDirectoryUsedListResponse.class,
             getHisProcurementConfig().getServiceUri());
@@ -99,20 +99,20 @@ public interface HisProcurementClient {
   }
 
   /**
-   * 查询采购订单
+   * 获取订单明细
    *
    * @param inputData 请求参数数据部分不能为空
    * @return 响应结果不为空
    * @throws HisProcurementClientException 执行请求或者执行业务发生异常
    */
-  default HisProcurementPurchaseOrderListResponse listPurchaseOrder(HisProcurementPurchaseOrderListInputData inputData)
+  default HisProcurementOrderListResponse listOrders(HisProcurementOrderListInputData inputData)
           throws HisProcurementClientException {
-    return execute(new DefaultHisProcurementParameters("ZJ9708", inputData), HisProcurementPurchaseOrderListResponse.class,
+    return execute(new DefaultHisProcurementParameters("ZJ9708", inputData), HisProcurementOrderListResponse.class,
             getHisProcurementConfig().getServiceUri());
   }
 
   /**
-   * 医疗机构收获
+   * 医疗机构收货
    *
    * @param inputData 请求参数数据部分不能为空
    * @return 响应结果不为空
@@ -144,7 +144,7 @@ public interface HisProcurementClient {
    * @return 响应结果不为空
    * @throws HisProcurementClientException 响应结果不为空
    */
-  default HisProcurementReturnListResponse listReturn(HisProcurementReturnListInputData inputData)
+  default HisProcurementReturnListResponse listReturns(HisProcurementReturnListInputData inputData)
           throws HisProcurementClientException {
     return execute(new DefaultHisProcurementParameters("ZJ9711", inputData), HisProcurementReturnListResponse.class,
             getHisProcurementConfig().getServiceUri());
@@ -157,7 +157,7 @@ public interface HisProcurementClient {
    * @return 响应结果不为空
    * @throws HisProcurementClientException 执行请求或者执行业务发生异常
    */
-  default HisProcurementProductDeliveryEnterpriseListResponse listProductDeliveryEnterprise(
+  default HisProcurementProductDeliveryEnterpriseListResponse listProductDeliveryEnterprises(
           HisProcurementProductDeliveryEnterpriseListInputData inputData) throws HisProcurementClientException {
     return execute(new DefaultHisProcurementParameters("ZJ9713", inputData),
             HisProcurementProductDeliveryEnterpriseListResponse.class, getHisProcurementConfig().getServiceUri());
@@ -170,7 +170,7 @@ public interface HisProcurementClient {
    * @return 响应结果不为空
    * @throws HisProcurementClientException 执行请求或者执行业务发生异常
    */
-  default HisProcurementProductDeliveryEnterpriseSetResponse setProductDeliveryEnterprise(
+  default HisProcurementProductDeliveryEnterpriseSetResponse setProductDeliveryEnterprises(
           HisProcurementProductDeliveryEnterpriseSetInputData inputData) throws HisProcurementClientException {
     return execute(new DefaultHisProcurementParameters("ZJ9714", inputData),
             HisProcurementProductDeliveryEnterpriseSetResponse.class, getHisProcurementConfig().getServiceUri());
@@ -196,7 +196,7 @@ public interface HisProcurementClient {
    * @return 响应结果不为空
    * @throws HisProcurementClientException 执行请求或者执行业务发生异常
    */
-  default HisProcurementStatementDetailAddResponse addStatementDetail(HisProcurementStatementDetailAddInputData inputData)
+  default HisProcurementStatementDetailAddResponse addStatementDetails(HisProcurementStatementDetailAddInputData inputData)
           throws HisProcurementClientException {
     return execute(new DefaultHisProcurementParameters("ZJ9717", inputData), HisProcurementStatementDetailAddResponse.class,
             getHisProcurementConfig().getServiceUri());
@@ -235,7 +235,7 @@ public interface HisProcurementClient {
    * @return 响应结果不为空
    * @throws HisProcurementClientException 执行请求或者执行业务发生异常
    */
-  default HisProcurementStorehouseListResponse listStorehouse(HisProcurementStorehouseListInputData inputData)
+  default HisProcurementStorehouseListResponse listStorehouses(HisProcurementStorehouseListInputData inputData)
           throws HisProcurementClientException {
     return execute(new DefaultHisProcurementParameters("ZJ9604", inputData), HisProcurementStorehouseListResponse.class,
             getHisProcurementConfig().getServiceUri());
