@@ -4,6 +4,7 @@ import work.gaigeshen.tripartite.his.procurement.openapi.config.HisProcurementCo
 
 import java.util.Objects;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 /**
  *
@@ -29,6 +30,13 @@ public interface HisProcurementClients {
   HisProcurementClient getClient(Predicate<HisProcurementConfig> predicate) throws HisProcurementClientNotFoundException;
 
   HisProcurementClient getClient() throws HisProcurementClientNotFoundException;
+
+  default HisProcurementClient getClientOrCreate(Supplier<HisProcurementConfig> configSupplier) {
+    if (Objects.isNull(configSupplier)) {
+      throw new IllegalArgumentException("config supplier cannot be null");
+    }
+    return getClientOrCreate(configSupplier.get());
+  }
 
   HisProcurementClient getClientOrCreate(HisProcurementConfig config);
 }
