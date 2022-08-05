@@ -1,7 +1,6 @@
 package work.gaigeshen.tripartite.his.procurement.openapi;
 
 import org.apache.commons.lang3.ObjectUtils;
-import org.apache.commons.lang3.StringUtils;
 import work.gaigeshen.tripartite.core.interceptor.InterceptingException;
 import work.gaigeshen.tripartite.his.procurement.openapi.accesstoken.HisProcurementAccessToken;
 import work.gaigeshen.tripartite.his.procurement.openapi.accesstoken.HisProcurementAccessTokenManager;
@@ -33,9 +32,6 @@ public class HisProcurementClientAccessTokenInterceptor extends HisProcurementCl
 
   @Override
   protected void updateRequest(Request request) throws InterceptingException {
-    if (StringUtils.contains(request.url(), "accessToken")) {
-      return;
-    }
     HisProcurementConfig config = hisProcurementClient.getHisProcurementConfig();
     HisProcurementAccessToken accessToken = hisProcurementAccessTokenManager.findAccessToken(config.getAccount());
     if (Objects.nonNull(accessToken)) {
