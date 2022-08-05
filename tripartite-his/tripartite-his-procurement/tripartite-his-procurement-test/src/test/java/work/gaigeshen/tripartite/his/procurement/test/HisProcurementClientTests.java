@@ -61,6 +61,8 @@ public class HisProcurementClientTests {
   @Test
   public void listUsedDirectoryTest() {
     HisProcurementDirectoryUsedListInputData inputData = new HisProcurementDirectoryUsedListInputData();
+    inputData.mcsCode = "C02064106501000100550000003";
+    inputData.hospListId = "1554991252811169793";
     inputData.current = 1;
     inputData.size = 10;
 
