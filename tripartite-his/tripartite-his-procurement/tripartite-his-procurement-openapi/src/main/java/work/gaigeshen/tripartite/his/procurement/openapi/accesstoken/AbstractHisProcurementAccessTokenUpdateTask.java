@@ -67,12 +67,12 @@ public abstract class AbstractHisProcurementAccessTokenUpdateTask implements His
     try {
       currentAccessToken = accessTokenStore.findByAccount(account);
     } catch (HisProcurementAccessTokenStoreException e) {
-      handleUpdateFailed(new HisProcurementAccessTokenUpdateException("Could not find current access token for account: "  + account, e)
+      handleUpdateFailed(new HisProcurementAccessTokenUpdateException("could not find current access token: "  + account, e)
               .setCanRetry(true));
       return;
     }
     if (Objects.isNull(currentAccessToken)) {
-      handleUpdateFailed(new HisProcurementAccessTokenUpdateException("No such current access token for account: "  + account));
+      handleUpdateFailed(new HisProcurementAccessTokenUpdateException("current access token not found: "  + account));
       return;
     }
     HisProcurementAccessToken accessToken;
@@ -86,14 +86,15 @@ public abstract class AbstractHisProcurementAccessTokenUpdateTask implements His
       return;
     }
     if (!HisProcurementAccessTokenHelper.isValid(accessToken)) {
-      handleUpdateFailed(new HisProcurementAccessTokenUpdateException("Could not save invalid access token to store for account: " + account)
-              .setCurrentAccessToken(currentAccessToken));
+      handleUpdateFailed(new HisProcurementAccessTokenUpdateException("could not save invalid access token to store: " + account)
+              .setCurrentAccessToken(currentAccessToken)
+              .setCanRetry(true));
       return;
     }
     try {
       accessTokenStore.save(accessToken);
     } catch (HisProcurementAccessTokenStoreException e) {
-      handleUpdateFailed(new HisProcurementAccessTokenUpdateException("Could not save access token to store for account: " + account)
+      handleUpdateFailed(new HisProcurementAccessTokenUpdateException("could not save access token to store: " + account)
               .setCurrentAccessToken(currentAccessToken)
               .setCanRetry(true));
       return;
