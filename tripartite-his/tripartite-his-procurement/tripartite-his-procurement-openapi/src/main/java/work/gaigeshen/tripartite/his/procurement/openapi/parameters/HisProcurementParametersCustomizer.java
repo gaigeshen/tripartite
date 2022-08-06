@@ -3,6 +3,7 @@ package work.gaigeshen.tripartite.his.procurement.openapi.parameters;
 import work.gaigeshen.tripartite.core.parameter.Parameters;
 import work.gaigeshen.tripartite.core.parameter.converter.ParametersCustomizer;
 import work.gaigeshen.tripartite.core.parameter.converter.ParametersCustomizingException;
+import work.gaigeshen.tripartite.his.procurement.openapi.config.HisProcurementConfig;
 
 /**
  * @author gaigeshen
@@ -21,6 +22,6 @@ public class HisProcurementParametersCustomizer implements ParametersCustomizer 
 
   @Override
   public boolean supports(Object config) {
-    return false;
+    return config instanceof HisProcurementConfig;
   }
 }

@@ -1,7 +1,5 @@
 package work.gaigeshen.tripartite.his.procurement.openapi.response;
 
-import work.gaigeshen.tripartite.his.procurement.openapi.response.AbstractHisProcurementResponse;
-
 /**
  *
  * @author gaigeshen

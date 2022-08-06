@@ -16,15 +16,11 @@ import java.util.Objects;
 )
 public class DefaultHisProcurementParameters implements HisProcurementParameters {
 
-  @Parameter(
-          name = "infno"
-  )
+  @Parameter(name = "infno")
   private final String interfaceCode;
 
-  @Parameter(
-          name = "input"
-  )
-  private final Input input;
+  @Parameter(name = "input")
+  private final InputParameter inputParameter;
 
   public DefaultHisProcurementParameters(String interfaceCode, HisProcurementInputData inputData) {
     if (Objects.isNull(interfaceCode)) {
@@ -34,31 +30,32 @@ public class DefaultHisProcurementParameters implements HisProcurementParameters
       throw new IllegalArgumentException("inputData cannot be null");
     }
     this.interfaceCode = interfaceCode;
-    this.input = new Input(inputData);
+    this.inputParameter = new InputParameter(inputData);
   }
 
   public String getInterfaceCode() {
     return interfaceCode;
   }
 
-  public Input getInput() {
-    return input;
+  public InputParameter getInputParameter() {
+    return inputParameter;
   }
 
   /**
    *
    * @author gaigeshen
    */
-  public static class Input {
+  public static class InputParameter {
 
-    private final HisProcurementInputData data;
+    @Parameter(name = "data")
+    private final HisProcurementInputData inputData;
 
-    public Input(HisProcurementInputData data) {
-      this.data = data;
+    public InputParameter(HisProcurementInputData inputData) {
+      this.inputData = inputData;
     }
 
-    public HisProcurementInputData getData() {
-      return data;
+    public HisProcurementInputData getInputData() {
+      return inputData;
     }
   }
 }
