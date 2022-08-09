@@ -112,6 +112,42 @@ public class HisProcurementClientTests {
   }
 
   @Test
+  public void addPurchaseOrderDetailsTest() {
+    HisProcurementClient client = hisProcurementClients.getClient();
+    HisProcurementConfig config = client.getHisProcurementConfig();
+
+    HisProcurementPurchaseOrderDetailAddInputData inputData = new HisProcurementPurchaseOrderDetailAddInputData();
+    inputData.medinsCode = config.getAccount();
+    inputData.purcCode = "";
+    inputData.chkStas = -1;
+    inputData.addorDelStas = 1;
+    inputData.list = new ArrayList<>();
+
+    HisProcurementPurchaseOrderDetailAddInputData.ListItem listItem1 = new HisProcurementPurchaseOrderDetailAddInputData.ListItem();
+    listItem1.hospListId = "1554991252811169793";
+    listItem1.delventpCode = "PS123456789";
+    listItem1.delventpName = "配送测试企业";
+    listItem1.purcCnt = new BigDecimal("1");
+    listItem1.planDetlMemo = "测试备注1";
+    listItem1.addrId = "1554719062308093954";
+    listItem1.hospPurcDetlId = "20220804003";
+    inputData.list.add(listItem1);
+
+    HisProcurementPurchaseOrderDetailAddInputData.ListItem listItem2 = new HisProcurementPurchaseOrderDetailAddInputData.ListItem();
+    listItem2.hospListId = "1554991252689534977";
+    listItem2.delventpCode = "PS123456789";
+    listItem2.delventpName = "配送测试企业";
+    listItem2.purcCnt = new BigDecimal("1");
+    listItem2.planDetlMemo = "测试备注2";
+    listItem2.addrId = "1554719062308093954";
+    listItem2.hospPurcDetlId = "20220804004";
+    inputData.list.add(listItem2);
+
+    HisProcurementPurchaseOrderDetailAddResponse response = client.addPurchaseOrderDetails(inputData);
+    Assertions.assertNotNull(response.dataList);
+    Assertions.assertEquals(2, response.dataList.size());
+  }
+  @Test
   public void sendPurchaseOrderTest() {
     HisProcurementClient client = hisProcurementClients.getClient();
     HisProcurementConfig config = client.getHisProcurementConfig();

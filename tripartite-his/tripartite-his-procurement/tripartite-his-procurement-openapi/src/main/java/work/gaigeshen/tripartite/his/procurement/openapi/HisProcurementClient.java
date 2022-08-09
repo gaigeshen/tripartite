@@ -73,6 +73,19 @@ public interface HisProcurementClient {
   }
 
   /**
+   * 添加采购订单明细
+   *
+   * @param inputData 请求参数数据部分不能为空
+   * @return 响应结果不为空
+   * @throws HisProcurementClientException 执行请求或者执行业务发生异常
+   */
+  default HisProcurementPurchaseOrderDetailAddResponse addPurchaseOrderDetails(HisProcurementPurchaseOrderDetailAddInputData inputData)
+          throws HisProcurementClientException {
+    return execute(new DefaultHisProcurementParameters("ZJ9705", inputData), HisProcurementPurchaseOrderDetailAddResponse.class,
+            getHisProcurementConfig().getServiceUri());
+  }
+
+  /**
    * 保存或发送采购订单
    *
    * @param inputData 请求参数数据部分不能为空

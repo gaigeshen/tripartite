@@ -6,7 +6,7 @@ import java.util.Collection;
 /**
  * @author gaigeshen
  */
-public class HisProcurementPurchaseOrderCreateResponse extends AbstractHisProcurementResponse {
+public class HisProcurementPurchaseOrderDetailAddResponse extends AbstractHisProcurementResponse {
 
   public String PurcCode;
 
