@@ -1,6 +1,5 @@
 package work.gaigeshen.tripartite.his.procurement.openapi;
 
-import org.apache.commons.lang3.ObjectUtils;
 import work.gaigeshen.tripartite.core.interceptor.InterceptingException;
 import work.gaigeshen.tripartite.his.procurement.openapi.accesstoken.HisProcurementAccessToken;
 import work.gaigeshen.tripartite.his.procurement.openapi.accesstoken.HisProcurementAccessTokenHelper;
@@ -24,9 +23,7 @@ public class HisProcurementClientAccessTokenInterceptor extends HisProcurementCl
 
   public HisProcurementClientAccessTokenInterceptor(HisProcurementClient client,
                                                     HisProcurementAccessTokenManager accessTokenManager) {
-    if (!ObjectUtils.allNotNull(client, accessTokenManager)) {
-      throw new IllegalArgumentException("his procurement client and accessTokenManager cannot be null");
-    }
+    super(client.getHisProcurementConfig());
     this.hisProcurementClient = client;
     this.hisProcurementAccessTokenManager = accessTokenManager;
   }

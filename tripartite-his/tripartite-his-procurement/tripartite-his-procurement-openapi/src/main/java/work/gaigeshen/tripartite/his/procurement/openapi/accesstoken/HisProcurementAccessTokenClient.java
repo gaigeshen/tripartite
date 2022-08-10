@@ -19,7 +19,7 @@ public class HisProcurementAccessTokenClient extends DefaultHisProcurementClient
 
   public static HisProcurementAccessTokenClient create(HisProcurementConfig config) {
     RestTemplateWebExecutor executor = RestTemplateWebExecutor.create();
-    executor.setInterceptors(HisProcurementClientResponseInterceptor.INSTANCE);
+    executor.setInterceptors(new HisProcurementClientResponseInterceptor(config));
     executor.setParametersConverter(new ParametersMetadataParametersConverter(config));
     return new HisProcurementAccessTokenClient(config, executor);
   }
