@@ -4,7 +4,7 @@ import work.gaigeshen.tripartite.core.RestTemplateWebExecutor;
 import work.gaigeshen.tripartite.core.WebExecutor;
 import work.gaigeshen.tripartite.core.parameter.converter.ParametersMetadataParametersConverter;
 import work.gaigeshen.tripartite.his.procurement.openapi.DefaultHisProcurementClient;
-import work.gaigeshen.tripartite.his.procurement.openapi.HisProcurementClientResponseInterceptor;
+import work.gaigeshen.tripartite.his.procurement.openapi.HisProcurementClientRequestResponseInterceptor;
 import work.gaigeshen.tripartite.his.procurement.openapi.config.HisProcurementConfig;
 
 /**
@@ -19,7 +19,7 @@ public class HisProcurementAccessTokenClient extends DefaultHisProcurementClient
 
   public static HisProcurementAccessTokenClient create(HisProcurementConfig config) {
     RestTemplateWebExecutor executor = RestTemplateWebExecutor.create();
-    executor.setInterceptors(new HisProcurementClientResponseInterceptor(config));
+    executor.setInterceptors(new HisProcurementClientRequestResponseInterceptor(config));
     executor.setParametersConverter(new ParametersMetadataParametersConverter(config));
     return new HisProcurementAccessTokenClient(config, executor);
   }

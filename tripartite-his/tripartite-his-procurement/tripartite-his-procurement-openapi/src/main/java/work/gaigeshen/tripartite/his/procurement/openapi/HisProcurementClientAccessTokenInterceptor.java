@@ -15,7 +15,7 @@ import java.util.Objects;
  *
  * @author gaigeshen
  */
-public class HisProcurementClientAccessTokenInterceptor extends HisProcurementClientResponseInterceptor {
+public class HisProcurementClientAccessTokenInterceptor extends HisProcurementClientRequestResponseInterceptor {
 
   private final HisProcurementClient hisProcurementClient;
 

@@ -21,7 +21,7 @@ import java.util.Objects;
  *
  * @author gaigeshen
  */
-public class HisProcurementClientResponseInterceptor extends AbstractInterceptor {
+public class HisProcurementClientRequestResponseInterceptor extends AbstractInterceptor {
 
   private final HisProcurementConfig hisProcurementConfig;
 
@@ -29,7 +29,7 @@ public class HisProcurementClientResponseInterceptor extends AbstractInterceptor
     Security.addProvider(new BouncyCastleProvider());
   }
 
-  public HisProcurementClientResponseInterceptor(HisProcurementConfig hisProcurementConfig) {
+  public HisProcurementClientRequestResponseInterceptor(HisProcurementConfig hisProcurementConfig) {
     if (Objects.isNull(hisProcurementConfig)) {
       throw new IllegalArgumentException("his procurement config cannot be null");
     }
