@@ -22,7 +22,7 @@ public abstract class AbstractNotifyParametersFilter<C extends NotifyParameters>
   }
 
   protected AbstractNotifyParametersFilter() {
-    super(new AbstractNotifyContentReceiver<>() {});
+    super(new AbstractNotifyContentReceiver<C>() {});
   }
 
   @Override
