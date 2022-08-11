@@ -30,6 +30,7 @@ public class HisProcurementClientAccessTokenInterceptor extends HisProcurementCl
 
   @Override
   protected void updateRequest(Request request) throws InterceptingException {
+    super.updateRequest(request);
     HisProcurementConfig config = hisProcurementClient.getHisProcurementConfig();
     HisProcurementAccessToken accessToken = hisProcurementAccessTokenManager.findAccessToken(config.getAccount());
     if (Objects.nonNull(accessToken) && !HisProcurementAccessTokenHelper.isExpired(accessToken)) {
