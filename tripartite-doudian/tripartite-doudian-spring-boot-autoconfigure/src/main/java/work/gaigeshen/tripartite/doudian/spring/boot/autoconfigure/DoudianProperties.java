@@ -1,7 +1,6 @@
 package work.gaigeshen.tripartite.doudian.spring.boot.autoconfigure;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.jdbc.DataSourceInitializationMode;
 
 /**
  * 抖店客户端配置
@@ -79,7 +78,7 @@ public class DoudianProperties {
     /**
      * 数据源初始化模式，默认只在嵌入式的数据源进行初始化
      */
-    private DataSourceInitializationMode initializeSchema = DataSourceInitializationMode.EMBEDDED;
+    // private DataSourceInitializationMode initializeSchema = DataSourceInitializationMode.EMBEDDED;
 
     public String getSchema() {
       return schema;
@@ -89,12 +88,12 @@ public class DoudianProperties {
       this.schema = schema;
     }
 
-    public DataSourceInitializationMode getInitializeSchema() {
-      return initializeSchema;
-    }
-
-    public void setInitializeSchema(DataSourceInitializationMode initializeSchema) {
-      this.initializeSchema = initializeSchema;
-    }
+    // public DataSourceInitializationMode getInitializeSchema() {
+    //   return initializeSchema;
+    // }
+    //
+    // public void setInitializeSchema(DataSourceInitializationMode initializeSchema) {
+    //   this.initializeSchema = initializeSchema;
+    // }
   }
 }

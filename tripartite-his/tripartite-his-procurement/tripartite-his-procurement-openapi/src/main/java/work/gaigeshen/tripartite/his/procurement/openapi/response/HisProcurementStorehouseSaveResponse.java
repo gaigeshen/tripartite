@@ -5,5 +5,13 @@ package work.gaigeshen.tripartite.his.procurement.openapi.response;
  */
 public class HisProcurementStorehouseSaveResponse extends AbstractHisProcurementResponse {
 
-  public String addrId;
+  private String addrId;
+
+  public String getAddrId() {
+    return addrId;
+  }
+
+  public void setAddrId(String addrId) {
+    this.addrId = addrId;
+  }
 }

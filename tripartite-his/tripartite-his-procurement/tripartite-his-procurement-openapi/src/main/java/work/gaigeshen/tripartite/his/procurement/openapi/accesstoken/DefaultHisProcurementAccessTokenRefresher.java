@@ -5,7 +5,6 @@ import work.gaigeshen.tripartite.his.procurement.openapi.config.HisProcurementCo
 import work.gaigeshen.tripartite.his.procurement.openapi.parameters.HisProcurementAccessTokenParameters;
 import work.gaigeshen.tripartite.his.procurement.openapi.response.HisProcurementAccessTokenResponse;
 
-import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -34,9 +33,8 @@ public class DefaultHisProcurementAccessTokenRefresher implements HisProcurement
     }
     HisProcurementConfig config = client.getHisProcurementConfig();
 
-    HisProcurementAccessTokenParameters parameters = new HisProcurementAccessTokenParameters();
-    parameters.appCode = config.getAppCode();
-    parameters.authCode = config.getAuthCode();
+    HisProcurementAccessTokenParameters parameters = new HisProcurementAccessTokenParameters(
+            config.getAppCode(), config.getAuthCode());
 
     HisProcurementAccessTokenResponse response;
     try {
@@ -45,10 +43,7 @@ public class DefaultHisProcurementAccessTokenRefresher implements HisProcurement
       throw new HisProcurementAccessTokenRefreshException("could not refresh access token", e)
               .setCurrentAccessToken(oldAccessToken).setCanRetry(true);
     }
-    return HisProcurementAccessToken.builder()
-            .setAccessToken(response.accessToken).setAccount(config.getAccount())
-            .setExpiresIn(1800).setExpiresTimestamp(System.currentTimeMillis() / 1000 + 1800)
-            .setUpdateTime(new Date()).build();
+    return HisProcurementAccessTokenHelper.createAccessToken(config, response.getAccessToken());
   }
 
   /**

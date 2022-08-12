@@ -47,7 +47,7 @@ public class HisProcurementClientRequestResponseInterceptor extends AbstractInte
       mac.update((timestamp + "\n").getBytes(StandardCharsets.UTF_8));
       mac.update((timestamp + "\n" + bodyContent).getBytes(StandardCharsets.UTF_8));
       byte[] digest = mac.doFinal();
-      String digestResult = timestamp + ":" + Hex.toHexString(digest).toLowerCase();
+      String digestResult = Hex.toHexString(digest).toLowerCase();
       Headers headers = request.headers();
       headers.putValue("x-ca-key", hisProcurementConfig.getAccount());
       headers.putValue("x-ca-signature", timestamp + ":" + digestResult);

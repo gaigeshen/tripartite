@@ -7,38 +7,166 @@ import java.util.Collection;
  */
 public class HisProcurementStorehouseListResponse extends AbstractHisProcurementResponse {
 
-  public Integer currentPageNumber;
+  private Integer currentPageNumber;
 
-  public Integer totalPageCount;
+  private Integer totalPageCount;
 
-  public Integer totalRecordCount;
+  private Integer totalRecordCount;
 
-  public Collection<ListItem> dataList;
+  private Collection<ListItem> dataList;
+
+  public Integer getCurrentPageNumber() {
+    return currentPageNumber;
+  }
+
+  public void setCurrentPageNumber(Integer currentPageNumber) {
+    this.currentPageNumber = currentPageNumber;
+  }
+
+  public Integer getTotalPageCount() {
+    return totalPageCount;
+  }
+
+  public void setTotalPageCount(Integer totalPageCount) {
+    this.totalPageCount = totalPageCount;
+  }
+
+  public Integer getTotalRecordCount() {
+    return totalRecordCount;
+  }
+
+  public void setTotalRecordCount(Integer totalRecordCount) {
+    this.totalRecordCount = totalRecordCount;
+  }
+
+  public Collection<ListItem> getDataList() {
+    return dataList;
+  }
+
+  public void setDataList(Collection<ListItem> dataList) {
+    this.dataList = dataList;
+  }
 
   public static class ListItem {
 
-    public String conerName;
+    private String conerName;
 
-    public String entpCode;
+    private String entpCode;
 
-    public String mcsFlag;
+    private String mcsFlag;
 
-    public String defFlag;
+    private String defFlag;
 
-    public String prov;
+    private String prov;
 
-    public String city;
+    private String city;
 
-    public String coty;
+    private String coty;
 
-    public String invottl;
+    private String invottl;
 
-    public String addrId;
+    private String addrId;
 
-    public String addr;
+    private String addr;
 
-    public String conerTel;
+    private String conerTel;
 
-    public String stroomName;
+    private String stroomName;
+
+    public String getConerName() {
+      return conerName;
+    }
+
+    public void setConerName(String conerName) {
+      this.conerName = conerName;
+    }
+
+    public String getEntpCode() {
+      return entpCode;
+    }
+
+    public void setEntpCode(String entpCode) {
+      this.entpCode = entpCode;
+    }
+
+    public String getMcsFlag() {
+      return mcsFlag;
+    }
+
+    public void setMcsFlag(String mcsFlag) {
+      this.mcsFlag = mcsFlag;
+    }
+
+    public String getDefFlag() {
+      return defFlag;
+    }
+
+    public void setDefFlag(String defFlag) {
+      this.defFlag = defFlag;
+    }
+
+    public String getProv() {
+      return prov;
+    }
+
+    public void setProv(String prov) {
+      this.prov = prov;
+    }
+
+    public String getCity() {
+      return city;
+    }
+
+    public void setCity(String city) {
+      this.city = city;
+    }
+
+    public String getCoty() {
+      return coty;
+    }
+
+    public void setCoty(String coty) {
+      this.coty = coty;
+    }
+
+    public String getInvottl() {
+      return invottl;
+    }
+
+    public void setInvottl(String invottl) {
+      this.invottl = invottl;
+    }
+
+    public String getAddrId() {
+      return addrId;
+    }
+
+    public void setAddrId(String addrId) {
+      this.addrId = addrId;
+    }
+
+    public String getAddr() {
+      return addr;
+    }
+
+    public void setAddr(String addr) {
+      this.addr = addr;
+    }
+
+    public String getConerTel() {
+      return conerTel;
+    }
+
+    public void setConerTel(String conerTel) {
+      this.conerTel = conerTel;
+    }
+
+    public String getStroomName() {
+      return stroomName;
+    }
+
+    public void setStroomName(String stroomName) {
+      this.stroomName = stroomName;
+    }
   }
 }

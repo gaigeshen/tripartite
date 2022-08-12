@@ -8,13 +8,53 @@ import work.gaigeshen.tripartite.his.procurement.openapi.parameters.HisProcureme
  */
 public class HisProcurementOrderListInputData implements HisProcurementInputData {
 
-  public String medinsCode;
+  private String medinsCode;
 
-  public String ordId;
+  private String ordId;
 
-  public String ordDetlId;
+  private String ordDetlId;
 
-  public Integer current;
+  private Integer current;
 
-  public Integer size;
+  private Integer size;
+
+  public String getMedinsCode() {
+    return medinsCode;
+  }
+
+  public void setMedinsCode(String medinsCode) {
+    this.medinsCode = medinsCode;
+  }
+
+  public String getOrdId() {
+    return ordId;
+  }
+
+  public void setOrdId(String ordId) {
+    this.ordId = ordId;
+  }
+
+  public String getOrdDetlId() {
+    return ordDetlId;
+  }
+
+  public void setOrdDetlId(String ordDetlId) {
+    this.ordDetlId = ordDetlId;
+  }
+
+  public Integer getCurrent() {
+    return current;
+  }
+
+  public void setCurrent(Integer current) {
+    this.current = current;
+  }
+
+  public Integer getSize() {
+    return size;
+  }
+
+  public void setSize(Integer size) {
+    this.size = size;
+  }
 }

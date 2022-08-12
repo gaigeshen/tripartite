@@ -41,9 +41,9 @@ public class AlipayAutoConfiguration {
   }
 
   @Bean
-  public FilterRegistrationBean<AlipayNotifyParametersFilter> alipayNotifyParametersFilter(AlipayNotifyParametersReceiver receiver) {
+  public FilterRegistrationBean alipayNotifyParametersFilter(AlipayNotifyParametersReceiver receiver) {
     AlipayNotifyParametersFilter filter = new AlipayNotifyParametersFilter(receiver);
-    FilterRegistrationBean<AlipayNotifyParametersFilter> filterBean = new FilterRegistrationBean<>();
+    FilterRegistrationBean filterBean = new FilterRegistrationBean();
     filterBean.setUrlPatterns(Collections.singletonList("/alipay-notify-receiver"));
     filterBean.setFilter(filter);
     return filterBean;

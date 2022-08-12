@@ -10,11 +10,43 @@ import java.math.BigDecimal;
  */
 public class HisProcurementReturnApplyInputData implements HisProcurementInputData {
 
-  public String medinsCode;
+  private String medinsCode;
 
-  public String shpCode;
+  private String shpCode;
 
-  public BigDecimal retnCnt;
+  private BigDecimal retnCnt;
 
-  public String medinsRetnRea;
+  private String medinsRetnRea;
+
+  public String getMedinsCode() {
+    return medinsCode;
+  }
+
+  public void setMedinsCode(String medinsCode) {
+    this.medinsCode = medinsCode;
+  }
+
+  public String getShpCode() {
+    return shpCode;
+  }
+
+  public void setShpCode(String shpCode) {
+    this.shpCode = shpCode;
+  }
+
+  public BigDecimal getRetnCnt() {
+    return retnCnt;
+  }
+
+  public void setRetnCnt(BigDecimal retnCnt) {
+    this.retnCnt = retnCnt;
+  }
+
+  public String getMedinsRetnRea() {
+    return medinsRetnRea;
+  }
+
+  public void setMedinsRetnRea(String medinsRetnRea) {
+    this.medinsRetnRea = medinsRetnRea;
+  }
 }

@@ -7,10 +7,26 @@ import java.util.Collection;
  */
 public class HisProcurementProductDeliveryEnterpriseSetResponse extends AbstractHisProcurementResponse {
 
-  public Collection<ListItem> dataList;
+  private Collection<ListItem> dataList;
+
+  public Collection<ListItem> getDataList() {
+    return dataList;
+  }
+
+  public void setDataList(Collection<ListItem> dataList) {
+    this.dataList = dataList;
+  }
 
   public static class ListItem {
 
-    public String hospListId;
+    private String hospListId;
+
+    public String getHospListId() {
+      return hospListId;
+    }
+
+    public void setHospListId(String hospListId) {
+      this.hospListId = hospListId;
+    }
   }
 }

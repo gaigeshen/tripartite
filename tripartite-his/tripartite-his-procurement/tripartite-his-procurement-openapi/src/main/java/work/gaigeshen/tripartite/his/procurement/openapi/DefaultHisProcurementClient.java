@@ -75,8 +75,8 @@ public class DefaultHisProcurementClient implements HisProcurementClient {
     }
     if (response instanceof AbstractHisProcurementResponse) {
       AbstractHisProcurementResponse abstractResponse = (AbstractHisProcurementResponse) response;
-      if (!Objects.equals(abstractResponse.returnCode, 0)) {
-        throw new HisProcurementClientException("[ " + abstractResponse.returnCode + " ] " + abstractResponse.returnMsg);
+      if (!Objects.equals(abstractResponse.getReturnCode(), 0)) {
+        throw new HisProcurementClientException("[ " + abstractResponse.getReturnCode() + " ] " + abstractResponse.getReturnMsg());
       }
     }
     return response;

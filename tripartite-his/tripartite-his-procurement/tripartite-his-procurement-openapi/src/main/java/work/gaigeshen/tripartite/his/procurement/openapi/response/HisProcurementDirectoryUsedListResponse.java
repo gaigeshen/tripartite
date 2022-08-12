@@ -8,56 +8,256 @@ import java.util.Collection;
  */
 public class HisProcurementDirectoryUsedListResponse extends AbstractHisProcurementResponse {
 
-  public Collection<ListItem> dataList;
+  private Collection<ListItem> dataList;
 
-  public Integer currentPageNumber;
+  private Integer currentPageNumber;
 
-  public Integer totalPageCount;
+  private Integer totalPageCount;
 
-  public Integer totalRecordCount;
+  private Integer totalRecordCount;
+
+  public Collection<ListItem> getDataList() {
+    return dataList;
+  }
+
+  public void setDataList(Collection<ListItem> dataList) {
+    this.dataList = dataList;
+  }
+
+  public Integer getCurrentPageNumber() {
+    return currentPageNumber;
+  }
+
+  public void setCurrentPageNumber(Integer currentPageNumber) {
+    this.currentPageNumber = currentPageNumber;
+  }
+
+  public Integer getTotalPageCount() {
+    return totalPageCount;
+  }
+
+  public void setTotalPageCount(Integer totalPageCount) {
+    this.totalPageCount = totalPageCount;
+  }
+
+  public Integer getTotalRecordCount() {
+    return totalRecordCount;
+  }
+
+  public void setTotalRecordCount(Integer totalRecordCount) {
+    this.totalRecordCount = totalRecordCount;
+  }
 
   public static class ListItem {
 
-    public String zclassName;
+    private String zclassName;
 
-    public String mcsCode;
+    private String mcsCode;
 
-    public String mcsRegno;
+    private String mcsRegno;
 
-    public String regcert;
+    private String regcert;
 
-    public String minpacuntName;
+    private String minpacuntName;
 
-    public String mcsMol;
+    private String mcsMol;
 
-    public String prxyEntpCode;
+    private String prxyEntpCode;
 
-    public String prxyEntpName;
+    private String prxyEntpName;
 
-    public String mcsSpec;
+    private String mcsSpec;
 
-    public String hospListId;
+    private String hospListId;
 
-    public BigDecimal hospPurcPric;
+    private BigDecimal hospPurcPric;
 
-    public String prodentpCode;
+    private String prodentpCode;
 
-    public String prodentpName;
+    private String prodentpName;
 
-    public String delventpName;
+    private String delventpName;
 
-    public String mcsInfoId;
+    private String mcsInfoId;
 
-    public String pubonlnRsltId;
+    private String pubonlnRsltId;
 
-    public String secondDirectory;
+    private String secondDirectory;
 
-    public String primDirectory;
+    private String primDirectory;
 
-    public String prodName;
+    private String prodName;
 
-    public BigDecimal pubonlnPric;
+    private BigDecimal pubonlnPric;
 
-    public String delventpCode;
+    private String delventpCode;
+
+    public String getZclassName() {
+      return zclassName;
+    }
+
+    public void setZclassName(String zclassName) {
+      this.zclassName = zclassName;
+    }
+
+    public String getMcsCode() {
+      return mcsCode;
+    }
+
+    public void setMcsCode(String mcsCode) {
+      this.mcsCode = mcsCode;
+    }
+
+    public String getMcsRegno() {
+      return mcsRegno;
+    }
+
+    public void setMcsRegno(String mcsRegno) {
+      this.mcsRegno = mcsRegno;
+    }
+
+    public String getRegcert() {
+      return regcert;
+    }
+
+    public void setRegcert(String regcert) {
+      this.regcert = regcert;
+    }
+
+    public String getMinpacuntName() {
+      return minpacuntName;
+    }
+
+    public void setMinpacuntName(String minpacuntName) {
+      this.minpacuntName = minpacuntName;
+    }
+
+    public String getMcsMol() {
+      return mcsMol;
+    }
+
+    public void setMcsMol(String mcsMol) {
+      this.mcsMol = mcsMol;
+    }
+
+    public String getPrxyEntpCode() {
+      return prxyEntpCode;
+    }
+
+    public void setPrxyEntpCode(String prxyEntpCode) {
+      this.prxyEntpCode = prxyEntpCode;
+    }
+
+    public String getPrxyEntpName() {
+      return prxyEntpName;
+    }
+
+    public void setPrxyEntpName(String prxyEntpName) {
+      this.prxyEntpName = prxyEntpName;
+    }
+
+    public String getMcsSpec() {
+      return mcsSpec;
+    }
+
+    public void setMcsSpec(String mcsSpec) {
+      this.mcsSpec = mcsSpec;
+    }
+
+    public String getHospListId() {
+      return hospListId;
+    }
+
+    public void setHospListId(String hospListId) {
+      this.hospListId = hospListId;
+    }
+
+    public BigDecimal getHospPurcPric() {
+      return hospPurcPric;
+    }
+
+    public void setHospPurcPric(BigDecimal hospPurcPric) {
+      this.hospPurcPric = hospPurcPric;
+    }
+
+    public String getProdentpCode() {
+      return prodentpCode;
+    }
+
+    public void setProdentpCode(String prodentpCode) {
+      this.prodentpCode = prodentpCode;
+    }
+
+    public String getProdentpName() {
+      return prodentpName;
+    }
+
+    public void setProdentpName(String prodentpName) {
+      this.prodentpName = prodentpName;
+    }
+
+    public String getDelventpName() {
+      return delventpName;
+    }
+
+    public void setDelventpName(String delventpName) {
+      this.delventpName = delventpName;
+    }
+
+    public String getMcsInfoId() {
+      return mcsInfoId;
+    }
+
+    public void setMcsInfoId(String mcsInfoId) {
+      this.mcsInfoId = mcsInfoId;
+    }
+
+    public String getPubonlnRsltId() {
+      return pubonlnRsltId;
+    }
+
+    public void setPubonlnRsltId(String pubonlnRsltId) {
+      this.pubonlnRsltId = pubonlnRsltId;
+    }
+
+    public String getSecondDirectory() {
+      return secondDirectory;
+    }
+
+    public void setSecondDirectory(String secondDirectory) {
+      this.secondDirectory = secondDirectory;
+    }
+
+    public String getPrimDirectory() {
+      return primDirectory;
+    }
+
+    public void setPrimDirectory(String primDirectory) {
+      this.primDirectory = primDirectory;
+    }
+
+    public String getProdName() {
+      return prodName;
+    }
+
+    public void setProdName(String prodName) {
+      this.prodName = prodName;
+    }
+
+    public BigDecimal getPubonlnPric() {
+      return pubonlnPric;
+    }
+
+    public void setPubonlnPric(BigDecimal pubonlnPric) {
+      this.pubonlnPric = pubonlnPric;
+    }
+
+    public String getDelventpCode() {
+      return delventpCode;
+    }
+
+    public void setDelventpCode(String delventpCode) {
+      this.delventpCode = delventpCode;
+    }
   }
 }

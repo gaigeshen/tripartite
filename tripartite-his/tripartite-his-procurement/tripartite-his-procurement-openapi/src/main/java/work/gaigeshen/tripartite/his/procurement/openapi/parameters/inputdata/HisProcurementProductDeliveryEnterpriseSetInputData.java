@@ -10,16 +10,40 @@ import java.util.Collection;
  */
 public class HisProcurementProductDeliveryEnterpriseSetInputData implements HisProcurementInputData {
 
-  public String medinsCode;
+  private String medinsCode;
 
-  public Collection<ListItem> list;
+  private Collection<ListItem> list;
 
   public static class ListItem {
 
-    public String hospListId;
+    private String hospListId;
 
-    public String delvEntpUscc;
+    private String delvEntpUscc;
 
-    public String delvEntpName;
+    private String delvEntpName;
+
+    public String getHospListId() {
+      return hospListId;
+    }
+
+    public void setHospListId(String hospListId) {
+      this.hospListId = hospListId;
+    }
+
+    public String getDelvEntpUscc() {
+      return delvEntpUscc;
+    }
+
+    public void setDelvEntpUscc(String delvEntpUscc) {
+      this.delvEntpUscc = delvEntpUscc;
+    }
+
+    public String getDelvEntpName() {
+      return delvEntpName;
+    }
+
+    public void setDelvEntpName(String delvEntpName) {
+      this.delvEntpName = delvEntpName;
+    }
   }
 }

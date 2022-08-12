@@ -8,15 +8,63 @@ import work.gaigeshen.tripartite.his.procurement.openapi.parameters.HisProcureme
  */
 public class HisProcurementReturnListInputData implements HisProcurementInputData {
 
-  public String medinsCode;
+  private String medinsCode;
 
-  public String retnCode;
+  private String retnCode;
 
-  public String strUpTime;
+  private String strUpTime;
 
-  public String endUpTime;
+  private String endUpTime;
 
-  public Integer current;
+  private Integer current;
 
-  public Integer size;
+  private Integer size;
+
+  public String getMedinsCode() {
+    return medinsCode;
+  }
+
+  public void setMedinsCode(String medinsCode) {
+    this.medinsCode = medinsCode;
+  }
+
+  public String getRetnCode() {
+    return retnCode;
+  }
+
+  public void setRetnCode(String retnCode) {
+    this.retnCode = retnCode;
+  }
+
+  public String getStrUpTime() {
+    return strUpTime;
+  }
+
+  public void setStrUpTime(String strUpTime) {
+    this.strUpTime = strUpTime;
+  }
+
+  public String getEndUpTime() {
+    return endUpTime;
+  }
+
+  public void setEndUpTime(String endUpTime) {
+    this.endUpTime = endUpTime;
+  }
+
+  public Integer getCurrent() {
+    return current;
+  }
+
+  public void setCurrent(Integer current) {
+    this.current = current;
+  }
+
+  public Integer getSize() {
+    return size;
+  }
+
+  public void setSize(Integer size) {
+    this.size = size;
+  }
 }

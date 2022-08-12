@@ -10,12 +10,12 @@ import org.springframework.http.client.AbstractClientHttpResponse;
 import org.springframework.http.client.ClientHttpRequestExecution;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.http.client.ClientHttpResponse;
+import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.*;
 import work.gaigeshen.tripartite.core.header.DefaultHeaders;
 import work.gaigeshen.tripartite.core.header.Headers;
-import work.gaigeshen.tripartite.core.response.consumer.ResponseConsumer;
 import work.gaigeshen.tripartite.core.interceptor.Execution;
 import work.gaigeshen.tripartite.core.interceptor.Interceptor;
 import work.gaigeshen.tripartite.core.interceptor.Interceptors;
@@ -24,6 +24,7 @@ import work.gaigeshen.tripartite.core.parameter.Parameters;
 import work.gaigeshen.tripartite.core.parameter.converter.ParametersConversionException;
 import work.gaigeshen.tripartite.core.parameter.converter.ParametersConverter;
 import work.gaigeshen.tripartite.core.parameter.creator.ParametersCreator;
+import work.gaigeshen.tripartite.core.response.consumer.ResponseConsumer;
 import work.gaigeshen.tripartite.core.response.converter.ResponseConverter;
 
 import java.io.ByteArrayInputStream;
@@ -274,13 +275,14 @@ public class RestTemplateWebExecutor implements WebExecutor {
   }
 
   private RequestCallback wrapParametersRequestCallback(Parameters parameters) {
+    List<HttpMessageConverter<?>> messageConverters = restTemplate.getMessageConverters();
     if (Objects.isNull(parameters)) {
-      return restTemplate.httpEntityCallback(null);
+      return new HttpEntityRequestCallback(messageConverters, null);
     }
     HttpHeaders hHeaders = new HttpHeaders();
     if (parameters.getType() == Parameters.Type.JSON) {
       hHeaders.setContentType(APPLICATION_JSON);
-      return restTemplate.httpEntityCallback(new HttpEntity<>(extractParameters(parameters), hHeaders));
+      return new HttpEntityRequestCallback(messageConverters, new HttpEntity<>(extractParameters(parameters), hHeaders));
     } else {
       if (parameters.getType() == Parameters.Type.PARAMETERS) {
         hHeaders.setContentType(APPLICATION_FORM_URLENCODED);
@@ -294,7 +296,7 @@ public class RestTemplateWebExecutor implements WebExecutor {
           converted.put(parameter.getName(), Collections.singletonList(parameter.getValue()));
         }
       }
-      return restTemplate.httpEntityCallback(new HttpEntity<>(converted, hHeaders));
+      return new HttpEntityRequestCallback(messageConverters, new HttpEntity<>(converted, hHeaders));
     }
   }
 
@@ -413,6 +415,8 @@ public class RestTemplateWebExecutor implements WebExecutor {
    */
   private static class LoggerInterceptor implements ClientHttpRequestInterceptor {
 
+    private static final Collection<MediaType> LOGGABLE_MEDIA_TYPE = Arrays.asList(APPLICATION_JSON, TEXT_PLAIN, TEXT_XML, TEXT_HTML);
+
     @Override
     public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution) throws IOException {
       ClientHttpResponse response = execution.execute(request, body);
@@ -431,11 +435,14 @@ public class RestTemplateWebExecutor implements WebExecutor {
       if (Objects.isNull(contentType)) {
         return response;
       }
-      if (contentType.isPresentIn(Arrays.asList(APPLICATION_JSON, TEXT_PLAIN, TEXT_XML, TEXT_HTML, TEXT_MARKDOWN))) {
-        HttpResponseResponse httpResponse = (HttpResponseResponse) response;
-        String responseBody = httpResponse.bodyString(StandardCharsets.UTF_8);
-        httpResponse.buffered(responseBody.getBytes(StandardCharsets.UTF_8));
-        log.info("<<<< Body: {}", responseBody);
+      for (MediaType loggableMediaType : LOGGABLE_MEDIA_TYPE) {
+        if (loggableMediaType.includes(contentType)) {
+          HttpResponseResponse httpResponse = (HttpResponseResponse) response;
+          String responseBody = httpResponse.bodyString(StandardCharsets.UTF_8);
+          httpResponse.buffered(responseBody.getBytes(StandardCharsets.UTF_8));
+          log.info("<<<< Body: {}", responseBody);
+          break;
+        }
       }
       return response;
     }
@@ -499,7 +506,7 @@ public class RestTemplateWebExecutor implements WebExecutor {
 
     @Override
     public String method() {
-      return httpRequest.getMethodValue();
+      return httpRequest.getMethod().name();
     }
 
     @Override
@@ -621,7 +628,9 @@ public class RestTemplateWebExecutor implements WebExecutor {
       if (Objects.isNull(values) || values.isEmpty()) {
         throw new IllegalArgumentException("values cannot be null or empty");
       }
-      httpHeaders.addAll(name, values);
+      for (String value : values) {
+        httpHeaders.add(name, value);
+      }
     }
 
     @Override

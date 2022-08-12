@@ -8,9 +8,33 @@ import work.gaigeshen.tripartite.his.procurement.openapi.parameters.HisProcureme
  */
 public class HisProcurementStorehouseListInputData implements HisProcurementInputData {
 
-  public String orgCode;
+  private String orgCode;
 
-  public Integer current;
+  private Integer current;
 
-  public Integer size;
+  private Integer size;
+
+  public String getOrgCode() {
+    return orgCode;
+  }
+
+  public void setOrgCode(String orgCode) {
+    this.orgCode = orgCode;
+  }
+
+  public Integer getCurrent() {
+    return current;
+  }
+
+  public void setCurrent(Integer current) {
+    this.current = current;
+  }
+
+  public Integer getSize() {
+    return size;
+  }
+
+  public void setSize(Integer size) {
+    this.size = size;
+  }
 }

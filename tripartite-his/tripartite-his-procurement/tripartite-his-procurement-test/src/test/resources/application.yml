@@ -1,9 +1,0 @@
-his:
-  procurement:
-    clients:
-      - server-host: http://112.124.241.254
-        access-token-uri: /tps-local-bd/intf/api/accessToken/getAccessHospToken
-        service-uri: /tps-local-bd/intf/api/commonInterface
-        account: H33010201560
-        app-code: FBE2BF21-33EE-450B-BF37-E5A799971531
-        auth-code: 2AB2CB83-2520-4C0F-8109-5D6DA364295E

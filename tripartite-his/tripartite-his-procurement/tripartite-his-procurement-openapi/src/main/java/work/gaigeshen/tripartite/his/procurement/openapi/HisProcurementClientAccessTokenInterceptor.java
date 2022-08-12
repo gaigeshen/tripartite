@@ -8,7 +8,6 @@ import work.gaigeshen.tripartite.his.procurement.openapi.config.HisProcurementCo
 import work.gaigeshen.tripartite.his.procurement.openapi.parameters.HisProcurementAccessTokenParameters;
 import work.gaigeshen.tripartite.his.procurement.openapi.response.HisProcurementAccessTokenResponse;
 
-import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -37,9 +36,8 @@ public class HisProcurementClientAccessTokenInterceptor extends HisProcurementCl
       request.headers().putValue("Access-Token", accessToken.getAccessToken());
       return;
     }
-    HisProcurementAccessTokenParameters parameters = new HisProcurementAccessTokenParameters();
-    parameters.appCode = config.getAppCode();
-    parameters.authCode = config.getAuthCode();
+    HisProcurementAccessTokenParameters parameters = new HisProcurementAccessTokenParameters(
+            config.getAppCode(), config.getAuthCode());
     HisProcurementAccessTokenResponse response;
     try {
       response = hisProcurementClient.execute(parameters, HisProcurementAccessTokenResponse.class,
@@ -47,10 +45,8 @@ public class HisProcurementClientAccessTokenInterceptor extends HisProcurementCl
     } catch (Exception e) {
       throw new InterceptingException("could not get new access token", e);
     }
-    HisProcurementAccessToken newAccessToken = HisProcurementAccessToken.builder()
-            .setAccessToken(response.accessToken).setAccount(config.getAccount())
-            .setExpiresIn(1800).setExpiresTimestamp(System.currentTimeMillis() / 1000 + 1800)
-            .setUpdateTime(new Date()).build();
+    HisProcurementAccessToken newAccessToken = HisProcurementAccessTokenHelper.createAccessToken(
+            config, response.getAccessToken());
     hisProcurementAccessTokenManager.addNewAccessToken(newAccessToken);
     request.headers().putValue("Access-Token", newAccessToken.getAccessToken());
   }

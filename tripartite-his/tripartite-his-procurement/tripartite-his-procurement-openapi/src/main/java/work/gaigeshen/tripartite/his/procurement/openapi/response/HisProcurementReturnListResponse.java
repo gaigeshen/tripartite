@@ -8,68 +8,316 @@ import java.util.Collection;
  */
 public class HisProcurementReturnListResponse extends AbstractHisProcurementResponse {
 
-  public Integer currentPageNumber;
+  private Integer currentPageNumber;
 
-  public Integer totalPageCount;
+  private Integer totalPageCount;
 
-  public Integer totalRecordCount;
+  private Integer totalRecordCount;
 
-  public Collection<ListItem> dataList;
+  private Collection<ListItem> dataList;
+
+  public Integer getCurrentPageNumber() {
+    return currentPageNumber;
+  }
+
+  public void setCurrentPageNumber(Integer currentPageNumber) {
+    this.currentPageNumber = currentPageNumber;
+  }
+
+  public Integer getTotalPageCount() {
+    return totalPageCount;
+  }
+
+  public void setTotalPageCount(Integer totalPageCount) {
+    this.totalPageCount = totalPageCount;
+  }
+
+  public Integer getTotalRecordCount() {
+    return totalRecordCount;
+  }
+
+  public void setTotalRecordCount(Integer totalRecordCount) {
+    this.totalRecordCount = totalRecordCount;
+  }
+
+  public Collection<ListItem> getDataList() {
+    return dataList;
+  }
+
+  public void setDataList(Collection<ListItem> dataList) {
+    this.dataList = dataList;
+  }
 
   public static class ListItem {
 
-    public String regcert;
+    private String regcert;
 
-    public String retnCode;
+    private String retnCode;
 
-    public String rgtMol;
+    private String rgtMol;
 
-    public String purcCnt;
+    private String purcCnt;
 
-    public String medinsRetnRea;
+    private String medinsRetnRea;
 
-    public String prodentpName;
+    private String prodentpName;
 
-    public String ordCode;
+    private String ordCode;
 
-    public String prodName;
+    private String prodName;
 
-    public String prodMatl;
+    private String prodMatl;
 
-    public String delventpCode;
+    private String delventpCode;
 
-    public String manuLotnum;
+    private String manuLotnum;
 
-    public String medinsRetnTime;
+    private String medinsRetnTime;
 
-    public String mcsRegno;
+    private String mcsRegno;
 
-    public String delventpFailRea;
+    private String delventpFailRea;
 
-    public String delventpPassTime;
+    private String delventpPassTime;
 
-    public String pacMatl;
+    private String pacMatl;
 
-    public String prodSpec;
+    private String prodSpec;
 
-    public BigDecimal retnCnt;
+    private BigDecimal retnCnt;
 
-    public BigDecimal retnAmt;
+    private BigDecimal retnAmt;
 
-    public String delventpName;
+    private String delventpName;
 
-    public String delventpFailTime;
+    private String delventpFailTime;
 
-    public String retnChkStas;
+    private String retnChkStas;
 
-    public String prodPac;
+    private String prodPac;
 
-    public String returnInvoiceId;
+    private String returnInvoiceId;
 
-    public String pubonlnPric;
+    private String pubonlnPric;
 
-    public String dclaEntpName;
+    private String dclaEntpName;
 
-    public String purcpric;
+    private String purcpric;
+
+    public String getRegcert() {
+      return regcert;
+    }
+
+    public void setRegcert(String regcert) {
+      this.regcert = regcert;
+    }
+
+    public String getRetnCode() {
+      return retnCode;
+    }
+
+    public void setRetnCode(String retnCode) {
+      this.retnCode = retnCode;
+    }
+
+    public String getRgtMol() {
+      return rgtMol;
+    }
+
+    public void setRgtMol(String rgtMol) {
+      this.rgtMol = rgtMol;
+    }
+
+    public String getPurcCnt() {
+      return purcCnt;
+    }
+
+    public void setPurcCnt(String purcCnt) {
+      this.purcCnt = purcCnt;
+    }
+
+    public String getMedinsRetnRea() {
+      return medinsRetnRea;
+    }
+
+    public void setMedinsRetnRea(String medinsRetnRea) {
+      this.medinsRetnRea = medinsRetnRea;
+    }
+
+    public String getProdentpName() {
+      return prodentpName;
+    }
+
+    public void setProdentpName(String prodentpName) {
+      this.prodentpName = prodentpName;
+    }
+
+    public String getOrdCode() {
+      return ordCode;
+    }
+
+    public void setOrdCode(String ordCode) {
+      this.ordCode = ordCode;
+    }
+
+    public String getProdName() {
+      return prodName;
+    }
+
+    public void setProdName(String prodName) {
+      this.prodName = prodName;
+    }
+
+    public String getProdMatl() {
+      return prodMatl;
+    }
+
+    public void setProdMatl(String prodMatl) {
+      this.prodMatl = prodMatl;
+    }
+
+    public String getDelventpCode() {
+      return delventpCode;
+    }
+
+    public void setDelventpCode(String delventpCode) {
+      this.delventpCode = delventpCode;
+    }
+
+    public String getManuLotnum() {
+      return manuLotnum;
+    }
+
+    public void setManuLotnum(String manuLotnum) {
+      this.manuLotnum = manuLotnum;
+    }
+
+    public String getMedinsRetnTime() {
+      return medinsRetnTime;
+    }
+
+    public void setMedinsRetnTime(String medinsRetnTime) {
+      this.medinsRetnTime = medinsRetnTime;
+    }
+
+    public String getMcsRegno() {
+      return mcsRegno;
+    }
+
+    public void setMcsRegno(String mcsRegno) {
+      this.mcsRegno = mcsRegno;
+    }
+
+    public String getDelventpFailRea() {
+      return delventpFailRea;
+    }
+
+    public void setDelventpFailRea(String delventpFailRea) {
+      this.delventpFailRea = delventpFailRea;
+    }
+
+    public String getDelventpPassTime() {
+      return delventpPassTime;
+    }
+
+    public void setDelventpPassTime(String delventpPassTime) {
+      this.delventpPassTime = delventpPassTime;
+    }
+
+    public String getPacMatl() {
+      return pacMatl;
+    }
+
+    public void setPacMatl(String pacMatl) {
+      this.pacMatl = pacMatl;
+    }
+
+    public String getProdSpec() {
+      return prodSpec;
+    }
+
+    public void setProdSpec(String prodSpec) {
+      this.prodSpec = prodSpec;
+    }
+
+    public BigDecimal getRetnCnt() {
+      return retnCnt;
+    }
+
+    public void setRetnCnt(BigDecimal retnCnt) {
+      this.retnCnt = retnCnt;
+    }
+
+    public BigDecimal getRetnAmt() {
+      return retnAmt;
+    }
+
+    public void setRetnAmt(BigDecimal retnAmt) {
+      this.retnAmt = retnAmt;
+    }
+
+    public String getDelventpName() {
+      return delventpName;
+    }
+
+    public void setDelventpName(String delventpName) {
+      this.delventpName = delventpName;
+    }
+
+    public String getDelventpFailTime() {
+      return delventpFailTime;
+    }
+
+    public void setDelventpFailTime(String delventpFailTime) {
+      this.delventpFailTime = delventpFailTime;
+    }
+
+    public String getRetnChkStas() {
+      return retnChkStas;
+    }
+
+    public void setRetnChkStas(String retnChkStas) {
+      this.retnChkStas = retnChkStas;
+    }
+
+    public String getProdPac() {
+      return prodPac;
+    }
+
+    public void setProdPac(String prodPac) {
+      this.prodPac = prodPac;
+    }
+
+    public String getReturnInvoiceId() {
+      return returnInvoiceId;
+    }
+
+    public void setReturnInvoiceId(String returnInvoiceId) {
+      this.returnInvoiceId = returnInvoiceId;
+    }
+
+    public String getPubonlnPric() {
+      return pubonlnPric;
+    }
+
+    public void setPubonlnPric(String pubonlnPric) {
+      this.pubonlnPric = pubonlnPric;
+    }
+
+    public String getDclaEntpName() {
+      return dclaEntpName;
+    }
+
+    public void setDclaEntpName(String dclaEntpName) {
+      this.dclaEntpName = dclaEntpName;
+    }
+
+    public String getPurcpric() {
+      return purcpric;
+    }
+
+    public void setPurcpric(String purcpric) {
+      this.purcpric = purcpric;
+    }
   }
 }

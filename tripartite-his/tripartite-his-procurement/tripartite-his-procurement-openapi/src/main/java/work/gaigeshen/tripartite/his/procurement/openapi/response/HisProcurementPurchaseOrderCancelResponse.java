@@ -5,6 +5,13 @@ package work.gaigeshen.tripartite.his.procurement.openapi.response;
  */
 public class HisProcurementPurchaseOrderCancelResponse extends AbstractHisProcurementResponse {
 
-  public String PurcCode;
+  private String PurcCode;
 
+  public String getPurcCode() {
+    return PurcCode;
+  }
+
+  public void setPurcCode(String purcCode) {
+    PurcCode = purcCode;
+  }
 }

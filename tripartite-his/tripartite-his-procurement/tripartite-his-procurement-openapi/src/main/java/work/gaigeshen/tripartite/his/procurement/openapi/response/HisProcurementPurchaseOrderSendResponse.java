@@ -7,29 +7,109 @@ import java.util.Collection;
  */
 public class HisProcurementPurchaseOrderSendResponse extends AbstractHisProcurementResponse {
 
-  public String PurcCode;
+  private String PurcCode;
 
-  public String purcPlanCode;
+  private String purcPlanCode;
 
-  public Collection<OrdDetlIdListItem> ordDetlIdList;
+  private Collection<OrdDetlIdListItem> ordDetlIdList;
 
-  public Collection<OrdIdListItem> ordIdList;
+  private Collection<OrdIdListItem> ordIdList;
+
+  public String getPurcCode() {
+    return PurcCode;
+  }
+
+  public void setPurcCode(String purcCode) {
+    PurcCode = purcCode;
+  }
+
+  public String getPurcPlanCode() {
+    return purcPlanCode;
+  }
+
+  public void setPurcPlanCode(String purcPlanCode) {
+    this.purcPlanCode = purcPlanCode;
+  }
+
+  public Collection<OrdDetlIdListItem> getOrdDetlIdList() {
+    return ordDetlIdList;
+  }
+
+  public void setOrdDetlIdList(Collection<OrdDetlIdListItem> ordDetlIdList) {
+    this.ordDetlIdList = ordDetlIdList;
+  }
+
+  public Collection<OrdIdListItem> getOrdIdList() {
+    return ordIdList;
+  }
+
+  public void setOrdIdList(Collection<OrdIdListItem> ordIdList) {
+    this.ordIdList = ordIdList;
+  }
 
   public static class OrdDetlIdListItem {
 
-    public String ordCode;
+    private String ordCode;
 
-    public String ordDetlId;
+    private String ordDetlId;
 
-    public String purcPlanDetId;
+    private String purcPlanDetId;
 
-    public String ordId;
+    private String ordId;
+
+    public String getOrdCode() {
+      return ordCode;
+    }
+
+    public void setOrdCode(String ordCode) {
+      this.ordCode = ordCode;
+    }
+
+    public String getOrdDetlId() {
+      return ordDetlId;
+    }
+
+    public void setOrdDetlId(String ordDetlId) {
+      this.ordDetlId = ordDetlId;
+    }
+
+    public String getPurcPlanDetId() {
+      return purcPlanDetId;
+    }
+
+    public void setPurcPlanDetId(String purcPlanDetId) {
+      this.purcPlanDetId = purcPlanDetId;
+    }
+
+    public String getOrdId() {
+      return ordId;
+    }
+
+    public void setOrdId(String ordId) {
+      this.ordId = ordId;
+    }
   }
 
   public static class OrdIdListItem {
 
-    public String ordCode;
+    private String ordCode;
 
-    public String ordId;
+    private String ordId;
+
+    public String getOrdCode() {
+      return ordCode;
+    }
+
+    public void setOrdCode(String ordCode) {
+      this.ordCode = ordCode;
+    }
+
+    public String getOrdId() {
+      return ordId;
+    }
+
+    public void setOrdId(String ordId) {
+      this.ordId = ordId;
+    }
   }
 }

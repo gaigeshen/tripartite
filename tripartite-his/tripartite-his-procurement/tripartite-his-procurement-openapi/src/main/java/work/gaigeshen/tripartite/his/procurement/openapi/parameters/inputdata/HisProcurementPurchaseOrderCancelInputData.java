@@ -8,8 +8,23 @@ import work.gaigeshen.tripartite.his.procurement.openapi.parameters.HisProcureme
  */
 public class HisProcurementPurchaseOrderCancelInputData implements HisProcurementInputData {
 
-  public String medinsCode;
+  private String medinsCode;
 
-  public String purcCode;
+  private String purcCode;
 
+  public String getMedinsCode() {
+    return medinsCode;
+  }
+
+  public void setMedinsCode(String medinsCode) {
+    this.medinsCode = medinsCode;
+  }
+
+  public String getPurcCode() {
+    return purcCode;
+  }
+
+  public void setPurcCode(String purcCode) {
+    this.purcCode = purcCode;
+  }
 }

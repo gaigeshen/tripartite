@@ -10,10 +10,26 @@ import java.util.Collection;
  */
 public class HisProcurementDirectoryAddInputData implements HisProcurementInputData {
 
-  public Collection<ListItem> list;
+  private Collection<ListItem> list;
+
+  public Collection<ListItem> getList() {
+    return list;
+  }
+
+  public void setList(Collection<ListItem> list) {
+    this.list = list;
+  }
 
   public static class ListItem {
 
-    public String pubonlnId;
+    private String pubonlnId;
+
+    public String getPubonlnId() {
+      return pubonlnId;
+    }
+
+    public void setPubonlnId(String pubonlnId) {
+      this.pubonlnId = pubonlnId;
+    }
   }
 }

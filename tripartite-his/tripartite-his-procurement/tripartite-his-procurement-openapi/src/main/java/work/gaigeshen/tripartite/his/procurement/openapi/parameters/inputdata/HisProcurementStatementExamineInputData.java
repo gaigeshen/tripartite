@@ -8,9 +8,33 @@ import work.gaigeshen.tripartite.his.procurement.openapi.parameters.HisProcureme
  */
 public class HisProcurementStatementExamineInputData implements HisProcurementInputData {
 
-  public String medinsCode;
+  private String medinsCode;
 
-  public String payOrdId;
+  private String payOrdId;
 
-  public Integer chkStas;
+  private Integer chkStas;
+
+  public String getMedinsCode() {
+    return medinsCode;
+  }
+
+  public void setMedinsCode(String medinsCode) {
+    this.medinsCode = medinsCode;
+  }
+
+  public String getPayOrdId() {
+    return payOrdId;
+  }
+
+  public void setPayOrdId(String payOrdId) {
+    this.payOrdId = payOrdId;
+  }
+
+  public Integer getChkStas() {
+    return chkStas;
+  }
+
+  public void setChkStas(Integer chkStas) {
+    this.chkStas = chkStas;
+  }
 }

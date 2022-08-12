@@ -5,5 +5,13 @@ package work.gaigeshen.tripartite.his.procurement.openapi.response;
  */
 public class HisProcurementStatementCreateResponse extends AbstractHisProcurementResponse {
 
-  public String pryOrdId;
+  private String pryOrdId;
+
+  public String getPryOrdId() {
+    return pryOrdId;
+  }
+
+  public void setPryOrdId(String pryOrdId) {
+    this.pryOrdId = pryOrdId;
+  }
 }

@@ -9,10 +9,35 @@ public class HisProcurementDirectoryAddResponse extends AbstractHisProcurementRe
 
   public Collection<ListItem> dataList;
 
+  public Collection<ListItem> getDataList() {
+    return dataList;
+  }
+
+  public void setDataList(Collection<ListItem> dataList) {
+    this.dataList = dataList;
+  }
+
   public static class ListItem {
 
-    public String pubonlnId;
+    private String pubonlnId;
 
-    public String hospListId;
+    private String hospListId;
+
+    public String getPubonlnId() {
+      return pubonlnId;
+    }
+
+    public void setPubonlnId(String pubonlnId) {
+      this.pubonlnId = pubonlnId;
+    }
+
+    public String getHospListId() {
+      return hospListId;
+    }
+
+    public void setHospListId(String hospListId) {
+      this.hospListId = hospListId;
+    }
   }
+
 }

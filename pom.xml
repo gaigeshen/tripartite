@@ -56,9 +56,9 @@
         <commons.dbutils.version>1.7</commons.dbutils.version>
         <slf4j.version>1.7.30</slf4j.version>
         <logback.version>1.2.4</logback.version>
-        <spring.web.version>5.3.12</spring.web.version>
+        <spring.web.version>4.3.30.RELEASE</spring.web.version>
         <javax.servlet.api.version>3.1.0</javax.servlet.api.version>
-        <spring.boot.version>2.5.4</spring.boot.version>
+        <spring.boot.version>1.5.22.RELEASE</spring.boot.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>utf-8</project.build.sourceEncoding>

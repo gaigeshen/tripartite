@@ -8,10 +8,43 @@ import work.gaigeshen.tripartite.his.procurement.openapi.parameters.HisProcureme
  */
 public class HisProcurementDirectoryUsedListInputData implements HisProcurementInputData {
 
-  public String mcsCode;
+  private String mcsCode;
 
-  public String hospListId;
-  public Integer current;
+  private String hospListId;
 
-  public Integer size;
+  private Integer current;
+
+  private Integer size;
+
+  public String getMcsCode() {
+    return mcsCode;
+  }
+
+  public void setMcsCode(String mcsCode) {
+    this.mcsCode = mcsCode;
+  }
+
+  public String getHospListId() {
+    return hospListId;
+  }
+
+  public void setHospListId(String hospListId) {
+    this.hospListId = hospListId;
+  }
+
+  public Integer getCurrent() {
+    return current;
+  }
+
+  public void setCurrent(Integer current) {
+    this.current = current;
+  }
+
+  public Integer getSize() {
+    return size;
+  }
+
+  public void setSize(Integer size) {
+    this.size = size;
+  }
 }

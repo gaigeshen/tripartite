@@ -8,8 +8,23 @@ import work.gaigeshen.tripartite.his.procurement.openapi.parameters.HisProcureme
  */
 public class HisProcurementStatementSubmitInputData implements HisProcurementInputData {
 
-  public String medinsCode;
+  private String medinsCode;
 
-  public String payOrdId;
+  private String payOrdId;
 
+  public String getMedinsCode() {
+    return medinsCode;
+  }
+
+  public void setMedinsCode(String medinsCode) {
+    this.medinsCode = medinsCode;
+  }
+
+  public String getPayOrdId() {
+    return payOrdId;
+  }
+
+  public void setPayOrdId(String payOrdId) {
+    this.payOrdId = payOrdId;
+  }
 }

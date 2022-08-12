@@ -8,20 +8,76 @@ import java.util.Collection;
  */
 public class HisProcurementPurchaseOrderCreateResponse extends AbstractHisProcurementResponse {
 
-  public String PurcCode;
+  private String PurcCode;
 
-  public BigDecimal planSumamt;
+  private BigDecimal planSumamt;
 
-  public Collection<ListItem> dataList;
+  private Collection<ListItem> dataList;
+
+  public String getPurcCode() {
+    return PurcCode;
+  }
+
+  public void setPurcCode(String purcCode) {
+    PurcCode = purcCode;
+  }
+
+  public BigDecimal getPlanSumamt() {
+    return planSumamt;
+  }
+
+  public void setPlanSumamt(BigDecimal planSumamt) {
+    this.planSumamt = planSumamt;
+  }
+
+  public Collection<ListItem> getDataList() {
+    return dataList;
+  }
+
+  public void setDataList(Collection<ListItem> dataList) {
+    this.dataList = dataList;
+  }
 
   public static class ListItem {
 
-    public Integer returnCode;
+    private Integer returnCode;
 
-    public String returnMsg;
+    private String returnMsg;
 
-    public String hospPurcDetlId;
+    private String hospPurcDetlId;
 
-    public String purcPlanDetId;
+    private String purcPlanDetId;
+
+    public Integer getReturnCode() {
+      return returnCode;
+    }
+
+    public void setReturnCode(Integer returnCode) {
+      this.returnCode = returnCode;
+    }
+
+    public String getReturnMsg() {
+      return returnMsg;
+    }
+
+    public void setReturnMsg(String returnMsg) {
+      this.returnMsg = returnMsg;
+    }
+
+    public String getHospPurcDetlId() {
+      return hospPurcDetlId;
+    }
+
+    public void setHospPurcDetlId(String hospPurcDetlId) {
+      this.hospPurcDetlId = hospPurcDetlId;
+    }
+
+    public String getPurcPlanDetId() {
+      return purcPlanDetId;
+    }
+
+    public void setPurcPlanDetId(String purcPlanDetId) {
+      this.purcPlanDetId = purcPlanDetId;
+    }
   }
 }

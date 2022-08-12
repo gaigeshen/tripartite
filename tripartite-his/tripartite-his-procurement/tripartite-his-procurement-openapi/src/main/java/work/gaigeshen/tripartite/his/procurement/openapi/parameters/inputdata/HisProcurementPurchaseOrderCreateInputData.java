@@ -11,36 +11,156 @@ import java.util.Collection;
  */
 public class HisProcurementPurchaseOrderCreateInputData implements HisProcurementInputData {
 
-  public String medinsCode;
+  private String medinsCode;
 
-  public BigDecimal planSumamt;
+  private BigDecimal planSumamt;
 
-  public String addrId;
+  private String addrId;
 
-  public String conerName;
+  private String conerName;
 
-  public String conerTel;
+  private String conerTel;
 
-  public String invottl;
+  private String invottl;
 
-  public Integer chkStas;
+  private Integer chkStas;
 
-  public Collection<ListItem> list;
+  private Collection<ListItem> list;
+
+  public String getMedinsCode() {
+    return medinsCode;
+  }
+
+  public void setMedinsCode(String medinsCode) {
+    this.medinsCode = medinsCode;
+  }
+
+  public BigDecimal getPlanSumamt() {
+    return planSumamt;
+  }
+
+  public void setPlanSumamt(BigDecimal planSumamt) {
+    this.planSumamt = planSumamt;
+  }
+
+  public String getAddrId() {
+    return addrId;
+  }
+
+  public void setAddrId(String addrId) {
+    this.addrId = addrId;
+  }
+
+  public String getConerName() {
+    return conerName;
+  }
+
+  public void setConerName(String conerName) {
+    this.conerName = conerName;
+  }
+
+  public String getConerTel() {
+    return conerTel;
+  }
+
+  public void setConerTel(String conerTel) {
+    this.conerTel = conerTel;
+  }
+
+  public String getInvottl() {
+    return invottl;
+  }
+
+  public void setInvottl(String invottl) {
+    this.invottl = invottl;
+  }
+
+  public Integer getChkStas() {
+    return chkStas;
+  }
+
+  public void setChkStas(Integer chkStas) {
+    this.chkStas = chkStas;
+  }
+
+  public Collection<ListItem> getList() {
+    return list;
+  }
+
+  public void setList(Collection<ListItem> list) {
+    this.list = list;
+  }
 
   public static class ListItem {
 
-    public String hospListId;
+    private String hospListId;
 
-    public String delventpCode;
+    private String delventpCode;
 
-    public String delventpName;
+    private String delventpName;
 
-    public BigDecimal purcCnt;
+    private BigDecimal purcCnt;
 
-    public String planDetlMemo;
+    private String planDetlMemo;
 
-    public String addrId;
+    private String addrId;
 
-    public String hospPurcDetlId;
+    private String hospPurcDetlId;
+
+    public String getHospListId() {
+      return hospListId;
+    }
+
+    public void setHospListId(String hospListId) {
+      this.hospListId = hospListId;
+    }
+
+    public String getDelventpCode() {
+      return delventpCode;
+    }
+
+    public void setDelventpCode(String delventpCode) {
+      this.delventpCode = delventpCode;
+    }
+
+    public String getDelventpName() {
+      return delventpName;
+    }
+
+    public void setDelventpName(String delventpName) {
+      this.delventpName = delventpName;
+    }
+
+    public BigDecimal getPurcCnt() {
+      return purcCnt;
+    }
+
+    public void setPurcCnt(BigDecimal purcCnt) {
+      this.purcCnt = purcCnt;
+    }
+
+    public String getPlanDetlMemo() {
+      return planDetlMemo;
+    }
+
+    public void setPlanDetlMemo(String planDetlMemo) {
+      this.planDetlMemo = planDetlMemo;
+    }
+
+    public String getAddrId() {
+      return addrId;
+    }
+
+    public void setAddrId(String addrId) {
+      this.addrId = addrId;
+    }
+
+    public String getHospPurcDetlId() {
+      return hospPurcDetlId;
+    }
+
+    public void setHospPurcDetlId(String hospPurcDetlId) {
+      this.hospPurcDetlId = hospPurcDetlId;
+    }
   }
 }

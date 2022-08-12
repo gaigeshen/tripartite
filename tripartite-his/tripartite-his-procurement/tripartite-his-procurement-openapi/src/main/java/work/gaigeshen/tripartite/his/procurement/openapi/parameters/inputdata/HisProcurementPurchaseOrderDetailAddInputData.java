@@ -11,32 +11,136 @@ import java.util.Collection;
  */
 public class HisProcurementPurchaseOrderDetailAddInputData implements HisProcurementInputData {
 
-  public String medinsCode;
+  private String medinsCode;
 
-  public String purcCode;
+  private String purcCode;
 
-  public Integer chkStas;
+  private Integer chkStas;
 
-  public Integer addorDelStas;
+  private Integer addorDelStas;
 
-  public Collection<ListItem> list;
+  private Collection<ListItem> list;
+
+  public String getMedinsCode() {
+    return medinsCode;
+  }
+
+  public void setMedinsCode(String medinsCode) {
+    this.medinsCode = medinsCode;
+  }
+
+  public String getPurcCode() {
+    return purcCode;
+  }
+
+  public void setPurcCode(String purcCode) {
+    this.purcCode = purcCode;
+  }
+
+  public Integer getChkStas() {
+    return chkStas;
+  }
+
+  public void setChkStas(Integer chkStas) {
+    this.chkStas = chkStas;
+  }
+
+  public Integer getAddorDelStas() {
+    return addorDelStas;
+  }
+
+  public void setAddorDelStas(Integer addorDelStas) {
+    this.addorDelStas = addorDelStas;
+  }
+
+  public Collection<ListItem> getList() {
+    return list;
+  }
+
+  public void setList(Collection<ListItem> list) {
+    this.list = list;
+  }
 
   public static class ListItem {
 
-    public String hospListId;
+    private String hospListId;
 
-    public String delventpCode;
+    private String delventpCode;
 
-    public String delventpName;
+    private String delventpName;
 
-    public BigDecimal purcCnt;
+    private BigDecimal purcCnt;
 
-    public String planDetlMemo;
+    private String planDetlMemo;
 
-    public String addrId;
+    private String addrId;
 
-    public String hospPurcDetlId;
+    private String hospPurcDetlId;
 
-    public String purcPlanDetId;
+    private String purcPlanDetId;
+
+    public String getHospListId() {
+      return hospListId;
+    }
+
+    public void setHospListId(String hospListId) {
+      this.hospListId = hospListId;
+    }
+
+    public String getDelventpCode() {
+      return delventpCode;
+    }
+
+    public void setDelventpCode(String delventpCode) {
+      this.delventpCode = delventpCode;
+    }
+
+    public String getDelventpName() {
+      return delventpName;
+    }
+
+    public void setDelventpName(String delventpName) {
+      this.delventpName = delventpName;
+    }
+
+    public BigDecimal getPurcCnt() {
+      return purcCnt;
+    }
+
+    public void setPurcCnt(BigDecimal purcCnt) {
+      this.purcCnt = purcCnt;
+    }
+
+    public String getPlanDetlMemo() {
+      return planDetlMemo;
+    }
+
+    public void setPlanDetlMemo(String planDetlMemo) {
+      this.planDetlMemo = planDetlMemo;
+    }
+
+    public String getAddrId() {
+      return addrId;
+    }
+
+    public void setAddrId(String addrId) {
+      this.addrId = addrId;
+    }
+
+    public String getHospPurcDetlId() {
+      return hospPurcDetlId;
+    }
+
+    public void setHospPurcDetlId(String hospPurcDetlId) {
+      this.hospPurcDetlId = hospPurcDetlId;
+    }
+
+    public String getPurcPlanDetId() {
+      return purcPlanDetId;
+    }
+
+    public void setPurcPlanDetId(String purcPlanDetId) {
+      this.purcPlanDetId = purcPlanDetId;
+    }
   }
 }

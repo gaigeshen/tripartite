@@ -8,13 +8,53 @@ import work.gaigeshen.tripartite.his.procurement.openapi.parameters.HisProcureme
  */
 public class HisProcurementProductDeliveryEnterpriseListInputData implements HisProcurementInputData {
 
-  public String medinsCode;
+  private String medinsCode;
 
-  public String prodCode;
+  private String prodCode;
 
-  public String hospListId;
+  private String hospListId;
 
-  public Integer current;
+  private Integer current;
 
-  public Integer size;
+  private Integer size;
+
+  public String getMedinsCode() {
+    return medinsCode;
+  }
+
+  public void setMedinsCode(String medinsCode) {
+    this.medinsCode = medinsCode;
+  }
+
+  public String getProdCode() {
+    return prodCode;
+  }
+
+  public void setProdCode(String prodCode) {
+    this.prodCode = prodCode;
+  }
+
+  public String getHospListId() {
+    return hospListId;
+  }
+
+  public void setHospListId(String hospListId) {
+    this.hospListId = hospListId;
+  }
+
+  public Integer getCurrent() {
+    return current;
+  }
+
+  public void setCurrent(Integer current) {
+    this.current = current;
+  }
+
+  public Integer getSize() {
+    return size;
+  }
+
+  public void setSize(Integer size) {
+    this.size = size;
+  }
 }

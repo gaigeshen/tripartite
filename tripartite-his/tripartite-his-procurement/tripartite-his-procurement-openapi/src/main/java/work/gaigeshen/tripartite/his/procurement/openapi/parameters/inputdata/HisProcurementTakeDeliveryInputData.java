@@ -10,9 +10,33 @@ import java.math.BigDecimal;
  */
 public class HisProcurementTakeDeliveryInputData implements HisProcurementInputData {
 
-  public String medinsCode;
+  private String medinsCode;
 
-  public String shpCode;
+  private String shpCode;
 
-  public BigDecimal shppCnt;
+  private BigDecimal shppCnt;
+
+  public String getMedinsCode() {
+    return medinsCode;
+  }
+
+  public void setMedinsCode(String medinsCode) {
+    this.medinsCode = medinsCode;
+  }
+
+  public String getShpCode() {
+    return shpCode;
+  }
+
+  public void setShpCode(String shpCode) {
+    this.shpCode = shpCode;
+  }
+
+  public BigDecimal getShppCnt() {
+    return shppCnt;
+  }
+
+  public void setShppCnt(BigDecimal shppCnt) {
+    this.shppCnt = shppCnt;
+  }
 }

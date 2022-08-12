@@ -13,7 +13,6 @@
         <module>tripartite-his-procurement-openapi</module>
         <module>tripartite-his-procurement-spring-boot-autoconfigure</module>
         <module>tripartite-his-procurement-spring-boot-starter</module>
-        <module>tripartite-his-procurement-test</module>
     </modules>
     <artifactId>tripartite-his-procurement</artifactId>
 
