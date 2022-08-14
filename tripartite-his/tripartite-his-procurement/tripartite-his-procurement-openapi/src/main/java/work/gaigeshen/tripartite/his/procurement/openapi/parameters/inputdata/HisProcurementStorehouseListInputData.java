@@ -10,6 +10,8 @@ public class HisProcurementStorehouseListInputData implements HisProcurementInpu
 
   private String orgCode;
 
+  private Integer mcsFlag;
+
   private Integer current;
 
   private Integer size;
@@ -20,6 +22,14 @@ public class HisProcurementStorehouseListInputData implements HisProcurementInpu
 
   public void setOrgCode(String orgCode) {
     this.orgCode = orgCode;
+  }
+
+  public Integer getMcsFlag() {
+    return mcsFlag;
+  }
+
+  public void setMcsFlag(Integer mcsFlag) {
+    this.mcsFlag = mcsFlag;
   }
 
   public Integer getCurrent() {
