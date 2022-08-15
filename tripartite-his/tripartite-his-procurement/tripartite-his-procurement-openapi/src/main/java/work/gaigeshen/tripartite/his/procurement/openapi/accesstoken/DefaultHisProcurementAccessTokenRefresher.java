@@ -1,6 +1,6 @@
 package work.gaigeshen.tripartite.his.procurement.openapi.accesstoken;
 
-import work.gaigeshen.tripartite.his.procurement.openapi.HisProcurementClient;
+import work.gaigeshen.tripartite.his.procurement.openapi.HisProcurementBasicClient;
 import work.gaigeshen.tripartite.his.procurement.openapi.config.HisProcurementConfig;
 import work.gaigeshen.tripartite.his.procurement.openapi.parameters.HisProcurementAccessTokenParameters;
 import work.gaigeshen.tripartite.his.procurement.openapi.response.HisProcurementAccessTokenResponse;
@@ -23,19 +23,16 @@ public class DefaultHisProcurementAccessTokenRefresher implements HisProcurement
   }
 
   @Override
-  public HisProcurementAccessToken refresh(HisProcurementAccessToken oldAccessToken)
+  public HisProcurementAccessToken refresh(HisProcurementConfig config, HisProcurementAccessToken oldAccessToken)
           throws HisProcurementAccessTokenRefreshException {
-    HisProcurementClient client;
+    HisProcurementBasicClient client;
     try {
-      client = hisProcurementClientSelector.select(oldAccessToken);
+      client = hisProcurementClientSelector.select(config, oldAccessToken);
     } catch (Exception e) {
       throw new HisProcurementAccessTokenRefreshException("could not find his procurement client: " + oldAccessToken);
     }
-    HisProcurementConfig config = client.getHisProcurementConfig();
-
     HisProcurementAccessTokenParameters parameters = new HisProcurementAccessTokenParameters(
             config.getAppCode(), config.getAuthCode());
-
     HisProcurementAccessTokenResponse response;
     try {
       response = client.execute(parameters, HisProcurementAccessTokenResponse.class, config.getAccessTokenUri());
@@ -52,6 +49,6 @@ public class DefaultHisProcurementAccessTokenRefresher implements HisProcurement
    */
   @FunctionalInterface
   public interface HisProcurementClientSelector {
-    HisProcurementClient select(HisProcurementAccessToken oldAccessToken);
+    HisProcurementBasicClient select(HisProcurementConfig config, HisProcurementAccessToken oldAccessToken);
   }
 }

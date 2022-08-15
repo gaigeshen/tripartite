@@ -1,7 +1,9 @@
 package work.gaigeshen.tripartite.his.procurement.openapi.accesstoken;
 
+import work.gaigeshen.tripartite.his.procurement.openapi.config.HisProcurementConfig;
+
 /**
- * 任务类，用于更新访问令牌，每个此任务对象应该对应某个访问令牌，根据设置的账号进行区分
+ * 任务类，用于更新访问令牌，每个此任务对象应该对应某个访问令牌，根据设置的配置信息进行区分
  *
  * @author gaigeshen
  */
@@ -21,11 +23,11 @@ public interface HisProcurementAccessTokenUpdateTask extends Runnable {
   void setAccessTokenUpdateListener(HisProcurementAccessTokenUpdateListener accessTokenUpdateListener);
 
   /**
-   * 设置账号到此任务，此店铺编号用于在执行更新任务的时候从存储器中查询访问令牌
+   * 设置配置信息到此任务，此配置信息用于在执行更新任务的时候从存储器中查询访问令牌
    *
-   * @param account 账号
+   * @param config 配置信息
    */
-  void setAccount(String account);
+  void setConfig(HisProcurementConfig config);
 
   /**
    * 返回设置的访问令牌存储器
@@ -42,11 +44,11 @@ public interface HisProcurementAccessTokenUpdateTask extends Runnable {
   HisProcurementAccessTokenUpdateListener getAccessTokenUpdateListener();
 
   /**
-   * 返回设置的账号
+   * 返回设置的配置信息
    *
-   * @return 账号
+   * @return 设置的配置信息
    */
-  String getAccount();
+  HisProcurementConfig getConfig();
 
   /**
    * 执行具体的更新任务，注意此方法不抛出任何异常，如任务执行失败，请使用监听器传达

@@ -22,18 +22,21 @@ public class HisProcurementAccessTokenHelper {
    * 创建新的访问令牌
    *
    * @param config 配置信息不能为空
-   * @param accessToken 访问令牌内容不能为空
+   * @param newAccessToken 访问令牌内容不能为空
    * @return 新的访问令牌
    */
-  public static HisProcurementAccessToken createAccessToken(HisProcurementConfig config, String accessToken) {
-    if (Objects.isNull(config) || Objects.isNull(accessToken)) {
-      throw new IllegalArgumentException("config and access token value cannot be null");
+  public static HisProcurementAccessToken createAccessToken(HisProcurementConfig config, String newAccessToken) {
+    if (Objects.isNull(config) || Objects.isNull(newAccessToken)) {
+      throw new IllegalArgumentException("config and new access token value cannot be null");
     }
-    return HisProcurementAccessToken.builder()
-            .setAccessToken(accessToken).setAccount(config.getAccount())
-            .setExpiresIn(DEFAULT_EXPIRES_IN_SECONDS)
-            .setExpiresTimestamp(System.currentTimeMillis() / 1000 + DEFAULT_EXPIRES_IN_SECONDS)
-            .setUpdateTime(new Date()).build();
+    HisProcurementAccessToken.Builder builder = HisProcurementAccessToken.builder();
+    builder.setAccessToken(newAccessToken);
+    builder.setAccount(config.getAccount());
+    builder.setType(config.getType());
+    builder.setExpiresIn(DEFAULT_EXPIRES_IN_SECONDS);
+    builder.setExpiresTimestamp(System.currentTimeMillis() / 1000 + DEFAULT_EXPIRES_IN_SECONDS);
+    builder.setUpdateTime(new Date());
+    return builder.build();
   }
 
   /**
@@ -59,6 +62,6 @@ public class HisProcurementAccessTokenHelper {
     if (Objects.isNull(accessToken)) {
       throw new IllegalArgumentException("accessToken cannot be null");
     }
-    return !StringUtils.isAnyBlank(accessToken.getAccessToken(), accessToken.getAccount());
+    return !StringUtils.isAnyBlank(accessToken.getAccessToken(), accessToken.getAccount(), accessToken.getType());
   }
 }

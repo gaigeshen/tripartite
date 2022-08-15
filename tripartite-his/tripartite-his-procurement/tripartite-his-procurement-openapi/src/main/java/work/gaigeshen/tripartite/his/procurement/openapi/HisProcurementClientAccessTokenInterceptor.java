@@ -1,5 +1,6 @@
 package work.gaigeshen.tripartite.his.procurement.openapi;
 
+import work.gaigeshen.tripartite.core.header.Headers;
 import work.gaigeshen.tripartite.core.interceptor.InterceptingException;
 import work.gaigeshen.tripartite.his.procurement.openapi.accesstoken.HisProcurementAccessToken;
 import work.gaigeshen.tripartite.his.procurement.openapi.accesstoken.HisProcurementAccessTokenHelper;
@@ -16,11 +17,11 @@ import java.util.Objects;
  */
 public class HisProcurementClientAccessTokenInterceptor extends HisProcurementClientRequestResponseInterceptor {
 
-  private final HisProcurementClient hisProcurementClient;
+  private final HisProcurementBasicClient hisProcurementClient;
 
   private final HisProcurementAccessTokenManager hisProcurementAccessTokenManager;
 
-  public HisProcurementClientAccessTokenInterceptor(HisProcurementClient client,
+  public HisProcurementClientAccessTokenInterceptor(HisProcurementBasicClient client,
                                                     HisProcurementAccessTokenManager accessTokenManager) {
     super(client.getHisProcurementConfig());
     this.hisProcurementClient = client;
@@ -31,9 +32,10 @@ public class HisProcurementClientAccessTokenInterceptor extends HisProcurementCl
   protected void updateRequest(Request request) throws InterceptingException {
     super.updateRequest(request);
     HisProcurementConfig config = hisProcurementClient.getHisProcurementConfig();
-    HisProcurementAccessToken accessToken = hisProcurementAccessTokenManager.findAccessToken(config.getAccount());
+    HisProcurementAccessToken accessToken = hisProcurementAccessTokenManager.findAccessToken(config);
+    Headers headers = request.headers();
     if (Objects.nonNull(accessToken) && !HisProcurementAccessTokenHelper.isExpired(accessToken)) {
-      request.headers().putValue("Access-Token", accessToken.getAccessToken());
+      headers.putValue("Access-Token", accessToken.getAccessToken());
       return;
     }
     HisProcurementAccessTokenParameters parameters = new HisProcurementAccessTokenParameters(
@@ -47,7 +49,7 @@ public class HisProcurementClientAccessTokenInterceptor extends HisProcurementCl
     }
     HisProcurementAccessToken newAccessToken = HisProcurementAccessTokenHelper.createAccessToken(
             config, response.getAccessToken());
-    hisProcurementAccessTokenManager.addNewAccessToken(newAccessToken);
-    request.headers().putValue("Access-Token", newAccessToken.getAccessToken());
+    hisProcurementAccessTokenManager.addNewAccessToken(config, newAccessToken);
+    headers.putValue("Access-Token", newAccessToken.getAccessToken());
   }
 }

@@ -1,5 +1,7 @@
 package work.gaigeshen.tripartite.his.procurement.openapi.accesstoken;
 
+import work.gaigeshen.tripartite.his.procurement.openapi.config.HisProcurementConfig;
+
 import java.util.Objects;
 
 /**
@@ -13,7 +15,7 @@ public abstract class AbstractHisProcurementAccessTokenUpdateTask implements His
 
   private HisProcurementAccessTokenUpdateListener accessTokenUpdateListener;
 
-  private String account;
+  private HisProcurementConfig config;
 
   /**
    * 请先设置访问令牌存储器再使用此任务
@@ -36,8 +38,8 @@ public abstract class AbstractHisProcurementAccessTokenUpdateTask implements His
   }
 
   @Override
-  public final void setAccount(String account) {
-    this.account = account;
+  public final void setConfig(HisProcurementConfig config) {
+    this.config = config;
   }
 
   @Override
@@ -51,62 +53,69 @@ public abstract class AbstractHisProcurementAccessTokenUpdateTask implements His
   }
 
   @Override
-  public final String getAccount() {
-    return account;
+  public final HisProcurementConfig getConfig() {
+    return config;
   }
 
   @Override
   public final void executeUpdate() {
-    if (Objects.isNull(accessTokenStore)) {
-      throw new IllegalStateException("Could not execute update because 'accessTokenStore' not configured");
-    }
-    if (Objects.isNull(account)) {
-      throw new IllegalStateException("Could not execute update because 'account' not configured");
+    HisProcurementAccessTokenStore accessTokenStore = getAccessTokenStore();
+    HisProcurementConfig config = getConfig();
+    if (Objects.isNull(accessTokenStore) || Objects.isNull(config)) {
+      throw new IllegalStateException("access token store or config not found");
     }
     HisProcurementAccessToken currentAccessToken;
     try {
-      currentAccessToken = accessTokenStore.findByAccount(account);
-    } catch (HisProcurementAccessTokenStoreException e) {
-      handleUpdateFailed(new HisProcurementAccessTokenUpdateException("could not find current access token: "  + account, e)
-              .setCanRetry(true));
+      currentAccessToken = accessTokenStore.find(config);
+    } catch (Exception e) {
+      handleUpdateFailed(config, null, true, "could not find current access token: " + config);
       return;
     }
     if (Objects.isNull(currentAccessToken)) {
-      handleUpdateFailed(new HisProcurementAccessTokenUpdateException("current access token not found: "  + account));
+      handleUpdateFailed(config, null, false, "current access token not found:" + config);
       return;
     }
     HisProcurementAccessToken accessToken;
     try {
       accessToken = executeUpdate(currentAccessToken);
-    } catch (HisProcurementAccessTokenUpdateException ex) {
-      handleUpdateFailed(ex);
+    } catch (Exception ex) {
+      if (ex instanceof HisProcurementAccessTokenUpdateException) {
+        handleUpdateFailed(config, (HisProcurementAccessTokenUpdateException) ex);
+      } else {
+        handleUpdateFailed(config, currentAccessToken, true, ex.getMessage());
+      }
       return;
     }
     if (Objects.isNull(accessToken)) {
       return;
     }
     if (!HisProcurementAccessTokenHelper.isValid(accessToken)) {
-      handleUpdateFailed(new HisProcurementAccessTokenUpdateException("could not save invalid access token to store: " + account)
-              .setCurrentAccessToken(currentAccessToken)
-              .setCanRetry(true));
+      handleUpdateFailed(config, currentAccessToken, true, "new access token is invalid: " + config);
       return;
     }
     try {
-      accessTokenStore.save(accessToken);
-    } catch (HisProcurementAccessTokenStoreException e) {
-      handleUpdateFailed(new HisProcurementAccessTokenUpdateException("could not save access token to store: " + account)
-              .setCurrentAccessToken(currentAccessToken)
-              .setCanRetry(true));
+      accessTokenStore.save(config, accessToken);
+    } catch (Exception e) {
+      handleUpdateFailed(config, currentAccessToken, true, "could not save new access token: " + config);
       return;
     }
-    if (Objects.nonNull(accessTokenUpdateListener)) {
-      accessTokenUpdateListener.handleUpdated(currentAccessToken, accessToken);
+    HisProcurementAccessTokenUpdateListener listener = getAccessTokenUpdateListener();
+    if (Objects.nonNull(listener)) {
+      listener.handleUpdated(config, currentAccessToken, accessToken);
     }
   }
 
-  private void handleUpdateFailed(HisProcurementAccessTokenUpdateException ex) {
-    if (Objects.nonNull(accessTokenUpdateListener)) {
-      accessTokenUpdateListener.handleFailed(ex);
+  private void handleUpdateFailed(HisProcurementConfig config, HisProcurementAccessToken currentAccessToken,
+                                  boolean canRetry, String error) {
+    HisProcurementAccessTokenUpdateException exception = new HisProcurementAccessTokenUpdateException(error)
+            .setCurrentAccessToken(currentAccessToken).setCanRetry(canRetry);
+    handleUpdateFailed(config, exception);
+  }
+
+  private void handleUpdateFailed(HisProcurementConfig config, HisProcurementAccessTokenUpdateException ex) {
+    HisProcurementAccessTokenUpdateListener listener = getAccessTokenUpdateListener();
+    if (Objects.nonNull(listener)) {
+      listener.handleFailed(config, ex);
     }
   }
 

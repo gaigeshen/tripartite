@@ -36,6 +36,8 @@ public class HisProcurementProperties {
 
     private String account;
 
+    private String type;
+
     private String appCode;
 
     private String authCode;
@@ -70,6 +72,14 @@ public class HisProcurementProperties {
 
     public void setAccount(String account) {
       this.account = account;
+    }
+
+    public String getType() {
+      return type;
+    }
+
+    public void setType(String type) {
+      this.type = type;
     }
 
     public String getAppCode() {

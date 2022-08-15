@@ -1,7 +1,8 @@
 package work.gaigeshen.tripartite.his.procurement.openapi.accesstoken;
 
-import java.util.ArrayList;
-import java.util.List;
+import work.gaigeshen.tripartite.his.procurement.openapi.config.HisProcurementConfig;
+
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
@@ -13,34 +14,34 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class DefaultHisProcurementAccessTokenStore implements HisProcurementAccessTokenStore {
 
-  private final Map<String, HisProcurementAccessToken> internalStore = new ConcurrentHashMap<>();
+  private final Map<HisProcurementConfig, HisProcurementAccessToken> internalStore = new ConcurrentHashMap<>();
 
   @Override
-  public boolean save(HisProcurementAccessToken accessToken) throws HisProcurementAccessTokenException {
+  public boolean save(HisProcurementConfig config, HisProcurementAccessToken accessToken) throws HisProcurementAccessTokenStoreException {
     if (Objects.isNull(accessToken)) {
       throw new IllegalArgumentException("accessToken cannot be null");
     }
-    return Objects.isNull(internalStore.put(accessToken.getAccount(), accessToken));
+    return Objects.isNull(internalStore.put(config, accessToken));
   }
 
   @Override
-  public void deleteByAccount(String account) throws HisProcurementAccessTokenException {
-    if (Objects.isNull(account)) {
-      throw new IllegalArgumentException("account cannot be null");
+  public void delete(HisProcurementConfig config) throws HisProcurementAccessTokenStoreException {
+    if (Objects.isNull(config)) {
+      throw new IllegalArgumentException("config cannot be null");
     }
-    internalStore.remove(account);
+    internalStore.remove(config);
   }
 
   @Override
-  public HisProcurementAccessToken findByAccount(String account) throws HisProcurementAccessTokenException {
-    if (Objects.isNull(account)) {
-      throw new IllegalArgumentException("account cannot be null");
+  public HisProcurementAccessToken find(HisProcurementConfig config) throws HisProcurementAccessTokenStoreException {
+    if (Objects.isNull(config)) {
+      throw new IllegalArgumentException("config cannot be null");
     }
-    return internalStore.get(account);
+    return internalStore.get(config);
   }
 
   @Override
-  public List<HisProcurementAccessToken> findAll() throws HisProcurementAccessTokenException {
-    return new ArrayList<>(internalStore.values());
+  public Map<HisProcurementConfig, HisProcurementAccessToken> findAll() throws HisProcurementAccessTokenStoreException {
+    return new HashMap<>(internalStore);
   }
 }

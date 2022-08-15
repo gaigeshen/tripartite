@@ -11,6 +11,8 @@ public class HisProcurementAccessToken {
 
   private final String account;
 
+  private final String type;
+
   private final long expiresIn; // 有效期时长单位秒
 
   private final long expiresTimestamp; // 过期时间点单位秒
@@ -20,6 +22,7 @@ public class HisProcurementAccessToken {
   private HisProcurementAccessToken(Builder builder) {
     this.accessToken = builder.accessToken;
     this.account = builder.account;
+    this.type = builder.type;
     this.expiresIn = builder.expiresIn;
     this.expiresTimestamp = builder.expiresTimestamp;
     this.updateTime = builder.updateTime;
@@ -37,6 +40,10 @@ public class HisProcurementAccessToken {
     return account;
   }
 
+  public String getType() {
+    return type;
+  }
+
   public long getExpiresIn() {
     return expiresIn;
   }
@@ -51,7 +58,7 @@ public class HisProcurementAccessToken {
 
   @Override
   public String toString() {
-    return "AccessToken: " + account + "/" + updateTime;
+    return "AccessToken: " + account + "/" + type;
   }
 
   /**
@@ -64,35 +71,36 @@ public class HisProcurementAccessToken {
 
     private String account;
 
+    private String type;
+
     private long expiresIn;
 
     private long expiresTimestamp;
 
     private Date updateTime;
 
-    public Builder setAccessToken(String accessToken) {
+    public void setAccessToken(String accessToken) {
       this.accessToken = accessToken;
-      return this;
     }
 
-    public Builder setAccount(String account) {
+    public void setAccount(String account) {
       this.account = account;
-      return this;
     }
 
-    public Builder setExpiresIn(long expiresIn) {
+    public void setType(String type) {
+      this.type = type;
+    }
+
+    public void setExpiresIn(long expiresIn) {
       this.expiresIn = expiresIn;
-      return this;
     }
 
-    public Builder setExpiresTimestamp(long expiresTimestamp) {
+    public void setExpiresTimestamp(long expiresTimestamp) {
       this.expiresTimestamp = expiresTimestamp;
-      return this;
     }
 
-    public Builder setUpdateTime(Date updateTime) {
+    public void setUpdateTime(Date updateTime) {
       this.updateTime = updateTime;
-      return this;
     }
 
     public HisProcurementAccessToken build() {

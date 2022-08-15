@@ -2,6 +2,7 @@ package work.gaigeshen.tripartite.his.procurement.openapi.accesstoken;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import work.gaigeshen.tripartite.his.procurement.openapi.config.HisProcurementConfig;
 
 import java.util.Objects;
 import java.util.concurrent.Executors;
@@ -33,55 +34,48 @@ public class DefaultHisProcurementAccessTokenManager implements HisProcurementAc
   public DefaultHisProcurementAccessTokenManager(
           HisProcurementAccessTokenStore accessTokenStore, HisProcurementAccessTokenRefresher accessTokenRefresher)
           throws HisProcurementAccessTokenManagerException {
+    if (Objects.isNull(accessTokenStore)) {
+      throw new IllegalArgumentException("accessTokenStore cannot be null");
+    }
+    if (Objects.isNull(accessTokenRefresher)) {
+      throw new IllegalArgumentException("accessTokenRefresher cannot be null");
+    }
     this.accessTokenStore = accessTokenStore;
     this.accessTokenRefresher = accessTokenRefresher;
     createAndScheduleUpdateTasks();
   }
 
   @Override
-  public void addNewAccessToken(HisProcurementAccessToken accessToken)
-          throws HisProcurementAccessTokenManagerException, HisProcurementInvalidAccessTokenException {
-    if (Objects.isNull(accessToken)) {
-      throw new IllegalArgumentException("accessToken cannot be null");
+  public void addNewAccessToken(HisProcurementConfig config, HisProcurementAccessToken accessToken)
+          throws HisProcurementAccessTokenManagerException {
+    if (Objects.isNull(config) || Objects.isNull(accessToken)) {
+      throw new IllegalArgumentException("config and accessToken cannot be null");
     }
     if (!HisProcurementAccessTokenHelper.isValid(accessToken)) {
-      throw new HisProcurementInvalidAccessTokenException("Could not add invalid access token " + accessToken);
+      throw new HisProcurementAccessTokenManagerException("Could not add invalid access token: " + accessToken);
     }
     try {
-      if (!accessTokenStore.save(accessToken)) {
-        return;
-      }
+      if (!accessTokenStore.save(config, accessToken)) return;
     } catch (HisProcurementAccessTokenStoreException e) {
-      throw new HisProcurementAccessTokenManagerException("Could not add new access token " + accessToken, e);
+      throw new HisProcurementAccessTokenManagerException("Could not add new access token: " + accessToken, e);
     }
     try {
-      createAndScheduleUpdateTask(accessToken);
+      createAndScheduleUpdateTask(config, accessToken);
     } catch (Exception e) {
-      throw new HisProcurementAccessTokenManagerException("Could not schedule update task for new access token " + accessToken, e);
+      throw new HisProcurementAccessTokenManagerException(
+              "Could not schedule update task for new access token: " + accessToken, e);
     }
   }
 
   @Override
-  public void deleteAccessToken(String account) throws HisProcurementAccessTokenManagerException {
-    if (Objects.isNull(account)) {
-      throw new IllegalArgumentException("account cannot be null");
+  public HisProcurementAccessToken findAccessToken(HisProcurementConfig config) throws HisProcurementAccessTokenManagerException {
+    if (Objects.isNull(config)) {
+      throw new IllegalArgumentException("config cannot be null");
     }
     try {
-      accessTokenStore.deleteByAccount(account);
+      return accessTokenStore.find(config);
     } catch (HisProcurementAccessTokenStoreException e) {
-      throw new HisProcurementAccessTokenManagerException("Could not delete access token for account: " + account, e);
-    }
-  }
-
-  @Override
-  public HisProcurementAccessToken findAccessToken(String account) throws HisProcurementAccessTokenManagerException {
-    if (Objects.isNull(account)) {
-      throw new IllegalArgumentException("account cannot be null");
-    }
-    try {
-      return accessTokenStore.findByAccount(account);
-    } catch (HisProcurementAccessTokenStoreException e) {
-      throw new HisProcurementAccessTokenManagerException("Could not find access token for account: " + account, e);
+      throw new HisProcurementAccessTokenManagerException("Could not find access token: " + config, e);
     }
   }
 
@@ -95,31 +89,29 @@ public class DefaultHisProcurementAccessTokenManager implements HisProcurementAc
         log.warn("access token manager termination timeout");
       }
     } catch (InterruptedException e) {
-      throw new HisProcurementAccessTokenManagerException("Current thread interrupted while shutting down this access token manager", e);
+      throw new HisProcurementAccessTokenManagerException("Current thread interrupted while shutting down", e);
     }
   }
 
   private void createAndScheduleUpdateTasks() throws HisProcurementAccessTokenManagerException {
     try {
-      for (HisProcurementAccessToken accessToken : accessTokenStore.findAll()) {
-        createAndScheduleUpdateTask(accessToken);
-      }
+      accessTokenStore.findAll().forEach(this::createAndScheduleUpdateTask);
     } catch (Exception e) {
       throw new HisProcurementAccessTokenManagerException("Could not schedule access token update tasks", e);
     }
   }
 
-  private void createAndScheduleUpdateTask(HisProcurementAccessToken accessToken) {
+  private void createAndScheduleUpdateTask(HisProcurementConfig config, HisProcurementAccessToken accessToken) {
     long executionTimestamp = accessToken.getExpiresTimestamp() - 600;
-    createAndScheduleUpdateTask(accessToken, executionTimestamp - System.currentTimeMillis() / 1000);
+    createAndScheduleUpdateTask(config, executionTimestamp - System.currentTimeMillis() / 1000);
   }
 
-  private void createAndScheduleUpdateTask(HisProcurementAccessToken accessToken, long delaySeconds) {
-    executorService.schedule(createUpdateTask(accessToken), delaySeconds, TimeUnit.SECONDS);
+  private void createAndScheduleUpdateTask(HisProcurementConfig config, long delaySeconds) {
+    executorService.schedule(createUpdateTask(config), delaySeconds, TimeUnit.SECONDS);
   }
 
-  private HisProcurementAccessTokenUpdateTask createUpdateTask(HisProcurementAccessToken accessToken) {
-    return new HisProcurementAccessTokenUpdateTaskImpl(accessToken.getAccount());
+  private HisProcurementAccessTokenUpdateTask createUpdateTask(HisProcurementConfig config) {
+    return new HisProcurementAccessTokenUpdateTaskImpl(config);
   }
 
   /**
@@ -129,16 +121,16 @@ public class DefaultHisProcurementAccessTokenManager implements HisProcurementAc
    */
   private class HisProcurementAccessTokenUpdateTaskImpl extends AbstractHisProcurementAccessTokenUpdateTask {
 
-    public HisProcurementAccessTokenUpdateTaskImpl(String account) {
+    public HisProcurementAccessTokenUpdateTaskImpl(HisProcurementConfig config) {
       setAccessTokenStore(accessTokenStore);
       setAccessTokenUpdateListener(new HisProcurementAccessTokenUpdateListenerImpl());
-      setAccount(account);
+      setConfig(config);
     }
 
     @Override
     protected HisProcurementAccessToken executeUpdate(HisProcurementAccessToken currentAccessToken)
             throws HisProcurementAccessTokenUpdateException {
-      return accessTokenRefresher.refresh(currentAccessToken);
+      return accessTokenRefresher.refresh(getConfig(), currentAccessToken);
     }
   }
 
@@ -149,22 +141,22 @@ public class DefaultHisProcurementAccessTokenManager implements HisProcurementAc
    */
   private class HisProcurementAccessTokenUpdateListenerImpl implements HisProcurementAccessTokenUpdateListener {
     @Override
-    public void handleUpdated(HisProcurementAccessToken oldAccessToken, HisProcurementAccessToken newAccessToken) {
+    public void handleUpdated(HisProcurementConfig config, HisProcurementAccessToken oldAccessToken, HisProcurementAccessToken newAccessToken) {
       log.info("Access token updated, old access token is {}, new access token is {}", oldAccessToken, newAccessToken);
       try {
-        createAndScheduleUpdateTask(newAccessToken);
+        createAndScheduleUpdateTask(config, newAccessToken);
       } catch (Exception e) {
         log.warn("Could not schedule access token update task, current access token is " + newAccessToken, e);
       }
     }
     @Override
-    public void handleFailed(HisProcurementAccessTokenUpdateException ex) {
+    public void handleFailed(HisProcurementConfig config, HisProcurementAccessTokenUpdateException ex) {
       log.warn("Access token update failed"
               + (ex.isCanRetry() && ex.hasCurrentAccessToken() ? ", retry again 10 seconds later" : "")
               + (ex.hasCurrentAccessToken() ? ", current access token is " + ex.getCurrentAccessToken() : ""), ex);
       if (ex.isCanRetry() && ex.hasCurrentAccessToken()) {
         try {
-          createAndScheduleUpdateTask(ex.getCurrentAccessToken(), 10);
+          createAndScheduleUpdateTask(config, 10);
         } catch (Exception e) {
           log.warn("Could not reschedule update task, current access token is " + ex.getCurrentAccessToken(), e);
         }

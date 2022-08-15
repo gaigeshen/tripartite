@@ -14,38 +14,32 @@ import java.util.function.Predicate;
  */
 public class DefaultHisProcurementClients implements HisProcurementClients {
 
-  private final Map<HisProcurementConfig, HisProcurementClient> hisProcurementClients = new ConcurrentHashMap<>();
+  private final Map<HisProcurementConfig, HisProcurementBasicClient> hisProcurementClients = new ConcurrentHashMap<>();
 
-  private final HisProcurementClientFactory hisProcurementClientFactory;
+  private final HisProcurementClientCreator hisProcurementClientCreator;
 
-  public DefaultHisProcurementClients(Collection<HisProcurementClient> hisProcurementClients, HisProcurementClientFactory hisProcurementClientFactory) {
+  public DefaultHisProcurementClients(
+          Collection<HisProcurementBasicClient> hisProcurementClients,
+          HisProcurementClientCreator hisProcurementClientCreator) {
     if (Objects.isNull(hisProcurementClients)) {
       throw new IllegalArgumentException("his procurement clients cannot be null");
     }
-    if (Objects.isNull(hisProcurementClientFactory)) {
-      throw new IllegalArgumentException("his procurement client factory cannot be null");
+    if (Objects.isNull(hisProcurementClientCreator)) {
+      throw new IllegalArgumentException("his procurement client creator cannot be null");
     }
-    for (HisProcurementClient hisProcurementClient : hisProcurementClients) {
+    for (HisProcurementBasicClient hisProcurementClient : hisProcurementClients) {
       this.hisProcurementClients.put(hisProcurementClient.getHisProcurementConfig(), hisProcurementClient);
     }
-    this.hisProcurementClientFactory = hisProcurementClientFactory;
+    this.hisProcurementClientCreator = hisProcurementClientCreator;
   }
 
   @Override
-  public HisProcurementClient getClient(Predicate<HisProcurementConfig> predicate) throws HisProcurementClientNotFoundException {
+  public HisProcurementBasicClient getClient(Predicate<HisProcurementConfig> predicate)
+          throws HisProcurementClientNotFoundException {
     if (Objects.isNull(predicate)) {
       throw new IllegalArgumentException("predicate cannot be null");
     }
-    HisProcurementClient hisProcurementClient  = findHisProcurementClient(predicate);
-    if (Objects.isNull(hisProcurementClient)) {
-      throw new HisProcurementClientNotFoundException("could not his procurement client");
-    }
-    return hisProcurementClient;
-  }
-
-  @Override
-  public HisProcurementClient getClient() throws HisProcurementClientNotFoundException {
-    HisProcurementClient hisProcurementClient = findHisProcurementClient(cfg -> true);
+    HisProcurementBasicClient hisProcurementClient  = findHisProcurementClient(predicate);
     if (Objects.isNull(hisProcurementClient)) {
       throw new HisProcurementClientNotFoundException("could not find his procurement client");
     }
@@ -53,18 +47,18 @@ public class DefaultHisProcurementClients implements HisProcurementClients {
   }
 
   @Override
-  public HisProcurementClient getClientOrCreate(HisProcurementConfig config) {
+  public HisProcurementBasicClient getClientOrCreate(HisProcurementConfig config) {
     if (Objects.isNull(config)) {
       throw new IllegalArgumentException("config cannot be null");
     }
-    return hisProcurementClients.computeIfAbsent(config, hisProcurementClientFactory::create);
+    return hisProcurementClients.computeIfAbsent(config, hisProcurementClientCreator::create);
   }
 
-  private HisProcurementClient findHisProcurementClient(Predicate<HisProcurementConfig> predicate) {
+  private HisProcurementBasicClient findHisProcurementClient(Predicate<HisProcurementConfig> predicate) {
     if (Objects.isNull(predicate)) {
       throw new IllegalArgumentException("predicate cannot be null");
     }
-    for (Map.Entry<HisProcurementConfig, HisProcurementClient> entry : hisProcurementClients.entrySet()) {
+    for (Map.Entry<HisProcurementConfig, HisProcurementBasicClient> entry : hisProcurementClients.entrySet()) {
       if (predicate.test(entry.getKey())) {
         return entry.getValue();
       }
