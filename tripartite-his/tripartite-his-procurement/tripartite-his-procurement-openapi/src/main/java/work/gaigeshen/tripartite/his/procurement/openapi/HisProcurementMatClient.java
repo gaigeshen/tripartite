@@ -155,32 +155,6 @@ public interface HisProcurementMatClient extends HisProcurementBasicClient {
   }
 
   /**
-   * 获取产品配送企业
-   *
-   * @param inputData 请求参数数据部分不能为空
-   * @return 响应结果不为空
-   * @throws HisProcurementClientException 执行请求或者执行业务发生异常
-   */
-  default HisProcurementProductDeliveryEnterpriseListResponse listProductDeliveryEnterprises(
-          HisProcurementProductDeliveryEnterpriseListInputData inputData) throws HisProcurementClientException {
-    return execute(new DefaultHisProcurementParameters("ZJ9713", inputData),
-            HisProcurementProductDeliveryEnterpriseListResponse.class, getHisProcurementConfig().getServiceUri());
-  }
-
-  /**
-   * 设置产品配送企业
-   *
-   * @param inputData 请求参数数据部分不能为空
-   * @return 响应结果不为空
-   * @throws HisProcurementClientException 执行请求或者执行业务发生异常
-   */
-  default HisProcurementProductDeliveryEnterpriseSetResponse setProductDeliveryEnterprises(
-          HisProcurementProductDeliveryEnterpriseSetInputData inputData) throws HisProcurementClientException {
-    return execute(new DefaultHisProcurementParameters("ZJ9714", inputData),
-            HisProcurementProductDeliveryEnterpriseSetResponse.class, getHisProcurementConfig().getServiceUri());
-  }
-
-  /**
    * 创建结算单
    *
    * @param inputData 请求参数数据部分不能为空
