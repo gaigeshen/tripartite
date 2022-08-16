@@ -28,6 +28,8 @@
 
     <name>tripartite</name>
 
+    <description>the tripartite project</description>
+
     <url>https://github.com/gaigeshen/tripartite</url>
 
     <scm>
