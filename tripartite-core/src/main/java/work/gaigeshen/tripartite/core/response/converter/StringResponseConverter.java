@@ -5,7 +5,7 @@ import work.gaigeshen.tripartite.core.header.Headers;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
+import java.io.UnsupportedEncodingException;
 
 /**
  * 响应结果数据转换器，用于转换为字符串
@@ -28,6 +28,10 @@ public class StringResponseConverter implements ResponseConverter<String> {
     } catch (IOException e) {
       throw new ResponseConvertingException("could not read bytes from input stream", e);
     }
-    return outputStream.toString(StandardCharsets.UTF_8);
+    try {
+      return outputStream.toString("utf-8");
+    } catch (UnsupportedEncodingException e) {
+      throw new ResponseConvertingException("encoding invalid", e);
+    }
   }
 }

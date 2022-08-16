@@ -46,9 +46,9 @@ public class DingAutoConfiguration {
   }
 
   @Bean
-  public FilterRegistrationBean<DingDefaultNotifyContentFilter> dingNotifyContentFilter(DingDefaultNotifyContentReceiver receiver) {
+  public FilterRegistrationBean dingNotifyContentFilter(DingDefaultNotifyContentReceiver receiver) {
     DingDefaultNotifyContentFilter filter = new DingDefaultNotifyContentFilter(receiver);
-    FilterRegistrationBean<DingDefaultNotifyContentFilter> filterBean = new FilterRegistrationBean<>();
+    FilterRegistrationBean filterBean = new FilterRegistrationBean();
     filterBean.setUrlPatterns(Collections.singletonList("/ding-notify-receiver"));
     filterBean.setFilter(filter);
     return filterBean;

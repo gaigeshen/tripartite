@@ -13,6 +13,7 @@
         <module>tripartite-ding</module>
         <module>tripartite-pay</module>
         <module>tripartite-doudian</module>
+        <module>tripartite-his</module>
     </modules>
 
     <packaging>pom</packaging>
@@ -55,11 +56,11 @@
         <commons.dbutils.version>1.7</commons.dbutils.version>
         <slf4j.version>1.7.30</slf4j.version>
         <logback.version>1.2.4</logback.version>
-        <spring.web.version>5.3.12</spring.web.version>
+        <spring.web.version>4.3.30.RELEASE</spring.web.version>
         <javax.servlet.api.version>3.1.0</javax.servlet.api.version>
-        <spring.boot.version>2.5.4</spring.boot.version>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <spring.boot.version>1.5.22.RELEASE</spring.boot.version>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>utf-8</project.reporting.outputEncoding>
     </properties>
@@ -131,21 +132,6 @@
                 <artifactId>javax.servlet-api</artifactId>
                 <version>${javax.servlet.api.version}</version>
             </dependency>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-autoconfigure</artifactId>
-                <version>${spring.boot.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter</artifactId>
-                <version>${spring.boot.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-configuration-processor</artifactId>
-                <version>${spring.boot.version}</version>
-            </dependency>
 
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -189,7 +175,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-gpg-plugin</artifactId>
-                <version>1.6</version>
+                <version>3.0.1</version>
                 <executions>
                     <execution>
                         <id>sign-artifacts</id>

@@ -43,6 +43,7 @@ public class ParameterResolver {
     if (Objects.isNull(target)) {
       throw new IllegalArgumentException("target object cannot be null");
     }
+    field.setAccessible(true);
     Object value = field.get(target);
     if (Objects.isNull(value)) {
       return;
@@ -63,7 +64,6 @@ public class ParameterResolver {
       throw new IllegalArgumentException("field cannot be null");
     }
     return FIELD_MAPPING_METADATA.computeIfAbsent(field, f -> {
-      f.setAccessible(true);
       Parameter metadata = f.getAnnotation(Parameter.class);
       if (Objects.isNull(metadata)) {
         return new Metadata(f.getName(), DefaultParameterConverter.INSTANCE);

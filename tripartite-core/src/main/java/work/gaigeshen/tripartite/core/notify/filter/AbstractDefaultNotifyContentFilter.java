@@ -19,7 +19,7 @@ import java.util.Map;
 public abstract class AbstractDefaultNotifyContentFilter extends AbstractNotifyContentFilter<DefaultNotifyContent> {
 
   public AbstractDefaultNotifyContentFilter() {
-    super(new AbstractNotifyContentReceiver<>() {});
+    super(new AbstractNotifyContentReceiver<DefaultNotifyContent>() {});
   }
 
   public AbstractDefaultNotifyContentFilter(NotifyContentReceiver<DefaultNotifyContent> receiver) {

@@ -21,7 +21,7 @@ public abstract class AbstractNotifyBodyFilter<C extends NotifyBody> extends Abs
   }
 
   protected AbstractNotifyBodyFilter() {
-    super(new AbstractNotifyContentReceiver<>() {});
+    super(new AbstractNotifyContentReceiver<C>() {});
   }
 
   @Override

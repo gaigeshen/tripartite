@@ -39,9 +39,9 @@ public class WechatAutoConfiguration {
   }
 
   @Bean
-  public FilterRegistrationBean<WechatNotifyBodyFilter> wechatNotifyBodyFilter(WechatNotifyBodyReceiver receiver) {
+  public FilterRegistrationBean wechatNotifyBodyFilter(WechatNotifyBodyReceiver receiver) {
     WechatNotifyBodyFilter filter = new WechatNotifyBodyFilter(receiver);
-    FilterRegistrationBean<WechatNotifyBodyFilter> filterBean = new FilterRegistrationBean<>();
+    FilterRegistrationBean filterBean = new FilterRegistrationBean();
     filterBean.setUrlPatterns(Collections.singletonList("/wechat-notify-receiver/*"));
     filterBean.setFilter(filter);
     return filterBean;
