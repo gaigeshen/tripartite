@@ -100,8 +100,8 @@ public class DefaultAlipayPrivateKey implements AlipayPrivateKey {
       throw new IllegalArgumentException("file not readable: " + certFilename);
     }
     try {
-      String privateKeyContent = Files.readString(privateKeyPath);
-      String certContent = Files.readString(certPath);
+      String privateKeyContent = new String(Files.readAllBytes(privateKeyPath), StandardCharsets.UTF_8);
+      String certContent = new String(Files.readAllBytes(certPath), StandardCharsets.UTF_8);
       return load(privateKeyContent, certContent);
     } catch (IOException e) {
       throw new AlipayCertificateException(e.getMessage(), e);

@@ -102,8 +102,8 @@ public class DefaultHisProcurementAccessTokenManager implements HisProcurementAc
   }
 
   private void createAndScheduleUpdateTask(HisProcurementConfig config, HisProcurementAccessToken accessToken) {
-    long executionTimestamp = accessToken.getExpiresTimestamp() - 600;
-    createAndScheduleUpdateTask(config, executionTimestamp - System.currentTimeMillis() / 1000);
+    long remainingDuration = HisProcurementAccessTokenHelper.getRemainingDuration(accessToken);
+    createAndScheduleUpdateTask(config, remainingDuration - 600);
   }
 
   private void createAndScheduleUpdateTask(HisProcurementConfig config, long delaySeconds) {
