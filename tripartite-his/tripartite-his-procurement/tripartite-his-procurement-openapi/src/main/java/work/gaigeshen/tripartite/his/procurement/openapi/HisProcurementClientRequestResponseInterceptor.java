@@ -45,7 +45,7 @@ public class HisProcurementClientRequestResponseInterceptor extends AbstractInte
       Mac mac = Mac.getInstance(secretKey.getAlgorithm());
       mac.init(secretKey);
       mac.update((timestamp + "\n").getBytes(StandardCharsets.UTF_8));
-      mac.update((timestamp + "\n" + bodyContent).getBytes(StandardCharsets.UTF_8));
+      mac.update(bodyContent.getBytes(StandardCharsets.UTF_8));
       byte[] digest = mac.doFinal();
       String digestResult = Hex.toHexString(digest).toLowerCase();
       Headers headers = request.headers();

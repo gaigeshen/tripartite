@@ -19,6 +19,22 @@ public class HisProcurementAccessTokenHelper {
   private HisProcurementAccessTokenHelper() { }
 
   /**
+   * 返回该访问令牌剩余有效时长单位秒
+   *
+   * @param accessToken 访问令牌不可为空
+   * @return 剩余有效时长单位秒
+   */
+  public static long getRemainingDuration(HisProcurementAccessToken accessToken) {
+    if (Objects.isNull(accessToken)) {
+      throw new IllegalArgumentException("accessToken cannot be null");
+    }
+    if (isExpired(accessToken)) {
+      return 0;
+    }
+    return accessToken.getExpiresTimestamp() - System.currentTimeMillis() / 1000;
+  }
+
+  /**
    * 创建新的访问令牌
    *
    * @param config 配置信息不能为空
