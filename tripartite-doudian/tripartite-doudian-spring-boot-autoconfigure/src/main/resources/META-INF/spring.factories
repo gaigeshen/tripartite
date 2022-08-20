@@ -1,2 +1,0 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  work.gaigeshen.tripartite.doudian.spring.boot.autoconfigure.DoudianAutoConfiguration
