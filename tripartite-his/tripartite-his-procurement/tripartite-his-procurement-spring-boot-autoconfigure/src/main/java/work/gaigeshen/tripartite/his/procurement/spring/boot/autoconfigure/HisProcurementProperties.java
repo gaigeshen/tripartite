@@ -42,6 +42,8 @@ public class HisProcurementProperties {
 
     private String authCode;
 
+    private String secret;
+
     public String getServerHost() {
       return serverHost;
     }
@@ -96,6 +98,14 @@ public class HisProcurementProperties {
 
     public void setAuthCode(String authCode) {
       this.authCode = authCode;
+    }
+
+    public String getSecret() {
+      return secret;
+    }
+
+    public void setSecret(String secret) {
+      this.secret = secret;
     }
   }
 }
