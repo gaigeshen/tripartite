@@ -40,8 +40,10 @@ public class HisProcurementClientRequestResponseInterceptor extends AbstractInte
   protected void updateRequest(Request request) throws InterceptingException {
     long timestamp = System.currentTimeMillis() / 1000;
     String bodyContent = new String(request.bodyBytes(), StandardCharsets.UTF_8);
+    String account = hisProcurementConfig.getAccount();
+    byte[] secretBytes = hisProcurementConfig.getSecret().getBytes(StandardCharsets.UTF_8);
     try {
-      SecretKey secretKey = new SecretKeySpec(hisProcurementConfig.getAuthCode().getBytes(StandardCharsets.UTF_8), "HmacSm3");
+      SecretKey secretKey = new SecretKeySpec(secretBytes, "HmacSm3");
       Mac mac = Mac.getInstance(secretKey.getAlgorithm());
       mac.init(secretKey);
       mac.update((timestamp + "\n").getBytes(StandardCharsets.UTF_8));
@@ -49,7 +51,7 @@ public class HisProcurementClientRequestResponseInterceptor extends AbstractInte
       byte[] digest = mac.doFinal();
       String digestResult = Hex.toHexString(digest).toLowerCase();
       Headers headers = request.headers();
-      headers.putValue("x-ca-key", hisProcurementConfig.getAccount());
+      headers.putValue("x-ca-key", account);
       headers.putValue("x-ca-signature", timestamp + ":" + digestResult);
     } catch (Exception e) {
       throw new InterceptingException("update request signature error", e);

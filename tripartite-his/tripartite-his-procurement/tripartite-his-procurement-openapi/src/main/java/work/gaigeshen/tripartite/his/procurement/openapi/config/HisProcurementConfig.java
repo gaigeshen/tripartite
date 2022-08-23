@@ -26,6 +26,8 @@ public class HisProcurementConfig {
 
   private final String authCode;
 
+  private final String secret;
+
   private HisProcurementConfig(Builder builder) {
     this.serverHost = builder.serverHost;
     this.accessTokenUri = builder.accessTokenUri;
@@ -34,6 +36,7 @@ public class HisProcurementConfig {
     this.type = builder.type;
     this.appCode = builder.appCode;
     this.authCode = builder.authCode;
+    this.secret = builder.secret;
   }
 
   public static Builder builder() {
@@ -66,6 +69,10 @@ public class HisProcurementConfig {
 
   public String getAuthCode() {
     return authCode;
+  }
+
+  public String getSecret() {
+    return secret;
   }
 
   @Override
@@ -110,6 +117,8 @@ public class HisProcurementConfig {
 
     private String authCode;
 
+    private String secret;
+
     public Builder setServerHost(String serverHost) {
       this.serverHost = serverHost;
       return this;
@@ -142,6 +151,11 @@ public class HisProcurementConfig {
 
     public Builder setAuthCode(String authCode) {
       this.authCode = authCode;
+      return this;
+    }
+
+    public Builder setSecret(String secret) {
+      this.secret = secret;
       return this;
     }
 

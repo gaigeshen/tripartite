@@ -51,7 +51,7 @@ public class HisProcurementAutoConfiguration {
               .setServerHost(client.getServerHost())
               .setAccessTokenUri(client.getAccessTokenUri()).setServiceUri(client.getServiceUri())
               .setAccount(client.getAccount()).setType(client.getType())
-              .setAppCode(client.getAppCode()).setAuthCode(client.getAuthCode())
+              .setAppCode(client.getAppCode()).setAuthCode(client.getAuthCode()).setSecret(client.getSecret())
               .build();
       HisProcurementBasicClient procurementClient = hisProcurementClientCreator.create(config);
       hisProcurementClients.add(procurementClient);
