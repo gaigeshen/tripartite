@@ -7,13 +7,13 @@ import work.gaigeshen.tripartite.his.procurement.openapi.response.AbstractHisPro
  */
 public class HisProcurementStatementCreateResponse extends AbstractHisProcurementResponse {
 
-  private String pryOrdId;
+  private String payOrdId;
 
-  public String getPryOrdId() {
-    return pryOrdId;
+  public String getPayOrdId() {
+    return payOrdId;
   }
 
-  public void setPryOrdId(String pryOrdId) {
-    this.pryOrdId = pryOrdId;
+  public void setPayOrdId(String payOrdId) {
+    this.payOrdId = payOrdId;
   }
 }
