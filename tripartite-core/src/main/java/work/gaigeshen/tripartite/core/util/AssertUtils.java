@@ -16,26 +16,8 @@ public abstract class AssertUtils {
         }
     }
 
-    public static void isFalse(boolean expression, String message) {
-        if (expression) {
-            throw new IllegalArgumentException(message);
-        }
-    }
-
-    public static void isNull(Object object, String message) {
-        if (object != null) {
-            throw new IllegalArgumentException(message);
-        }
-    }
-
     public static void notNull(Object object, String message) {
         if (object == null) {
-            throw new IllegalArgumentException(message);
-        }
-    }
-
-    public static void isEmpty(Collection<?> collection, String message) {
-        if (collection != null && !collection.isEmpty()) {
             throw new IllegalArgumentException(message);
         }
     }
@@ -43,6 +25,18 @@ public abstract class AssertUtils {
     public static void notEmpty(Collection<?> collection, String message) {
         if (collection == null || collection.isEmpty()) {
             throw new IllegalArgumentException(message);
+        }
+    }
+
+    public static void notBlank(CharSequence text, String message) {
+        int length;
+        if (text == null || (length = text.length()) == 0) {
+            throw new IllegalArgumentException(message);
+        }
+        for (int i = 0; i < length; i++) {
+            if (!Character.isWhitespace(text.charAt(i))) {
+                throw new IllegalArgumentException(message);
+            }
         }
     }
 }
