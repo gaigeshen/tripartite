@@ -10,6 +10,8 @@ import java.util.Objects;
  */
 public abstract class TimestampUtils {
 
+  private TimestampUtils() { }
+
   public static String timestamp() {
     return timestamp(new Date());
   }
