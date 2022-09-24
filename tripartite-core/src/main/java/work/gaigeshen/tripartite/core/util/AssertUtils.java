@@ -40,7 +40,7 @@ public abstract class AssertUtils {
         }
     }
 
-    public static void isNotEmpty(Collection<?> collection, String message) {
+    public static void notEmpty(Collection<?> collection, String message) {
         if (collection == null || collection.isEmpty()) {
             throw new IllegalArgumentException(message);
         }
