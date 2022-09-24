@@ -35,8 +35,9 @@ public abstract class AssertUtils {
         }
         for (int i = 0; i < length; i++) {
             if (!Character.isWhitespace(text.charAt(i))) {
-                throw new IllegalArgumentException(message);
+                return;
             }
         }
+        throw new IllegalArgumentException(message);
     }
 }
