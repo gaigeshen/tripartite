@@ -1,72 +1,96 @@
 package work.gaigeshen.tripartite.ding.openapi.accesstoken;
 
 import java.util.Date;
-import java.util.Objects;
 
 /**
- * 钉钉访问令牌
- *
  * @author gaigeshen
  */
 public class DingAccessToken {
 
-  private final String token;
+    private final String accessToken;
 
-  private final long expiresInSeconds;
+    private final String appKey;
 
-  private final long createTime; // seconds
+    private final long expiresIn; // 有效期时长单位秒
 
-  public DingAccessToken(String token, long expiresInSeconds) {
-    if (Objects.isNull(token)) {
-      throw new IllegalArgumentException("token cannot be null");
+    private final long expiresTimestamp; // 过期时间点单位秒
+
+    private final Date updateTime; // 更新时间
+
+    private DingAccessToken(Builder builder) {
+        this.accessToken = builder.accessToken;
+        this.appKey = builder.appKey;
+        this.expiresIn = builder.expiresIn;
+        this.expiresTimestamp = builder.expiresTimestamp;
+        this.updateTime = builder.updateTime;
     }
-    if (expiresInSeconds <= 0) {
-      throw new IllegalArgumentException("expiresInSeconds is invalid");
+
+    public static Builder builder() {
+        return new Builder();
     }
-    this.token = token;
-    this.expiresInSeconds = expiresInSeconds;
-    this.createTime = System.currentTimeMillis() / 1000;
-  }
 
-  public String getToken() {
-    return token;
-  }
-
-  public long getExpiresInSeconds() {
-    return expiresInSeconds;
-  }
-
-  public Date getCreateTime() {
-    return new Date(createTime * 1000);
-  }
-
-  public Date getExpiresTime() {
-    return new Date((createTime + expiresInSeconds) * 1000);
-  }
-
-  public boolean isExpired() {
-    return getExpiresTime().before(new Date());
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
+    public String getAccessToken() {
+        return accessToken;
     }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
+
+    public String getAppKey() {
+        return appKey;
     }
-    DingAccessToken that = (DingAccessToken) o;
-    return Objects.equals(token, that.token);
-  }
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(token);
-  }
+    public long getExpiresIn() {
+        return expiresIn;
+    }
 
-  @Override
-  public String toString() {
-    return "AccessToken: " + token + "/" + getExpiresTime();
-  }
+    public long getExpiresTimestamp() {
+        return expiresTimestamp;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    @Override
+    public String toString() {
+        return "AccessToken: " + appKey;
+    }
+
+    /**
+     * @author gaigeshen
+     */
+    public static class Builder {
+
+        private String accessToken;
+
+        private String appKey;
+
+        private long expiresIn;
+
+        private long expiresTimestamp;
+
+        private Date updateTime;
+
+        public void setAccessToken(String accessToken) {
+            this.accessToken = accessToken;
+        }
+
+        public void setAppKey(String appKey) {
+            this.appKey = appKey;
+        }
+
+        public void setExpiresIn(long expiresIn) {
+            this.expiresIn = expiresIn;
+        }
+
+        public void setExpiresTimestamp(long expiresTimestamp) {
+            this.expiresTimestamp = expiresTimestamp;
+        }
+
+        public void setUpdateTime(Date updateTime) {
+            this.updateTime = updateTime;
+        }
+
+        public DingAccessToken build() {
+            return new DingAccessToken(this);
+        }
+    }
 }

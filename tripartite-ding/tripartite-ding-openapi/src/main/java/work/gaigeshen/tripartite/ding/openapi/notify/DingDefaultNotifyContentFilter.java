@@ -20,41 +20,41 @@ import java.security.GeneralSecurityException;
  */
 public class DingDefaultNotifyContentFilter extends AbstractDefaultNotifyContentFilter {
 
-  public static final String REPLY_TEXT_TEMPLATE = "{\"msg_signature\":\"%s\",\"timeStamp\":\"%s\",\"nonce\":\"%s\",\"encrypt\":\"%s\"}";
+    public static final String REPLY_TEXT_TEMPLATE = "{\"msg_signature\":\"%s\",\"timeStamp\":\"%s\",\"nonce\":\"%s\",\"encrypt\":\"%s\"}";
 
-  public DingDefaultNotifyContentFilter(DingDefaultNotifyContentReceiver receiver) {
-    super(receiver);
-  }
-
-  @Override
-  protected void renderOnSuccess(DefaultNotifyContent notifyContent, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    renderInternal("success", notifyContent, response);
-  }
-
-  @Override
-  protected void renderOnFail(DefaultNotifyContent notifyContent, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    renderInternal("fail", notifyContent, response);
-  }
-
-  private void renderInternal(String replyPlainText, DefaultNotifyContent notifyContent, HttpServletResponse response) throws ServletException, IOException {
-
-    DingConfig dingConfig = (DingConfig) notifyContent.getValue("ding_config");
-
-    String timestamp = TimestampUtils.unixTimestamp();
-    String nonce = RandomStringUtils.randomAlphanumeric(16);
-
-    String encrypted;
-    try {
-      encrypted = DingDefaultNotifyContentReceiver.encrypt(dingConfig, replyPlainText);
-    } catch (GeneralSecurityException e) {
-      throw new ServletException(e.getMessage(), e);
+    public DingDefaultNotifyContentFilter(DingDefaultNotifyContentReceiver receiver) {
+        super(receiver);
     }
 
-    String signature = DingDefaultNotifyContentReceiver.genSignature(dingConfig, timestamp, nonce, encrypted);
+    @Override
+    protected void renderOnSuccess(DefaultNotifyContent notifyContent, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        renderInternal("success", notifyContent, response);
+    }
 
-    String replyText = String.format(REPLY_TEXT_TEMPLATE, signature, timestamp, nonce, encrypted);
+    @Override
+    protected void renderOnFail(DefaultNotifyContent notifyContent, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        renderInternal("fail", notifyContent, response);
+    }
 
-    response.setContentType("application/json;charset=UTF-8");
-    response.getOutputStream().write(replyText.getBytes(StandardCharsets.UTF_8));
-  }
+    private void renderInternal(String replyPlainText, DefaultNotifyContent notifyContent, HttpServletResponse response) throws ServletException, IOException {
+
+        DingConfig dingConfig = (DingConfig) notifyContent.getValue("ding_config");
+
+        String timestamp = TimestampUtils.unixTimestamp();
+        String nonce = RandomStringUtils.randomAlphanumeric(16);
+
+        String encrypted;
+        try {
+            encrypted = DingDefaultNotifyContentReceiver.encrypt(dingConfig, replyPlainText);
+        } catch (GeneralSecurityException e) {
+            throw new ServletException(e.getMessage(), e);
+        }
+
+        String signature = DingDefaultNotifyContentReceiver.genSignature(dingConfig, timestamp, nonce, encrypted);
+
+        String replyText = String.format(REPLY_TEXT_TEMPLATE, signature, timestamp, nonce, encrypted);
+
+        response.setContentType("application/json;charset=UTF-8");
+        response.getOutputStream().write(replyText.getBytes(StandardCharsets.UTF_8));
+    }
 }
