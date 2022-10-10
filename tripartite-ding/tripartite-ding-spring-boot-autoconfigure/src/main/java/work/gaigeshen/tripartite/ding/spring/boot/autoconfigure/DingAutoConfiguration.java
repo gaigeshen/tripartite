@@ -7,11 +7,18 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import work.gaigeshen.tripartite.core.client.Client;
+import work.gaigeshen.tripartite.core.client.Clients;
+import work.gaigeshen.tripartite.core.client.DefaultClients;
+import work.gaigeshen.tripartite.core.client.accesstoken.AccessTokenManager;
+import work.gaigeshen.tripartite.core.client.accesstoken.AccessTokenStore;
+import work.gaigeshen.tripartite.core.client.accesstoken.DefaultAccessTokenManager;
+import work.gaigeshen.tripartite.core.client.accesstoken.DefaultAccessTokenStore;
 import work.gaigeshen.tripartite.core.notify.AbstractNotifyContentProcessor;
 import work.gaigeshen.tripartite.core.notify.DefaultNotifyContent;
-import work.gaigeshen.tripartite.ding.openapi.DingClient;
-import work.gaigeshen.tripartite.ding.openapi.DingClients;
-import work.gaigeshen.tripartite.ding.openapi.accesstoken.*;
+import work.gaigeshen.tripartite.ding.openapi.DingClientCreator;
+import work.gaigeshen.tripartite.ding.openapi.accesstoken.DingAccessTokenRefresher;
+import work.gaigeshen.tripartite.ding.openapi.config.DingConfig;
 import work.gaigeshen.tripartite.ding.openapi.notify.DingDefaultNotifyContentFilter;
 import work.gaigeshen.tripartite.ding.openapi.notify.DingDefaultNotifyContentReceiver;
 
@@ -23,7 +30,7 @@ import java.util.List;
  * @author gaigeshen
  */
 @EnableConfigurationProperties({DingProperties.class})
-@ConditionalOnClass({DingClient.class})
+@ConditionalOnClass({Client.class})
 @Configuration
 public class DingAutoConfiguration {
 
@@ -48,29 +55,29 @@ public class DingAutoConfiguration {
     }
 
     @Bean
-    public DingDefaultNotifyContentReceiver dingNotifyContentReceiver(DingClients clients) {
+    public DingDefaultNotifyContentReceiver dingNotifyContentReceiver(Clients<DingConfig> clients) {
         DingDefaultNotifyContentReceiver receiver = new DingDefaultNotifyContentReceiver(clients);
         receiver.setProcessors(new ArrayList<>(processors));
         return receiver;
     }
 
     @Bean
-    public DingClients dingClients() {
-        return null;
+    public Clients<DingConfig> dingClients() {
+        return new DefaultClients<>(new ArrayList<>(), new DingClientCreator(dingAccessTokenManager()));
     }
 
     @Bean(destroyMethod = "shutdown")
-    public DingAccessTokenManager dingAccessTokenManager() {
-        return null;
+    public AccessTokenManager<DingConfig> dingAccessTokenManager() {
+        return new DefaultAccessTokenManager<>(dingAccessTokenStore(), dingAccessTokenRefresher());
     }
 
     @Bean
     public DingAccessTokenRefresher dingAccessTokenRefresher() {
-        return new DefaultDingAccessTokenRefresher((cfg, oat) -> dingClients().getClientOrCreate(cfg));
+        return new DingAccessTokenRefresher(cfg -> dingClients().getClientOrCreate(cfg));
     }
 
     @Bean
-    public DingAccessTokenStore dingAccessTokenStore() {
-        return new DefaultDingAccessTokenStore();
+    public AccessTokenStore<DingConfig> dingAccessTokenStore() {
+        return new DefaultAccessTokenStore<>();
     }
 }

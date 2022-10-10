@@ -3,11 +3,11 @@ package work.gaigeshen.tripartite.ding.openapi.notify;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.RandomStringUtils;
+import work.gaigeshen.tripartite.core.client.Clients;
 import work.gaigeshen.tripartite.core.notify.AbstractNotifyContentReceiver;
 import work.gaigeshen.tripartite.core.notify.DefaultNotifyContent;
 import work.gaigeshen.tripartite.core.notify.NotifyContentIncorrectException;
 import work.gaigeshen.tripartite.core.util.json.JsonCodec;
-import work.gaigeshen.tripartite.ding.openapi.DingClients;
 import work.gaigeshen.tripartite.ding.openapi.config.DingConfig;
 
 import javax.crypto.Cipher;
@@ -27,9 +27,9 @@ import java.util.Objects;
  */
 public class DingDefaultNotifyContentReceiver extends AbstractNotifyContentReceiver<DefaultNotifyContent> {
 
-    private final DingClients dingClients;
+    private final Clients<DingConfig> dingClients;
 
-    public DingDefaultNotifyContentReceiver(DingClients clients) {
+    public DingDefaultNotifyContentReceiver(Clients<DingConfig> clients) {
         if (Objects.isNull(clients)) {
             throw new IllegalArgumentException("clients cannot be null");
         }

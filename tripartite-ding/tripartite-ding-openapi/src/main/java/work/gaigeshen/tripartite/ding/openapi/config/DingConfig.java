@@ -1,12 +1,14 @@
 package work.gaigeshen.tripartite.ding.openapi.config;
 
+import work.gaigeshen.tripartite.core.client.config.Config;
+
 import java.util.Objects;
 
 /**
  *
  * @author gaigeshen
  */
-public class DingConfig {
+public class DingConfig implements Config {
 
     private final String serverHost;
 
@@ -33,6 +35,7 @@ public class DingConfig {
         return new Builder();
     }
 
+    @Override
     public String getServerHost() {
         return serverHost;
     }
@@ -96,33 +99,38 @@ public class DingConfig {
 
         private String token;
 
-        public void setServerHost(String serverHost) {
+        public Builder setServerHost(String serverHost) {
             this.serverHost = serverHost;
+            return this;
         }
 
-        public void setAccessTokenUri(String accessTokenUri) {
+        public Builder setAccessTokenUri(String accessTokenUri) {
             this.accessTokenUri = accessTokenUri;
+            return this;
         }
 
-        public void setAppKey(String appKey) {
+        public Builder setAppKey(String appKey) {
             this.appKey = appKey;
+            return this;
         }
 
-        public void setAppSecret(String appSecret) {
+        public Builder setAppSecret(String appSecret) {
             this.appSecret = appSecret;
+            return this;
         }
 
-        public void setSecretKey(String secretKey) {
+        public Builder setSecretKey(String secretKey) {
             this.secretKey = secretKey;
+            return this;
         }
 
-        public void setToken(String token) {
+        public Builder setToken(String token) {
             this.token = token;
+            return this;
         }
 
         public DingConfig build() {
             return new DingConfig(this);
         }
     }
-
 }

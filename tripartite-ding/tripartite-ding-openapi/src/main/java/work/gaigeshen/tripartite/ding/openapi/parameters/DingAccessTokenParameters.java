@@ -1,5 +1,6 @@
 package work.gaigeshen.tripartite.ding.openapi.parameters;
 
+import work.gaigeshen.tripartite.core.client.parameters.ClientParameters;
 import work.gaigeshen.tripartite.core.parameter.converter.JsonParametersConverter;
 import work.gaigeshen.tripartite.core.parameter.converter.Parameters;
 import work.gaigeshen.tripartite.core.parameter.typed.Parameter;
@@ -11,7 +12,7 @@ import work.gaigeshen.tripartite.core.parameter.typed.Parameter;
 @Parameters(
         converter = JsonParametersConverter.class
 )
-public class DingAccessTokenParameters implements DingParameters {
+public class DingAccessTokenParameters implements ClientParameters {
 
     @Parameter
     public final String appKey;
