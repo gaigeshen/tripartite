@@ -36,7 +36,7 @@ public abstract class AbstractClient<C extends Config> implements Client<C> {
     }
 
     @Override
-    public final <R extends ClientResponse> R execute(ClientParameters parameters, Class<R> responseClass, String uri) throws ClientException {
+    public final <R extends ClientResponse, P extends ClientParameters> R execute(P parameters, Class<R> responseClass, String uri) throws ClientException {
         if (Objects.isNull(parameters)) {
             throw new IllegalArgumentException("parameters cannot be null");
         }
