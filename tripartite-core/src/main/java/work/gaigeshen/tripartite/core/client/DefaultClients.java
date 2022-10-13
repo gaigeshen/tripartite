@@ -43,7 +43,7 @@ public class DefaultClients<C extends Config> implements Clients<C> {
     }
 
     @Override
-    public Client<C> getClientOrCreate(C config) {
+    public Client<C> getClientOrCreate(C config) throws ClientCreationException {
         if (Objects.isNull(config)) {
             throw new IllegalArgumentException("config cannot be null");
         }

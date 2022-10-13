@@ -3,7 +3,6 @@ package work.gaigeshen.tripartite.ding.openapi.parameters;
 import work.gaigeshen.tripartite.core.client.parameters.ClientParameters;
 import work.gaigeshen.tripartite.core.parameter.converter.JsonParametersConverter;
 import work.gaigeshen.tripartite.core.parameter.converter.Parameters;
-import work.gaigeshen.tripartite.core.parameter.typed.Parameter;
 
 /**
  *
@@ -14,22 +13,23 @@ import work.gaigeshen.tripartite.core.parameter.typed.Parameter;
 )
 public class DingAccessTokenParameters implements ClientParameters {
 
-    @Parameter
-    public final String appKey;
+    private String appKey;
 
-    @Parameter
-    public final String appSecret;
-
-    public DingAccessTokenParameters(String appKey, String appSecret) {
-        this.appKey = appKey;
-        this.appSecret = appSecret;
-    }
+    private String appSecret;
 
     public String getAppKey() {
         return appKey;
     }
 
+    public void setAppKey(String appKey) {
+        this.appKey = appKey;
+    }
+
     public String getAppSecret() {
         return appSecret;
+    }
+
+    public void setAppSecret(String appSecret) {
+        this.appSecret = appSecret;
     }
 }

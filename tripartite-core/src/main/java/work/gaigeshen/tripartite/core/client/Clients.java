@@ -20,5 +20,5 @@ public interface Clients<C extends Config> {
 
     Client<C> getClient(Predicate<C> predicate) throws ClientNotFoundException;
 
-    Client<C> getClientOrCreate(C config) throws ClientNotFoundException;
+    Client<C> getClientOrCreate(C config) throws ClientCreationException;
 }

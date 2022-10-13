@@ -16,8 +16,8 @@ import work.gaigeshen.tripartite.core.client.accesstoken.DefaultAccessTokenManag
 import work.gaigeshen.tripartite.core.client.accesstoken.DefaultAccessTokenStore;
 import work.gaigeshen.tripartite.core.notify.AbstractNotifyContentProcessor;
 import work.gaigeshen.tripartite.core.notify.DefaultNotifyContent;
-import work.gaigeshen.tripartite.ding.openapi.DingClientCreator;
-import work.gaigeshen.tripartite.ding.openapi.accesstoken.DingAccessTokenRefresher;
+import work.gaigeshen.tripartite.ding.openapi.client.DingClientCreator;
+import work.gaigeshen.tripartite.ding.openapi.client.accesstoken.DingAccessTokenRefresher;
 import work.gaigeshen.tripartite.ding.openapi.config.DingConfig;
 import work.gaigeshen.tripartite.ding.openapi.notify.DingDefaultNotifyContentFilter;
 import work.gaigeshen.tripartite.ding.openapi.notify.DingDefaultNotifyContentReceiver;
