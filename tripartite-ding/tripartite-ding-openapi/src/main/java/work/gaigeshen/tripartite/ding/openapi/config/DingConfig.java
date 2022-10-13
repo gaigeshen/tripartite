@@ -18,11 +18,17 @@ public class DingConfig implements Config {
 
     private final String appSecret;
 
+    private final String secretKey;
+
+    private final String token;
+
     private DingConfig(Builder builder) {
         this.serverHost = builder.serverHost;
         this.accessTokenUri = builder.accessTokenUri;
         this.appKey = builder.appKey;
         this.appSecret = builder.appSecret;
+        this.secretKey = builder.secretKey;
+        this.token = builder.token;
     }
 
     public static Builder builder() {
@@ -44,6 +50,14 @@ public class DingConfig implements Config {
 
     public String getAppSecret() {
         return appSecret;
+    }
+
+    public String getSecretKey() {
+        return secretKey;
+    }
+
+    public String getToken() {
+        return token;
     }
 
     @Override
@@ -81,6 +95,10 @@ public class DingConfig implements Config {
 
         private String appSecret;
 
+        private String secretKey;
+
+        private String token;
+
         public Builder setServerHost(String serverHost) {
             this.serverHost = serverHost;
             return this;
@@ -98,6 +116,16 @@ public class DingConfig implements Config {
 
         public Builder setAppSecret(String appSecret) {
             this.appSecret = appSecret;
+            return this;
+        }
+
+        public Builder setSecretKey(String secretKey) {
+            this.secretKey = secretKey;
+            return this;
+        }
+
+        public Builder setToken(String token) {
+            this.token = token;
             return this;
         }
 
