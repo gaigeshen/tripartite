@@ -7,17 +7,14 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import work.gaigeshen.tripartite.core.client.Client;
-import work.gaigeshen.tripartite.core.client.Clients;
-import work.gaigeshen.tripartite.core.client.DefaultClients;
-import work.gaigeshen.tripartite.core.client.accesstoken.AccessTokenManager;
-import work.gaigeshen.tripartite.core.client.accesstoken.AccessTokenStore;
-import work.gaigeshen.tripartite.core.client.accesstoken.DefaultAccessTokenManager;
-import work.gaigeshen.tripartite.core.client.accesstoken.DefaultAccessTokenStore;
+import work.gaigeshen.tripartite.core.client.*;
+import work.gaigeshen.tripartite.core.client.accesstoken.*;
 import work.gaigeshen.tripartite.core.notify.AbstractNotifyContentProcessor;
 import work.gaigeshen.tripartite.core.notify.DefaultNotifyContent;
-import work.gaigeshen.tripartite.ding.openapi.client.DingClientCreator;
-import work.gaigeshen.tripartite.ding.openapi.client.accesstoken.DingAccessTokenRefresher;
+import work.gaigeshen.tripartite.ding.openapi.client.DefaultDingClient;
+import work.gaigeshen.tripartite.ding.openapi.client.DingAccessTokenInterceptor;
+import work.gaigeshen.tripartite.ding.openapi.client.DingAccessTokenRefresher;
+import work.gaigeshen.tripartite.ding.openapi.client.DingClient;
 import work.gaigeshen.tripartite.ding.openapi.config.DingConfig;
 import work.gaigeshen.tripartite.ding.openapi.notify.DingDefaultNotifyContentFilter;
 import work.gaigeshen.tripartite.ding.openapi.notify.DingDefaultNotifyContentReceiver;
@@ -30,7 +27,7 @@ import java.util.List;
  * @author gaigeshen
  */
 @EnableConfigurationProperties({DingProperties.class})
-@ConditionalOnClass({Client.class})
+@ConditionalOnClass({DingClient.class})
 @Configuration
 public class DingAutoConfiguration {
 
@@ -63,7 +60,12 @@ public class DingAutoConfiguration {
 
     @Bean
     public Clients<DingConfig> dingClients() {
-        return new DefaultClients<>(new ArrayList<>(), new DingClientCreator(dingAccessTokenManager()));
+        return new DefaultClients<>(new ArrayList<>(), dingClientCreator());
+    }
+
+    @Bean
+    public ClientCreator<DingConfig> dingClientCreator() {
+        return new DingClientCreator();
     }
 
     @Bean(destroyMethod = "shutdown")
@@ -72,12 +74,22 @@ public class DingAutoConfiguration {
     }
 
     @Bean
-    public DingAccessTokenRefresher dingAccessTokenRefresher() {
-        return new DingAccessTokenRefresher(cfg -> dingClients().getClientOrCreate(cfg));
+    public AccessTokenStore<DingConfig> dingAccessTokenStore() {
+        return new DefaultAccessTokenStore<>();
     }
 
     @Bean
-    public AccessTokenStore<DingConfig> dingAccessTokenStore() {
-        return new DefaultAccessTokenStore<>();
+    public AccessTokenRefresher<DingConfig> dingAccessTokenRefresher() {
+        return new DingAccessTokenRefresher(cfg -> dingClients().getClientOrCreate(cfg));
+    }
+
+    private class DingClientCreator implements ClientCreator<DingConfig> {
+
+        @Override
+        public Client<DingConfig> create(DingConfig config) throws ClientCreationException {
+            log.info("creating ding client: {}", config);
+            AccessTokenManager<DingConfig> accessTokenManager = dingAccessTokenManager();
+            return DefaultDingClient.create(config, DingAccessTokenInterceptor.create(config, accessTokenManager));
+        }
     }
 }
