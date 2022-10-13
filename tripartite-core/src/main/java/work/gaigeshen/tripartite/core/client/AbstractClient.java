@@ -13,6 +13,7 @@ import work.gaigeshen.tripartite.core.parameter.converter.ParametersMetadataPara
 import java.util.Objects;
 
 /**
+ * 抽象的客户端
  *
  * @author gaigeshen
  */

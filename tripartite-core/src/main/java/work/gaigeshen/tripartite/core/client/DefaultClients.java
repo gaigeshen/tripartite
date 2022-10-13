@@ -9,6 +9,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Predicate;
 
 /**
+ * 默认的客户端集合，维护了所有的客户端和其对应的配置信息，可通过配置信息寻找客户端
+ *
  * @author gaigeshen
  */
 public class DefaultClients<C extends Config> implements Clients<C> {

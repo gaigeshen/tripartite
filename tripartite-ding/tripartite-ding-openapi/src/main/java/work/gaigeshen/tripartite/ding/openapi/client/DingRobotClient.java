@@ -22,7 +22,7 @@ public interface DingRobotClient extends Client<DingConfig> {
      *
      * @param parameters 请求参数不能为空
      * @return 响应结果不为空
-     * @throws ClientException 执行请求或者执行业务发生异常
+     * @throws ClientException 执行请求的时候发生异常
      * @see <a href="https://open.dingtalk.com/document/group/the-robot-sends-a-group-message">接口文档</a>
      */
     default DingRobotGroupMessageSendResponse robotSendGroupMessage(DingRobotGroupMessageSendParameters parameters) throws ClientException {
@@ -34,7 +34,7 @@ public interface DingRobotClient extends Client<DingConfig> {
      *
      * @param parameters 请求参数不能为空
      * @return 响应结果不为空
-     * @throws ClientException 执行请求或者执行业务发生异常
+     * @throws ClientException 执行请求的时候发生异常
      * @see <a href="https://open.dingtalk.com/document/group/enterprise-chatbot-withdraws-internal-group-messages">接口文档</a>
      */
     default DingRobotGroupMessageRecallResponse robotRecallGroupMessage(DingRobotGroupMessageRecallParameters parameters) throws ClientException {
@@ -46,7 +46,7 @@ public interface DingRobotClient extends Client<DingConfig> {
      *
      * @param parameters 请求参数不能为空
      * @return 响应结果不为空
-     * @throws ClientException 执行请求或者执行业务发生异常
+     * @throws ClientException 执行请求的时候发生异常
      * @see <a href="https://open.dingtalk.com/document/orgapp-server/query-the-read-status-of-a-chatbot-group-chat-message">接口文档</a>
      */
     default DingRobotGroupMessageQueryResponse robotQueryGroupMessage(DingRobotGroupMessageQueryParameters parameters) throws ClientException {

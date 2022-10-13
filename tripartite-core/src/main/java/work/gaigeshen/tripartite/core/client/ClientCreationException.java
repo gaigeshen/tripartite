@@ -1,6 +1,8 @@
 package work.gaigeshen.tripartite.core.client;
 
 /**
+ * 客户端创建的时候发生异常
+ *
  * @author gaigeshen
  */
 public class ClientCreationException extends ClientException {
