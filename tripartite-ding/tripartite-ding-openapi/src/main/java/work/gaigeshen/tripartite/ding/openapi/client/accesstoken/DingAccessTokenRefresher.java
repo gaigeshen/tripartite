@@ -1,4 +1,4 @@
-package work.gaigeshen.tripartite.ding.openapi.client;
+package work.gaigeshen.tripartite.ding.openapi.client.accesstoken;
 
 import work.gaigeshen.tripartite.core.client.Client;
 import work.gaigeshen.tripartite.core.client.ClientSelector;
