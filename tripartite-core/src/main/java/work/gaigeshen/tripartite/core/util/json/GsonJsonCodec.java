@@ -1,14 +1,9 @@
 package work.gaigeshen.tripartite.core.util.json;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonNull;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.google.gson.JsonPrimitive;
+import com.google.gson.*;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.*;
 
 /**
@@ -42,11 +37,20 @@ public class GsonJsonCodec implements JsonCodec {
   }
 
   @Override
-  public <T> T decode(String json, Class<T> resultClass) {
+  public <T> T decodeObject(String json, Class<T> resultClass) {
     if (Objects.isNull(json) || Objects.isNull(resultClass)) {
       throw new IllegalArgumentException("json and result class cannot be null");
     }
     return gson.fromJson(json, resultClass);
+  }
+
+  @Override
+  public <E> Collection<E> decodeCollection(String json, Class<E> itemClass) {
+    if (Objects.isNull(json) || Objects.isNull(itemClass)) {
+      throw new IllegalArgumentException("json and item class cannot be null");
+    }
+    Type type = new TypeToken<ArrayList<E>>() { }.getType();
+    return gson.fromJson(json, type);
   }
 
   @Override
@@ -62,7 +66,7 @@ public class GsonJsonCodec implements JsonCodec {
   }
 
   @Override
-  public Collection<Object> decodeArray(String json) {
+  public Collection<Object> decodeCollection(String json) {
     if (Objects.isNull(json)) {
       throw new IllegalArgumentException("json cannot be null");
     }

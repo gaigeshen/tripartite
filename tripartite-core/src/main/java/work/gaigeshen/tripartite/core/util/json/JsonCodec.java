@@ -35,7 +35,17 @@ public interface JsonCodec {
    * @param <T> 解码对象类型
    * @return 字符串解码的对象实例不能为空
    */
-  <T> T decode(String json, Class<T> resultClass);
+  <T> T decodeObject(String json, Class<T> resultClass);
+
+  /**
+   * 将字符串解码为指定类型的对象集合实例
+   *
+   * @param json 字符串不能为空
+   * @param itemClass 对象集合中的元素类型不能为空
+   * @return 字符串解码的对象集合实例不能为空
+   * @param <E> 对象集合中的元素类型
+   */
+  <E> Collection<E> decodeCollection(String json, Class<E> itemClass);
 
   /**
    * 将字符串解码为映射类型的对象实例
@@ -51,6 +61,6 @@ public interface JsonCodec {
    * @param json 字符串不能为空
    * @return 集合类型的对象实例不能为空
    */
-  Collection<Object> decodeArray(String json);
+  Collection<Object> decodeCollection(String json);
 
 }

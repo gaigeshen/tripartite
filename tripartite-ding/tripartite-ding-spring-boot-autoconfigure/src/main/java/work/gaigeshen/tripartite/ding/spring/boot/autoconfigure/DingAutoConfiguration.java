@@ -3,106 +3,113 @@ package work.gaigeshen.tripartite.ding.spring.boot.autoconfigure;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.StringUtils;
+import work.gaigeshen.tripartite.core.client.*;
+import work.gaigeshen.tripartite.core.client.accesstoken.*;
 import work.gaigeshen.tripartite.core.notify.AbstractNotifyContentProcessor;
 import work.gaigeshen.tripartite.core.notify.DefaultNotifyContent;
-import work.gaigeshen.tripartite.ding.openapi.DefaultDingCompositeClient;
-import work.gaigeshen.tripartite.ding.openapi.DefaultDingCompositeClients;
-import work.gaigeshen.tripartite.ding.openapi.DingCompositeClient;
-import work.gaigeshen.tripartite.ding.openapi.DingCompositeClients;
-import work.gaigeshen.tripartite.ding.openapi.accesstoken.DefaultDingAccessTokenManager;
-import work.gaigeshen.tripartite.ding.openapi.accesstoken.DingAccessTokenManager;
+import work.gaigeshen.tripartite.ding.openapi.client.DefaultDingClient;
+import work.gaigeshen.tripartite.ding.openapi.client.DingClient;
+import work.gaigeshen.tripartite.ding.openapi.client.accesstoken.DingAccessTokenRefresher;
 import work.gaigeshen.tripartite.ding.openapi.config.DingConfig;
-import work.gaigeshen.tripartite.ding.openapi.notify.DingDefaultNotifyContentFilter;
-import work.gaigeshen.tripartite.ding.openapi.notify.DingDefaultNotifyContentReceiver;
-import work.gaigeshen.tripartite.ding.openapi.robotwebhook.DingRobotWebhook;
-import work.gaigeshen.tripartite.ding.openapi.robotwebhook.DingRobotWebhookClient;
+import work.gaigeshen.tripartite.ding.openapi.notify.DingNotifyContentFilter;
+import work.gaigeshen.tripartite.ding.openapi.notify.DingNotifyContentReceiver;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
- *
  * @author gaigeshen
  */
-@EnableConfigurationProperties({ DingProperties.class })
-@ConditionalOnClass({ DingCompositeClient.class })
+@EnableConfigurationProperties({DingProperties.class})
+@ConditionalOnClass({DingClient.class})
 @Configuration
 public class DingAutoConfiguration {
 
-  private static final Logger log = LoggerFactory.getLogger(DingAutoConfiguration.class);
+    private static final Logger log = LoggerFactory.getLogger(DingAutoConfiguration.class);
 
-  private final DingProperties properties;
+    private final DingProperties properties;
 
-  private final List<AbstractNotifyContentProcessor<DefaultNotifyContent>> processors;
+    private final List<AbstractNotifyContentProcessor<DefaultNotifyContent>> processors;
 
-  public DingAutoConfiguration(DingProperties properties, List<AbstractNotifyContentProcessor<DefaultNotifyContent>> processors) {
-    this.properties = properties;
-    this.processors = processors;
-  }
-
-  @Bean
-  public FilterRegistrationBean dingNotifyContentFilter(DingDefaultNotifyContentReceiver receiver) {
-    DingDefaultNotifyContentFilter filter = new DingDefaultNotifyContentFilter(receiver);
-    FilterRegistrationBean filterBean = new FilterRegistrationBean();
-    filterBean.setUrlPatterns(Collections.singletonList("/ding-notify-receiver"));
-    filterBean.setFilter(filter);
-    return filterBean;
-  }
-
-  @Bean
-  public DingDefaultNotifyContentReceiver dingNotifyContentReceiver(DingCompositeClients clients) {
-    DingDefaultNotifyContentReceiver receiver = new DingDefaultNotifyContentReceiver(clients);
-    receiver.setProcessors(new ArrayList<>(processors));
-    return receiver;
-  }
-
-  @Bean
-  public DingCompositeClients dingCompositeClients(DingAccessTokenManager manager) {
-    Collection<DingCompositeClient> clients = new ArrayList<>();
-
-    String legacyServerHost = properties.getLegacyServerHost();
-    if (!StringUtils.hasText(legacyServerHost)) {
-      throw new IllegalStateException("the legacy server host cannot be blank");
-    }
-    String modernServerHost = properties.getModernServerHost();
-    if (!StringUtils.hasText(modernServerHost)) {
-      throw new IllegalStateException("the modern server host cannot be blank");
+    public DingAutoConfiguration(DingProperties properties, List<AbstractNotifyContentProcessor<DefaultNotifyContent>> processors) {
+        this.properties = properties;
+        this.processors = processors;
     }
 
-    for (DingProperties.Client client : properties.getClients()) {
-      DingConfig.Builder builder = DingConfig.builder();
-      builder.setAppKey(client.getAppKey());
-      builder.setAppSecret(client.getAppSecret());
-      builder.setSecretKey(client.getSecretKey());
-      builder.setToken(client.getToken());
-      DingConfig config = builder.build();
-
-      clients.add(new DefaultDingCompositeClient(config, manager, legacyServerHost, modernServerHost));
-
-      log.info("loaded ding composite client: {}", config);
+    @Bean
+    public FilterRegistrationBean dingNotifyContentFilter(DingNotifyContentReceiver receiver) {
+        DingNotifyContentFilter filter = new DingNotifyContentFilter(receiver);
+        FilterRegistrationBean filterBean = new FilterRegistrationBean();
+        filterBean.setUrlPatterns(Collections.singletonList("/ding-notify-receiver"));
+        filterBean.setFilter(filter);
+        return filterBean;
     }
-    return new DefaultDingCompositeClients(clients);
-  }
 
-  @ConditionalOnMissingBean
-  @Bean
-  public DingAccessTokenManager dingAccessTokenManager() {
-    return DefaultDingAccessTokenManager.INSTANCE;
-  }
-
-  @Bean
-  public DingRobotWebhookClient dingRobotWebhookClient() {
-    Set<DingRobotWebhook> robotWebhooks = new HashSet<>();
-    for (DingProperties.RobotWebhook robotWebhook : properties.getRobotWebhooks()) {
-      DingRobotWebhook webhook = new DingRobotWebhook(robotWebhook.getName(), robotWebhook.getWebhook());
-      log.info("created robot webhook object: {}", webhook);
-      robotWebhooks.add(webhook);
+    @Bean
+    public DingNotifyContentReceiver dingNotifyContentReceiver(Clients<DingConfig> clients) {
+        DingNotifyContentReceiver receiver = new DingNotifyContentReceiver(clients);
+        receiver.setProcessors(new ArrayList<>(processors));
+        return receiver;
     }
-    return new DingRobotWebhookClient(robotWebhooks);
-  }
+
+    @Bean
+    public Clients<DingConfig> dingClients() {
+        String serverHost = properties.getServerHost();
+        String accessTokenUri = properties.getAccessTokenUri();
+        if (!StringUtils.hasText(serverHost)) {
+            throw new IllegalStateException("serverHost cannot be blank");
+        }
+        if (!StringUtils.hasText(accessTokenUri)) {
+            throw new IllegalStateException("accessTokenUri cannot be blank");
+        }
+        ClientCreator<DingConfig> dingClientCreator = new DingClientCreator();
+        List<Client<DingConfig>> dingClients = new ArrayList<>();
+        for (DingProperties.Client client : properties.getClients()) {
+            if (!StringUtils.hasText(client.getAppKey()) || !StringUtils.hasText(client.getAppSecret())) {
+                throw new IllegalStateException("appKey and appSecret cannot be blank");
+            }
+            DingConfig dingConfig = DingConfig.builder()
+                    .setServerHost(serverHost).setAccessTokenUri(accessTokenUri)
+                    .setAppKey(client.getAppKey()).setAppSecret(client.getAppSecret())
+                    .setSecretKey(client.getSecretKey()).setToken(client.getToken())
+                    .build();
+            dingClients.add(dingClientCreator.create(dingConfig));
+            log.info("loaded ding client: {}", dingConfig);
+        }
+        return new DefaultClients<>(dingClients, dingClientCreator);
+    }
+
+    @Bean(destroyMethod = "shutdown")
+    public AccessTokenManager<DingConfig> dingAccessTokenManager() {
+        return new DefaultAccessTokenManager<>(dingAccessTokenStore(), dingAccessTokenRefresher());
+    }
+
+    @Bean
+    public AccessTokenStore<DingConfig> dingAccessTokenStore() {
+        return new DefaultAccessTokenStore<>();
+    }
+
+    @Bean
+    public AccessTokenRefresher<DingConfig> dingAccessTokenRefresher() {
+        return new DingAccessTokenRefresher(cfg -> dingClients().getClientOrCreate(cfg));
+    }
+
+    /**
+     *
+     * @author gaigeshen
+     */
+    private class DingClientCreator implements ClientCreator<DingConfig> {
+
+        @Override
+        public Client<DingConfig> create(DingConfig config) throws ClientCreationException {
+            log.info("creating ding client: {}", config);
+            return DefaultDingClient.create(config, dingAccessTokenManager());
+        }
+    }
 }

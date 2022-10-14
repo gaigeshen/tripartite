@@ -47,7 +47,8 @@ public class DefaultHisProcurementClients implements HisProcurementClients {
   }
 
   @Override
-  public HisProcurementBasicClient getClientOrCreate(HisProcurementConfig config) {
+  public HisProcurementBasicClient getClientOrCreate(HisProcurementConfig config)
+          throws HisProcurementClientCreationException {
     if (Objects.isNull(config)) {
       throw new IllegalArgumentException("config cannot be null");
     }
