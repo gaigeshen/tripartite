@@ -13,7 +13,6 @@ import work.gaigeshen.tripartite.ding.openapi.response.DingAccessTokenResponse;
 import java.util.Objects;
 
 /**
- *
  * @author gaigeshen
  */
 public class DingAccessTokenRefresher implements AccessTokenRefresher<DingConfig> {
@@ -35,19 +34,24 @@ public class DingAccessTokenRefresher implements AccessTokenRefresher<DingConfig
         } catch (Exception e) {
             throw new AccessTokenRefreshException("could not find ding client: " + oldAccessToken);
         }
-        DingAccessTokenParameters accessTokenParameters = new DingAccessTokenParameters();
-        accessTokenParameters.setAppKey(config.getAppKey());
-        accessTokenParameters.setAppSecret(config.getAppSecret());
-        DingAccessTokenResponse accessTokenResponse;
+        DingAccessTokenParameters parameters = new DingAccessTokenParameters();
+        parameters.setAppKey(config.getAppKey());
+        parameters.setAppSecret(config.getAppSecret());
+        DingAccessTokenResponse response;
         try {
-            accessTokenResponse = dingClient.execute(
-                    accessTokenParameters, DingAccessTokenResponse.class, config.getAccessTokenUri());
+            response = dingClient.execute(parameters, DingAccessTokenResponse.class, config.getAccessTokenUri());
         } catch (Exception e) {
             throw new AccessTokenRefreshException("could not refresh access token", e)
-                    .setCurrentAccessToken(oldAccessToken)
-                    .setCanRetry(true);
+                    .setCanRetry(true)
+                    .setCurrentAccessToken(oldAccessToken);
         }
-        return AccessTokenHelper.createAccessToken(
-                config, accessTokenResponse.getAccessToken(), accessTokenResponse.getExpireIn());
+        String accessToken = response.getAccessToken();
+        Long expireIn = response.getExpireIn();
+        if (Objects.isNull(accessToken) || Objects.isNull(expireIn)) {
+            throw new AccessTokenRefreshException("acquired access token is invalid")
+                    .setCanRetry(true)
+                    .setCurrentAccessToken(oldAccessToken);
+        }
+        return AccessTokenHelper.createAccessToken(config, accessToken, expireIn);
     }
 }

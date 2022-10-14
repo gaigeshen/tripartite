@@ -1,4 +1,4 @@
-package work.gaigeshen.tripartite.ding.openapi.client.accesstoken;
+package work.gaigeshen.tripartite.ding.openapi.client.interceptor;
 
 import work.gaigeshen.tripartite.core.client.AbstractClient;
 import work.gaigeshen.tripartite.core.client.Client;
@@ -73,7 +73,12 @@ public class DingAccessTokenInterceptor extends AbstractInterceptor {
         } catch (Exception e) {
             throw new InterceptingException("could not get new access token", e);
         }
-        AccessToken newAccessToken = AccessTokenHelper.createAccessToken(config, response.getAccessToken(), response.getExpireIn());
+        String accessToken = response.getAccessToken();
+        Long expireIn = response.getExpireIn();
+        if (Objects.isNull(accessToken) || Objects.isNull(expireIn)) {
+            throw new InterceptingException("acquired access token is invalid");
+        }
+        AccessToken newAccessToken = AccessTokenHelper.createAccessToken(config, accessToken, expireIn);
         accessTokenManager.addNewAccessToken(config, newAccessToken);
         headers.putValue(ACCESS_TOKEN_HEADER, newAccessToken.getAccessToken());
     }

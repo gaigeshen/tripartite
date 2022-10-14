@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * 钉钉客户端配置
+ * 钉钉配置信息属性
  *
  * @author gaigeshen
  */
@@ -14,39 +14,34 @@ import java.util.Collection;
 public class DingProperties {
 
     /**
-     * 遗留的接口服务器的主机地址
+     * 服务器的地址，该地址应该包含协议、域名和端口信息
      */
-    private String legacyServerHost;
+    private String serverHost;
 
     /**
-     * 新的接口服务器的主机地址
+     * 获取访问令牌的接口调用地址，该地址不包含服务器地址
      */
-    private String modernServerHost;
+    private String accessTokenUri;
 
     /**
-     * 多个客户端的配置
+     * 多个配置信息
      */
     private Collection<Client> clients = new ArrayList<>();
 
-    /**
-     * 多个自定义机器人地址配置
-     */
-    private Collection<RobotWebhook> robotWebhooks = new ArrayList<>();
-
-    public String getLegacyServerHost() {
-        return legacyServerHost;
+    public String getServerHost() {
+        return serverHost;
     }
 
-    public void setLegacyServerHost(String legacyServerHost) {
-        this.legacyServerHost = legacyServerHost;
+    public void setServerHost(String serverHost) {
+        this.serverHost = serverHost;
     }
 
-    public String getModernServerHost() {
-        return modernServerHost;
+    public String getAccessTokenUri() {
+        return accessTokenUri;
     }
 
-    public void setModernServerHost(String modernServerHost) {
-        this.modernServerHost = modernServerHost;
+    public void setAccessTokenUri(String accessTokenUri) {
+        this.accessTokenUri = accessTokenUri;
     }
 
     public Collection<Client> getClients() {
@@ -57,16 +52,8 @@ public class DingProperties {
         this.clients = clients;
     }
 
-    public Collection<RobotWebhook> getRobotWebhooks() {
-        return robotWebhooks;
-    }
-
-    public void setRobotWebhooks(Collection<RobotWebhook> robotWebhooks) {
-        this.robotWebhooks = robotWebhooks;
-    }
-
     /**
-     * 钉钉客户端应用配置
+     * 钉钉配置信息
      *
      * @author gaigeshen
      */
@@ -122,40 +109,6 @@ public class DingProperties {
 
         public void setToken(String token) {
             this.token = token;
-        }
-    }
-
-    /**
-     * 自定义机器人地址配置
-     *
-     * @author gaigeshen
-     */
-    public static class RobotWebhook {
-
-        /**
-         * 可读的名称
-         */
-        private String name;
-
-        /**
-         * 自定义机器人的地址
-         */
-        private String webhook;
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getWebhook() {
-            return webhook;
-        }
-
-        public void setWebhook(String webhook) {
-            this.webhook = webhook;
         }
     }
 }

@@ -7,17 +7,17 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.util.StringUtils;
 import work.gaigeshen.tripartite.core.client.*;
 import work.gaigeshen.tripartite.core.client.accesstoken.*;
 import work.gaigeshen.tripartite.core.notify.AbstractNotifyContentProcessor;
 import work.gaigeshen.tripartite.core.notify.DefaultNotifyContent;
 import work.gaigeshen.tripartite.ding.openapi.client.DefaultDingClient;
-import work.gaigeshen.tripartite.ding.openapi.client.accesstoken.DingAccessTokenInterceptor;
-import work.gaigeshen.tripartite.ding.openapi.client.accesstoken.DingAccessTokenRefresher;
 import work.gaigeshen.tripartite.ding.openapi.client.DingClient;
+import work.gaigeshen.tripartite.ding.openapi.client.accesstoken.DingAccessTokenRefresher;
 import work.gaigeshen.tripartite.ding.openapi.config.DingConfig;
-import work.gaigeshen.tripartite.ding.openapi.notify.DingDefaultNotifyContentFilter;
-import work.gaigeshen.tripartite.ding.openapi.notify.DingDefaultNotifyContentReceiver;
+import work.gaigeshen.tripartite.ding.openapi.notify.DingNotifyContentFilter;
+import work.gaigeshen.tripartite.ding.openapi.notify.DingNotifyContentReceiver;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -43,8 +43,8 @@ public class DingAutoConfiguration {
     }
 
     @Bean
-    public FilterRegistrationBean dingNotifyContentFilter(DingDefaultNotifyContentReceiver receiver) {
-        DingDefaultNotifyContentFilter filter = new DingDefaultNotifyContentFilter(receiver);
+    public FilterRegistrationBean dingNotifyContentFilter(DingNotifyContentReceiver receiver) {
+        DingNotifyContentFilter filter = new DingNotifyContentFilter(receiver);
         FilterRegistrationBean filterBean = new FilterRegistrationBean();
         filterBean.setUrlPatterns(Collections.singletonList("/ding-notify-receiver"));
         filterBean.setFilter(filter);
@@ -52,20 +52,37 @@ public class DingAutoConfiguration {
     }
 
     @Bean
-    public DingDefaultNotifyContentReceiver dingNotifyContentReceiver(Clients<DingConfig> clients) {
-        DingDefaultNotifyContentReceiver receiver = new DingDefaultNotifyContentReceiver(clients);
+    public DingNotifyContentReceiver dingNotifyContentReceiver(Clients<DingConfig> clients) {
+        DingNotifyContentReceiver receiver = new DingNotifyContentReceiver(clients);
         receiver.setProcessors(new ArrayList<>(processors));
         return receiver;
     }
 
     @Bean
     public Clients<DingConfig> dingClients() {
-        return new DefaultClients<>(new ArrayList<>(), dingClientCreator());
-    }
-
-    @Bean
-    public ClientCreator<DingConfig> dingClientCreator() {
-        return new DingClientCreator();
+        String serverHost = properties.getServerHost();
+        String accessTokenUri = properties.getAccessTokenUri();
+        if (!StringUtils.hasText(serverHost)) {
+            throw new IllegalStateException("serverHost cannot be blank");
+        }
+        if (!StringUtils.hasText(accessTokenUri)) {
+            throw new IllegalStateException("accessTokenUri cannot be blank");
+        }
+        ClientCreator<DingConfig> dingClientCreator = new DingClientCreator();
+        List<Client<DingConfig>> dingClients = new ArrayList<>();
+        for (DingProperties.Client client : properties.getClients()) {
+            if (!StringUtils.hasText(client.getAppKey()) || !StringUtils.hasText(client.getAppSecret())) {
+                throw new IllegalStateException("appKey and appSecret cannot be blank");
+            }
+            DingConfig dingConfig = DingConfig.builder()
+                    .setServerHost(serverHost).setAccessTokenUri(accessTokenUri)
+                    .setAppKey(client.getAppKey()).setAppSecret(client.getAppSecret())
+                    .setSecretKey(client.getSecretKey()).setToken(client.getToken())
+                    .build();
+            dingClients.add(dingClientCreator.create(dingConfig));
+            log.info("loaded ding client: {}", dingConfig);
+        }
+        return new DefaultClients<>(dingClients, dingClientCreator);
     }
 
     @Bean(destroyMethod = "shutdown")
@@ -83,13 +100,16 @@ public class DingAutoConfiguration {
         return new DingAccessTokenRefresher(cfg -> dingClients().getClientOrCreate(cfg));
     }
 
+    /**
+     *
+     * @author gaigeshen
+     */
     private class DingClientCreator implements ClientCreator<DingConfig> {
 
         @Override
         public Client<DingConfig> create(DingConfig config) throws ClientCreationException {
             log.info("creating ding client: {}", config);
-            AccessTokenManager<DingConfig> accessTokenManager = dingAccessTokenManager();
-            return DefaultDingClient.create(config, DingAccessTokenInterceptor.create(config, accessTokenManager));
+            return DefaultDingClient.create(config, dingAccessTokenManager());
         }
     }
 }

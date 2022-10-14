@@ -25,11 +25,11 @@ import java.util.Objects;
  *
  * @author gaigeshen
  */
-public class DingDefaultNotifyContentReceiver extends AbstractNotifyContentReceiver<DefaultNotifyContent> {
+public class DingNotifyContentReceiver extends AbstractNotifyContentReceiver<DefaultNotifyContent> {
 
     private final Clients<DingConfig> dingClients;
 
-    public DingDefaultNotifyContentReceiver(Clients<DingConfig> clients) {
+    public DingNotifyContentReceiver(Clients<DingConfig> clients) {
         if (Objects.isNull(clients)) {
             throw new IllegalArgumentException("clients cannot be null");
         }
