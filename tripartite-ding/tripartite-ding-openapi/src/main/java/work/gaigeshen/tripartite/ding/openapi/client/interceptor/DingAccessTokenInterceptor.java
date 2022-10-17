@@ -3,14 +3,11 @@ package work.gaigeshen.tripartite.ding.openapi.client.interceptor;
 import work.gaigeshen.tripartite.core.client.AbstractClient;
 import work.gaigeshen.tripartite.core.client.Client;
 import work.gaigeshen.tripartite.core.client.accesstoken.AccessToken;
-import work.gaigeshen.tripartite.core.client.accesstoken.AccessTokenHelper;
 import work.gaigeshen.tripartite.core.client.accesstoken.AccessTokenManager;
-import work.gaigeshen.tripartite.core.header.Headers;
 import work.gaigeshen.tripartite.core.interceptor.AbstractInterceptor;
 import work.gaigeshen.tripartite.core.interceptor.InterceptingException;
+import work.gaigeshen.tripartite.ding.openapi.client.accesstoken.DingAccessTokenHelper;
 import work.gaigeshen.tripartite.ding.openapi.config.DingConfig;
-import work.gaigeshen.tripartite.ding.openapi.parameters.DingAccessTokenParameters;
-import work.gaigeshen.tripartite.ding.openapi.response.DingAccessTokenResponse;
 
 import java.util.Objects;
 
@@ -58,29 +55,13 @@ public class DingAccessTokenInterceptor extends AbstractInterceptor {
     @Override
     protected void updateRequest(Request request) throws InterceptingException {
         DingConfig config = accessTokenClient.getConfig();
-        AccessToken currentAccessToken = accessTokenManager.findAccessToken(config);
-        Headers headers = request.headers();
-        if (Objects.nonNull(currentAccessToken) && !AccessTokenHelper.isExpired(currentAccessToken)) {
-            headers.putValue(ACCESS_TOKEN_HEADER, currentAccessToken.getAccessToken());
-            return;
-        }
-        DingAccessTokenParameters parameters = new DingAccessTokenParameters();
-        parameters.setAppKey(config.getAppKey());
-        parameters.setAppSecret(config.getAppSecret());
-        DingAccessTokenResponse response;
+        AccessToken accessToken;
         try {
-            response = accessTokenClient.execute(parameters, DingAccessTokenResponse.class, config.getAccessTokenUri());
+            accessToken = DingAccessTokenHelper.findValidAccessToken(accessTokenManager, accessTokenClient, config);
         } catch (Exception e) {
-            throw new InterceptingException("could not get new access token", e);
+            throw new InterceptingException("could not find valid access token: " + config, e);
         }
-        String accessToken = response.getAccessToken();
-        Long expireIn = response.getExpireIn();
-        if (Objects.isNull(accessToken) || Objects.isNull(expireIn)) {
-            throw new InterceptingException("acquired access token is invalid");
-        }
-        AccessToken newAccessToken = AccessTokenHelper.createAccessToken(config, accessToken, expireIn);
-        accessTokenManager.addNewAccessToken(config, newAccessToken);
-        headers.putValue(ACCESS_TOKEN_HEADER, newAccessToken.getAccessToken());
+        request.headers().putValue(ACCESS_TOKEN_HEADER, accessToken.getAccessToken());
     }
 
     @Override

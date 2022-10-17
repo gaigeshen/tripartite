@@ -15,6 +15,6 @@ public interface Client<C extends Config> {
     C getConfig() throws ConfigException;
 
     <R extends ClientResponse, P extends ClientParameters> R execute(
-            P parameters, Class<R> responseClass, String uri
+            P parameters, Class<R> responseClass, String uri, Object... uriVariables
     ) throws ClientException;
 }

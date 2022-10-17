@@ -42,7 +42,7 @@ public abstract class AbstractClient<C extends Config> implements Client<C> {
 
     @Override
     public final <R extends ClientResponse, P extends ClientParameters> R execute(
-            P parameters, Class<R> responseClass, String uri
+            P parameters, Class<R> responseClass, String uri, Object... uriVariables
     ) throws ClientException {
         if (Objects.isNull(parameters)) {
             throw new IllegalArgumentException("parameters cannot be null");
@@ -51,7 +51,7 @@ public abstract class AbstractClient<C extends Config> implements Client<C> {
             throw new IllegalArgumentException("response class cannot be null");
         }
         try {
-            R response = executor.execute(config.getServerHost() + uri, parameters, responseClass);
+            R response = executor.execute(config.getServerHost() + uri, parameters, responseClass, uriVariables);
             return validateResponse(response);
         } catch (WebException e) {
             throw new ClientException(e.getMessage(), e);
