@@ -3,7 +3,7 @@ package work.gaigeshen.tripartite.ding.spring.boot.autoconfigure;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
 /**
  * 钉钉配置信息属性
@@ -13,42 +13,13 @@ import java.util.Collection;
 @ConfigurationProperties("ding")
 public class DingProperties {
 
-    /**
-     * 服务器的地址，该地址应该包含协议、域名和端口信息
-     */
-    private String serverHost;
+    private List<Client> clients = new ArrayList<>();
 
-    /**
-     * 获取访问令牌的接口调用地址，该地址不包含服务器地址
-     */
-    private String accessTokenUri;
-
-    /**
-     * 多个配置信息
-     */
-    private Collection<Client> clients = new ArrayList<>();
-
-    public String getServerHost() {
-        return serverHost;
-    }
-
-    public void setServerHost(String serverHost) {
-        this.serverHost = serverHost;
-    }
-
-    public String getAccessTokenUri() {
-        return accessTokenUri;
-    }
-
-    public void setAccessTokenUri(String accessTokenUri) {
-        this.accessTokenUri = accessTokenUri;
-    }
-
-    public Collection<Client> getClients() {
+    public List<Client> getClients() {
         return clients;
     }
 
-    public void setClients(Collection<Client> clients) {
+    public void setClients(List<Client> clients) {
         this.clients = clients;
     }
 
@@ -58,6 +29,16 @@ public class DingProperties {
      * @author gaigeshen
      */
     public static class Client {
+
+        /**
+         * 服务器的地址
+         */
+        private String serverHost;
+
+        /**
+         * 获取访问令牌的接口调用地址
+         */
+        private String accessTokenUri;
 
         /**
          * 应用编号
@@ -78,6 +59,22 @@ public class DingProperties {
          * 异步通知或者回调通知的签名令牌
          */
         private String token;
+
+        public String getServerHost() {
+            return serverHost;
+        }
+
+        public void setServerHost(String serverHost) {
+            this.serverHost = serverHost;
+        }
+
+        public String getAccessTokenUri() {
+            return accessTokenUri;
+        }
+
+        public void setAccessTokenUri(String accessTokenUri) {
+            this.accessTokenUri = accessTokenUri;
+        }
 
         public String getAppKey() {
             return appKey;
