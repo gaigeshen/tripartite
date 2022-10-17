@@ -9,13 +9,6 @@ import java.util.Collection;
  */
 public class DingRobotGroupMessageRecallResponse implements ClientResponse {
 
-    private Collection<String> successResult;
+    public Collection<String> successResult;
 
-    public Collection<String> getSuccessResult() {
-        return successResult;
-    }
-
-    public void setSuccessResult(Collection<String> successResult) {
-        this.successResult = successResult;
-    }
 }

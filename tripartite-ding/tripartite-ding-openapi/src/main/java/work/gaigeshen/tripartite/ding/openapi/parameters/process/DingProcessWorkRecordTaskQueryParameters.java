@@ -1,4 +1,4 @@
-package work.gaigeshen.tripartite.ding.openapi.parameters.robot;
+package work.gaigeshen.tripartite.ding.openapi.parameters.process;
 
 import work.gaigeshen.tripartite.core.client.parameters.ClientParameters;
 import work.gaigeshen.tripartite.core.parameter.converter.JsonParametersConverter;
@@ -11,15 +11,13 @@ import work.gaigeshen.tripartite.core.parameter.converter.Parameters;
 @Parameters(
         converter = JsonParametersConverter.class
 )
-public class DingRobotGroupMessageQueryParameters implements ClientParameters {
+public class DingProcessWorkRecordTaskQueryParameters implements ClientParameters {
 
-    public String openConversationId;
+    public String userid;
 
-    public String robotCode;
+    public Integer offset;
 
-    public String processQueryKey;
+    public Integer count;
 
-    public String nextToken;
-
-    public Long maxResults;
+    public Integer status;
 }

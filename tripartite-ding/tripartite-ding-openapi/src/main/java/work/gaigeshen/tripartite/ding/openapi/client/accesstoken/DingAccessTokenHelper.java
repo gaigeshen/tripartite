@@ -62,16 +62,16 @@ public class DingAccessTokenHelper {
             throw new IllegalArgumentException("access token client and config cannot be null");
         }
         DingAccessTokenParameters parameters = new DingAccessTokenParameters();
-        parameters.setAppKey(config.getAppKey());
-        parameters.setAppSecret(config.getAppSecret());
+        parameters.appKey = config.getAppKey();
+        parameters.appSecret = config.getAppSecret();
         DingAccessTokenResponse response;
         try {
             response = accessTokenClient.execute(parameters, DingAccessTokenResponse.class, config.getAccessTokenUri());
         } catch (Exception e) {
             throw new IllegalStateException("could not get new access token: " + config, e);
         }
-        String accessToken = response.getAccessToken();
-        Long expireIn = response.getExpireIn();
+        String accessToken = response.accessToken;
+        Long expireIn = response.expireIn;
         if (Objects.isNull(accessToken) || Objects.isNull(expireIn)) {
             throw new IllegalStateException("acquired access token is invalid: " + config);
         }

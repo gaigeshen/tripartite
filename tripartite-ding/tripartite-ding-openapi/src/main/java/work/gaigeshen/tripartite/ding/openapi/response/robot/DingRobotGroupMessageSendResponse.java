@@ -8,13 +8,5 @@ import work.gaigeshen.tripartite.core.client.response.ClientResponse;
  */
 public class DingRobotGroupMessageSendResponse implements ClientResponse {
 
-    private String processQueryKey;
-
-    public String getProcessQueryKey() {
-        return processQueryKey;
-    }
-
-    public void setProcessQueryKey(String processQueryKey) {
-        this.processQueryKey = processQueryKey;
-    }
+    public String processQueryKey;
 }

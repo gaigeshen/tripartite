@@ -10,43 +10,11 @@ import java.util.Collection;
  */
 public class DingRobotGroupMessageQueryResponse implements ClientResponse {
 
-    private String sendStatus;
+    public String sendStatus;
 
-    private Collection<String> readUserIds;
+    public Collection<String> readUserIds;
 
-    private String nextToken;
+    public String nextToken;
 
-    private Boolean hasMore;
-
-    public String getSendStatus() {
-        return sendStatus;
-    }
-
-    public void setSendStatus(String sendStatus) {
-        this.sendStatus = sendStatus;
-    }
-
-    public Collection<String> getReadUserIds() {
-        return readUserIds;
-    }
-
-    public void setReadUserIds(Collection<String> readUserIds) {
-        this.readUserIds = readUserIds;
-    }
-
-    public String getNextToken() {
-        return nextToken;
-    }
-
-    public void setNextToken(String nextToken) {
-        this.nextToken = nextToken;
-    }
-
-    public Boolean getHasMore() {
-        return hasMore;
-    }
-
-    public void setHasMore(Boolean hasMore) {
-        this.hasMore = hasMore;
-    }
+    public Boolean hasMore;
 }

@@ -13,23 +13,7 @@ import work.gaigeshen.tripartite.core.parameter.converter.Parameters;
 )
 public class DingAccessTokenParameters implements ClientParameters {
 
-    private String appKey;
+    public String appKey;
 
-    private String appSecret;
-
-    public String getAppKey() {
-        return appKey;
-    }
-
-    public void setAppKey(String appKey) {
-        this.appKey = appKey;
-    }
-
-    public String getAppSecret() {
-        return appSecret;
-    }
-
-    public void setAppSecret(String appSecret) {
-        this.appSecret = appSecret;
-    }
+    public String appSecret;
 }

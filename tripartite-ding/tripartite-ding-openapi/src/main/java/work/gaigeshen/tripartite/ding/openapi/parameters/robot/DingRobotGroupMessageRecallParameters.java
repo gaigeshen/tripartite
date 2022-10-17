@@ -14,33 +14,9 @@ import java.util.Collection;
 )
 public class DingRobotGroupMessageRecallParameters implements ClientParameters {
 
-    private String openConversationId;
+    public String openConversationId;
 
-    private String robotCode;
+    public String robotCode;
 
-    private Collection<String> processQueryKeys;
-
-    public String getOpenConversationId() {
-        return openConversationId;
-    }
-
-    public void setOpenConversationId(String openConversationId) {
-        this.openConversationId = openConversationId;
-    }
-
-    public String getRobotCode() {
-        return robotCode;
-    }
-
-    public void setRobotCode(String robotCode) {
-        this.robotCode = robotCode;
-    }
-
-    public Collection<String> getProcessQueryKeys() {
-        return processQueryKeys;
-    }
-
-    public void setProcessQueryKeys(Collection<String> processQueryKeys) {
-        this.processQueryKeys = processQueryKeys;
-    }
+    public Collection<String> processQueryKeys;
 }
