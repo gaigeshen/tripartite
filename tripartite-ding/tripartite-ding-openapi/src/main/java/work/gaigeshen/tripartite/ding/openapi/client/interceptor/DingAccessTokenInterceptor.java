@@ -49,7 +49,7 @@ public class DingAccessTokenInterceptor extends AbstractInterceptor {
      * @return 返回被创建的拦截器对象
      */
     public static DingAccessTokenInterceptor create(DingConfig config, AccessTokenManager<DingConfig> accessTokenManager) {
-        return new DingAccessTokenInterceptor(new DingAccessTokenClient(config), accessTokenManager);
+        return new DingAccessTokenInterceptor(new AbstractClient<DingConfig>(config) {}, accessTokenManager);
     }
 
     @Override
@@ -67,15 +67,4 @@ public class DingAccessTokenInterceptor extends AbstractInterceptor {
     @Override
     protected void validateResponse(Request request, Response response) throws InterceptingException { }
 
-    /**
-     * 此客户端仅仅用于获取新的访问令牌，与钉钉其他的客户端有所区别，此客户端不实现任何钉钉接口调用
-     *
-     * @author gaigeshen
-     */
-    private static class DingAccessTokenClient extends AbstractClient<DingConfig> {
-
-        public DingAccessTokenClient(DingConfig config, AbstractInterceptor... interceptors) {
-            super(config, interceptors);
-        }
-    }
 }
