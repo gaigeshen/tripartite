@@ -28,7 +28,7 @@ public class DingProcessWorkRecordTaskUpdateParameters implements ClientParamete
 
     public static class Task {
 
-        public Integer task_id;
+        public Long task_id;
 
         public String status;
 

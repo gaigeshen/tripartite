@@ -22,7 +22,7 @@ public class DingProcessWorkRecordTaskQueryResponse implements ClientResponse {
 
         public String instance_id;
 
-        public Integer task_id;
+        public Long task_id;
 
         public String title;
 
