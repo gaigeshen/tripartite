@@ -19,7 +19,7 @@ public class DingProcessSaveParameters implements ClientParameters {
 
     public static class SaveProcessRequest {
 
-        public Integer agentid;
+        public Long agentid;
 
         public String process_code;
 

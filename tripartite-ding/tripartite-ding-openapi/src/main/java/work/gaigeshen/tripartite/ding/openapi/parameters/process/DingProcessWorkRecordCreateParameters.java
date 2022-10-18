@@ -19,7 +19,7 @@ public class DingProcessWorkRecordCreateParameters implements ClientParameters {
 
     public static class Request {
 
-        public Integer agentid;
+        public Long agentid;
 
         public String process_code;
 

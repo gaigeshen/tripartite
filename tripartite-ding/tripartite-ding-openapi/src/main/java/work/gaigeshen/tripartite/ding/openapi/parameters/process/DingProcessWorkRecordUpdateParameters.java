@@ -17,7 +17,7 @@ public class DingProcessWorkRecordUpdateParameters implements ClientParameters {
 
     public static class Request {
 
-        public Integer agentid;
+        public Long agentid;
 
         public String process_instance_id;
 

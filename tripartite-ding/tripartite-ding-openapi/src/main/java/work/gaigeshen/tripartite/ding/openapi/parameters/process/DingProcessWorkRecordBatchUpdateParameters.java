@@ -21,7 +21,7 @@ public class DingProcessWorkRecordBatchUpdateParameters implements ClientParamet
 
         public Collection<Instance> instances;
 
-        public Integer agentid;
+        public Long agentid;
     }
 
     public static class Instance {
