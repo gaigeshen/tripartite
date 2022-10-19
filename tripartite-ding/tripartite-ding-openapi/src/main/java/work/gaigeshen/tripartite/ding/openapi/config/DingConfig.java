@@ -10,10 +10,6 @@ import java.util.Objects;
  */
 public class DingConfig implements Config {
 
-    private final String serverHost;
-
-    private final String accessTokenUri;
-
     private final String appKey;
 
     private final String appSecret;
@@ -23,8 +19,6 @@ public class DingConfig implements Config {
     private final String token;
 
     private DingConfig(Builder builder) {
-        this.serverHost = builder.serverHost;
-        this.accessTokenUri = builder.accessTokenUri;
         this.appKey = builder.appKey;
         this.appSecret = builder.appSecret;
         this.secretKey = builder.secretKey;
@@ -33,15 +27,6 @@ public class DingConfig implements Config {
 
     public static Builder builder() {
         return new Builder();
-    }
-
-    @Override
-    public String getServerHost() {
-        return serverHost;
-    }
-
-    public String getAccessTokenUri() {
-        return accessTokenUri;
     }
 
     public String getAppKey() {
@@ -87,10 +72,6 @@ public class DingConfig implements Config {
      */
     public static class Builder {
 
-        private String serverHost;
-
-        private String accessTokenUri;
-
         private String appKey;
 
         private String appSecret;
@@ -98,16 +79,6 @@ public class DingConfig implements Config {
         private String secretKey;
 
         private String token;
-
-        public Builder setServerHost(String serverHost) {
-            this.serverHost = serverHost;
-            return this;
-        }
-
-        public Builder setAccessTokenUri(String accessTokenUri) {
-            this.accessTokenUri = accessTokenUri;
-            return this;
-        }
 
         public Builder setAppKey(String appKey) {
             this.appKey = appKey;

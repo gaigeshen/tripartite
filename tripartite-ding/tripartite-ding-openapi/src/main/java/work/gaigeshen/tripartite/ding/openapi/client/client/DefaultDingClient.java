@@ -12,7 +12,7 @@ import work.gaigeshen.tripartite.ding.openapi.config.DingConfig;
  *
  * @author gaigeshen
  */
-public class DefaultDingClient extends AbstractClient<DingConfig> implements DingClient {
+public class DefaultDingClient extends AbstractClient<DingConfig> implements DingOldEditionClient, DingNewEditionClient {
 
     private final AccessTokenManager<DingConfig> accessTokenManager;
 

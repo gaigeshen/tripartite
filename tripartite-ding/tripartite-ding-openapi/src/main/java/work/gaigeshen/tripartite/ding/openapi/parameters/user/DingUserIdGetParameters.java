@@ -11,7 +11,7 @@ import work.gaigeshen.tripartite.core.parameter.converter.Parameters;
 @Parameters(
         converter = JsonParametersConverter.class
 )
-public class DingUserByMobileGetParameters implements ClientParameters {
+public class DingUserIdGetParameters implements ClientParameters {
 
     public String mobile;
 }

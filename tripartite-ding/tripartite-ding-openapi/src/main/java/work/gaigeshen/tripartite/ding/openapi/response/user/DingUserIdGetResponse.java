@@ -6,7 +6,7 @@ import work.gaigeshen.tripartite.core.client.response.ClientResponse;
  *
  * @author gaigeshen
  */
-public class DingUserByMobileGetResponse implements ClientResponse {
+public class DingUserIdGetResponse implements ClientResponse {
 
     public Result result;
 
