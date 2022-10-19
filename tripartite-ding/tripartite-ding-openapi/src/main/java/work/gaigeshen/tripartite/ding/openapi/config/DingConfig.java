@@ -10,6 +10,18 @@ import java.util.Objects;
  */
 public class DingConfig implements Config {
 
+    public static final String SERVER_HOST_NEW_EDITION = "https://api.dingtalk.com";
+
+    public static final String SERVER_HOST_OLD_EDITION = "https://oapi.dingtalk.com";
+
+    public static final String ACCESS_TOKEN_URI_NEW_EDITION = "/v1.0/oauth2/accessToken";
+
+    public static final String ACCESS_TOKEN_URI_OLD_EDITION = "/gettoken";
+
+    private final String serverHost;
+
+    private final String accessTokenUri;
+
     private final String appKey;
 
     private final String appSecret;
@@ -19,6 +31,8 @@ public class DingConfig implements Config {
     private final String token;
 
     private DingConfig(Builder builder) {
+        this.serverHost = builder.serverHost;
+        this.accessTokenUri = builder.accessTokenUri;
         this.appKey = builder.appKey;
         this.appSecret = builder.appSecret;
         this.secretKey = builder.secretKey;
@@ -27,6 +41,16 @@ public class DingConfig implements Config {
 
     public static Builder builder() {
         return new Builder();
+    }
+
+    @Override
+    public String getServerHost() {
+        return serverHost;
+    }
+
+    @Override
+    public String getAccessTokenUri() {
+        return accessTokenUri;
     }
 
     public String getAppKey() {
@@ -54,23 +78,28 @@ public class DingConfig implements Config {
             return false;
         }
         DingConfig that = (DingConfig) o;
-        return Objects.equals(appKey, that.appKey);
+        return Objects.equals(appKey, that.appKey)
+                && Objects.equals(serverHost, that.serverHost);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(appKey);
+        return Objects.hash(appKey, serverHost);
     }
 
     @Override
     public String toString() {
-        return "DingConfig: " + appKey;
+        return "DingConfig: " + appKey + "(" + serverHost + ")";
     }
 
     /**
      * @author gaigeshen
      */
     public static class Builder {
+
+        private String serverHost;
+
+        private String accessTokenUri;
 
         private String appKey;
 
@@ -79,6 +108,16 @@ public class DingConfig implements Config {
         private String secretKey;
 
         private String token;
+
+        public Builder setServerHost(String serverHost) {
+            this.serverHost = serverHost;
+            return this;
+        }
+
+        public Builder setAccessTokenUri(String accessTokenUri) {
+            this.accessTokenUri = accessTokenUri;
+            return this;
+        }
 
         public Builder setAppKey(String appKey) {
             this.appKey = appKey;

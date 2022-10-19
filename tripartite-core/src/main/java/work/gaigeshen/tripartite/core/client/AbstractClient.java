@@ -58,6 +58,21 @@ public abstract class AbstractClient<C extends Config> implements Client<C> {
         }
     }
 
+    @Override
+    public <R extends ClientResponse> R execute(
+            Class<R> responseClass, String uri, Object... uriVariables
+    ) throws ClientException {
+        if (Objects.isNull(responseClass)) {
+            throw new IllegalArgumentException("response class cannot be null");
+        }
+        try {
+            R response = executor.execute(config.getServerHost() + uri, responseClass, uriVariables);
+            return validateResponse(response);
+        } catch (WebException e) {
+            throw new ClientException(e.getMessage(), e);
+        }
+    }
+
     protected <R extends ClientResponse> R validateResponse(R response) throws ClientException {
         if (Objects.isNull(response)) {
             throw new ClientException("could not validate null response");

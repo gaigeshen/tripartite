@@ -22,6 +22,10 @@ public interface Client<C extends Config> {
             P parameters, Class<R> responseClass, String uri, Object... uriVariables
     ) throws ClientException;
 
+    <R extends ClientResponse> R execute(
+            Class<R> responseClass, String uri, Object... uriVariables
+    ) throws ClientException;
+
     default void init() throws ClientException { }
 
     default String getAccessTokenValue() {
