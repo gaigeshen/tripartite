@@ -10,17 +10,9 @@ import java.util.Objects;
  */
 public class DingConfig implements Config {
 
-    public static final String SERVER_HOST_NEW_EDITION = "https://api.dingtalk.com";
+    private final String apiServerHost;
 
-    public static final String SERVER_HOST_OLD_EDITION = "https://oapi.dingtalk.com";
-
-    public static final String ACCESS_TOKEN_URI_NEW_EDITION = "/v1.0/oauth2/accessToken";
-
-    public static final String ACCESS_TOKEN_URI_OLD_EDITION = "/gettoken";
-
-    private final String serverHost;
-
-    private final String accessTokenUri;
+    private final String oapiServerHost;
 
     private final String appKey;
 
@@ -31,8 +23,8 @@ public class DingConfig implements Config {
     private final String token;
 
     private DingConfig(Builder builder) {
-        this.serverHost = builder.serverHost;
-        this.accessTokenUri = builder.accessTokenUri;
+        this.apiServerHost = builder.apiServerHost;
+        this.oapiServerHost = builder.oapiServerHost;
         this.appKey = builder.appKey;
         this.appSecret = builder.appSecret;
         this.secretKey = builder.secretKey;
@@ -44,13 +36,13 @@ public class DingConfig implements Config {
     }
 
     @Override
-    public String getServerHost() {
-        return serverHost;
+    public String getApiServerHost() {
+        return apiServerHost;
     }
 
     @Override
-    public String getAccessTokenUri() {
-        return accessTokenUri;
+    public String getOapiServerHost() {
+        return oapiServerHost;
     }
 
     public String getAppKey() {
@@ -78,18 +70,17 @@ public class DingConfig implements Config {
             return false;
         }
         DingConfig that = (DingConfig) o;
-        return Objects.equals(appKey, that.appKey)
-                && Objects.equals(serverHost, that.serverHost);
+        return Objects.equals(appKey, that.appKey);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(appKey, serverHost);
+        return Objects.hash(appKey);
     }
 
     @Override
     public String toString() {
-        return "DingConfig: " + appKey + "(" + serverHost + ")";
+        return "DingConfig: " + appKey;
     }
 
     /**
@@ -97,9 +88,9 @@ public class DingConfig implements Config {
      */
     public static class Builder {
 
-        private String serverHost;
+        private String apiServerHost;
 
-        private String accessTokenUri;
+        private String oapiServerHost;
 
         private String appKey;
 
@@ -109,13 +100,13 @@ public class DingConfig implements Config {
 
         private String token;
 
-        public Builder setServerHost(String serverHost) {
-            this.serverHost = serverHost;
+        public Builder setApiServerHost(String apiServerHost) {
+            this.apiServerHost = apiServerHost;
             return this;
         }
 
-        public Builder setAccessTokenUri(String accessTokenUri) {
-            this.accessTokenUri = accessTokenUri;
+        public Builder setOapiServerHost(String oapiServerHost) {
+            this.oapiServerHost = oapiServerHost;
             return this;
         }
 

@@ -10,20 +10,19 @@ import work.gaigeshen.tripartite.core.client.response.ClientResponse;
 import java.util.Objects;
 
 /**
- * 客户端
  *
  * @author gaigeshen
  */
-public interface Client<C extends Config> {
+public interface Client<C extends Config> extends ServerHosts {
 
     C getConfig() throws ConfigException;
 
     <R extends ClientResponse, P extends ClientParameters> R execute(
-            P parameters, Class<R> responseClass, String uri, Object... uriVariables
+            P parameters, Class<R> responseClass, String path, Object... uriVariables
     ) throws ClientException;
 
     <R extends ClientResponse> R execute(
-            Class<R> responseClass, String uri, Object... uriVariables
+            Class<R> responseClass, String path, Object... uriVariables
     ) throws ClientException;
 
     default void init() throws ClientException { }

@@ -4,7 +4,7 @@ package work.gaigeshen.tripartite.ding.openapi.client;
  *
  * @author gaigeshen
  */
-public interface DingClient extends DingRobotClient {
+public interface DingClient extends DingApiClient, DingOapiClient {
 
 
 

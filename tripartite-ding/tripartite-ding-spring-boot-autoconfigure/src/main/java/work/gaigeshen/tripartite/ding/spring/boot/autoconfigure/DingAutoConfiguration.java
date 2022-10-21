@@ -63,17 +63,17 @@ public class DingAutoConfiguration {
         ClientCreator<DingConfig> dingClientCreator = new DingClientCreator();
         List<Client<DingConfig>> dingClients = new ArrayList<>();
         for (DingProperties.Client client : properties.getClients()) {
-            if (!StringUtils.hasText(client.getServerHost())) {
+            if (!StringUtils.hasText(client.getApiServerHost())) {
                 throw new IllegalStateException("serverHost cannot be blank");
             }
-            if (!StringUtils.hasText(client.getAccessTokenUri())) {
+            if (!StringUtils.hasText(client.getOapiServerHost())) {
                 throw new IllegalStateException("accessTokenUri cannot be blank");
             }
             if (!StringUtils.hasText(client.getAppKey()) || !StringUtils.hasText(client.getAppSecret())) {
                 throw new IllegalStateException("appKey and appSecret cannot be blank");
             }
             DingConfig dingConfig = DingConfig.builder()
-                    .setServerHost(client.getServerHost()).setAccessTokenUri(client.getAccessTokenUri())
+                    .setApiServerHost(client.getApiServerHost()).setOapiServerHost(client.getOapiServerHost())
                     .setAppKey(client.getAppKey()).setAppSecret(client.getAppSecret())
                     .setSecretKey(client.getSecretKey()).setToken(client.getToken())
                     .build();

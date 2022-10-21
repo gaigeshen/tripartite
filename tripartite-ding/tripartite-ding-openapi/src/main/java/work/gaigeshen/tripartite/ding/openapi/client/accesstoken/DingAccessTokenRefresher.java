@@ -34,7 +34,7 @@ public class DingAccessTokenRefresher implements AccessTokenRefresher<DingConfig
                     .setCanRetry(false);
         }
         try {
-            return DingAccessTokenHelper.getNewAccessToken(dingClient, config);
+            return DingAccessTokenHelper.getNewAccessToken(dingClient);
         } catch (Exception e) {
             throw new AccessTokenRefreshException("could not refresh access token", e)
                     .setCurrentAccessToken(oldAccessToken)

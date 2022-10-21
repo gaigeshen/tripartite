@@ -6,7 +6,7 @@ package work.gaigeshen.tripartite.core.client.config;
  */
 public interface Config {
 
-    String getServerHost();
+    String getApiServerHost();
 
-    String getAccessTokenUri();
+    String getOapiServerHost();
 }
