@@ -97,6 +97,12 @@ public class DefaultDingClient extends AbstractWebExecutorClient<DingConfig> imp
         return Collections.singletonList(new AbstractInterceptor() {
             @Override
             protected void updateRequest(Request request) throws InterceptingException {
+                // 获取新的访问令牌无需加入请求头，只会使用新版接口去获取访问令牌
+                if (request.url().contains("/v1.0/oauth2/accessToken")) {
+                    return;
+                }
+                // 其他任何情况都加入访问令牌请求头
+                // 旧版本接口加入此请求头应该无任何副作用
                 String accessTokenValue = getAccessTokenValue();
                 if (Objects.isNull(accessTokenValue)) {
                     throw new InterceptingException("access token not found: " + getConfig());
@@ -105,7 +111,8 @@ public class DefaultDingClient extends AbstractWebExecutorClient<DingConfig> imp
                 headers.putValue("x-acs-dingtalk-access-token", accessTokenValue);
             }
             @Override
-            protected void validateResponse(Request request, Response response) throws InterceptingException { }
+            protected void validateResponse(Request request, Response response) throws InterceptingException {
+            }
         });
     }
 
