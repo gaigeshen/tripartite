@@ -14,7 +14,7 @@ import work.gaigeshen.tripartite.core.notify.AbstractNotifyContentProcessor;
 import work.gaigeshen.tripartite.core.notify.DefaultNotifyContent;
 import work.gaigeshen.tripartite.ding.openapi.client.DefaultDingClient;
 import work.gaigeshen.tripartite.ding.openapi.client.DingClient;
-import work.gaigeshen.tripartite.ding.openapi.client.accesstoken.DingAccessTokenRefresher;
+import work.gaigeshen.tripartite.ding.openapi.client.DingClientCreator;
 import work.gaigeshen.tripartite.ding.openapi.config.DingConfig;
 import work.gaigeshen.tripartite.ding.openapi.notify.DingNotifyContentFilter;
 import work.gaigeshen.tripartite.ding.openapi.notify.DingNotifyContentReceiver;
@@ -60,7 +60,7 @@ public class DingAutoConfiguration {
 
     @Bean
     public Clients<DingConfig> dingClients() {
-        ClientCreator<DingConfig> dingClientCreator = new DingClientCreator();
+        ClientCreator<DingConfig> dingClientCreator = new DingClientCreator(dingAccessTokenManager());
         List<Client<DingConfig>> dingClients = new ArrayList<>();
         for (DingProperties.Client client : dingProperties.getClients()) {
             if (!StringUtils.hasText(client.getApiServerHost()) || !StringUtils.hasText(client.getOapiServerHost())) {
@@ -92,19 +92,15 @@ public class DingAutoConfiguration {
 
     @Bean
     public AccessTokenRefresher<DingConfig> dingAccessTokenRefresher() {
-        return new DingAccessTokenRefresher(cfg -> dingClients().getClientOrCreate(cfg));
-    }
-
-    /**
-     *
-     * @author gaigeshen
-     */
-    private class DingClientCreator implements ClientCreator<DingConfig> {
-
-        @Override
-        public Client<DingConfig> create(DingConfig config) throws ClientCreationException {
-            log.info("creating ding client: {}", config);
-            return DefaultDingClient.create(config, dingAccessTokenManager());
-        }
+        return (config, oldAccessToken) -> {
+            try {
+                DefaultDingClient dingClient = (DefaultDingClient) dingClients().getClientOrCreate(config);
+                return dingClient.getNewAccessToken();
+            } catch (ClientException e) {
+                throw new AccessTokenRefreshException(e.getMessage(), e)
+                        .setCurrentAccessToken(oldAccessToken)
+                        .setCanRetry(true);
+            }
+        };
     }
 }

@@ -1,22 +1,27 @@
 package work.gaigeshen.tripartite.ding.openapi.client;
 
 import work.gaigeshen.tripartite.core.client.*;
+import work.gaigeshen.tripartite.core.client.accesstoken.AccessToken;
+import work.gaigeshen.tripartite.core.client.accesstoken.AccessTokenHelper;
 import work.gaigeshen.tripartite.core.client.accesstoken.AccessTokenManager;
-import work.gaigeshen.tripartite.core.client.accesstoken.AccessTokenManagerException;
 import work.gaigeshen.tripartite.core.client.config.ConfigException;
 import work.gaigeshen.tripartite.core.client.parameters.ClientParameters;
 import work.gaigeshen.tripartite.core.client.response.ClientResponse;
 import work.gaigeshen.tripartite.core.header.Headers;
 import work.gaigeshen.tripartite.core.interceptor.AbstractInterceptor;
 import work.gaigeshen.tripartite.core.interceptor.InterceptingException;
-import work.gaigeshen.tripartite.ding.openapi.client.accesstoken.DingAccessTokenHelper;
 import work.gaigeshen.tripartite.ding.openapi.config.DingConfig;
 import work.gaigeshen.tripartite.ding.openapi.parameters.DingApiParameters;
 import work.gaigeshen.tripartite.ding.openapi.parameters.DingOapiParameters;
+import work.gaigeshen.tripartite.ding.openapi.parameters.api.DingAccessTokenParameters;
 import work.gaigeshen.tripartite.ding.openapi.response.DingApiResponse;
 import work.gaigeshen.tripartite.ding.openapi.response.DingOapiResponse;
+import work.gaigeshen.tripartite.ding.openapi.response.api.DingAccessTokenResponse;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * 默认的钉钉接口客户端
@@ -52,6 +57,25 @@ public class DefaultDingClient extends AbstractWebExecutorClient<DingConfig> imp
     }
 
     /**
+     * 调用此方法将获取新的访问令牌
+     *
+     * @return
+     * @throws ClientException
+     */
+    public synchronized AccessToken getNewAccessToken() throws ClientException {
+        DingAccessTokenParameters parameters = new DingAccessTokenParameters();
+        parameters.appKey = config.getAppKey();
+        parameters.appSecret = config.getAppSecret();
+        DingAccessTokenResponse response = execute(parameters, DingAccessTokenResponse.class, "/v1.0/oauth2/accessToken");
+        String accessToken = response.accessToken;
+        Long expireIn = response.expireIn;
+        if (Objects.isNull(accessToken) || Objects.isNull(expireIn)) {
+            throw new ClientException("acquired access token is invalid: " + config);
+        }
+        return AccessTokenHelper.createAccessToken(config, accessToken, expireIn);
+    }
+
+    /**
      * 在钉钉接口客户端被创建之后，调用此方法来获取钉钉访问令牌并添加到访问令牌管理器
      *
      * @throws ClientException 无法获取钉钉访问令牌
@@ -60,8 +84,8 @@ public class DefaultDingClient extends AbstractWebExecutorClient<DingConfig> imp
     public synchronized void init() throws ClientException {
         super.init();
         try {
-            accessTokenManager.addNewAccessToken(config, DingAccessTokenHelper.getNewAccessToken(this));
-        } catch (AccessTokenManagerException e) {
+            accessTokenManager.addNewAccessToken(config, getNewAccessToken());
+        } catch (Exception e) {
             throw new ClientException(e.getMessage(), e);
         }
     }
