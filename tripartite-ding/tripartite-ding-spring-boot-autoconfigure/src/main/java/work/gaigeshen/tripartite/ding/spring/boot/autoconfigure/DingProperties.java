@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 钉钉配置信息属性
+ * 钉钉配置信息
  *
  * @author gaigeshen
  */
@@ -24,21 +24,20 @@ public class DingProperties {
     }
 
     /**
-     * 钉钉配置信息
      *
      * @author gaigeshen
      */
     public static class Client {
 
         /**
-         * 服务器的地址
+         * 新版服务器的地址
          */
-        private String serverHost;
+        private String apiServerHost;
 
         /**
-         * 获取访问令牌的接口调用地址
+         * 旧版服务器的地址
          */
-        private String accessTokenUri;
+        private String oapiServerHost;
 
         /**
          * 应用编号
@@ -60,20 +59,20 @@ public class DingProperties {
          */
         private String token;
 
-        public String getServerHost() {
-            return serverHost;
+        public String getApiServerHost() {
+            return apiServerHost;
         }
 
-        public void setServerHost(String serverHost) {
-            this.serverHost = serverHost;
+        public void setApiServerHost(String apiServerHost) {
+            this.apiServerHost = apiServerHost;
         }
 
-        public String getAccessTokenUri() {
-            return accessTokenUri;
+        public String getOapiServerHost() {
+            return oapiServerHost;
         }
 
-        public void setAccessTokenUri(String accessTokenUri) {
-            this.accessTokenUri = accessTokenUri;
+        public void setOapiServerHost(String oapiServerHost) {
+            this.oapiServerHost = oapiServerHost;
         }
 
         public String getAppKey() {

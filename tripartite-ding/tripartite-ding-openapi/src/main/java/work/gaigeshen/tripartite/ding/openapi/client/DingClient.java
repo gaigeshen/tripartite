@@ -1,12 +1,11 @@
 package work.gaigeshen.tripartite.ding.openapi.client;
 
-import work.gaigeshen.tripartite.ding.openapi.client.robot.DingRobotClient;
-
 /**
+ * 钉钉接口客户端
  *
  * @author gaigeshen
  */
-public interface DingClient extends DingRobotClient {
+public interface DingClient extends DingApiClient, DingOapiClient {
 
 
 

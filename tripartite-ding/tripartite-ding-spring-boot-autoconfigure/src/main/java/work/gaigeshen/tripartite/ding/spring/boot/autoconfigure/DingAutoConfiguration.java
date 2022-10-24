@@ -14,7 +14,7 @@ import work.gaigeshen.tripartite.core.notify.AbstractNotifyContentProcessor;
 import work.gaigeshen.tripartite.core.notify.DefaultNotifyContent;
 import work.gaigeshen.tripartite.ding.openapi.client.DefaultDingClient;
 import work.gaigeshen.tripartite.ding.openapi.client.DingClient;
-import work.gaigeshen.tripartite.ding.openapi.client.accesstoken.DingAccessTokenRefresher;
+import work.gaigeshen.tripartite.ding.openapi.client.DingClientCreator;
 import work.gaigeshen.tripartite.ding.openapi.config.DingConfig;
 import work.gaigeshen.tripartite.ding.openapi.notify.DingNotifyContentFilter;
 import work.gaigeshen.tripartite.ding.openapi.notify.DingNotifyContentReceiver;
@@ -33,12 +33,12 @@ public class DingAutoConfiguration {
 
     private static final Logger log = LoggerFactory.getLogger(DingAutoConfiguration.class);
 
-    private final DingProperties properties;
+    private final DingProperties dingProperties;
 
     private final List<AbstractNotifyContentProcessor<DefaultNotifyContent>> processors;
 
-    public DingAutoConfiguration(DingProperties properties, List<AbstractNotifyContentProcessor<DefaultNotifyContent>> processors) {
-        this.properties = properties;
+    public DingAutoConfiguration(DingProperties dingProperties, List<AbstractNotifyContentProcessor<DefaultNotifyContent>> processors) {
+        this.dingProperties = dingProperties;
         this.processors = processors;
     }
 
@@ -60,20 +60,17 @@ public class DingAutoConfiguration {
 
     @Bean
     public Clients<DingConfig> dingClients() {
-        ClientCreator<DingConfig> dingClientCreator = new DingClientCreator();
+        ClientCreator<DingConfig> dingClientCreator = new DingClientCreator(dingAccessTokenManager());
         List<Client<DingConfig>> dingClients = new ArrayList<>();
-        for (DingProperties.Client client : properties.getClients()) {
-            if (!StringUtils.hasText(client.getServerHost())) {
-                throw new IllegalStateException("serverHost cannot be blank");
-            }
-            if (!StringUtils.hasText(client.getAccessTokenUri())) {
-                throw new IllegalStateException("accessTokenUri cannot be blank");
+        for (DingProperties.Client client : dingProperties.getClients()) {
+            if (!StringUtils.hasText(client.getApiServerHost()) || !StringUtils.hasText(client.getOapiServerHost())) {
+                throw new IllegalStateException("apiServerHost and oapiServerHost cannot be blank");
             }
             if (!StringUtils.hasText(client.getAppKey()) || !StringUtils.hasText(client.getAppSecret())) {
                 throw new IllegalStateException("appKey and appSecret cannot be blank");
             }
             DingConfig dingConfig = DingConfig.builder()
-                    .setServerHost(client.getServerHost()).setAccessTokenUri(client.getAccessTokenUri())
+                    .setApiServerHost(client.getApiServerHost()).setOapiServerHost(client.getOapiServerHost())
                     .setAppKey(client.getAppKey()).setAppSecret(client.getAppSecret())
                     .setSecretKey(client.getSecretKey()).setToken(client.getToken())
                     .build();
@@ -95,19 +92,13 @@ public class DingAutoConfiguration {
 
     @Bean
     public AccessTokenRefresher<DingConfig> dingAccessTokenRefresher() {
-        return new DingAccessTokenRefresher(cfg -> dingClients().getClientOrCreate(cfg));
-    }
-
-    /**
-     *
-     * @author gaigeshen
-     */
-    private class DingClientCreator implements ClientCreator<DingConfig> {
-
-        @Override
-        public Client<DingConfig> create(DingConfig config) throws ClientCreationException {
-            log.info("creating ding client: {}", config);
-            return DefaultDingClient.create(config, dingAccessTokenManager());
-        }
+        return (config, oat) -> {
+            try {
+                DefaultDingClient dingClient = (DefaultDingClient) dingClients().getClientOrCreate(config);
+                return dingClient.getNewAccessToken();
+            } catch (ClientException e) {
+                throw new AccessTokenRefreshException(e.getMessage(), e).setCurrentAccessToken(oat).setCanRetry(true);
+            }
+        };
     }
 }

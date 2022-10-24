@@ -5,14 +5,15 @@ import work.gaigeshen.tripartite.core.client.config.Config;
 import java.util.Objects;
 
 /**
+ * 钉钉配置信息
  *
  * @author gaigeshen
  */
 public class DingConfig implements Config {
 
-    private final String serverHost;
+    private final String apiServerHost;
 
-    private final String accessTokenUri;
+    private final String oapiServerHost;
 
     private final String appKey;
 
@@ -23,8 +24,8 @@ public class DingConfig implements Config {
     private final String token;
 
     private DingConfig(Builder builder) {
-        this.serverHost = builder.serverHost;
-        this.accessTokenUri = builder.accessTokenUri;
+        this.apiServerHost = builder.apiServerHost;
+        this.oapiServerHost = builder.oapiServerHost;
         this.appKey = builder.appKey;
         this.appSecret = builder.appSecret;
         this.secretKey = builder.secretKey;
@@ -35,13 +36,12 @@ public class DingConfig implements Config {
         return new Builder();
     }
 
-    @Override
-    public String getServerHost() {
-        return serverHost;
+    public String getApiServerHost() {
+        return apiServerHost;
     }
 
-    public String getAccessTokenUri() {
-        return accessTokenUri;
+    public String getOapiServerHost() {
+        return oapiServerHost;
     }
 
     public String getAppKey() {
@@ -87,9 +87,9 @@ public class DingConfig implements Config {
      */
     public static class Builder {
 
-        private String serverHost;
+        private String apiServerHost;
 
-        private String accessTokenUri;
+        private String oapiServerHost;
 
         private String appKey;
 
@@ -99,13 +99,13 @@ public class DingConfig implements Config {
 
         private String token;
 
-        public Builder setServerHost(String serverHost) {
-            this.serverHost = serverHost;
+        public Builder setApiServerHost(String apiServerHost) {
+            this.apiServerHost = apiServerHost;
             return this;
         }
 
-        public Builder setAccessTokenUri(String accessTokenUri) {
-            this.accessTokenUri = accessTokenUri;
+        public Builder setOapiServerHost(String oapiServerHost) {
+            this.oapiServerHost = oapiServerHost;
             return this;
         }
 
