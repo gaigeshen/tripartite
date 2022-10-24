@@ -24,7 +24,6 @@ public class DingProperties {
     }
 
     /**
-     * 钉钉配置信息
      *
      * @author gaigeshen
      */

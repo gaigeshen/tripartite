@@ -11,6 +11,7 @@ import work.gaigeshen.tripartite.ding.openapi.response.api.robot.DingRobotGroupM
 import work.gaigeshen.tripartite.ding.openapi.response.api.robot.DingRobotGroupMessageSendResponse;
 
 /**
+ * 钉钉新版接口客户端
  *
  * @author gaigeshen
  */

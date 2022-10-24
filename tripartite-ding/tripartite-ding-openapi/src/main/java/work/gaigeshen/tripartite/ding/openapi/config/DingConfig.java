@@ -5,6 +5,7 @@ import work.gaigeshen.tripartite.core.client.config.Config;
 import java.util.Objects;
 
 /**
+ * 钉钉配置信息
  *
  * @author gaigeshen
  */
@@ -35,12 +36,10 @@ public class DingConfig implements Config {
         return new Builder();
     }
 
-    @Override
     public String getApiServerHost() {
         return apiServerHost;
     }
 
-    @Override
     public String getOapiServerHost() {
         return oapiServerHost;
     }

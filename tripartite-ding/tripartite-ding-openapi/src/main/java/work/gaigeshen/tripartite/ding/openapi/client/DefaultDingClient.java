@@ -19,7 +19,7 @@ import work.gaigeshen.tripartite.ding.openapi.response.DingOapiResponse;
 import java.util.*;
 
 /**
- *
+ * 默认的钉钉接口客户端
  *
  * @author gaigeshen
  */
@@ -40,10 +40,22 @@ public class DefaultDingClient extends AbstractWebExecutorClient<DingConfig> imp
         this.accessTokenManager = accessTokenManager;
     }
 
+    /**
+     * 创建默认的钉钉接口客户端，需要钉钉配置信息和访问令牌管理器
+     *
+     * @param config 钉钉配置信息
+     * @param accessTokenManager 访问令牌管理器
+     * @return 钉钉接口客户端
+     */
     public static DefaultDingClient create(DingConfig config, AccessTokenManager<DingConfig> accessTokenManager) {
         return new DefaultDingClient(config, accessTokenManager);
     }
 
+    /**
+     * 在钉钉接口客户端被创建之后，调用此方法来获取钉钉访问令牌并添加到访问令牌管理器
+     *
+     * @throws ClientException 无法获取钉钉访问令牌
+     */
     @Override
     public synchronized void init() throws ClientException {
         super.init();
@@ -61,7 +73,7 @@ public class DefaultDingClient extends AbstractWebExecutorClient<DingConfig> imp
             protected void updateRequest(Request request) throws InterceptingException {
                 String accessTokenValue = getAccessTokenValue();
                 if (Objects.isNull(accessTokenValue)) {
-                    return;
+                    throw new InterceptingException("access token not found: " + getConfig());
                 }
                 Headers headers = request.headers();
                 headers.putValue("x-acs-dingtalk-access-token", accessTokenValue);

@@ -1,7 +1,7 @@
 package work.gaigeshen.tripartite.core.client;
 
 /**
- * 客户端异常同时也是顶级异常
+ * 接口客户端异常同时也是顶级异常
  *
  * @author gaigeshen
  */

@@ -33,12 +33,12 @@ public class DingAutoConfiguration {
 
     private static final Logger log = LoggerFactory.getLogger(DingAutoConfiguration.class);
 
-    private final DingProperties properties;
+    private final DingProperties dingProperties;
 
     private final List<AbstractNotifyContentProcessor<DefaultNotifyContent>> processors;
 
-    public DingAutoConfiguration(DingProperties properties, List<AbstractNotifyContentProcessor<DefaultNotifyContent>> processors) {
-        this.properties = properties;
+    public DingAutoConfiguration(DingProperties dingProperties, List<AbstractNotifyContentProcessor<DefaultNotifyContent>> processors) {
+        this.dingProperties = dingProperties;
         this.processors = processors;
     }
 
@@ -62,12 +62,9 @@ public class DingAutoConfiguration {
     public Clients<DingConfig> dingClients() {
         ClientCreator<DingConfig> dingClientCreator = new DingClientCreator();
         List<Client<DingConfig>> dingClients = new ArrayList<>();
-        for (DingProperties.Client client : properties.getClients()) {
-            if (!StringUtils.hasText(client.getApiServerHost())) {
-                throw new IllegalStateException("serverHost cannot be blank");
-            }
-            if (!StringUtils.hasText(client.getOapiServerHost())) {
-                throw new IllegalStateException("accessTokenUri cannot be blank");
+        for (DingProperties.Client client : dingProperties.getClients()) {
+            if (!StringUtils.hasText(client.getApiServerHost()) || !StringUtils.hasText(client.getOapiServerHost())) {
+                throw new IllegalStateException("apiServerHost and oapiServerHost cannot be blank");
             }
             if (!StringUtils.hasText(client.getAppKey()) || !StringUtils.hasText(client.getAppSecret())) {
                 throw new IllegalStateException("appKey and appSecret cannot be blank");

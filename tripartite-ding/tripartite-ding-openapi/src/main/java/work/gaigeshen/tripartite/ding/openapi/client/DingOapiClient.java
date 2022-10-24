@@ -15,6 +15,7 @@ import work.gaigeshen.tripartite.ding.openapi.response.oapi.process.*;
 import work.gaigeshen.tripartite.ding.openapi.response.oapi.user.DingUserIdGetResponse;
 
 /**
+ * 钉钉旧版接口客户端
  *
  * @author gaigeshen
  */

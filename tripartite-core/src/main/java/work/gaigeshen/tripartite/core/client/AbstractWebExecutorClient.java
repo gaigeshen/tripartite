@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
+ * 抽象的接口客户端
  *
  * @author gaigeshen
  */
