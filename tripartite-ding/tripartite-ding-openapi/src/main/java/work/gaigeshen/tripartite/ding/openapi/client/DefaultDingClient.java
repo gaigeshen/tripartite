@@ -4,6 +4,7 @@ import work.gaigeshen.tripartite.core.client.*;
 import work.gaigeshen.tripartite.core.client.accesstoken.AccessToken;
 import work.gaigeshen.tripartite.core.client.accesstoken.AccessTokenHelper;
 import work.gaigeshen.tripartite.core.client.accesstoken.AccessTokenManager;
+import work.gaigeshen.tripartite.core.client.accesstoken.AccessTokenManagerException;
 import work.gaigeshen.tripartite.core.client.config.ConfigException;
 import work.gaigeshen.tripartite.core.client.parameters.ClientParameters;
 import work.gaigeshen.tripartite.core.client.response.ClientResponse;
@@ -57,16 +58,17 @@ public class DefaultDingClient extends AbstractWebExecutorClient<DingConfig> imp
     }
 
     /**
-     * 调用此方法将获取新的访问令牌
+     * 调用此方法将获取新的访问令牌，在访问令牌过期前，重复获取返回的访问令牌都是相同的
      *
-     * @return
-     * @throws ClientException
+     * @return 获取到的访问令牌
+     * @throws ClientException 无法获取访问令牌
      */
-    public synchronized AccessToken getNewAccessToken() throws ClientException {
+    public AccessToken getNewAccessToken() throws ClientException {
         DingAccessTokenParameters parameters = new DingAccessTokenParameters();
         parameters.appKey = config.getAppKey();
         parameters.appSecret = config.getAppSecret();
-        DingAccessTokenResponse response = execute(parameters, DingAccessTokenResponse.class, "/v1.0/oauth2/accessToken");
+        DingAccessTokenResponse response = execute(parameters, DingAccessTokenResponse.class,
+                "/v1.0/oauth2/accessToken");
         String accessToken = response.accessToken;
         Long expireIn = response.expireIn;
         if (Objects.isNull(accessToken) || Objects.isNull(expireIn)) {
@@ -85,7 +87,7 @@ public class DefaultDingClient extends AbstractWebExecutorClient<DingConfig> imp
         super.init();
         try {
             accessTokenManager.addNewAccessToken(config, getNewAccessToken());
-        } catch (Exception e) {
+        } catch (AccessTokenManagerException e) {
             throw new ClientException(e.getMessage(), e);
         }
     }

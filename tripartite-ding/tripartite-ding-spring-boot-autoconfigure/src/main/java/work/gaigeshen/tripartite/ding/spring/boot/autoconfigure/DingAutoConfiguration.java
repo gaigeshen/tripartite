@@ -92,14 +92,12 @@ public class DingAutoConfiguration {
 
     @Bean
     public AccessTokenRefresher<DingConfig> dingAccessTokenRefresher() {
-        return (config, oldAccessToken) -> {
+        return (config, oat) -> {
             try {
                 DefaultDingClient dingClient = (DefaultDingClient) dingClients().getClientOrCreate(config);
                 return dingClient.getNewAccessToken();
             } catch (ClientException e) {
-                throw new AccessTokenRefreshException(e.getMessage(), e)
-                        .setCurrentAccessToken(oldAccessToken)
-                        .setCanRetry(true);
+                throw new AccessTokenRefreshException(e.getMessage(), e).setCurrentAccessToken(oat).setCanRetry(true);
             }
         };
     }
