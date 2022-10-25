@@ -25,6 +25,9 @@ public abstract class AbstractWebExecutorClient<C extends Config> implements Cli
 
     @Override
     public synchronized void init() throws ClientException {
+        if (Objects.nonNull(webExecutor)) {
+            return;
+        }
         webExecutor = createWebExecutor();
         if (Objects.isNull(webExecutor)) {
             throw new ClientException("Web executor created cannot be null");
