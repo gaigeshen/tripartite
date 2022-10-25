@@ -11,7 +11,7 @@ import work.gaigeshen.tripartite.ding.openapi.parameters.DingOapiParameters;
 @Parameters(
         converter = JsonParametersConverter.class
 )
-public class DingUserIdGetParameters extends DingOapiParameters {
+public class DingUserByMobileGetParameters extends DingOapiParameters {
 
     public String mobile;
 }
