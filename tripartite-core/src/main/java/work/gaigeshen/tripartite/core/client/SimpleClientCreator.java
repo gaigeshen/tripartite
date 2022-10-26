@@ -4,7 +4,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import work.gaigeshen.tripartite.core.client.SimpleClient.ServerHostResolver;
 import work.gaigeshen.tripartite.core.client.config.Config;
+import work.gaigeshen.tripartite.core.interceptor.AbstractInterceptor;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -30,27 +33,25 @@ public class SimpleClientCreator<C extends Config> implements ClientCreator<C> {
         this.resolver = resolver;
     }
 
-    /**
-     * 直接调用此方法来创建简单的接口客户端
-     *
-     * @param config 配置信息
-     * @param resolver 服务器地址集合解析器
-     * @return 简单的接口客户端
-     * @param <C> 配置信息类型
-     */
-    public static <C extends Config> SimpleClient<C> create(C config, ServerHostResolver<C> resolver) {
-        return (SimpleClient<C>) new SimpleClientCreator<>(resolver).create(config);
-    }
-
     @Override
     public Client<C> create(C config) throws ClientCreationException {
         log.info("creating simple client: {}", config);
-        SimpleClient<C> simpleClient = new SimpleClient<>(config, resolver);
+
+        List<AbstractInterceptor> interceptors = getInterceptors(config);
+
+        SimpleClient<C> simpleClient = new SimpleClient<C>(config, resolver) {
+            @Override
+            protected List<AbstractInterceptor> createInterceptors() { return interceptors; }
+        };
         try {
             simpleClient.init();
         } catch (Exception e) {
             throw new ClientCreationException(e.getMessage(), e);
         }
         return simpleClient;
+    }
+
+    protected List<AbstractInterceptor> getInterceptors(C config) {
+        return Collections.emptyList();
     }
 }

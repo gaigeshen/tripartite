@@ -24,7 +24,7 @@ public class SimpleClient<C extends Config> extends AbstractWebExecutorClient<C>
      * @param config 配置信息
      * @param resolver 用于服务器地址解析
      */
-    public SimpleClient(C config, ServerHostResolver<C> resolver) {
+    protected SimpleClient(C config, ServerHostResolver<C> resolver) {
         if (Objects.isNull(config)) {
             throw new IllegalArgumentException("config cannot be null");
         }
