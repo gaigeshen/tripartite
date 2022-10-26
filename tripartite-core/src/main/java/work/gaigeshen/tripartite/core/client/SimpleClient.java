@@ -29,7 +29,7 @@ public class SimpleClient<C extends Config> extends AbstractWebExecutorClient<C>
             throw new IllegalArgumentException("config cannot be null");
         }
         if (Objects.isNull(resolver)) {
-            throw new IllegalArgumentException("server host determiner cannot be null");
+            throw new IllegalArgumentException("server host resolver cannot be null");
         }
         this.config = config;
         this.resolver = resolver;
