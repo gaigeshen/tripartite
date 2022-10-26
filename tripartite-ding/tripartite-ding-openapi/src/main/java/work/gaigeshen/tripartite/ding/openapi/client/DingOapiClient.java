@@ -7,12 +7,14 @@ import work.gaigeshen.tripartite.ding.openapi.parameters.oapi.chat.DingChatCreat
 import work.gaigeshen.tripartite.ding.openapi.parameters.oapi.message.DingMessageAsyncSendParameters;
 import work.gaigeshen.tripartite.ding.openapi.parameters.oapi.message.DingMessageRecallParameters;
 import work.gaigeshen.tripartite.ding.openapi.parameters.oapi.process.*;
-import work.gaigeshen.tripartite.ding.openapi.parameters.oapi.user.DingUserIdGetParameters;
+import work.gaigeshen.tripartite.ding.openapi.parameters.oapi.user.DingUserByCodeGetParameters;
+import work.gaigeshen.tripartite.ding.openapi.parameters.oapi.user.DingUserByMobileGetParameters;
 import work.gaigeshen.tripartite.ding.openapi.response.oapi.chat.DingChatCreateResponse;
 import work.gaigeshen.tripartite.ding.openapi.response.oapi.message.DingMessageAsyncSendResponse;
 import work.gaigeshen.tripartite.ding.openapi.response.oapi.message.DingMessageRecallResponse;
 import work.gaigeshen.tripartite.ding.openapi.response.oapi.process.*;
-import work.gaigeshen.tripartite.ding.openapi.response.oapi.user.DingUserIdGetResponse;
+import work.gaigeshen.tripartite.ding.openapi.response.oapi.user.DingUserByCodeGetResponse;
+import work.gaigeshen.tripartite.ding.openapi.response.oapi.user.DingUserByMobileGetResponse;
 
 /**
  * 钉钉旧版接口客户端
@@ -22,15 +24,27 @@ import work.gaigeshen.tripartite.ding.openapi.response.oapi.user.DingUserIdGetRe
 public interface DingOapiClient extends Client<DingConfig> {
 
     /**
-     * 查询在职员工用户标识
+     * 根据手机号查询用户
      *
      * @param parameters 请求参数不能为空
      * @return 响应结果不为空
      * @throws ClientException 执行请求的时候发生异常
      * @see <a href="https://open.dingtalk.com/document/orgapp-server/obtain-the-userid-of-your-mobile-phone-number">接口文档</a>
      */
-    default DingUserIdGetResponse userGetId(DingUserIdGetParameters parameters) throws ClientException {
-        return execute(parameters, DingUserIdGetResponse.class, "/topapi/v2/user/getbymobile?access_token={access_token}", getAccessTokenValue());
+    default DingUserByMobileGetResponse userGetByMobile(DingUserByMobileGetParameters parameters) throws ClientException {
+        return execute(parameters, DingUserByMobileGetResponse.class, "/topapi/v2/user/getbymobile?access_token={access_token}", getAccessTokenValue());
+    }
+
+    /**
+     * 通过免登码获取用户信息
+     *
+     * @param parameters 请求参数不能为空
+     * @return 响应结果不为空
+     * @throws ClientException 执行请求的时候发生异常
+     * @see <a href="https://open.dingtalk.com/document/orgapp-server/obtain-the-userid-of-a-user-by-using-the-log-free">接口文档</a>
+     */
+    default DingUserByCodeGetResponse userGetByCode(DingUserByCodeGetParameters parameters) throws ClientException {
+        return execute(parameters, DingUserByCodeGetResponse.class, "/topapi/v2/user/getuserinfo?access_token={access_token}", getAccessTokenValue());
     }
 
     /**

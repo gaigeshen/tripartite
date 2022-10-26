@@ -6,7 +6,7 @@ import work.gaigeshen.tripartite.ding.openapi.response.DingOapiResponse;
  *
  * @author gaigeshen
  */
-public class DingUserIdGetResponse extends DingOapiResponse {
+public class DingUserByMobileGetResponse extends DingOapiResponse {
 
     public Result result;
 

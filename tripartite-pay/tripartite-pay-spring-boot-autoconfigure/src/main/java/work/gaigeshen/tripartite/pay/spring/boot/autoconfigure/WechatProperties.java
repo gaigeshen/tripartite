@@ -3,7 +3,7 @@ package work.gaigeshen.tripartite.pay.spring.boot.autoconfigure;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
 /**
  *
@@ -12,13 +12,13 @@ import java.util.Collection;
 @ConfigurationProperties("wechat")
 public class WechatProperties {
 
-  private Collection<Client> clients = new ArrayList<>();
+  private List<Client> clients = new ArrayList<>();
 
-  public Collection<Client> getClients() {
+  public List<Client> getClients() {
     return clients;
   }
 
-  public void setClients(Collection<Client> clients) {
+  public void setClients(List<Client> clients) {
     this.clients = clients;
   }
 

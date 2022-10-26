@@ -6,18 +6,8 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import work.gaigeshen.tripartite.his.procurement.openapi.DefaultHisProcurementClientCreator;
-import work.gaigeshen.tripartite.his.procurement.openapi.DefaultHisProcurementClients;
-import work.gaigeshen.tripartite.his.procurement.openapi.HisProcurementBasicClient;
-import work.gaigeshen.tripartite.his.procurement.openapi.HisProcurementClientCreator;
-import work.gaigeshen.tripartite.his.procurement.openapi.HisProcurementClients;
-import work.gaigeshen.tripartite.his.procurement.openapi.HisProcurementMatClient;
-import work.gaigeshen.tripartite.his.procurement.openapi.accesstoken.DefaultHisProcurementAccessTokenManager;
-import work.gaigeshen.tripartite.his.procurement.openapi.accesstoken.DefaultHisProcurementAccessTokenRefresher;
-import work.gaigeshen.tripartite.his.procurement.openapi.accesstoken.DefaultHisProcurementAccessTokenStore;
-import work.gaigeshen.tripartite.his.procurement.openapi.accesstoken.HisProcurementAccessTokenManager;
-import work.gaigeshen.tripartite.his.procurement.openapi.accesstoken.HisProcurementAccessTokenRefresher;
-import work.gaigeshen.tripartite.his.procurement.openapi.accesstoken.HisProcurementAccessTokenStore;
+import work.gaigeshen.tripartite.his.procurement.openapi.*;
+import work.gaigeshen.tripartite.his.procurement.openapi.accesstoken.*;
 import work.gaigeshen.tripartite.his.procurement.openapi.config.HisProcurementConfig;
 import work.gaigeshen.tripartite.his.procurement.spring.boot.autoconfigure.HisProcurementProperties.Client;
 
@@ -29,7 +19,7 @@ import java.util.Collection;
  * @author gaigeshen
  */
 @EnableConfigurationProperties({ HisProcurementProperties.class })
-@ConditionalOnClass({ HisProcurementMatClient.class })
+@ConditionalOnClass({ HisProcurementBasicClient.class })
 @Configuration
 public class HisProcurementAutoConfiguration {
 

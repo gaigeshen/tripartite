@@ -53,7 +53,7 @@ public class DefaultDingClient extends AbstractWebExecutorClient<DingConfig> imp
      * @param accessTokenManager 访问令牌管理器
      * @return 钉钉接口客户端
      */
-    public static DefaultDingClient create(DingConfig config, AccessTokenManager<DingConfig> accessTokenManager) {
+    static DefaultDingClient create(DingConfig config, AccessTokenManager<DingConfig> accessTokenManager) {
         return new DefaultDingClient(config, accessTokenManager);
     }
 
