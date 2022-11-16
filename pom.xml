@@ -49,6 +49,7 @@
         <bcprov.jdk15on.version>1.70</bcprov.jdk15on.version>
         <jackson.version>2.13.3</jackson.version>
         <gson.version>2.9.0</gson.version>
+        <guava.version>31.1-jre</guava.version>
         <commons.lang.version>3.8.1</commons.lang.version>
         <commons.collection.version>4.4</commons.collection.version>
         <commons.codec.version>1.13</commons.codec.version>
@@ -81,6 +82,11 @@
                 <groupId>com.google.code.gson</groupId>
                 <artifactId>gson</artifactId>
                 <version>${gson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.commons</groupId>
