@@ -11,6 +11,7 @@ import work.gaigeshen.tripartite.core.client.response.ClientResponse;
 import work.gaigeshen.tripartite.core.header.Headers;
 import work.gaigeshen.tripartite.core.interceptor.AbstractInterceptor;
 import work.gaigeshen.tripartite.core.interceptor.InterceptingException;
+import work.gaigeshen.tripartite.core.ratelimiter.RateLimiterService;
 import work.gaigeshen.tripartite.ding.openapi.config.DingConfig;
 import work.gaigeshen.tripartite.ding.openapi.parameters.DingApiParameters;
 import work.gaigeshen.tripartite.ding.openapi.parameters.DingOapiParameters;
@@ -124,6 +125,11 @@ public class DefaultDingClient extends AbstractWebExecutorClient<DingConfig> imp
     @Override
     public AccessTokenManager<DingConfig> getAccessTokenManager() {
         return accessTokenManager;
+    }
+
+    @Override
+    public RateLimiterService getRateLimiterService() {
+        return RateLimiterService.create(16);
     }
 
     @Override
