@@ -117,6 +117,7 @@ public class DingNotifyContentReceiver extends AbstractNotifyContentReceiver<Def
 
         byte[] randomBytes = RandomStringUtils.randomAscii(16).getBytes();
         byte[] plainTextBytes = plainText.getBytes();
+        byte[] appKeyBytes = config.getAppKey().getBytes();
 
         byte[] plainTextLenBytes = new byte[]{
                 (byte) (plainTextBytes.length >> 24 & 0xff),
@@ -130,6 +131,7 @@ public class DingNotifyContentReceiver extends AbstractNotifyContentReceiver<Def
             byteStream.write(randomBytes);
             byteStream.write(plainTextLenBytes);
             byteStream.write(plainTextBytes);
+            byteStream.write(appKeyBytes);
         } catch (IOException e) {
             throw new IllegalStateException(e.getMessage(), e);
         }
