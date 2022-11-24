@@ -32,6 +32,15 @@ public class DingConfig implements Config {
         this.token = builder.token;
     }
 
+    protected DingConfig(DingConfig copyFrom) {
+        this.apiServerHost = copyFrom.apiServerHost;
+        this.oapiServerHost = copyFrom.oapiServerHost;
+        this.appKey = copyFrom.appKey;
+        this.appSecret = copyFrom.appSecret;
+        this.secretKey = copyFrom.secretKey;
+        this.token = copyFrom.token;
+    }
+
     public static Builder builder() {
         return new Builder();
     }

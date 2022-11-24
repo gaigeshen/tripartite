@@ -27,7 +27,7 @@ import work.gaigeshen.tripartite.ding.openapi.response.oapi.user.DingUserByMobil
  *
  * @author gaigeshen
  */
-public interface DingOapiClient extends Client<DingConfig> {
+public interface DingOapiClient<DC extends DingConfig> extends Client<DC> {
 
     /**
      * 根据手机号查询用户

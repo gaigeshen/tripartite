@@ -15,7 +15,7 @@ import work.gaigeshen.tripartite.ding.openapi.response.api.robot.DingRobotGroupM
  *
  * @author gaigeshen
  */
-public interface DingApiClient extends Client<DingConfig> {
+public interface DingApiClient<DC extends DingConfig> extends Client<DC> {
 
     /**
      * 企业机器人向内部群发消息
