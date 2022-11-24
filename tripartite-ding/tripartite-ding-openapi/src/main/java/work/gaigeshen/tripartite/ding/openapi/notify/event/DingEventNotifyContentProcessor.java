@@ -1,4 +1,4 @@
-package work.gaigeshen.tripartite.ding.openapi.notify;
+package work.gaigeshen.tripartite.ding.openapi.notify.event;
 
 import work.gaigeshen.tripartite.core.notify.AbstractNotifyContentProcessor;
 import work.gaigeshen.tripartite.core.notify.DefaultNotifyContent;
@@ -57,11 +57,21 @@ public abstract class DingEventNotifyContentProcessor extends AbstractNotifyCont
     }
 
     /**
+     * 检查事件内容的事件类型
+     *
+     * @param eventContent 事件内容
+     * @param eventType 期望的事件类型
+     * @return 返回是否为期望的事件类型
+     */
+    protected boolean checkEventType(Map<String, Object> eventContent, String eventType) {
+        return Objects.equals(eventContent.get("EventType"), eventType);
+    }
+
+    /**
      * 此方法用于从通知数据中获取事件内容，需要配合钉钉异步通知数据接收器使用，否则获取不到事件内容
      *
      * @param content 通知数据
      * @return 事件内容
-     * @see DingNotifyContentReceiver
      */
     protected Map<String, Object> extractEventContent(DefaultNotifyContent content) {
         String decrypted = (String) content.getValue("decrypted");
