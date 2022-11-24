@@ -30,7 +30,7 @@ import java.util.Objects;
  *
  * @author gaigeshen
  */
-public class DefaultDingClient extends AbstractWebExecutorClient<DingConfig> implements DingClient<DingConfig> {
+public class DefaultDingClient extends AbstractWebExecutorClient<DingConfig> implements DingClient {
 
     private final DingConfig config;
 
