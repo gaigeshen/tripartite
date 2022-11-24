@@ -18,6 +18,9 @@ import work.gaigeshen.tripartite.ding.openapi.client.DingClientCreator;
 import work.gaigeshen.tripartite.ding.openapi.config.DingConfig;
 import work.gaigeshen.tripartite.ding.openapi.notify.DingNotifyContentFilter;
 import work.gaigeshen.tripartite.ding.openapi.notify.DingNotifyContentReceiver;
+import work.gaigeshen.tripartite.ding.openapi.notify.event.DingCheckCreateSuiteUrlNotifyContentProcessor;
+import work.gaigeshen.tripartite.ding.openapi.notify.event.DingCheckUpdateSuiteUrlNotifyContentProcessor;
+import work.gaigeshen.tripartite.ding.openapi.notify.event.DingCheckUrlNotifyContentProcessor;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -100,5 +103,24 @@ public class DingAutoConfiguration {
                 throw new AccessTokenRefreshException(e.getMessage(), e).setCurrentAccessToken(oat).setCanRetry(true);
             }
         };
+    }
+
+    @Configuration
+    static class DingEventNotifyContentProcessorConfiguration {
+
+        @Bean
+        public DingCheckUrlNotifyContentProcessor dingCheckUrlNotifyContentProcessor() {
+            return new DingCheckUrlNotifyContentProcessor();
+        }
+
+        @Bean
+        public DingCheckCreateSuiteUrlNotifyContentProcessor dingCheckCreateSuiteUrlNotifyContentProcessor() {
+            return new DingCheckCreateSuiteUrlNotifyContentProcessor();
+        }
+
+        @Bean
+        public DingCheckUpdateSuiteUrlNotifyContentProcessor dingCheckUpdateSuiteUrlNotifyContentProcessor() {
+            return new DingCheckUpdateSuiteUrlNotifyContentProcessor();
+        }
     }
 }
