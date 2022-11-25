@@ -1,6 +1,4 @@
-package work.gaigeshen.tripartite.ding.openapi.client;
-
-import work.gaigeshen.tripartite.ding.openapi.config.DingConfig;
+package work.gaigeshen.tripartite.ding.openapi.config;
 
 import java.util.Objects;
 
@@ -11,7 +9,6 @@ import java.util.Objects;
 public class DingAuthCorpContexts {
 
     private static final ThreadLocal<Context> CONTEXT_LOCAL = new ThreadLocal<>();
-
 
     public static void setContextLocal(Context context) {
         CONTEXT_LOCAL.set(context);

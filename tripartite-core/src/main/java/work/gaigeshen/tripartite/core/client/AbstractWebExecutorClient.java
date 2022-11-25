@@ -31,14 +31,21 @@ public abstract class AbstractWebExecutorClient<C extends Config> implements Cli
      */
     @Override
     public synchronized void init() throws ClientException {
-        if (Objects.nonNull(webExecutor)) {
-            return;
-        }
-        webExecutor = createWebExecutor();
         if (Objects.isNull(webExecutor)) {
-            throw new ClientException("Web executor created cannot be null");
+            webExecutor = createWebExecutor();
+            if (Objects.isNull(webExecutor)) {
+                throw new ClientException("web executor created cannot be null");
+            }
+            initInternal();
         }
     }
+
+    /**
+     * 此方法将会被初始化方法调用，子类可以重写此方法用于额外的初始化操作
+     *
+     * @throws ClientException 如果方法执行发生异常
+     */
+    protected void initInternal() throws ClientException { }
 
     @Override
     public final <R extends ClientResponse, P extends ClientParameters> R execute(

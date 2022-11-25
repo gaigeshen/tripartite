@@ -78,14 +78,8 @@ public class DefaultDingClient extends AbstractWebExecutorClient<DingConfig> imp
         return AccessTokenHelper.createAccessToken(config, accessToken, expireIn);
     }
 
-    /**
-     * 在钉钉接口客户端被创建之后，调用此方法来获取钉钉访问令牌并添加到访问令牌管理器
-     *
-     * @throws ClientException 无法获取钉钉访问令牌
-     */
     @Override
-    public synchronized void init() throws ClientException {
-        super.init();
+    protected void initInternal() throws ClientException {
         try {
             accessTokenManager.addNewAccessToken(config, getNewAccessToken());
         } catch (AccessTokenManagerException e) {
@@ -98,15 +92,9 @@ public class DefaultDingClient extends AbstractWebExecutorClient<DingConfig> imp
         return Collections.singletonList(new AbstractInterceptor() {
             @Override
             protected void updateRequest(Request request) throws InterceptingException {
-                // 获取新的访问令牌无需加入请求头，只会使用新版接口去获取访问令牌
-                if (request.url().contains("/v1.0/oauth2/accessToken")) {
-                    return;
-                }
-                // 其他任何情况都加入访问令牌请求头
-                // 旧版本接口加入此请求头应该无任何副作用
                 String accessTokenValue = getAccessTokenValue();
                 if (Objects.isNull(accessTokenValue)) {
-                    throw new InterceptingException("access token not found: " + getConfig());
+                    return;
                 }
                 Headers headers = request.headers();
                 headers.putValue("x-acs-dingtalk-access-token", accessTokenValue);
