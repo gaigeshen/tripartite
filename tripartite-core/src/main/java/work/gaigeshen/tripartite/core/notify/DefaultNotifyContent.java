@@ -65,4 +65,9 @@ public class DefaultNotifyContent extends AbstractNotifyContent implements Notif
   public Iterator<Parameter> iterator() {
     return notifyParameters.iterator();
   }
+
+  @Override
+  public String toString() {
+    return notifyParameters.toString();
+  }
 }
