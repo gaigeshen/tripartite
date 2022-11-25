@@ -47,7 +47,8 @@ public abstract class DingEventNotifyContentProcessor extends AbstractNotifyCont
     }
 
     @Override
-    protected final void processInternal(DefaultNotifyContent content, ProcessorChain<DefaultNotifyContent> chain) throws NotifyContentProcessingException {
+    protected final void processInternal(DefaultNotifyContent content, ProcessorChain<DefaultNotifyContent> chain)
+            throws NotifyContentProcessingException {
         Map<String, Object> eventContent = extractEventContent(content);
         if (supportsEventContent(eventContent)) {
             processEventContent(eventContent, chain);
