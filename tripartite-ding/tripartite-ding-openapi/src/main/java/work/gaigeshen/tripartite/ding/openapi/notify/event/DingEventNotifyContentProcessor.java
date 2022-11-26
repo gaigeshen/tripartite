@@ -16,31 +16,6 @@ import java.util.Objects;
  */
 public abstract class DingEventNotifyContentProcessor extends AbstractNotifyContentProcessor<DefaultNotifyContent> {
 
-    /**
-     * 测试回调事件
-     */
-    protected static final String EVENT_TYPE_CHECK_URL = "check_url";
-
-    /**
-     * 验证回调事件
-     */
-    protected static final String EVENT_TYPE_CHECK_CREATE_SUITE_URL = "check_create_suite_url";
-
-    /**
-     * 回调地址更新事件
-     */
-    protected static final String EVENT_TYPE_CHECK_UPDATE_SUITE_URL = "check_update_suite_url";
-
-    /**
-     * 高优先级数据例如激活应用等
-     */
-    protected static final String EVENT_TYPE_SYNC_HTTP_PUSH_HIGH = "SYNC_HTTP_PUSH_HIGH";
-
-    /**
-     * 普通优先级数据例如通讯录变更等
-     */
-    protected static final String EVENT_TYPE_SYNC_HTTP_PUSH_MEDIUM = "SYNC_HTTP_PUSH_MEDIUM";
-
     @Override
     protected final boolean supports(DefaultNotifyContent content) {
         return true;
@@ -51,7 +26,7 @@ public abstract class DingEventNotifyContentProcessor extends AbstractNotifyCont
             throws NotifyContentProcessingException {
         Map<String, Object> eventContent = extractEventContent(content);
         if (supportsEventContent(eventContent)) {
-            processEventContent(eventContent, chain);
+            processEventContent(eventContent, content, chain);
         } else {
             chain.process(content);
         }
@@ -87,7 +62,7 @@ public abstract class DingEventNotifyContentProcessor extends AbstractNotifyCont
      *
      * @param eventContent 事件内容
      * @return 返回是否能处理该事件内容，只有能处理该事件内容的时候才会继续调用处理方法
-     * @see #processEventContent(Map, ProcessorChain)
+     * @see #processEventContent(Map, DefaultNotifyContent, ProcessorChain)
      */
     protected abstract boolean supportsEventContent(Map<String, Object> eventContent);
 
@@ -95,7 +70,8 @@ public abstract class DingEventNotifyContentProcessor extends AbstractNotifyCont
      * 处理事件内容的方法
      *
      * @param eventContent 事件内容
+     * @param content 原始的通知数据
      * @param chain 通知数据处理器链不为空，用于决定是否继续处理
      */
-    protected abstract void processEventContent(Map<String, Object> eventContent, ProcessorChain<DefaultNotifyContent> chain);
+    protected abstract void processEventContent(Map<String, Object> eventContent, DefaultNotifyContent content, ProcessorChain<DefaultNotifyContent> chain);
 }

@@ -3,6 +3,7 @@ package work.gaigeshen.tripartite.ding.spring.boot.autoconfigure;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -10,7 +11,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.util.StringUtils;
 import work.gaigeshen.tripartite.core.client.*;
 import work.gaigeshen.tripartite.core.client.accesstoken.*;
-import work.gaigeshen.tripartite.core.notify.AbstractNotifyContentProcessor;
 import work.gaigeshen.tripartite.core.notify.DefaultNotifyContent;
 import work.gaigeshen.tripartite.ding.openapi.client.DefaultDingClient;
 import work.gaigeshen.tripartite.ding.openapi.client.DingClient;
@@ -18,13 +18,12 @@ import work.gaigeshen.tripartite.ding.openapi.client.DingClientCreator;
 import work.gaigeshen.tripartite.ding.openapi.config.DingConfig;
 import work.gaigeshen.tripartite.ding.openapi.notify.DingNotifyContentFilter;
 import work.gaigeshen.tripartite.ding.openapi.notify.DingNotifyContentReceiver;
-import work.gaigeshen.tripartite.ding.openapi.notify.event.DingCheckCreateSuiteUrlNotifyContentProcessor;
-import work.gaigeshen.tripartite.ding.openapi.notify.event.DingCheckUpdateSuiteUrlNotifyContentProcessor;
-import work.gaigeshen.tripartite.ding.openapi.notify.event.DingCheckUrlNotifyContentProcessor;
+import work.gaigeshen.tripartite.ding.openapi.notify.event.DingEventNotifyContentProcessor;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author gaigeshen
@@ -38,9 +37,9 @@ public class DingAutoConfiguration {
 
     private final DingProperties dingProperties;
 
-    private final List<AbstractNotifyContentProcessor<DefaultNotifyContent>> processors;
+    private final List<DingEventNotifyContentProcessor> processors;
 
-    public DingAutoConfiguration(DingProperties dingProperties, List<AbstractNotifyContentProcessor<DefaultNotifyContent>> processors) {
+    public DingAutoConfiguration(DingProperties dingProperties, List<DingEventNotifyContentProcessor> processors) {
         this.dingProperties = dingProperties;
         this.processors = processors;
     }
@@ -105,22 +104,23 @@ public class DingAutoConfiguration {
         };
     }
 
+    @ConditionalOnMissingBean(DingEventNotifyContentProcessor.class)
     @Configuration
     static class DingEventNotifyContentProcessorConfiguration {
 
         @Bean
-        public DingCheckUrlNotifyContentProcessor dingCheckUrlNotifyContentProcessor() {
-            return new DingCheckUrlNotifyContentProcessor();
-        }
+        public DingEventNotifyContentProcessor dingEventNotifyContentProcessor() {
+            return new DingEventNotifyContentProcessor() {
+                @Override
+                protected boolean supportsEventContent(Map<String, Object> eventContent) {
+                    return true;
+                }
 
-        @Bean
-        public DingCheckCreateSuiteUrlNotifyContentProcessor dingCheckCreateSuiteUrlNotifyContentProcessor() {
-            return new DingCheckCreateSuiteUrlNotifyContentProcessor();
-        }
-
-        @Bean
-        public DingCheckUpdateSuiteUrlNotifyContentProcessor dingCheckUpdateSuiteUrlNotifyContentProcessor() {
-            return new DingCheckUpdateSuiteUrlNotifyContentProcessor();
+                @Override
+                protected void processEventContent(Map<String, Object> eventContent, DefaultNotifyContent content, ProcessorChain<DefaultNotifyContent> chain) {
+                    log.info("<<<< Event Content: {}", eventContent);
+                }
+            };
         }
     }
 }
