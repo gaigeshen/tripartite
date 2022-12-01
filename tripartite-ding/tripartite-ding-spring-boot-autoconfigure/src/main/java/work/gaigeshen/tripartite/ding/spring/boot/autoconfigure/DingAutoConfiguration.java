@@ -2,6 +2,7 @@ package work.gaigeshen.tripartite.ding.spring.boot.autoconfigure;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -26,10 +27,13 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 钉钉自动配置
+ *
  * @author gaigeshen
  */
 @EnableConfigurationProperties({DingProperties.class})
 @ConditionalOnClass({DingClient.class})
+@AutoConfigureAfter({DingSuiteTicketAutoConfiguration.class})
 @Configuration
 public class DingAutoConfiguration {
 
@@ -73,6 +77,7 @@ public class DingAutoConfiguration {
             }
             DingConfig dingConfig = DingConfig.builder()
                     .setApiServerHost(client.getApiServerHost()).setOapiServerHost(client.getOapiServerHost())
+                    .setSuiteId(client.getSuiteId())
                     .setAppKey(client.getAppKey()).setAppSecret(client.getAppSecret())
                     .setSecretKey(client.getSecretKey()).setToken(client.getToken())
                     .build();

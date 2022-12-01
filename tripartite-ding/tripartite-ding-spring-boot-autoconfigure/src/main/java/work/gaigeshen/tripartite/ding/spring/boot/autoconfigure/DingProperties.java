@@ -40,6 +40,11 @@ public class DingProperties {
         private String oapiServerHost;
 
         /**
+         * 套件编号
+         */
+        private String suiteId;
+
+        /**
          * 应用编号
          */
         private String appKey;
@@ -73,6 +78,14 @@ public class DingProperties {
 
         public void setOapiServerHost(String oapiServerHost) {
             this.oapiServerHost = oapiServerHost;
+        }
+
+        public String getSuiteId() {
+            return suiteId;
+        }
+
+        public void setSuiteId(String suiteId) {
+            this.suiteId = suiteId;
         }
 
         public String getAppKey() {

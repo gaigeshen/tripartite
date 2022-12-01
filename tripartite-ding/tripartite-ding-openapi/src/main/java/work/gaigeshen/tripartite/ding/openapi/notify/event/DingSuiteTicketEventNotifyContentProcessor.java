@@ -3,34 +3,29 @@ package work.gaigeshen.tripartite.ding.openapi.notify.event;
 import work.gaigeshen.tripartite.core.notify.DefaultNotifyContent;
 import work.gaigeshen.tripartite.core.util.json.JsonCodec;
 import work.gaigeshen.tripartite.ding.openapi.client.DingSuiteTicketStore;
-import work.gaigeshen.tripartite.ding.openapi.config.DingConfig;
 
 import java.util.Collection;
 import java.util.Map;
 import java.util.Objects;
 
 /**
- * 第三方企业应用票据事件推送处理器
+ * 钉钉套件票据事件推送处理器
  *
  * @author gaigeshen
  */
 public class DingSuiteTicketEventNotifyContentProcessor extends DingEventNotifyContentProcessor {
-
-    private final DingConfig config;
 
     private final DingSuiteTicketStore suiteTicketStore;
 
     /**
      * 创建此事件推送处理器
      *
-     * @param config 钉钉配置信息
-     * @param suiteTicketStore 票据存储器
+     * @param suiteTicketStore 钉钉套件票据存储器
      */
-    public DingSuiteTicketEventNotifyContentProcessor(DingConfig config, DingSuiteTicketStore suiteTicketStore) {
-        if (Objects.isNull(config) || Objects.isNull(suiteTicketStore)) {
-            throw new IllegalArgumentException("config and suite ticket store cannot be null");
+    public DingSuiteTicketEventNotifyContentProcessor(DingSuiteTicketStore suiteTicketStore) {
+        if (Objects.isNull(suiteTicketStore)) {
+            throw new IllegalArgumentException("suite ticket store cannot be null");
         }
-        this.config = config;
         this.suiteTicketStore = suiteTicketStore;
     }
 
@@ -48,22 +43,29 @@ public class DingSuiteTicketEventNotifyContentProcessor extends DingEventNotifyC
      */
     @Override
     protected void processEventContent(Map<String, Object> eventContent, DefaultNotifyContent content, ProcessorChain<DefaultNotifyContent> chain) {
-        Collection<?> bizData = (Collection<?>) eventContent.get("bizData");
-        if (Objects.isNull(bizData) || bizData.isEmpty()) {
+        Collection<?> bizDataCollection = (Collection<?>) eventContent.get("bizData");
+        if (Objects.isNull(bizDataCollection) || bizDataCollection.isEmpty()) {
             chain.process(content);
+            return;
         }
-        Map<?, ?> bizDataContent = (Map<?, ?>) bizData.iterator().next();
-        if (bizDataContent.isEmpty() || !Objects.equals(2, bizDataContent.get("biz_type"))) {
-            chain.process(content);
+        for (Object bizDataObject : bizDataCollection) {
+            Map<?, ?> bizDataContent = (Map<?, ?>) bizDataObject;
+            if (bizDataContent.isEmpty() || !Objects.equals(2, bizDataContent.get("biz_type"))) {
+                continue;
+            }
+            String suiteIdText = (String) bizDataContent.get("biz_id");
+            String bizDataText = (String) bizDataContent.get("biz_data");
+            if (Objects.isNull(suiteIdText) || Objects.isNull(bizDataText)) {
+                return;
+            }
+            Map<String, Object> bizDataWanted = JsonCodec.instance().decodeObject(bizDataText);
+            String suiteTicket = (String) bizDataWanted.get("suiteTicket");
+            if (Objects.isNull(suiteTicket)) {
+                return;
+            }
+            suiteTicketStore.setTicket(suiteIdText, suiteTicket);
+            return;
         }
-        String bizDataWantedText = (String) bizDataContent.get("biz_data");
-        if (Objects.isNull(bizDataWantedText)) {
-            chain.process(content);
-        }
-        Map<String, Object> bizDataWanted = JsonCodec.instance().decodeObject(bizDataWantedText);
-        if (Objects.isNull(bizDataWanted) || bizDataWanted.isEmpty()) {
-            chain.process(content);
-        }
-        suiteTicketStore.setSuiteTicket(config.getAppKey(), (String) bizDataWanted.get("suiteTicket"));
+        chain.process(content);
     }
 }

@@ -15,6 +15,8 @@ public class DingConfig implements Config {
 
     private final String oapiServerHost;
 
+    private final String suiteId;
+
     private final String appKey;
 
     private final String appSecret;
@@ -26,6 +28,7 @@ public class DingConfig implements Config {
     private DingConfig(Builder builder) {
         this.apiServerHost = builder.apiServerHost;
         this.oapiServerHost = builder.oapiServerHost;
+        this.suiteId = builder.suiteId;
         this.appKey = builder.appKey;
         this.appSecret = builder.appSecret;
         this.secretKey = builder.secretKey;
@@ -35,6 +38,7 @@ public class DingConfig implements Config {
     protected DingConfig(DingConfig copyFrom) {
         this.apiServerHost = copyFrom.apiServerHost;
         this.oapiServerHost = copyFrom.oapiServerHost;
+        this.suiteId = copyFrom.suiteId;
         this.appKey = copyFrom.appKey;
         this.appSecret = copyFrom.appSecret;
         this.secretKey = copyFrom.secretKey;
@@ -51,6 +55,10 @@ public class DingConfig implements Config {
 
     public String getOapiServerHost() {
         return oapiServerHost;
+    }
+
+    public String getSuiteId() {
+        return suiteId;
     }
 
     public String getAppKey() {
@@ -100,6 +108,8 @@ public class DingConfig implements Config {
 
         private String oapiServerHost;
 
+        private String suiteId;
+
         private String appKey;
 
         private String appSecret;
@@ -115,6 +125,11 @@ public class DingConfig implements Config {
 
         public Builder setOapiServerHost(String oapiServerHost) {
             this.oapiServerHost = oapiServerHost;
+            return this;
+        }
+
+        public Builder setSuiteId(String suiteId) {
+            this.suiteId = suiteId;
             return this;
         }
 

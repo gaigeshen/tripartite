@@ -1,10 +1,34 @@
 package work.gaigeshen.tripartite.ding.openapi.client;
 
+/**
+ * 钉钉套件票据存储器
+ *
+ * @author gaigeshen
+ */
 public interface DingSuiteTicketStore {
 
-    void setSuiteTicket(String suiteKey, String suiteTicket);
+    /**
+     * 创建默认的套件票据存储器
+     *
+     * @return 默认的套件票据存储器
+     */
+    static DingSuiteTicketStore create() {
+        return new DefaultDingSuiteTicketStore();
+    }
 
-    void removeTicket(String suiteKey);
+    /**
+     * 设置套件票据
+     *
+     * @param suiteId 套件编号
+     * @param ticket 套件票据
+     */
+    void setTicket(String suiteId, String ticket);
 
-    String getSuiteTicket(String suiteKey);
+    /**
+     * 获取套件票据
+     *
+     * @param suiteId 套件编号
+     * @return 套件票据可能为空
+     */
+    String getTicket(String suiteId);
 }
