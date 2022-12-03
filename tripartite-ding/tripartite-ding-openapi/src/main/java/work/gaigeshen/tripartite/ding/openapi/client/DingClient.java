@@ -1,10 +1,5 @@
 package work.gaigeshen.tripartite.ding.openapi.client;
 
-import work.gaigeshen.tripartite.core.client.ClientException;
-import work.gaigeshen.tripartite.ding.openapi.config.DingAuthCorpContexts;
-import work.gaigeshen.tripartite.ding.openapi.config.DingAuthCorpContexts.Context;
-import work.gaigeshen.tripartite.ding.openapi.config.DingConfig;
-
 import java.util.Objects;
 
 /**
@@ -14,39 +9,21 @@ import java.util.Objects;
  */
 public interface DingClient extends DingApiClient, DingOapiClient {
 
-    default String getAuthCorpId() {
-        Context authCorpContext = getAuthCorpContext();
-        if (Objects.isNull(authCorpContext)) {
-            return null;
-        }
-        return authCorpContext.getAuthCorpId();
-    }
-
-    default boolean hasAuthCorpContext() {
-        return Objects.nonNull(getAuthCorpContext());
-    }
-
-    default Context getAuthCorpContext() {
-        return DingAuthCorpContexts.getContextLocal();
-    }
-
-    default String getSuiteTicket() throws ClientException {
-        DingConfig config = getConfig();
-        if (Objects.isNull(config.getSuiteId())) {
-            throw new ClientException("suite id not found: " + config);
-        }
-        DingSuiteTicketStore suiteTicketStore = getSuiteTicketStore();
-        if (Objects.isNull(suiteTicketStore)) {
-            throw new ClientException("suite ticket store not found: " + config);
-        }
-        return suiteTicketStore.getTicket(config.getSuiteId());
-    }
-
+    /**
+     * 返回是否有套件票据存储器，只有第三方企业应用开发才需要
+     *
+     * @return 是否有套件票据存储器
+     */
     default boolean hasSuiteTicketStore() {
         return Objects.nonNull(getSuiteTicketStore());
     }
 
-    default DingSuiteTicketStore getSuiteTicketStore() throws ClientException {
+    /**
+     * 返回钉钉套件票据存储器
+     *
+     * @return 钉钉套件票据存储器，默认返回空对象，表示没有套件票据存储器
+     */
+    default DingSuiteTicketStore getSuiteTicketStore() {
         return null;
     }
 }
