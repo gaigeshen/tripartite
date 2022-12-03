@@ -1,3 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  work.gaigeshen.tripartite.ding.spring.boot.autoconfigure.DingAutoConfiguration,\
-  work.gaigeshen.tripartite.ding.spring.boot.autoconfigure.DingSuiteTicketAutoConfiguration
+  work.gaigeshen.tripartite.ding.spring.boot.autoconfigure.DingAutoConfiguration

@@ -2,7 +2,6 @@ package work.gaigeshen.tripartite.ding.spring.boot.autoconfigure;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -12,19 +11,19 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.util.StringUtils;
 import work.gaigeshen.tripartite.core.client.*;
 import work.gaigeshen.tripartite.core.client.accesstoken.*;
-import work.gaigeshen.tripartite.core.notify.DefaultNotifyContent;
 import work.gaigeshen.tripartite.ding.openapi.client.DefaultDingClient;
 import work.gaigeshen.tripartite.ding.openapi.client.DingClient;
 import work.gaigeshen.tripartite.ding.openapi.client.DingClientCreator;
+import work.gaigeshen.tripartite.ding.openapi.client.DingSuiteTicketStore;
 import work.gaigeshen.tripartite.ding.openapi.config.DingConfig;
 import work.gaigeshen.tripartite.ding.openapi.notify.DingNotifyContentFilter;
 import work.gaigeshen.tripartite.ding.openapi.notify.DingNotifyContentReceiver;
 import work.gaigeshen.tripartite.ding.openapi.notify.event.DingEventNotifyContentProcessor;
+import work.gaigeshen.tripartite.ding.openapi.notify.event.DingSuiteTicketEventNotifyContentProcessor;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 钉钉自动配置
@@ -33,7 +32,6 @@ import java.util.Map;
  */
 @EnableConfigurationProperties({DingProperties.class})
 @ConditionalOnClass({DingClient.class})
-@AutoConfigureAfter({DingSuiteTicketAutoConfiguration.class})
 @Configuration
 public class DingAutoConfiguration {
 
@@ -93,11 +91,6 @@ public class DingAutoConfiguration {
     }
 
     @Bean
-    public AccessTokenStore<DingConfig> dingAccessTokenStore() {
-        return new DefaultAccessTokenStore<>();
-    }
-
-    @Bean
     public AccessTokenRefresher<DingConfig> dingAccessTokenRefresher() {
         return (config, oat) -> {
             try {
@@ -109,23 +102,29 @@ public class DingAutoConfiguration {
         };
     }
 
-    @ConditionalOnMissingBean(DingEventNotifyContentProcessor.class)
+    @ConditionalOnMissingBean
+    @Bean
+    public AccessTokenStore<DingConfig> dingAccessTokenStore() {
+        return new DefaultAccessTokenStore<>();
+    }
+
+    /**
+     * 钉钉套件票据自动配置
+     *
+     * @author gaigeshen
+     */
     @Configuration
-    static class DingEventNotifyContentProcessorConfiguration {
+    static class DingSuiteTicketAutoConfiguration {
 
         @Bean
-        public DingEventNotifyContentProcessor dingEventNotifyContentProcessor() {
-            return new DingEventNotifyContentProcessor() {
-                @Override
-                protected boolean supportsEventContent(Map<String, Object> eventContent) {
-                    return true;
-                }
+        public DingSuiteTicketEventNotifyContentProcessor dingSuiteTicketEventNotifyContentProcessor() {
+            return new DingSuiteTicketEventNotifyContentProcessor(dingSuiteTicketStore());
+        }
 
-                @Override
-                protected void processEventContent(Map<String, Object> eventContent, DefaultNotifyContent content, ProcessorChain<DefaultNotifyContent> chain) {
-                    log.info("<<<< Event Content: {}", eventContent);
-                }
-            };
+        @ConditionalOnMissingBean
+        @Bean
+        public DingSuiteTicketStore dingSuiteTicketStore() {
+            return DingSuiteTicketStore.create();
         }
     }
 }
