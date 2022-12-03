@@ -80,6 +80,9 @@ public class DefaultDingClient extends AbstractWebExecutorClient<DingConfig> imp
 
     @Override
     protected void initInternal() throws ClientException {
+        if (hasSuiteTicketStore()) {
+            return;
+        }
         try {
             accessTokenManager.addNewAccessToken(config, getNewAccessToken());
         } catch (AccessTokenManagerException e) {
