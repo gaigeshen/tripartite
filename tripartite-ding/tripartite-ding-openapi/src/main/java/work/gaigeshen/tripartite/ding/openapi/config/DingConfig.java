@@ -27,6 +27,11 @@ public class DingConfig implements Config {
     private final String authCorpId;
 
     /**
+     * 应用相关属性（调用接口的时候可能会用到）
+     */
+    private final String agentId;
+
+    /**
      * 应用编号（或者定制应用编号）
      */
     private final String appKey;
@@ -50,6 +55,7 @@ public class DingConfig implements Config {
         this.apiServerHost = builder.apiServerHost;
         this.oapiServerHost = builder.oapiServerHost;
         this.authCorpId = builder.authCorpId;
+        this.agentId = builder.agentId;
         this.appKey = builder.appKey;
         this.appSecret = builder.appSecret;
         this.secretKey = builder.secretKey;
@@ -70,6 +76,10 @@ public class DingConfig implements Config {
 
     public String getAuthCorpId() {
         return authCorpId;
+    }
+
+    public String getAgentId() {
+        return agentId;
     }
 
     public String getAppKey() {
@@ -121,6 +131,8 @@ public class DingConfig implements Config {
 
         private String authCorpId;
 
+        private String agentId;
+
         private String appKey;
 
         private String appSecret;
@@ -141,6 +153,11 @@ public class DingConfig implements Config {
 
         public Builder setAuthCorpId(String authCorpId) {
             this.authCorpId = authCorpId;
+            return this;
+        }
+
+        public Builder setAgentId(String agentId) {
+            this.agentId = agentId;
             return this;
         }
 
