@@ -11,38 +11,49 @@ import java.util.Objects;
  */
 public class DingConfig implements Config {
 
+    /**
+     * 新版服务器的地址
+     */
     private final String apiServerHost;
 
+    /**
+     * 旧版服务器的地址
+     */
     private final String oapiServerHost;
 
-    private final String suiteId;
+    /**
+     * 授权企业编号（用于定制应用）
+     */
+    private final String authCorpId;
 
+    /**
+     * 应用编号（或者定制应用编号）
+     */
     private final String appKey;
 
+    /**
+     * 应用密钥（或者定制应用密钥）
+     */
     private final String appSecret;
 
+    /**
+     * 异步通知或者回调通知的密钥（定制应用不可用）
+     */
     private final String secretKey;
 
+    /**
+     * 异步通知或者回调通知的签名令牌（定制应用不可用）
+     */
     private final String token;
 
     private DingConfig(Builder builder) {
         this.apiServerHost = builder.apiServerHost;
         this.oapiServerHost = builder.oapiServerHost;
-        this.suiteId = builder.suiteId;
+        this.authCorpId = builder.authCorpId;
         this.appKey = builder.appKey;
         this.appSecret = builder.appSecret;
         this.secretKey = builder.secretKey;
         this.token = builder.token;
-    }
-
-    protected DingConfig(DingConfig copyFrom) {
-        this.apiServerHost = copyFrom.apiServerHost;
-        this.oapiServerHost = copyFrom.oapiServerHost;
-        this.suiteId = copyFrom.suiteId;
-        this.appKey = copyFrom.appKey;
-        this.appSecret = copyFrom.appSecret;
-        this.secretKey = copyFrom.secretKey;
-        this.token = copyFrom.token;
     }
 
     public static Builder builder() {
@@ -57,8 +68,8 @@ public class DingConfig implements Config {
         return oapiServerHost;
     }
 
-    public String getSuiteId() {
-        return suiteId;
+    public String getAuthCorpId() {
+        return authCorpId;
     }
 
     public String getAppKey() {
@@ -108,7 +119,7 @@ public class DingConfig implements Config {
 
         private String oapiServerHost;
 
-        private String suiteId;
+        private String authCorpId;
 
         private String appKey;
 
@@ -128,8 +139,8 @@ public class DingConfig implements Config {
             return this;
         }
 
-        public Builder setSuiteId(String suiteId) {
-            this.suiteId = suiteId;
+        public Builder setAuthCorpId(String authCorpId) {
+            this.authCorpId = authCorpId;
             return this;
         }
 

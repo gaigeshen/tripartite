@@ -11,19 +11,19 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.util.StringUtils;
 import work.gaigeshen.tripartite.core.client.*;
 import work.gaigeshen.tripartite.core.client.accesstoken.*;
+import work.gaigeshen.tripartite.core.notify.DefaultNotifyContent;
 import work.gaigeshen.tripartite.ding.openapi.client.DefaultDingClient;
 import work.gaigeshen.tripartite.ding.openapi.client.DingClient;
 import work.gaigeshen.tripartite.ding.openapi.client.DingClientCreator;
-import work.gaigeshen.tripartite.ding.openapi.client.DingSuiteTicketStore;
 import work.gaigeshen.tripartite.ding.openapi.config.DingConfig;
 import work.gaigeshen.tripartite.ding.openapi.notify.DingNotifyContentFilter;
 import work.gaigeshen.tripartite.ding.openapi.notify.DingNotifyContentReceiver;
 import work.gaigeshen.tripartite.ding.openapi.notify.event.DingEventNotifyContentProcessor;
-import work.gaigeshen.tripartite.ding.openapi.notify.event.DingSuiteTicketEventNotifyContentProcessor;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 钉钉自动配置
@@ -75,7 +75,7 @@ public class DingAutoConfiguration {
             }
             DingConfig dingConfig = DingConfig.builder()
                     .setApiServerHost(client.getApiServerHost()).setOapiServerHost(client.getOapiServerHost())
-                    .setSuiteId(client.getSuiteId())
+                    .setAuthCorpId(client.getAuthCorpId())
                     .setAppKey(client.getAppKey()).setAppSecret(client.getAppSecret())
                     .setSecretKey(client.getSecretKey()).setToken(client.getToken())
                     .build();
@@ -108,23 +108,25 @@ public class DingAutoConfiguration {
         return new DefaultAccessTokenStore<>();
     }
 
-    /**
-     * 钉钉套件票据自动配置
-     *
-     * @author gaigeshen
-     */
+    @ConditionalOnMissingBean(DingEventNotifyContentProcessor.class)
     @Configuration
-    static class DingSuiteTicketAutoConfiguration {
+    static class DingEventNotifyContentProcessorConfiguration {
 
         @Bean
-        public DingSuiteTicketEventNotifyContentProcessor dingSuiteTicketEventNotifyContentProcessor() {
-            return new DingSuiteTicketEventNotifyContentProcessor(dingSuiteTicketStore());
-        }
+        public DingEventNotifyContentProcessor dingEventNotifyContentProcessor() {
+            return new DingEventNotifyContentProcessor() {
+                @Override
+                protected boolean supportsEventContent(Map<String, Object> eventContent) {
+                    return true;
+                }
 
-        @ConditionalOnMissingBean
-        @Bean
-        public DingSuiteTicketStore dingSuiteTicketStore() {
-            return DingSuiteTicketStore.create();
+                @Override
+                protected void processEventContent(Map<String, Object> eventContent,
+                                                   DefaultNotifyContent content,
+                                                   ProcessorChain<DefaultNotifyContent> chain) {
+                    log.info("<<<< Event Content: {}", eventContent);
+                }
+            };
         }
     }
 }

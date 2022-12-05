@@ -16,9 +16,11 @@ import work.gaigeshen.tripartite.ding.openapi.config.DingConfig;
 import work.gaigeshen.tripartite.ding.openapi.parameters.DingApiParameters;
 import work.gaigeshen.tripartite.ding.openapi.parameters.DingOapiParameters;
 import work.gaigeshen.tripartite.ding.openapi.parameters.api.DingAccessTokenParameters;
+import work.gaigeshen.tripartite.ding.openapi.parameters.api.DingAuthCorpAccessTokenParameters;
 import work.gaigeshen.tripartite.ding.openapi.response.DingApiResponse;
 import work.gaigeshen.tripartite.ding.openapi.response.DingOapiResponse;
 import work.gaigeshen.tripartite.ding.openapi.response.api.DingAccessTokenResponse;
+import work.gaigeshen.tripartite.ding.openapi.response.api.DingAuthCorpAccessTokenResponse;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -65,11 +67,26 @@ public class DefaultDingClient extends AbstractWebExecutorClient<DingConfig> imp
      * @throws ClientException 无法获取访问令牌
      */
     public AccessToken getNewAccessToken() throws ClientException {
+        boolean hasAuthCorpId = Objects.nonNull(config.getAuthCorpId());
+        String path = hasAuthCorpId ? "/v1.0/oauth2/corpAccessToken" : "/v1.0/oauth2/accessToken";
+        if (hasAuthCorpId) {
+            DingAuthCorpAccessTokenParameters parameters = new DingAuthCorpAccessTokenParameters();
+            parameters.suiteKey = config.getAppKey();
+            parameters.suiteSecret = config.getAppSecret();
+            parameters.authCorpId = config.getAuthCorpId();
+            parameters.suiteTicket = "none";
+            DingAuthCorpAccessTokenResponse response = execute(parameters, DingAuthCorpAccessTokenResponse.class, path);
+            String accessToken = response.accessToken;
+            Long expireIn = response.expireIn;
+            if (Objects.isNull(accessToken) || Objects.isNull(expireIn)) {
+                throw new ClientException("acquired access token is invalid: " + config);
+            }
+            return AccessTokenHelper.createAccessToken(config, accessToken, expireIn);
+        }
         DingAccessTokenParameters parameters = new DingAccessTokenParameters();
         parameters.appKey = config.getAppKey();
         parameters.appSecret = config.getAppSecret();
-        DingAccessTokenResponse response = execute(parameters, DingAccessTokenResponse.class,
-                "/v1.0/oauth2/accessToken");
+        DingAccessTokenResponse response = execute(parameters, DingAccessTokenResponse.class, path);
         String accessToken = response.accessToken;
         Long expireIn = response.expireIn;
         if (Objects.isNull(accessToken) || Objects.isNull(expireIn)) {
@@ -80,9 +97,6 @@ public class DefaultDingClient extends AbstractWebExecutorClient<DingConfig> imp
 
     @Override
     protected void initInternal() throws ClientException {
-        if (hasSuiteTicketStore()) {
-            return;
-        }
         try {
             accessTokenManager.addNewAccessToken(config, getNewAccessToken());
         } catch (AccessTokenManagerException e) {
