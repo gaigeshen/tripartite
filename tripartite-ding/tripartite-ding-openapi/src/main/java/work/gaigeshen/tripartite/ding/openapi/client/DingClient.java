@@ -7,6 +7,4 @@ package work.gaigeshen.tripartite.ding.openapi.client;
  */
 public interface DingClient extends DingApiClient, DingOapiClient {
 
-
-
 }

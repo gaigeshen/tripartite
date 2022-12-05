@@ -11,13 +11,16 @@ import work.gaigeshen.tripartite.core.client.response.ClientResponse;
 import work.gaigeshen.tripartite.core.header.Headers;
 import work.gaigeshen.tripartite.core.interceptor.AbstractInterceptor;
 import work.gaigeshen.tripartite.core.interceptor.InterceptingException;
+import work.gaigeshen.tripartite.core.ratelimiter.RateLimiterService;
 import work.gaigeshen.tripartite.ding.openapi.config.DingConfig;
 import work.gaigeshen.tripartite.ding.openapi.parameters.DingApiParameters;
 import work.gaigeshen.tripartite.ding.openapi.parameters.DingOapiParameters;
 import work.gaigeshen.tripartite.ding.openapi.parameters.api.DingAccessTokenParameters;
+import work.gaigeshen.tripartite.ding.openapi.parameters.api.DingAuthCorpAccessTokenParameters;
 import work.gaigeshen.tripartite.ding.openapi.response.DingApiResponse;
 import work.gaigeshen.tripartite.ding.openapi.response.DingOapiResponse;
 import work.gaigeshen.tripartite.ding.openapi.response.api.DingAccessTokenResponse;
+import work.gaigeshen.tripartite.ding.openapi.response.api.DingAuthCorpAccessTokenResponse;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -64,11 +67,26 @@ public class DefaultDingClient extends AbstractWebExecutorClient<DingConfig> imp
      * @throws ClientException 无法获取访问令牌
      */
     public AccessToken getNewAccessToken() throws ClientException {
+        boolean hasAuthCorpId = Objects.nonNull(config.getAuthCorpId());
+        String path = hasAuthCorpId ? "/v1.0/oauth2/corpAccessToken" : "/v1.0/oauth2/accessToken";
+        if (hasAuthCorpId) {
+            DingAuthCorpAccessTokenParameters parameters = new DingAuthCorpAccessTokenParameters();
+            parameters.suiteKey = config.getAppKey();
+            parameters.suiteSecret = config.getAppSecret();
+            parameters.authCorpId = config.getAuthCorpId();
+            parameters.suiteTicket = "none";
+            DingAuthCorpAccessTokenResponse response = execute(parameters, DingAuthCorpAccessTokenResponse.class, path);
+            String accessToken = response.accessToken;
+            Long expireIn = response.expireIn;
+            if (Objects.isNull(accessToken) || Objects.isNull(expireIn)) {
+                throw new ClientException("acquired access token is invalid: " + config);
+            }
+            return AccessTokenHelper.createAccessToken(config, accessToken, expireIn);
+        }
         DingAccessTokenParameters parameters = new DingAccessTokenParameters();
         parameters.appKey = config.getAppKey();
         parameters.appSecret = config.getAppSecret();
-        DingAccessTokenResponse response = execute(parameters, DingAccessTokenResponse.class,
-                "/v1.0/oauth2/accessToken");
+        DingAccessTokenResponse response = execute(parameters, DingAccessTokenResponse.class, path);
         String accessToken = response.accessToken;
         Long expireIn = response.expireIn;
         if (Objects.isNull(accessToken) || Objects.isNull(expireIn)) {
@@ -77,14 +95,8 @@ public class DefaultDingClient extends AbstractWebExecutorClient<DingConfig> imp
         return AccessTokenHelper.createAccessToken(config, accessToken, expireIn);
     }
 
-    /**
-     * 在钉钉接口客户端被创建之后，调用此方法来获取钉钉访问令牌并添加到访问令牌管理器
-     *
-     * @throws ClientException 无法获取钉钉访问令牌
-     */
     @Override
-    public synchronized void init() throws ClientException {
-        super.init();
+    protected void initInternal() throws ClientException {
         try {
             accessTokenManager.addNewAccessToken(config, getNewAccessToken());
         } catch (AccessTokenManagerException e) {
@@ -97,15 +109,9 @@ public class DefaultDingClient extends AbstractWebExecutorClient<DingConfig> imp
         return Collections.singletonList(new AbstractInterceptor() {
             @Override
             protected void updateRequest(Request request) throws InterceptingException {
-                // 获取新的访问令牌无需加入请求头，只会使用新版接口去获取访问令牌
-                if (request.url().contains("/v1.0/oauth2/accessToken")) {
-                    return;
-                }
-                // 其他任何情况都加入访问令牌请求头
-                // 旧版本接口加入此请求头应该无任何副作用
                 String accessTokenValue = getAccessTokenValue();
                 if (Objects.isNull(accessTokenValue)) {
-                    throw new InterceptingException("access token not found: " + getConfig());
+                    return;
                 }
                 Headers headers = request.headers();
                 headers.putValue("x-acs-dingtalk-access-token", accessTokenValue);
@@ -124,6 +130,11 @@ public class DefaultDingClient extends AbstractWebExecutorClient<DingConfig> imp
     @Override
     public AccessTokenManager<DingConfig> getAccessTokenManager() {
         return accessTokenManager;
+    }
+
+    @Override
+    public RateLimiterService getRateLimiterService() {
+        return RateLimiterService.create(16);
     }
 
     @Override

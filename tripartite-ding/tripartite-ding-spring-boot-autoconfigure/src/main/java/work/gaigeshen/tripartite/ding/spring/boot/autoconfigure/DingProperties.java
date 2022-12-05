@@ -24,6 +24,7 @@ public class DingProperties {
     }
 
     /**
+     * 钉钉配置信息
      *
      * @author gaigeshen
      */
@@ -40,22 +41,27 @@ public class DingProperties {
         private String oapiServerHost;
 
         /**
-         * 应用编号
+         * 授权企业编号（用于定制应用）
+         */
+        private String authCorpId;
+
+        /**
+         * 应用编号（或者定制应用编号）
          */
         private String appKey;
 
         /**
-         * 应用密钥
+         * 应用密钥（或者定制应用密钥）
          */
         private String appSecret;
 
         /**
-         * 异步通知或者回调通知的密钥
+         * 异步通知或者回调通知的密钥（定制应用不可用）
          */
         private String secretKey;
 
         /**
-         * 异步通知或者回调通知的签名令牌
+         * 异步通知或者回调通知的签名令牌（定制应用不可用）
          */
         private String token;
 
@@ -73,6 +79,14 @@ public class DingProperties {
 
         public void setOapiServerHost(String oapiServerHost) {
             this.oapiServerHost = oapiServerHost;
+        }
+
+        public String getAuthCorpId() {
+            return authCorpId;
+        }
+
+        public void setAuthCorpId(String authCorpId) {
+            this.authCorpId = authCorpId;
         }
 
         public String getAppKey() {

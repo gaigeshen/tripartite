@@ -38,10 +38,12 @@ public class DingNotifyContentReceiver extends AbstractNotifyContentReceiver<Def
 
     @Override
     protected DefaultNotifyContent validate(DefaultNotifyContent content) throws NotifyContentIncorrectException {
+        // 此应用标识参数值钉钉不会推送过来，所以需要在配置回调地址的时候，主动将对应的值加上
         String appKey = (String) content.getValue("app_key");
         if (Objects.isNull(appKey)) {
             throw new NotifyContentIncorrectException("could not find [app_key] parameter: " + content);
         }
+        // 通过手动配置的应用标识参数值获取系统中已存在的配置信息
         DingConfig dingConfig = dingClients.getConfig(cfg -> Objects.equals(cfg.getAppKey(), appKey));
         content.put("ding_config", dingConfig);
 
@@ -117,6 +119,7 @@ public class DingNotifyContentReceiver extends AbstractNotifyContentReceiver<Def
 
         byte[] randomBytes = RandomStringUtils.randomAscii(16).getBytes();
         byte[] plainTextBytes = plainText.getBytes();
+        byte[] appKeyBytes = config.getAppKey().getBytes();
 
         byte[] plainTextLenBytes = new byte[]{
                 (byte) (plainTextBytes.length >> 24 & 0xff),
@@ -130,6 +133,7 @@ public class DingNotifyContentReceiver extends AbstractNotifyContentReceiver<Def
             byteStream.write(randomBytes);
             byteStream.write(plainTextLenBytes);
             byteStream.write(plainTextBytes);
+            byteStream.write(appKeyBytes);
         } catch (IOException e) {
             throw new IllegalStateException(e.getMessage(), e);
         }

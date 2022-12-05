@@ -3,6 +3,7 @@ package work.gaigeshen.tripartite.ding.spring.boot.autoconfigure;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -10,7 +11,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.util.StringUtils;
 import work.gaigeshen.tripartite.core.client.*;
 import work.gaigeshen.tripartite.core.client.accesstoken.*;
-import work.gaigeshen.tripartite.core.notify.AbstractNotifyContentProcessor;
 import work.gaigeshen.tripartite.core.notify.DefaultNotifyContent;
 import work.gaigeshen.tripartite.ding.openapi.client.DefaultDingClient;
 import work.gaigeshen.tripartite.ding.openapi.client.DingClient;
@@ -18,12 +18,16 @@ import work.gaigeshen.tripartite.ding.openapi.client.DingClientCreator;
 import work.gaigeshen.tripartite.ding.openapi.config.DingConfig;
 import work.gaigeshen.tripartite.ding.openapi.notify.DingNotifyContentFilter;
 import work.gaigeshen.tripartite.ding.openapi.notify.DingNotifyContentReceiver;
+import work.gaigeshen.tripartite.ding.openapi.notify.event.DingEventNotifyContentProcessor;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 /**
+ * 钉钉自动配置
+ *
  * @author gaigeshen
  */
 @EnableConfigurationProperties({DingProperties.class})
@@ -35,9 +39,9 @@ public class DingAutoConfiguration {
 
     private final DingProperties dingProperties;
 
-    private final List<AbstractNotifyContentProcessor<DefaultNotifyContent>> processors;
+    private final List<DingEventNotifyContentProcessor> processors;
 
-    public DingAutoConfiguration(DingProperties dingProperties, List<AbstractNotifyContentProcessor<DefaultNotifyContent>> processors) {
+    public DingAutoConfiguration(DingProperties dingProperties, List<DingEventNotifyContentProcessor> processors) {
         this.dingProperties = dingProperties;
         this.processors = processors;
     }
@@ -71,6 +75,7 @@ public class DingAutoConfiguration {
             }
             DingConfig dingConfig = DingConfig.builder()
                     .setApiServerHost(client.getApiServerHost()).setOapiServerHost(client.getOapiServerHost())
+                    .setAuthCorpId(client.getAuthCorpId())
                     .setAppKey(client.getAppKey()).setAppSecret(client.getAppSecret())
                     .setSecretKey(client.getSecretKey()).setToken(client.getToken())
                     .build();
@@ -86,11 +91,6 @@ public class DingAutoConfiguration {
     }
 
     @Bean
-    public AccessTokenStore<DingConfig> dingAccessTokenStore() {
-        return new DefaultAccessTokenStore<>();
-    }
-
-    @Bean
     public AccessTokenRefresher<DingConfig> dingAccessTokenRefresher() {
         return (config, oat) -> {
             try {
@@ -100,5 +100,33 @@ public class DingAutoConfiguration {
                 throw new AccessTokenRefreshException(e.getMessage(), e).setCurrentAccessToken(oat).setCanRetry(true);
             }
         };
+    }
+
+    @ConditionalOnMissingBean
+    @Bean
+    public AccessTokenStore<DingConfig> dingAccessTokenStore() {
+        return new DefaultAccessTokenStore<>();
+    }
+
+    @ConditionalOnMissingBean(DingEventNotifyContentProcessor.class)
+    @Configuration
+    static class DingEventNotifyContentProcessorConfiguration {
+
+        @Bean
+        public DingEventNotifyContentProcessor dingEventNotifyContentProcessor() {
+            return new DingEventNotifyContentProcessor() {
+                @Override
+                protected boolean supportsEventContent(Map<String, Object> eventContent) {
+                    return true;
+                }
+
+                @Override
+                protected void processEventContent(Map<String, Object> eventContent,
+                                                   DefaultNotifyContent content,
+                                                   ProcessorChain<DefaultNotifyContent> chain) {
+                    log.info("<<<< Event Content: {}", eventContent);
+                }
+            };
+        }
     }
 }

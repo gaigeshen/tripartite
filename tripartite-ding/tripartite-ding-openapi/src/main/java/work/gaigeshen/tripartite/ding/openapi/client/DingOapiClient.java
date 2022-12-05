@@ -4,16 +4,22 @@ import work.gaigeshen.tripartite.core.client.Client;
 import work.gaigeshen.tripartite.core.client.ClientException;
 import work.gaigeshen.tripartite.ding.openapi.config.DingConfig;
 import work.gaigeshen.tripartite.ding.openapi.parameters.oapi.chat.DingChatCreateParameters;
+import work.gaigeshen.tripartite.ding.openapi.parameters.oapi.department.DingDepartmentListParameters;
+import work.gaigeshen.tripartite.ding.openapi.parameters.oapi.department.DingDepartmentParentByUserListParameters;
 import work.gaigeshen.tripartite.ding.openapi.parameters.oapi.message.DingMessageAsyncSendParameters;
 import work.gaigeshen.tripartite.ding.openapi.parameters.oapi.message.DingMessageRecallParameters;
 import work.gaigeshen.tripartite.ding.openapi.parameters.oapi.process.*;
 import work.gaigeshen.tripartite.ding.openapi.parameters.oapi.user.DingUserByCodeGetParameters;
+import work.gaigeshen.tripartite.ding.openapi.parameters.oapi.user.DingUserByDepartmentListParameters;
 import work.gaigeshen.tripartite.ding.openapi.parameters.oapi.user.DingUserByMobileGetParameters;
 import work.gaigeshen.tripartite.ding.openapi.response.oapi.chat.DingChatCreateResponse;
+import work.gaigeshen.tripartite.ding.openapi.response.oapi.department.DingDepartmentListResponse;
+import work.gaigeshen.tripartite.ding.openapi.response.oapi.department.DingDepartmentParentByUserListResponse;
 import work.gaigeshen.tripartite.ding.openapi.response.oapi.message.DingMessageAsyncSendResponse;
 import work.gaigeshen.tripartite.ding.openapi.response.oapi.message.DingMessageRecallResponse;
 import work.gaigeshen.tripartite.ding.openapi.response.oapi.process.*;
 import work.gaigeshen.tripartite.ding.openapi.response.oapi.user.DingUserByCodeGetResponse;
+import work.gaigeshen.tripartite.ding.openapi.response.oapi.user.DingUserByDepartmentListResponse;
 import work.gaigeshen.tripartite.ding.openapi.response.oapi.user.DingUserByMobileGetResponse;
 
 /**
@@ -45,6 +51,42 @@ public interface DingOapiClient extends Client<DingConfig> {
      */
     default DingUserByCodeGetResponse userGetByCode(DingUserByCodeGetParameters parameters) throws ClientException {
         return execute(parameters, DingUserByCodeGetResponse.class, "/topapi/v2/user/getuserinfo?access_token={access_token}", getAccessTokenValue());
+    }
+
+    /**
+     * 获取部门用户信息
+     *
+     * @param parameters 请求参数不能为空
+     * @return 响应结果不为空
+     * @throws ClientException 执行请求的时候发生异常
+     * @see <a href="https://open.dingtalk.com/document/orgapp-server/queries-the-complete-information-of-a-department-user">接口文档</a>
+     */
+    default DingUserByDepartmentListResponse userListByDepartment(DingUserByDepartmentListParameters parameters) throws ClientException {
+        return execute(parameters, DingUserByDepartmentListResponse.class, "/topapi/v2/user/list?access_token={access_token}", getAccessTokenValue());
+    }
+
+    /**
+     * 获取部门列表
+     *
+     * @param parameters 请求参数不能为空
+     * @return 响应结果不为空
+     * @throws ClientException 执行请求的时候发生异常
+     * @see <a href="https://open.dingtalk.com/document/orgapp-server/obtain-the-department-list-v2">接口文档</a>
+     */
+    default DingDepartmentListResponse departmentList(DingDepartmentListParameters parameters) throws ClientException {
+        return execute(parameters, DingDepartmentListResponse.class, "/topapi/v2/department/listsub?access_token={access_token}", getAccessTokenValue());
+    }
+
+    /**
+     * 获取指定用户的所有父部门列表
+     *
+     * @param parameters 请求参数不能为空
+     * @return 响应结果不为空
+     * @throws ClientException 执行请求的时候发生异常
+     * @see <a href="https://open.dingtalk.com/document/orgapp-server/queries-the-list-of-all-parent-departments-of-a-user">接口文档</a>
+     */
+    default DingDepartmentParentByUserListResponse departmentParentListByUser(DingDepartmentParentByUserListParameters parameters) throws ClientException {
+        return execute(parameters, DingDepartmentParentByUserListResponse.class, "/topapi/v2/department/listparentbyuser?access_token={access_token}", getAccessTokenValue());
     }
 
     /**
