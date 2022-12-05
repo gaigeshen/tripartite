@@ -46,6 +46,11 @@ public class DingProperties {
         private String authCorpId;
 
         /**
+         * 应用相关属性（调用接口的时候可能会用到）
+         */
+        private String agentId;
+
+        /**
          * 应用编号（或者定制应用编号）
          */
         private String appKey;
@@ -87,6 +92,14 @@ public class DingProperties {
 
         public void setAuthCorpId(String authCorpId) {
             this.authCorpId = authCorpId;
+        }
+
+        public String getAgentId() {
+            return agentId;
+        }
+
+        public void setAgentId(String agentId) {
+            this.agentId = agentId;
         }
 
         public String getAppKey() {
