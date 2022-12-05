@@ -3,11 +3,3 @@ server:
 spring:
   application:
     name: ding-sample
-ding:
-  clients:
-    - api-server-host: https://api.dingtalk.com
-      oapi-server-host: https://oapi.dingtalk.com
-      app-key: suitent7r4lg27skddsft
-      app-secret: qWKFcjriMzO1m6ah3XK-uSC8lpi21yj9Y4vIj27sKlYgVRb6NtlYaNVvBNZPwdiJ
-      secret-key: XKXAskCRSDmDCCQwKRBxqxMBQQoEjBindj7uVzzs3sm
-      token: voXsRXi2CBpT2
