@@ -76,7 +76,7 @@ public class DingAutoConfiguration {
             DingConfig dingConfig = DingConfig.builder()
                     .setApiServerHost(client.getApiServerHost()).setOapiServerHost(client.getOapiServerHost())
                     .setAuthCorpId(client.getAuthCorpId())
-                    .setAppKey(client.getAppKey()).setAppSecret(client.getAppSecret())
+                    .setAgentId(client.getAgentId()).setAppKey(client.getAppKey()).setAppSecret(client.getAppSecret())
                     .setSecretKey(client.getSecretKey()).setToken(client.getToken())
                     .build();
             dingClients.add(dingClientCreator.create(dingConfig));
