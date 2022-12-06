@@ -18,14 +18,16 @@ public interface ClientsLoader<C extends Config> {
      *
      * @throws ConfigException 无法从关联的配置信息资源库中获取配置信息
      * @throws ClientCreationException 在创建接口客户端的时候发生异常
+     * @return 此接口客户端加载器
      */
-    default void load() throws ConfigException, ClientCreationException {
+    default ClientsLoader<C> load() throws ConfigException, ClientCreationException {
         ConfigRepository<C> repository = getConfigRepository();
         Clients<C> clients = getClients();
         if (Objects.isNull(repository) || Objects.isNull(clients)) {
-            return;
+            return this;
         }
         repository.findAll().forEach(clients::getClientOrCreate);
+        return this;
     }
 
     /**

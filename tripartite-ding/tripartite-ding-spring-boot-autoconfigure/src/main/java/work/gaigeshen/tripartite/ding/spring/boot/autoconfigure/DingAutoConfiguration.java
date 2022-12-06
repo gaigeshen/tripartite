@@ -65,7 +65,7 @@ public class DingAutoConfiguration {
 
     @Bean
     public ClientsLoader<DingConfig> dingClientsLoader() {
-        return new DefaultClientsLoader<>(dingClients(), dingConfigRepository());
+        return new DefaultClientsLoader<>(dingClients(), dingConfigRepository()).load();
     }
 
     @Bean
