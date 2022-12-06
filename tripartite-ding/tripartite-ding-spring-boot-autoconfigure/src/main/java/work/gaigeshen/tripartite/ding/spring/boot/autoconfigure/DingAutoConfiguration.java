@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.util.StringUtils;
 import work.gaigeshen.tripartite.core.client.*;
 import work.gaigeshen.tripartite.core.client.accesstoken.*;
+import work.gaigeshen.tripartite.core.client.config.ConfigRepository;
 import work.gaigeshen.tripartite.core.notify.DefaultNotifyContent;
 import work.gaigeshen.tripartite.ding.openapi.client.DefaultDingClient;
 import work.gaigeshen.tripartite.ding.openapi.client.DingClient;
@@ -47,6 +48,13 @@ public class DingAutoConfiguration {
     }
 
     @Bean
+    public DingNotifyContentReceiver dingNotifyContentReceiver(Clients<DingConfig> clients) {
+        DingNotifyContentReceiver receiver = new DingNotifyContentReceiver(clients);
+        receiver.setProcessors(new ArrayList<>(processors));
+        return receiver;
+    }
+
+    @Bean
     public FilterRegistrationBean dingNotifyContentFilter(DingNotifyContentReceiver receiver) {
         DingNotifyContentFilter filter = new DingNotifyContentFilter(receiver);
         FilterRegistrationBean filterBean = new FilterRegistrationBean();
@@ -56,10 +64,8 @@ public class DingAutoConfiguration {
     }
 
     @Bean
-    public DingNotifyContentReceiver dingNotifyContentReceiver(Clients<DingConfig> clients) {
-        DingNotifyContentReceiver receiver = new DingNotifyContentReceiver(clients);
-        receiver.setProcessors(new ArrayList<>(processors));
-        return receiver;
+    public ClientsLoader<DingConfig> dingClientsLoader() {
+        return new DefaultClientsLoader<>(dingClients(), dingConfigRepository()).load();
     }
 
     @Bean
@@ -106,6 +112,12 @@ public class DingAutoConfiguration {
     @Bean
     public AccessTokenStore<DingConfig> dingAccessTokenStore() {
         return new DefaultAccessTokenStore<>();
+    }
+
+    @ConditionalOnMissingBean
+    @Bean
+    public ConfigRepository<DingConfig> dingConfigRepository() {
+        return new ConfigRepository<DingConfig>() {};
     }
 
     @ConditionalOnMissingBean(DingEventNotifyContentProcessor.class)
