@@ -61,7 +61,7 @@ public class DefaultDingClient extends AbstractWebExecutorClient<DingConfig> imp
     }
 
     /**
-     * 调用此方法将获取新的访问令牌，在访问令牌过期前，重复获取返回的访问令牌都是相同的
+     * 调用此方法将获取新的访问令牌，定制应用的情况下，获取方式有所不同
      *
      * @return 获取到的访问令牌
      * @throws ClientException 无法获取访问令牌
