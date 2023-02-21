@@ -12,46 +12,46 @@ import java.util.TreeMap;
  */
 public abstract class AbstractNotifyParameters extends AbstractNotifyContent implements NotifyParameters {
 
-  private final Map<String, Parameter> parameters = new TreeMap<>();
+    private final Map<String, Parameter> parameters = new TreeMap<>();
 
-  @Override
-  public final void put(String name, Object value) {
-    if (Objects.isNull(name)) {
-      throw new IllegalArgumentException("name cannot be null");
+    @Override
+    public final void put(String name, Object value) {
+        if (Objects.isNull(name)) {
+            throw new IllegalArgumentException("name cannot be null");
+        }
+        if (Objects.isNull(value)) {
+            throw new IllegalArgumentException("value cannot be null");
+        }
+        parameters.put(name, new DefaultParameter(name, value));
     }
-    if (Objects.isNull(value)) {
-      throw new IllegalArgumentException("value cannot be null");
-    }
-    parameters.put(name, new DefaultParameter(name, value));
-  }
 
-  @Override
-  public final void remove(String name) {
-    if (Objects.isNull(name)) {
-      throw new IllegalArgumentException("name cannot be null");
+    @Override
+    public final void remove(String name) {
+        if (Objects.isNull(name)) {
+            throw new IllegalArgumentException("name cannot be null");
+        }
+        parameters.remove(name);
     }
-    parameters.remove(name);
-  }
 
-  @Override
-  public final Object getValue(String name) {
-    if (Objects.isNull(name)) {
-      throw new IllegalArgumentException("name cannot be null");
+    @Override
+    public final Object getValue(String name) {
+        if (Objects.isNull(name)) {
+            throw new IllegalArgumentException("name cannot be null");
+        }
+        Parameter parameter = parameters.get(name);
+        if (Objects.isNull(parameter)) {
+            return null;
+        }
+        return parameter.getValue();
     }
-    Parameter parameter = parameters.get(name);
-    if (Objects.isNull(parameter)) {
-      return null;
+
+    @Override
+    public final Iterator<Parameter> iterator() {
+        return parameters.values().iterator();
     }
-    return parameter.getValue();
-  }
 
-  @Override
-  public final Iterator<Parameter> iterator() {
-    return parameters.values().iterator();
-  }
-
-  @Override
-  public final String toString() {
-    return super.toString() + ", parameters: " + parameters.values();
-  }
+    @Override
+    public final String toString() {
+        return super.toString() + ", parameters: " + parameters.values();
+    }
 }

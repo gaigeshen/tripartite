@@ -9,22 +9,22 @@ import java.util.Objects;
  */
 public abstract class AbstractNotifyBody extends AbstractNotifyContent implements NotifyBody {
 
-  private final byte[] body;
+    private final byte[] body;
 
-  protected AbstractNotifyBody(byte[] body) {
-    if (Objects.isNull(body)) {
-      throw new IllegalArgumentException("body cannot be null");
+    protected AbstractNotifyBody(byte[] body) {
+        if (Objects.isNull(body)) {
+            throw new IllegalArgumentException("body cannot be null");
+        }
+        this.body = body;
     }
-    this.body = body;
-  }
 
-  @Override
-  public final byte[] getBody() {
-    return body;
-  }
+    @Override
+    public final byte[] getBody() {
+        return body;
+    }
 
-  @Override
-  public String toString() {
-    return super.toString() + ", body: " + new String(body);
-  }
+    @Override
+    public String toString() {
+        return super.toString() + ", body: " + new String(body);
+    }
 }

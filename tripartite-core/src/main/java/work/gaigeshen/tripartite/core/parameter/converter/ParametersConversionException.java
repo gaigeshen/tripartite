@@ -8,10 +8,11 @@ import work.gaigeshen.tripartite.core.parameter.ParametersException;
  * @author gaigeshen
  */
 public class ParametersConversionException extends ParametersException {
-  public ParametersConversionException(String message) {
-    super(message);
-  }
-  public ParametersConversionException(String message, Throwable cause) {
-    super(message, cause);
-  }
+    public ParametersConversionException(String message) {
+        super(message);
+    }
+
+    public ParametersConversionException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }

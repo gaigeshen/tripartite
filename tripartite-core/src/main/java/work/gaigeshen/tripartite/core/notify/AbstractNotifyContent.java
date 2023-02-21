@@ -12,61 +12,61 @@ import java.util.Objects;
  */
 public abstract class AbstractNotifyContent implements NotifyContent {
 
-  private final Map<String, String[]> headers = new HashMap<>();
+    private final Map<String, String[]> headers = new HashMap<>();
 
-  @Override
-  public final Map<String, String[]> getHeaders() {
-    return headers;
-  }
+    @Override
+    public final Map<String, String[]> getHeaders() {
+        return headers;
+    }
 
-  @Override
-  public final void putHeader(String name, String[] values) {
-    if (Objects.isNull(name)) {
-      throw new IllegalArgumentException("name cannot be null");
+    @Override
+    public final void putHeader(String name, String[] values) {
+        if (Objects.isNull(name)) {
+            throw new IllegalArgumentException("name cannot be null");
+        }
+        if (Objects.isNull(values) || values.length == 0) {
+            throw new IllegalArgumentException("values cannot be null or empty");
+        }
+        headers.put(name.toLowerCase(), values);
     }
-    if (Objects.isNull(values) || values.length == 0) {
-      throw new IllegalArgumentException("values cannot be null or empty");
-    }
-    headers.put(name.toLowerCase(), values);
-  }
 
-  @Override
-  public final boolean containsHeader(String name) {
-    if (Objects.isNull(name)) {
-      throw new IllegalArgumentException("name cannot be null");
+    @Override
+    public final boolean containsHeader(String name) {
+        if (Objects.isNull(name)) {
+            throw new IllegalArgumentException("name cannot be null");
+        }
+        return headers.containsKey(name.toLowerCase());
     }
-    return headers.containsKey(name.toLowerCase());
-  }
 
-  @Override
-  public final String[] getHeaderValues(String name) {
-    if (Objects.isNull(name)) {
-      throw new IllegalArgumentException("name cannot be null");
+    @Override
+    public final String[] getHeaderValues(String name) {
+        if (Objects.isNull(name)) {
+            throw new IllegalArgumentException("name cannot be null");
+        }
+        return headers.get(name.toLowerCase());
     }
-    return headers.get(name.toLowerCase());
-  }
 
-  @Override
-  public final String getHeaderValue(String name) {
-    if (Objects.isNull(name)) {
-      throw new IllegalArgumentException("name cannot be null");
+    @Override
+    public final String getHeaderValue(String name) {
+        if (Objects.isNull(name)) {
+            throw new IllegalArgumentException("name cannot be null");
+        }
+        String[] values = getHeaderValues(name);
+        if (Objects.isNull(values)) {
+            return null;
+        }
+        return values[0];
     }
-    String[] values = getHeaderValues(name);
-    if (Objects.isNull(values)) {
-      return null;
-    }
-    return values[0];
-  }
 
-  @Override
-  public String toString() {
-    StringBuilder builder = new StringBuilder();
-    headers.forEach((name, values) -> {
-      if (builder.length() > 0) {
-        builder.append(", ");
-      }
-      builder.append(name).append("=").append(Arrays.toString(values));
-    });
-    return "headers: " + builder;
-  }
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        headers.forEach((name, values) -> {
+            if (builder.length() > 0) {
+                builder.append(", ");
+            }
+            builder.append(name).append("=").append(Arrays.toString(values));
+        });
+        return "headers: " + builder;
+    }
 }

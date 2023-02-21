@@ -14,24 +14,24 @@ import java.io.UnsupportedEncodingException;
  */
 public class StringResponseConverter implements ResponseConverter<String> {
 
-  public static final StringResponseConverter INSTANCE = new StringResponseConverter();
+    public static final StringResponseConverter INSTANCE = new StringResponseConverter();
 
-  @Override
-  public String convert(InputStream inputStream, Headers headers) throws ResponseConvertingException {
-    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-    int len;
-    byte[] buffer = new byte[4096];
-    try {
-      while ((len = inputStream.read(buffer)) != -1) {
-        outputStream.write(buffer, 0, len);
-      }
-    } catch (IOException e) {
-      throw new ResponseConvertingException("could not read bytes from input stream", e);
+    @Override
+    public String convert(InputStream inputStream, Headers headers) throws ResponseConvertingException {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        int len;
+        byte[] buffer = new byte[4096];
+        try {
+            while ((len = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, len);
+            }
+        } catch (IOException e) {
+            throw new ResponseConvertingException("could not read bytes from input stream", e);
+        }
+        try {
+            return outputStream.toString("utf-8");
+        } catch (UnsupportedEncodingException e) {
+            throw new ResponseConvertingException("encoding invalid", e);
+        }
     }
-    try {
-      return outputStream.toString("utf-8");
-    } catch (UnsupportedEncodingException e) {
-      throw new ResponseConvertingException("encoding invalid", e);
-    }
-  }
 }

@@ -8,10 +8,11 @@ import work.gaigeshen.tripartite.core.response.ResponseException;
  * @author gaigeshen
  */
 public class ResponseConsumingException extends ResponseException {
-  public ResponseConsumingException(String message) {
-    super(message);
-  }
-  public ResponseConsumingException(String message, Throwable cause) {
-    super(message, cause);
-  }
+    public ResponseConsumingException(String message) {
+        super(message);
+    }
+
+    public ResponseConsumingException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }

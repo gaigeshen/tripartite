@@ -8,10 +8,11 @@ import work.gaigeshen.tripartite.core.response.ResponseException;
  * @author gaigeshen
  */
 public class ResponseConvertingException extends ResponseException {
-  public ResponseConvertingException(String message) {
-    super(message);
-  }
-  public ResponseConvertingException(String message, Throwable cause) {
-    super(message, cause);
-  }
+    public ResponseConvertingException(String message) {
+        super(message);
+    }
+
+    public ResponseConvertingException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }

@@ -11,23 +11,23 @@ import java.util.Objects;
  */
 public abstract class AbstractJsonParameterConverter implements ParameterConverter {
 
-  @Override
-  public final Parameter<?> convert(String name, Object rawParameter) throws ParameterConversionException {
-    if (Objects.isNull(name)) {
-      throw new IllegalArgumentException("name cannot be null");
+    @Override
+    public final Parameter<?> convert(String name, Object rawParameter) throws ParameterConversionException {
+        if (Objects.isNull(name)) {
+            throw new IllegalArgumentException("name cannot be null");
+        }
+        if (Objects.isNull(rawParameter)) {
+            throw new IllegalArgumentException("raw parameter cannot be null");
+        }
+        return Parameter.string(name, convertJson(rawParameter));
     }
-    if (Objects.isNull(rawParameter)) {
-      throw new IllegalArgumentException("raw parameter cannot be null");
-    }
-    return Parameter.string(name, convertJson(rawParameter));
-  }
 
-  /**
-   * 子类实现此方法用于将原始的对象转换为字符串
-   *
-   * @param rawParameter 原始的对象不为空
-   * @return 转换后的字符串不能为空
-   * @throws ParameterConversionException 转换失败的时候抛出此异常
-   */
-  protected abstract String convertJson(Object rawParameter) throws ParameterConversionException;
+    /**
+     * 子类实现此方法用于将原始的对象转换为字符串
+     *
+     * @param rawParameter 原始的对象不为空
+     * @return 转换后的字符串不能为空
+     * @throws ParameterConversionException 转换失败的时候抛出此异常
+     */
+    protected abstract String convertJson(Object rawParameter) throws ParameterConversionException;
 }

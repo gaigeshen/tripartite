@@ -8,10 +8,11 @@ import work.gaigeshen.tripartite.core.WebException;
  * @author gaigeshen
  */
 public class ParametersException extends WebException {
-  public ParametersException(String message) {
-    super(message);
-  }
-  public ParametersException(String message, Throwable cause) {
-    super(message, cause);
-  }
+    public ParametersException(String message) {
+        super(message);
+    }
+
+    public ParametersException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }

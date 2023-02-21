@@ -8,10 +8,11 @@ import work.gaigeshen.tripartite.core.WebException;
  * @author gaigeshen
  */
 public class InterceptingException extends WebException {
-  public InterceptingException(String message) {
-    super(message);
-  }
-  public InterceptingException(String message, Throwable cause) {
-    super(message, cause);
-  }
+    public InterceptingException(String message) {
+        super(message);
+    }
+
+    public InterceptingException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }

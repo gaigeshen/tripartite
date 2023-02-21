@@ -6,10 +6,11 @@ package work.gaigeshen.tripartite.core.notify;
  * @author gaigeshen
  */
 public class NotifyContentException extends RuntimeException {
-  public NotifyContentException(String message) {
-    super(message);
-  }
-  public NotifyContentException(String message, Throwable cause) {
-    super(message, cause);
-  }
+    public NotifyContentException(String message) {
+        super(message);
+    }
+
+    public NotifyContentException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }

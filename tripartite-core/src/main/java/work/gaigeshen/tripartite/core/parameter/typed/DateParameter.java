@@ -9,7 +9,7 @@ import java.util.Date;
  */
 public class DateParameter extends AbstractParameter<Date> {
 
-  public DateParameter(String name, Date value) {
-    super(name, value);
-  }
+    public DateParameter(String name, Date value) {
+        super(name, value);
+    }
 }

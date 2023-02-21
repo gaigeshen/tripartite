@@ -9,10 +9,10 @@ import work.gaigeshen.tripartite.core.parameter.Parameters;
  */
 public class JsonParametersConverter extends AbstractParametersConverter {
 
-  public static final JsonParametersConverter INSTANCE = new JsonParametersConverter();
+    public static final JsonParametersConverter INSTANCE = new JsonParametersConverter();
 
-  @Override
-  protected Parameters initParameters(Object parameters) {
-    return Parameters.json();
-  }
+    @Override
+    protected Parameters initParameters(Object parameters) {
+        return Parameters.json();
+    }
 }
