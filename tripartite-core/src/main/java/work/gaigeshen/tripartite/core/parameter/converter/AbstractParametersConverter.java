@@ -15,56 +15,56 @@ import java.util.Objects;
  */
 public abstract class AbstractParametersConverter implements ParametersConverter {
 
-  @Override
-  public final Parameters convert(Object parameters) throws ParametersConversionException {
-    if (Objects.isNull(parameters)) {
-      throw new IllegalArgumentException("parameters cannot be null");
-    }
-    Parameters initialParameters = initParameters(parameters);
-    if (Objects.isNull(initialParameters)) {
-      throw new IllegalArgumentException("init parameters cannot be null");
-    }
-    if (parameters instanceof Map) {
-      for (Map.Entry<?, ?> entry : ((Map<?, ?>) parameters).entrySet()) {
-        Object value = entry.getValue();
-        Object key = entry.getKey();
-        if (Objects.isNull(value) || Objects.isNull(key) || !(key instanceof String)) {
-          continue;
+    @Override
+    public final Parameters convert(Object parameters) throws ParametersConversionException {
+        if (Objects.isNull(parameters)) {
+            throw new IllegalArgumentException("parameters cannot be null");
         }
-        initialParameters.put(DefaultParameterConverter.INSTANCE.convert((String) key, value));
-      }
-    }
-    else {
-      Class<?> currentClass = parameters.getClass();
-      while (Objects.nonNull(currentClass)) {
-        try {
-          for (Field field : currentClass.getDeclaredFields()) {
-            ParameterResolver.addParameter(initialParameters, field, parameters);
-          }
-        } catch (IllegalAccessException e) {
-          throw new ParametersConversionException("could not convert parameters: " + parameters, e);
+        Parameters initialParameters = initParameters(parameters);
+        if (Objects.isNull(initialParameters)) {
+            throw new IllegalArgumentException("init parameters cannot be null");
         }
-        currentClass = currentClass.getSuperclass();
-      }
+        if (parameters instanceof Map) {
+            for (Map.Entry<?, ?> entry : ((Map<?, ?>) parameters).entrySet()) {
+                Object value = entry.getValue();
+                Object key = entry.getKey();
+                if (Objects.isNull(value) || Objects.isNull(key) || !(key instanceof String)) {
+                    continue;
+                }
+                initialParameters.put(DefaultParameterConverter.INSTANCE.convert((String) key, value));
+            }
+        }
+        else {
+            Class<?> currentClass = parameters.getClass();
+            while (Objects.nonNull(currentClass)) {
+                try {
+                    for (Field field : currentClass.getDeclaredFields()) {
+                        ParameterResolver.addParameter(initialParameters, field, parameters);
+                    }
+                } catch (IllegalAccessException e) {
+                    throw new ParametersConversionException("could not convert parameters: " + parameters, e);
+                }
+                currentClass = currentClass.getSuperclass();
+            }
+        }
+        overrideParameters(initialParameters);
+        return initialParameters;
     }
-    overrideParameters(initialParameters);
-    return initialParameters;
-  }
 
-  /**
-   * 子类提供请求参数的初始版本
-   *
-   * @param parameters 任意对象不为空
-   * @return 返回的请求参数初始版本不可为空
-   */
-  protected abstract Parameters initParameters(Object parameters);
+    /**
+     * 子类提供请求参数的初始版本
+     *
+     * @param parameters 任意对象不为空
+     * @return 返回的请求参数初始版本不可为空
+     */
+    protected abstract Parameters initParameters(Object parameters);
 
-  /**
-   * 重写此方法用于修改转换后的请求参数
-   *
-   * @param parameters 转换后的请求参数不会为空
-   */
-  protected void overrideParameters(Parameters parameters) {
+    /**
+     * 重写此方法用于修改转换后的请求参数
+     *
+     * @param parameters 转换后的请求参数不会为空
+     */
+    protected void overrideParameters(Parameters parameters) {
 
-  }
+    }
 }

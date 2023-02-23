@@ -9,51 +9,51 @@ import java.util.*;
  */
 public class DefaultParameters implements Parameters {
 
-  private final Collection<Parameter<?>> parameters = new TreeSet<>();
+    private final Collection<Parameter<?>> parameters = new TreeSet<>();
 
-  private final Type type;
+    private final Type type;
 
-  public DefaultParameters(Type type) {
-    if (Objects.isNull(type)) {
-      throw new IllegalArgumentException("type cannot be null");
+    public DefaultParameters(Type type) {
+        if (Objects.isNull(type)) {
+            throw new IllegalArgumentException("type cannot be null");
+        }
+        this.type = type;
     }
-    this.type = type;
-  }
 
-  @Override
-  public Type getType() {
-    return type;
-  }
-
-  @Override
-  public Parameters put(Collection<Parameter<?>> parameters) {
-    if (Objects.isNull(parameters)) {
-      return this;
+    @Override
+    public Type getType() {
+        return type;
     }
-    for (Parameter<?> parameter : parameters) {
-      if (Objects.isNull(parameter)) {
-        continue;
-      }
-      this.parameters.add(parameter);
+
+    @Override
+    public Parameters put(Collection<Parameter<?>> parameters) {
+        if (Objects.isNull(parameters)) {
+            return this;
+        }
+        for (Parameter<?> parameter : parameters) {
+            if (Objects.isNull(parameter)) {
+                continue;
+            }
+            this.parameters.add(parameter);
+        }
+        return this;
     }
-    return this;
-  }
 
-  @Override
-  public Parameters put(Parameter<?>... parameters) {
-    if (Objects.isNull(parameters)) {
-      return this;
+    @Override
+    public Parameters put(Parameter<?>... parameters) {
+        if (Objects.isNull(parameters)) {
+            return this;
+        }
+        return put(Arrays.asList(parameters));
     }
-    return put(Arrays.asList(parameters));
-  }
 
-  @Override
-  public Iterator<Parameter<?>> iterator() {
-    return parameters.iterator();
-  }
+    @Override
+    public Iterator<Parameter<?>> iterator() {
+        return parameters.iterator();
+    }
 
-  @Override
-  public String toString() {
-    return parameters.toString();
-  }
+    @Override
+    public String toString() {
+        return parameters.toString();
+    }
 }

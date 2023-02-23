@@ -8,10 +8,11 @@ import work.gaigeshen.tripartite.core.parameter.ParametersException;
  * @author gaigeshen
  */
 public class ParametersCreationException extends ParametersException {
-  public ParametersCreationException(String message) {
-    super(message);
-  }
-  public ParametersCreationException(String message, Throwable cause) {
-    super(message, cause);
-  }
+    public ParametersCreationException(String message) {
+        super(message);
+    }
+
+    public ParametersCreationException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }

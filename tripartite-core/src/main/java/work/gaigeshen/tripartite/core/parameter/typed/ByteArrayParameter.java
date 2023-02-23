@@ -7,7 +7,7 @@ package work.gaigeshen.tripartite.core.parameter.typed;
  */
 public class ByteArrayParameter extends AbstractParameter<byte[]> {
 
-  public ByteArrayParameter(String name, byte[] value) {
-    super(name, value);
-  }
+    public ByteArrayParameter(String name, byte[] value) {
+        super(name, value);
+    }
 }

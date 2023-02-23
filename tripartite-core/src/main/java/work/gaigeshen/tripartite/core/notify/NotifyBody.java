@@ -10,32 +10,32 @@ import java.util.Objects;
  * @author gaigeshen
  */
 public interface NotifyBody extends NotifyContent {
-  /**
-   * 返回数据体字节串
-   *
-   * @return 数据体字节串不为空
-   */
-  byte[] getBody();
+    /**
+     * 返回数据体字节串
+     *
+     * @return 数据体字节串不为空
+     */
+    byte[] getBody();
 
-  /**
-   * 将数据体转为指定字符集的字符串
-   *
-   * @param charset 字符集不能为空
-   * @return 数据体字符串不为空
-   */
-  default String getBodyAsString(Charset charset) {
-    if (Objects.isNull(charset)) {
-      throw new IllegalArgumentException("charset cannot be null");
+    /**
+     * 将数据体转为指定字符集的字符串
+     *
+     * @param charset 字符集不能为空
+     * @return 数据体字符串不为空
+     */
+    default String getBodyAsString(Charset charset) {
+        if (Objects.isNull(charset)) {
+            throw new IllegalArgumentException("charset cannot be null");
+        }
+        return new String(getBody(), charset);
     }
-    return new String(getBody(), charset);
-  }
 
-  /**
-   * 将数据体转为默认字符集的字符串
-   *
-   * @return 数据体字符串不为空
-   */
-  default String getBodyAsString() {
-    return getBodyAsString(StandardCharsets.UTF_8);
-  }
+    /**
+     * 将数据体转为默认字符集的字符串
+     *
+     * @return 数据体字符串不为空
+     */
+    default String getBodyAsString() {
+        return getBodyAsString(StandardCharsets.UTF_8);
+    }
 }

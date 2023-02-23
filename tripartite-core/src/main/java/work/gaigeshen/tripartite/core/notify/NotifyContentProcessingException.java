@@ -6,10 +6,11 @@ package work.gaigeshen.tripartite.core.notify;
  * @author gaigeshen
  */
 public class NotifyContentProcessingException extends NotifyContentException {
-  public NotifyContentProcessingException(String message) {
-    super(message);
-  }
-  public NotifyContentProcessingException(String message, Throwable cause) {
-    super(message, cause);
-  }
+    public NotifyContentProcessingException(String message) {
+        super(message);
+    }
+
+    public NotifyContentProcessingException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }

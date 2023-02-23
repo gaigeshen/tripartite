@@ -28,6 +28,8 @@ public class DingMessageAsyncSendParameters extends DingOapiParameters {
         public String msgtype;
 
         public Markdown markdown;
+
+        public OA oa;
     }
 
     public static class Markdown {
@@ -35,5 +37,30 @@ public class DingMessageAsyncSendParameters extends DingOapiParameters {
         public String title;
 
         public String text;
+    }
+
+    public static class OA {
+
+        public String message_url;
+
+        public String pc_message_url;
+
+        public OAHead head;
+
+        public OABody body;
+    }
+
+    public static class OAHead {
+
+        public String bgcolor;
+
+        public String text;
+    }
+
+    public static class OABody {
+
+        public String title;
+
+        public String content;
     }
 }

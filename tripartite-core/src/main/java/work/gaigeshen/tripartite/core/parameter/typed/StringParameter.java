@@ -7,7 +7,7 @@ package work.gaigeshen.tripartite.core.parameter.typed;
  */
 public class StringParameter extends AbstractParameter<String> {
 
-  public StringParameter(String name, String value) {
-    super(name, value);
-  }
+    public StringParameter(String name, String value) {
+        super(name, value);
+    }
 }

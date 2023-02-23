@@ -9,7 +9,7 @@ import work.gaigeshen.tripartite.core.parameter.Parameters;
  */
 public class ParametersParameter extends AbstractParameter<Parameters> {
 
-  public ParametersParameter(String name, Parameters value) {
-    super(name, value);
-  }
+    public ParametersParameter(String name, Parameters value) {
+        super(name, value);
+    }
 }

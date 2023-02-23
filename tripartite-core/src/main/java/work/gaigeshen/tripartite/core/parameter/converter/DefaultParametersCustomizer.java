@@ -9,20 +9,20 @@ import work.gaigeshen.tripartite.core.parameter.Parameters;
  */
 public class DefaultParametersCustomizer implements ParametersCustomizer {
 
-  public static final DefaultParametersCustomizer INSTANCE = new DefaultParametersCustomizer();
+    public static final DefaultParametersCustomizer INSTANCE = new DefaultParametersCustomizer();
 
-  @Override
-  public void beforeConvert(Object rawParameters, Object config) throws ParametersCustomizingException {
+    @Override
+    public void beforeConvert(Object rawParameters, Object config) throws ParametersCustomizingException {
 
-  }
+    }
 
-  @Override
-  public void customize(Parameters parameters, Object rawParameters, Object config) throws ParametersCustomizingException {
+    @Override
+    public void customize(Parameters parameters, Object rawParameters, Object config) throws ParametersCustomizingException {
 
-  }
+    }
 
-  @Override
-  public boolean supports(Object config) {
-    return true;
-  }
+    @Override
+    public boolean supports(Object config) {
+        return true;
+    }
 }

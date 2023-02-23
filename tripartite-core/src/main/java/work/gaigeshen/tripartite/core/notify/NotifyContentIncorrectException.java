@@ -6,10 +6,11 @@ package work.gaigeshen.tripartite.core.notify;
  * @author gaigeshen
  */
 public class NotifyContentIncorrectException extends NotifyContentException {
-  public NotifyContentIncorrectException(String message) {
-    super(message);
-  }
-  public NotifyContentIncorrectException(String message, Throwable cause) {
-    super(message, cause);
-  }
+    public NotifyContentIncorrectException(String message) {
+        super(message);
+    }
+
+    public NotifyContentIncorrectException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }

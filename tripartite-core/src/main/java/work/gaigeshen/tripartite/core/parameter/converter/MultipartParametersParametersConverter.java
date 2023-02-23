@@ -9,10 +9,10 @@ import work.gaigeshen.tripartite.core.parameter.Parameters;
  */
 public class MultipartParametersParametersConverter extends AbstractParametersConverter {
 
-  public static final MultipartParametersParametersConverter INSTANCE = new MultipartParametersParametersConverter();
+    public static final MultipartParametersParametersConverter INSTANCE = new MultipartParametersParametersConverter();
 
-  @Override
-  protected Parameters initParameters(Object parameters) {
-    return Parameters.multipartParameters();
-  }
+    @Override
+    protected Parameters initParameters(Object parameters) {
+        return Parameters.multipartParameters();
+    }
 }

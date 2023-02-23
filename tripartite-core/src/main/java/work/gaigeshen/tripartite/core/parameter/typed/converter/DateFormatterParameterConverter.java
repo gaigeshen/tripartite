@@ -13,19 +13,19 @@ import java.util.Objects;
  */
 public class DateFormatterParameterConverter implements ParameterConverter {
 
-  public static final DateFormatterParameterConverter INSTANCE = new DateFormatterParameterConverter();
+    public static final DateFormatterParameterConverter INSTANCE = new DateFormatterParameterConverter();
 
-  @Override
-  public Parameter<?> convert(String name, Object rawParameter) throws ParameterConversionException {
-    if (Objects.isNull(name)) {
-      throw new IllegalArgumentException("name cannot be null");
+    @Override
+    public Parameter<?> convert(String name, Object rawParameter) throws ParameterConversionException {
+        if (Objects.isNull(name)) {
+            throw new IllegalArgumentException("name cannot be null");
+        }
+        if (Objects.isNull(rawParameter)) {
+            throw new IllegalArgumentException("raw parameter cannot be null");
+        }
+        if (!(rawParameter instanceof Date)) {
+            throw new ParameterConversionException(rawParameter.getClass() + " not supported by this converter");
+        }
+        return Parameter.string(name, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(rawParameter));
     }
-    if (Objects.isNull(rawParameter)) {
-      throw new IllegalArgumentException("raw parameter cannot be null");
-    }
-    if (!(rawParameter instanceof Date)) {
-      throw new ParameterConversionException(rawParameter.getClass() + " not supported by this converter");
-    }
-    return Parameter.string(name, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(rawParameter));
-  }
 }

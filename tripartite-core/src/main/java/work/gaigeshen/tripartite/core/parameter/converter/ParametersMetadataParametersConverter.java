@@ -11,30 +11,30 @@ import java.util.Objects;
  */
 public class ParametersMetadataParametersConverter implements ParametersConverter {
 
-  private final Object config;
+    private final Object config;
 
-  public ParametersMetadataParametersConverter(Object config) {
-    this.config = config;
-  }
+    public ParametersMetadataParametersConverter(Object config) {
+        this.config = config;
+    }
 
-  @Override
-  public Parameters convert(Object parameters) throws ParametersConversionException {
-    if (Objects.isNull(parameters)) {
-      throw new IllegalArgumentException("parameters cannot be null");
-    }
-    ParametersResolver.Metadata metadata = ParametersResolver.getMetadata(parameters.getClass());
-    ParametersConverter converter = metadata.getConverter();
-    ParametersCustomizer customizer = metadata.getCustomizer();
+    @Override
+    public Parameters convert(Object parameters) throws ParametersConversionException {
+        if (Objects.isNull(parameters)) {
+            throw new IllegalArgumentException("parameters cannot be null");
+        }
+        ParametersResolver.Metadata metadata = ParametersResolver.getMetadata(parameters.getClass());
+        ParametersConverter converter = metadata.getConverter();
+        ParametersCustomizer customizer = metadata.getCustomizer();
 
-    boolean supports = customizer.supports(config);
-    if (supports) {
-      customizer.beforeConvert(parameters, config);
+        boolean supports = customizer.supports(config);
+        if (supports) {
+            customizer.beforeConvert(parameters, config);
+        }
+        Parameters converted = converter.convert(parameters);
+        if (supports) {
+            customizer.customize(converted, parameters, config);
+        }
+        return converted;
     }
-    Parameters converted = converter.convert(parameters);
-    if (supports) {
-      customizer.customize(converted, parameters, config);
-    }
-    return converted;
-  }
 
 }

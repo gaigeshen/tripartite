@@ -8,10 +8,11 @@ import work.gaigeshen.tripartite.core.WebException;
  * @author gaigeshen
  */
 public class ResponseException extends WebException {
-  public ResponseException(String message) {
-    super(message);
-  }
-  public ResponseException(String message, Throwable cause) {
-    super(message, cause);
-  }
+    public ResponseException(String message) {
+        super(message);
+    }
+
+    public ResponseException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }
