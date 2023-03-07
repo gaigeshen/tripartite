@@ -6,10 +6,11 @@ package work.gaigeshen.tripartite.pay.alipay;
  * @author gaigeshen
  */
 public class AlipayClientException extends RuntimeException {
-  public AlipayClientException(String message) {
-    super(message);
-  }
-  public AlipayClientException(String message, Throwable cause) {
-    super(message, cause);
-  }
+    public AlipayClientException(String message) {
+        super(message);
+    }
+
+    public AlipayClientException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }

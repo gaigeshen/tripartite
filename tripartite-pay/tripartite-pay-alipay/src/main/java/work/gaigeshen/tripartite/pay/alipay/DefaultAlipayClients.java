@@ -15,49 +15,49 @@ import java.util.function.Predicate;
  */
 public class DefaultAlipayClients implements AlipayClients {
 
-  private final Map<AlipayConfig, AlipayClient> alipayClients = new ConcurrentHashMap<>();
+    private final Map<AlipayConfig, AlipayClient> alipayClients = new ConcurrentHashMap<>();
 
-  public DefaultAlipayClients() { }
+    public DefaultAlipayClients() { }
 
-  public DefaultAlipayClients(Collection<AlipayClient> alipayClients) {
-    if (Objects.isNull(alipayClients)) {
-      throw new IllegalArgumentException("alipay clients cannot be null");
+    public DefaultAlipayClients(Collection<AlipayClient> alipayClients) {
+        if (Objects.isNull(alipayClients)) {
+            throw new IllegalArgumentException("alipay clients cannot be null");
+        }
+        for (AlipayClient alipayClient : alipayClients) {
+            this.alipayClients.put(alipayClient.getAlipayConfig(), alipayClient);
+        }
     }
-    for (AlipayClient alipayClient : alipayClients) {
-      this.alipayClients.put(alipayClient.getAlipayConfig(), alipayClient);
-    }
-  }
 
-  @Override
-  public AlipayClient getClient(Predicate<AlipayConfig> predicate) throws AlipayClientNotFoundException {
-    if (Objects.isNull(predicate)) {
-      throw new IllegalArgumentException("predicate cannot be null");
+    @Override
+    public AlipayClient getClient(Predicate<AlipayConfig> predicate) throws AlipayClientNotFoundException {
+        if (Objects.isNull(predicate)) {
+            throw new IllegalArgumentException("predicate cannot be null");
+        }
+        AlipayClient alipayClient = findAlipayClient(predicate);
+        if (Objects.isNull(alipayClient)) {
+            throw new AlipayClientNotFoundException("could not find alipay client");
+        }
+        return alipayClient;
     }
-    AlipayClient alipayClient = findAlipayClient(predicate);
-    if (Objects.isNull(alipayClient)) {
-      throw new AlipayClientNotFoundException("could not find alipay client");
-    }
-    return alipayClient;
-  }
 
-  @Override
-  public AlipayClient getClient() throws AlipayClientNotFoundException {
-    AlipayClient alipayClient = findAlipayClient(cfg -> true);
-    if (Objects.isNull(alipayClient)) {
-      throw new AlipayClientNotFoundException("could not find alipay client");
+    @Override
+    public AlipayClient getClient() throws AlipayClientNotFoundException {
+        AlipayClient alipayClient = findAlipayClient(cfg -> true);
+        if (Objects.isNull(alipayClient)) {
+            throw new AlipayClientNotFoundException("could not find alipay client");
+        }
+        return alipayClient;
     }
-    return alipayClient;
-  }
 
-  private AlipayClient findAlipayClient(Predicate<AlipayConfig> predicate) {
-    if (Objects.isNull(predicate)) {
-      throw new IllegalArgumentException("predicate cannot be null");
+    private AlipayClient findAlipayClient(Predicate<AlipayConfig> predicate) {
+        if (Objects.isNull(predicate)) {
+            throw new IllegalArgumentException("predicate cannot be null");
+        }
+        for (Map.Entry<AlipayConfig, AlipayClient> entry : alipayClients.entrySet()) {
+            if (predicate.test(entry.getKey())) {
+                return entry.getValue();
+            }
+        }
+        return null;
     }
-    for (Map.Entry<AlipayConfig, AlipayClient> entry : alipayClients.entrySet()) {
-      if (predicate.test(entry.getKey())) {
-        return entry.getValue();
-      }
-    }
-    return null;
-  }
 }

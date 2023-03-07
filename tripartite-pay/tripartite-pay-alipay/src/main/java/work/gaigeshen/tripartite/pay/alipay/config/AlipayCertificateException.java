@@ -6,10 +6,11 @@ package work.gaigeshen.tripartite.pay.alipay.config;
  * @author gaigeshen
  */
 public class AlipayCertificateException extends AlipayConfigException {
-  public AlipayCertificateException(String message) {
-    super(message);
-  }
-  public AlipayCertificateException(String message, Throwable cause) {
-    super(message, cause);
-  }
+    public AlipayCertificateException(String message) {
+        super(message);
+    }
+
+    public AlipayCertificateException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }

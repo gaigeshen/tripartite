@@ -7,6 +7,6 @@ package work.gaigeshen.tripartite.pay.alipay.config;
  */
 public interface AlipayRootCertificate {
 
-  String getSerialNumber();
+    String getSerialNumber();
 
 }

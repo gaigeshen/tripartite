@@ -6,10 +6,11 @@ package work.gaigeshen.tripartite.pay.alipay.config;
  * @author gaigeshen
  */
 public class AlipayPrivateKeySigningException extends AlipayPrivateKeyException {
-  public AlipayPrivateKeySigningException(String message) {
-    super(message);
-  }
-  public AlipayPrivateKeySigningException(String message, Throwable cause) {
-    super(message, cause);
-  }
+    public AlipayPrivateKeySigningException(String message) {
+        super(message);
+    }
+
+    public AlipayPrivateKeySigningException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }
