@@ -7,5 +7,5 @@ import work.gaigeshen.tripartite.pay.wechat.response.WechatResponse;
  */
 public class WechatNativeOrderResponse implements WechatResponse {
 
-  public String code_url;
+    public String code_url;
 }

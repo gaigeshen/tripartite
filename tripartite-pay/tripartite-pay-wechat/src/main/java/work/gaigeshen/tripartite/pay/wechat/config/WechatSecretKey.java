@@ -7,5 +7,5 @@ package work.gaigeshen.tripartite.pay.wechat.config;
  */
 public interface WechatSecretKey {
 
-  byte[] decrypt(String cipherText, byte[] nonce, byte[] aad) throws WechatSecretKeyException;
+    byte[] decrypt(String cipherText, byte[] nonce, byte[] aad) throws WechatSecretKeyException;
 }

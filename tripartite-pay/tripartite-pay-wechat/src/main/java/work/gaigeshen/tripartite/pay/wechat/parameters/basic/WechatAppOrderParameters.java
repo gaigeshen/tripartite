@@ -6,7 +6,6 @@ import work.gaigeshen.tripartite.pay.wechat.parameters.WechatParameters;
 import work.gaigeshen.tripartite.pay.wechat.parameters.WechatParametersCustomizer;
 
 /**
- *
  * @author gaigeshen
  */
 @Parameters(
@@ -15,73 +14,73 @@ import work.gaigeshen.tripartite.pay.wechat.parameters.WechatParametersCustomize
 )
 public class WechatAppOrderParameters implements WechatParameters {
 
-  public String description;
+    public String description;
 
-  public String out_trade_no;
+    public String out_trade_no;
 
-  public String time_expire;
+    public String time_expire;
 
-  public String attach;
+    public String attach;
 
-  public String goods_tag;
+    public String goods_tag;
 
-  public Amount amount;
+    public Amount amount;
 
-  public Detail detail;
+    public Detail detail;
 
-  public SceneInfo scene_info;
+    public SceneInfo scene_info;
 
-  public SettleInfo settle_info;
+    public SettleInfo settle_info;
 
-  public static class Amount {
+    public static class Amount {
 
-    public Integer total;
+        public Integer total;
 
-    public String currency;
-  }
+        public String currency;
+    }
 
-  public static class Detail {
+    public static class Detail {
 
-    public Integer cost_price;
+        public Integer cost_price;
 
-    public String invoice_id;
+        public String invoice_id;
 
-    public GoodsDetail[] goods_detail;
-  }
+        public GoodsDetail[] goods_detail;
+    }
 
-  public static class GoodsDetail {
+    public static class GoodsDetail {
 
-    public String merchant_goods_id;
+        public String merchant_goods_id;
 
-    public String goods_name;
+        public String goods_name;
 
-    public Integer quantity;
+        public Integer quantity;
 
-    public Integer unit_price;
-  }
+        public Integer unit_price;
+    }
 
-  public static class SceneInfo {
+    public static class SceneInfo {
 
-    public String payer_client_ip;
+        public String payer_client_ip;
 
-    public String device_id;
+        public String device_id;
 
-    public StoreInfo store_info;
-  }
+        public StoreInfo store_info;
+    }
 
-  public static class StoreInfo {
+    public static class StoreInfo {
 
-    public String id;
+        public String id;
 
-    public String name;
+        public String name;
 
-    public String area_code;
+        public String area_code;
 
-    public String address;
-  }
+        public String address;
+    }
 
-  public static class SettleInfo {
+    public static class SettleInfo {
 
-    public Boolean profit_sharing;
-  }
+        public Boolean profit_sharing;
+    }
 }

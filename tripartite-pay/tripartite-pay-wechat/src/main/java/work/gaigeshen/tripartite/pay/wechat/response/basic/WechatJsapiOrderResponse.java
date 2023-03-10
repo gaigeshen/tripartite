@@ -7,5 +7,5 @@ import work.gaigeshen.tripartite.pay.wechat.response.WechatResponse;
  */
 public class WechatJsapiOrderResponse implements WechatResponse {
 
-  public String prepay_id;
+    public String prepay_id;
 }

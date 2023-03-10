@@ -6,10 +6,11 @@ package work.gaigeshen.tripartite.pay.wechat;
  * @author gaigeshen
  */
 public class WechatClientException extends RuntimeException {
-  public WechatClientException(String message) {
-    super(message);
-  }
-  public WechatClientException(String message, Throwable cause) {
-    super(message, cause);
-  }
+    public WechatClientException(String message) {
+        super(message);
+    }
+
+    public WechatClientException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }

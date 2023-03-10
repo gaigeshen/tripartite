@@ -6,10 +6,11 @@ package work.gaigeshen.tripartite.pay.wechat;
  * @author gaigeshen
  */
 public class WechatClientNotFountException extends WechatClientException {
-  public WechatClientNotFountException(String message) {
-    super(message);
-  }
-  public WechatClientNotFountException(String message, Throwable cause) {
-    super(message, cause);
-  }
+    public WechatClientNotFountException(String message) {
+        super(message);
+    }
+
+    public WechatClientNotFountException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }
