@@ -6,7 +6,6 @@ import work.gaigeshen.tripartite.wangdian.openapi.parameters.WangdianParameters;
 import work.gaigeshen.tripartite.wangdian.openapi.parameters.WangdianParametersCustomizer;
 
 /**
- *
  * @author gaigeshen
  */
 @Parameters(
@@ -14,12 +13,12 @@ import work.gaigeshen.tripartite.wangdian.openapi.parameters.WangdianParametersC
 )
 public class LogisticsSyncQueryParameters implements WangdianParameters {
 
-  @Parameter
-  public Integer limit;
+    @Parameter
+    public Integer limit;
 
-  @Parameter
-  public String shop_no;
+    @Parameter
+    public String shop_no;
 
-  @Parameter
-  public Integer is_part_sync_able;
+    @Parameter
+    public Integer is_part_sync_able;
 }

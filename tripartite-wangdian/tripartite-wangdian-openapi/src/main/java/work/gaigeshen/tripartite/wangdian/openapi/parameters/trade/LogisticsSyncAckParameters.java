@@ -9,7 +9,6 @@ import work.gaigeshen.tripartite.wangdian.openapi.parameters.WangdianParametersC
 import java.util.Collection;
 
 /**
- *
  * @author gaigeshen
  */
 @Parameters(
@@ -17,16 +16,16 @@ import java.util.Collection;
 )
 public class LogisticsSyncAckParameters implements WangdianParameters {
 
-  @Parameter(converter = DefaultJsonParameterConverter.class)
-  public Collection<Logistics> logistics_list;
+    @Parameter(converter = DefaultJsonParameterConverter.class)
+    public Collection<Logistics> logistics_list;
 
 
-  public static class Logistics {
+    public static class Logistics {
 
-    public Integer rec_id;
+        public Integer rec_id;
 
-    public Integer status;
+        public Integer status;
 
-    public String message;
-  }
+        public String message;
+    }
 }

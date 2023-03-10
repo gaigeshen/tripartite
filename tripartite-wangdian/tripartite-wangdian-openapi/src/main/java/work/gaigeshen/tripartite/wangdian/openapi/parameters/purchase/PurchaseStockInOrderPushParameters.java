@@ -10,7 +10,6 @@ import java.math.BigDecimal;
 import java.util.Collection;
 
 /**
- *
  * @author gaigeshen
  */
 @Parameters(
@@ -18,45 +17,45 @@ import java.util.Collection;
 )
 public class PurchaseStockInOrderPushParameters implements WangdianParameters {
 
-  @Parameter(converter = DefaultJsonParameterConverter.class)
-  public Purchase purchase_info;
+    @Parameter(converter = DefaultJsonParameterConverter.class)
+    public Purchase purchase_info;
 
 
-  public static class Purchase {
+    public static class Purchase {
 
-    public String purchase_no;
+        public String purchase_no;
 
-    public String outer_no;
+        public String outer_no;
 
-    public String warehouse_no;
+        public String warehouse_no;
 
-    public String remark;
+        public String remark;
 
-    public Integer is_check;
+        public Integer is_check;
 
-    public Collection<Detail> details_list;
-  }
+        public Collection<Detail> details_list;
+    }
 
-  public static class Detail {
+    public static class Detail {
 
-    public String spec_no;
+        public String spec_no;
 
-    public BigDecimal stockin_num;
+        public BigDecimal stockin_num;
 
-    public BigDecimal stockin_price;
+        public BigDecimal stockin_price;
 
-    public BigDecimal tax_price;
+        public BigDecimal tax_price;
 
-    public BigDecimal tax;
+        public BigDecimal tax;
 
-    public String position_no;
+        public String position_no;
 
-    public String production_date;
+        public String production_date;
 
-    public BigDecimal validity_days;
+        public BigDecimal validity_days;
 
-    public BigDecimal src_price;
+        public BigDecimal src_price;
 
-    public String remark;
-  }
+        public String remark;
+    }
 }

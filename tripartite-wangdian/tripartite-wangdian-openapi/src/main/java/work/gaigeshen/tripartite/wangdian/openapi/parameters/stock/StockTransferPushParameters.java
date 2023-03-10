@@ -10,7 +10,6 @@ import java.math.BigDecimal;
 import java.util.Collection;
 
 /**
- *
  * @author gaigeshen
  */
 @Parameters(
@@ -18,43 +17,43 @@ import java.util.Collection;
 )
 public class StockTransferPushParameters implements WangdianParameters {
 
-  @Parameter(converter = DefaultJsonParameterConverter.class)
-  public Transfer transfer_info;
+    @Parameter(converter = DefaultJsonParameterConverter.class)
+    public Transfer transfer_info;
 
 
-  public static class Transfer {
+    public static class Transfer {
 
-    public String outer_no;
+        public String outer_no;
 
-    public String from_warehouse_no;
+        public String from_warehouse_no;
 
-    public String to_warehouse_no;
+        public String to_warehouse_no;
 
-    public String address;
+        public String address;
 
-    public String contact;
+        public String contact;
 
-    public String remark;
+        public String remark;
 
-    public Integer transfer_type;
+        public Integer transfer_type;
 
-    public Integer mode;
+        public Integer mode;
 
-    public Integer autocheck;
+        public Integer autocheck;
 
-    public Collection<Sku> skus;
-  }
+        public Collection<Sku> skus;
+    }
 
-  public static class Sku {
+    public static class Sku {
 
-    public String spec_no;
+        public String spec_no;
 
-    public String from_position_no;
+        public String from_position_no;
 
-    public String to_position_no;
+        public String to_position_no;
 
-    public BigDecimal num;
+        public BigDecimal num;
 
-    public String remark;
-  }
+        public String remark;
+    }
 }

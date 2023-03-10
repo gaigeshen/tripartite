@@ -9,7 +9,6 @@ import work.gaigeshen.tripartite.wangdian.openapi.parameters.WangdianParametersC
 import java.util.Collection;
 
 /**
- *
  * @author gaigeshen
  */
 @Parameters(
@@ -17,20 +16,20 @@ import java.util.Collection;
 )
 public class PurchaseOrderEndParameters implements WangdianParameters {
 
-  @Parameter
-  public Integer type;
+    @Parameter
+    public Integer type;
 
-  @Parameter
-  public Integer is_reject_review;
+    @Parameter
+    public Integer is_reject_review;
 
-  @Parameter(converter = DefaultJsonParameterConverter.class)
-  public Collection<PurchaseNo> purchase_no_list;
+    @Parameter(converter = DefaultJsonParameterConverter.class)
+    public Collection<PurchaseNo> purchase_no_list;
 
 
-  public static class PurchaseNo {
+    public static class PurchaseNo {
 
-    public String purchase_no;
+        public String purchase_no;
 
-    public Collection<String> spec_no;
-  }
+        public Collection<String> spec_no;
+    }
 }

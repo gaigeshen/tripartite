@@ -10,7 +10,6 @@ import java.math.BigDecimal;
 import java.util.Collection;
 
 /**
- *
  * @author gaigeshen
  */
 @Parameters(
@@ -18,45 +17,45 @@ import java.util.Collection;
 )
 public class SalesRefundPushParameters implements WangdianParameters {
 
-  @Parameter(converter = DefaultJsonParameterConverter.class)
-  public Collection<Refund> api_refund_list;
+    @Parameter(converter = DefaultJsonParameterConverter.class)
+    public Collection<Refund> api_refund_list;
 
 
-  public static class Refund {
+    public static class Refund {
 
-    public Integer platform_id;
+        public Integer platform_id;
 
-    public String shop_no;
+        public String shop_no;
 
-    public String tid;
+        public String tid;
 
-    public String refund_no;
+        public String refund_no;
 
-    public Integer type;
+        public Integer type;
 
-    public String status;
+        public String status;
 
-    public BigDecimal refund_fee;
+        public BigDecimal refund_fee;
 
-    public String buyer_nick;
+        public String buyer_nick;
 
-    public String refund_time;
+        public String refund_time;
 
-    public String reason;
+        public String reason;
 
-    public String desc;
+        public String desc;
 
-    public String logistics_no;
+        public String logistics_no;
 
-    public String logistics_name;
+        public String logistics_name;
 
-    public Collection<Order> order_list;
-  }
+        public Collection<Order> order_list;
+    }
 
-  public static class Order {
+    public static class Order {
 
-    public String oid;
+        public String oid;
 
-    public BigDecimal num;
-  }
+        public BigDecimal num;
+    }
 }

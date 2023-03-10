@@ -7,5 +7,5 @@ import work.gaigeshen.tripartite.wangdian.openapi.response.AbstractWangdianRespo
  */
 public class PurchaseReturnOrderPushResponse extends AbstractWangdianResponse {
 
-  public String stockout_no;
+    public String stockout_no;
 }

@@ -7,5 +7,5 @@ import work.gaigeshen.tripartite.wangdian.openapi.response.AbstractWangdianRespo
  */
 public class PurchaseReturnEndResponse extends AbstractWangdianResponse {
 
-  public Integer error_count;
+    public Integer error_count;
 }

@@ -5,29 +5,28 @@ import work.gaigeshen.tripartite.wangdian.openapi.response.AbstractWangdianRespo
 import java.util.Collection;
 
 /**
- *
  * @author gaigeshen
  */
 public class StockChangeQueryResponse extends AbstractWangdianResponse {
 
-  public Integer current_count;
+    public Integer current_count;
 
-  public Collection<StockChange> stock_change_list;
+    public Collection<StockChange> stock_change_list;
 
 
-  public static class StockChange {
+    public static class StockChange {
 
-    public Integer rec_id;
+        public Integer rec_id;
 
-    public Integer sync_stock;
+        public Integer sync_stock;
 
-    public String goods_no;
+        public String goods_no;
 
-    public String spec_no;
+        public String spec_no;
 
-    public Integer erp_spec_type;
+        public Integer erp_spec_type;
 
-    public Integer stock_change_count;
-  }
+        public Integer stock_change_count;
+    }
 
 }

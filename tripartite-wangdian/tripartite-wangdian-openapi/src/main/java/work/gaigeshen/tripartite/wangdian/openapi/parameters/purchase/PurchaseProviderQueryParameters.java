@@ -6,7 +6,6 @@ import work.gaigeshen.tripartite.wangdian.openapi.parameters.WangdianParameters;
 import work.gaigeshen.tripartite.wangdian.openapi.parameters.WangdianParametersCustomizer;
 
 /**
- *
  * @author gaigeshen
  */
 @Parameters(
@@ -14,18 +13,18 @@ import work.gaigeshen.tripartite.wangdian.openapi.parameters.WangdianParametersC
 )
 public class PurchaseProviderQueryParameters implements WangdianParameters {
 
-  @Parameter
-  public String column;
+    @Parameter
+    public String column;
 
-  @Parameter
-  public String provider_no;
+    @Parameter
+    public String provider_no;
 
-  @Parameter
-  public String provider_name;
+    @Parameter
+    public String provider_name;
 
-  @Parameter
-  public Integer page_no;
+    @Parameter
+    public Integer page_no;
 
-  @Parameter
-  public Integer page_size;
+    @Parameter
+    public Integer page_size;
 }
