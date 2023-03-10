@@ -6,7 +6,6 @@ import work.gaigeshen.tripartite.wangdian.openapi.parameters.WangdianParameters;
 import work.gaigeshen.tripartite.wangdian.openapi.parameters.WangdianParametersCustomizer;
 
 /**
- *
  * @author gaigeshen
  */
 @Parameters(
@@ -14,13 +13,13 @@ import work.gaigeshen.tripartite.wangdian.openapi.parameters.WangdianParametersC
 )
 public class WarehouseQueryParameters implements WangdianParameters {
 
-  @Parameter
-  public String warehouse_no;
+    @Parameter
+    public String warehouse_no;
 
-  @Parameter
-  public Integer page_no;
+    @Parameter
+    public Integer page_no;
 
-  @Parameter
-  public Integer page_size;
+    @Parameter
+    public Integer page_size;
 
 }

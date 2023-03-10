@@ -17,39 +17,39 @@ import java.util.Collection;
 )
 public class PurchaseReturnOrderPushParameters implements WangdianParameters {
 
-  @Parameter(converter = DefaultJsonParameterConverter.class)
-  public PurchaseReturn purchase_return_info;
+    @Parameter(converter = DefaultJsonParameterConverter.class)
+    public PurchaseReturn purchase_return_info;
 
 
-  public static class PurchaseReturn {
+    public static class PurchaseReturn {
 
-    public String return_no;
+        public String return_no;
 
-    public String outer_no;
+        public String outer_no;
 
-    public String logistics_no;
+        public String logistics_no;
 
-    public BigDecimal post_cost;
+        public BigDecimal post_cost;
 
-    public Integer is_check;
+        public Integer is_check;
 
-    public String remark;
+        public String remark;
 
-    public Collection<Detail> detail_list;
-  }
+        public Collection<Detail> detail_list;
+    }
 
-  public static class Detail {
+    public static class Detail {
 
-    public String spec_no;
+        public String spec_no;
 
-    public BigDecimal num;
+        public BigDecimal num;
 
-    public BigDecimal price;
+        public BigDecimal price;
 
-    public String position_no;
+        public String position_no;
 
-    public String batch_no;
+        public String batch_no;
 
-    public String remark;
-  }
+        public String remark;
+    }
 }

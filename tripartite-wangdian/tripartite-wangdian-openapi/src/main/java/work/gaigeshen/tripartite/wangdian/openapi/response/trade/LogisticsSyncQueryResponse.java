@@ -5,56 +5,55 @@ import work.gaigeshen.tripartite.wangdian.openapi.response.AbstractWangdianRespo
 import java.util.Collection;
 
 /**
- *
  * @author gaigeshen
  */
 public class LogisticsSyncQueryResponse extends AbstractWangdianResponse {
 
-  public Collection<Trade> trades;
+    public Collection<Trade> trades;
 
 
-  public static class Trade {
+    public static class Trade {
 
-    public Integer rec_id;
+        public Integer rec_id;
 
-    public String shop_no;
+        public String shop_no;
 
-    public String tid;
+        public String tid;
 
-    public String logistics_no;
+        public String logistics_no;
 
-    public Integer logistics_type;
+        public Integer logistics_type;
 
-    public String logistics_name;
+        public String logistics_name;
 
-    public Integer delivery_term;
+        public Integer delivery_term;
 
-    public String consign_time;
+        public String consign_time;
 
-    public String is_part_sync;
+        public String is_part_sync;
 
-    public String oids;
+        public String oids;
 
-    public Integer stockout_id;
+        public Integer stockout_id;
 
-    public Integer is_need_sync;
+        public Integer is_need_sync;
 
-    public Integer sync_status;
+        public Integer sync_status;
 
-    public Integer is_last;
+        public Integer is_last;
 
-    public String description;
+        public String description;
 
-    public String sync_time;
+        public String sync_time;
 
-    public String error_code;
+        public String error_code;
 
-    public String error_msg;
+        public String error_msg;
 
-    public Integer try_times;
+        public Integer try_times;
 
-    public String modified;
+        public String modified;
 
-    public String created;
-  }
+        public String created;
+    }
 }

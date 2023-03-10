@@ -9,7 +9,6 @@ import work.gaigeshen.tripartite.wangdian.openapi.parameters.WangdianParametersC
 import java.util.Collection;
 
 /**
- *
  * @author gaigeshen
  */
 @Parameters(
@@ -17,16 +16,16 @@ import java.util.Collection;
 )
 public class StockChangeAckParameters implements WangdianParameters {
 
-  @Parameter(converter = DefaultJsonParameterConverter.class)
-  public Collection<StockSync> stock_sync_list;
+    @Parameter(converter = DefaultJsonParameterConverter.class)
+    public Collection<StockSync> stock_sync_list;
 
 
-  public static class StockSync {
+    public static class StockSync {
 
-    public Integer rec_id;
+        public Integer rec_id;
 
-    public Integer sync_stock;
+        public Integer sync_stock;
 
-    public Integer stock_change_count;
-  }
+        public Integer stock_change_count;
+    }
 }

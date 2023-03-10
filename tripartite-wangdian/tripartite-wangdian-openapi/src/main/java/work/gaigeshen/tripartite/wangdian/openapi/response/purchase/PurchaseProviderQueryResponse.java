@@ -5,36 +5,35 @@ import work.gaigeshen.tripartite.wangdian.openapi.response.AbstractWangdianRespo
 import java.util.Collection;
 
 /**
- *
  * @author gaigeshen
  */
 public class PurchaseProviderQueryResponse extends AbstractWangdianResponse {
 
-  public Integer total_count;
+    public Integer total_count;
 
-  public Collection<Provider> provider_list;
+    public Collection<Provider> provider_list;
 
 
-  public static class Provider {
+    public static class Provider {
 
-    public String provider_no;
+        public String provider_no;
 
-    public String provider_name;
+        public String provider_name;
 
-    public String contact;
+        public String contact;
 
-    public String mobile;
+        public String mobile;
 
-    public String address;
+        public String address;
 
-    public String remark;
+        public String remark;
 
-    public Integer is_disabled;
+        public Integer is_disabled;
 
-    public Integer deleted;
+        public Integer deleted;
 
-    public String modified;
+        public String modified;
 
-    public String created;
-  }
+        public String created;
+    }
 }

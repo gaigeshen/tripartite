@@ -6,10 +6,11 @@ package work.gaigeshen.tripartite.pay.alipay;
  * @author gaigeshen
  */
 public class AlipayClientNotFoundException extends AlipayClientException {
-  public AlipayClientNotFoundException(String message) {
-    super(message);
-  }
-  public AlipayClientNotFoundException(String message, Throwable cause) {
-    super(message, cause);
-  }
+    public AlipayClientNotFoundException(String message) {
+        super(message);
+    }
+
+    public AlipayClientNotFoundException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }

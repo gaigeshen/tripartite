@@ -10,14 +10,14 @@ import java.util.Objects;
  */
 public interface AlipayPrivateKey {
 
-  String sign(byte[] content) throws AlipayPrivateKeyException;
+    String sign(byte[] content) throws AlipayPrivateKeyException;
 
-  default String sign(String content) throws AlipayPrivateKeyException {
-    if (Objects.isNull(content)) {
-      throw new IllegalArgumentException("content cannot be null");
+    default String sign(String content) throws AlipayPrivateKeyException {
+        if (Objects.isNull(content)) {
+            throw new IllegalArgumentException("content cannot be null");
+        }
+        return sign(content.getBytes(StandardCharsets.UTF_8));
     }
-    return sign(content.getBytes(StandardCharsets.UTF_8));
-  }
 
-  String getCertSerialNumber();
+    String getCertSerialNumber();
 }

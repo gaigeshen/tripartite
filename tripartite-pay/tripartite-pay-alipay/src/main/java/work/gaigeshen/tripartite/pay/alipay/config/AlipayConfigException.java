@@ -8,10 +8,11 @@ import work.gaigeshen.tripartite.pay.alipay.AlipayClientException;
  * @author gaigeshen
  */
 public class AlipayConfigException extends AlipayClientException {
-  public AlipayConfigException(String message) {
-    super(message);
-  }
-  public AlipayConfigException(String message, Throwable cause) {
-    super(message, cause);
-  }
+    public AlipayConfigException(String message) {
+        super(message);
+    }
+
+    public AlipayConfigException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }

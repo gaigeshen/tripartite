@@ -7,5 +7,5 @@ import work.gaigeshen.tripartite.pay.wechat.response.WechatResponse;
  */
 public class WechatH5OrderResponse implements WechatResponse {
 
-  public String h5_url;
+    public String h5_url;
 }

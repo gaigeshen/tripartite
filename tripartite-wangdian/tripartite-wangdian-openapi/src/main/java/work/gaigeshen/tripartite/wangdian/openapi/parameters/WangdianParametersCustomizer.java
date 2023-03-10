@@ -19,50 +19,50 @@ import java.util.Objects;
  */
 public class WangdianParametersCustomizer implements ParametersCustomizer {
 
-  @Override
-  public void beforeConvert(Object rawParameters, Object config) throws ParametersCustomizingException {
-    if (rawParameters instanceof TradePushParameters) {
-      TradePushParameters tradePushParameters = (TradePushParameters) rawParameters;
-      if (Objects.isNull(tradePushParameters.shop_no)) {
-        tradePushParameters.shop_no = ((WangdianConfig) config).getShopNo();
-      }
-    }
-    if (rawParameters instanceof SalesRefundPushParameters) {
-      SalesRefundPushParameters salesRefundPushParameters = (SalesRefundPushParameters) rawParameters;
-      if (Objects.nonNull(salesRefundPushParameters.api_refund_list)) {
-        for (SalesRefundPushParameters.Refund refund : salesRefundPushParameters.api_refund_list) {
-          if (Objects.isNull(refund.shop_no)) {
-            refund.shop_no = ((WangdianConfig) config).getShopNo();
-          }
-          if (Objects.isNull(refund.platform_id)) {
-            refund.platform_id = 127;
-          }
+    @Override
+    public void beforeConvert(Object rawParameters, Object config) throws ParametersCustomizingException {
+        if (rawParameters instanceof TradePushParameters) {
+            TradePushParameters tradePushParameters = (TradePushParameters) rawParameters;
+            if (Objects.isNull(tradePushParameters.shop_no)) {
+                tradePushParameters.shop_no = ((WangdianConfig) config).getShopNo();
+            }
         }
-      }
+        if (rawParameters instanceof SalesRefundPushParameters) {
+            SalesRefundPushParameters salesRefundPushParameters = (SalesRefundPushParameters) rawParameters;
+            if (Objects.nonNull(salesRefundPushParameters.api_refund_list)) {
+                for (SalesRefundPushParameters.Refund refund : salesRefundPushParameters.api_refund_list) {
+                    if (Objects.isNull(refund.shop_no)) {
+                        refund.shop_no = ((WangdianConfig) config).getShopNo();
+                    }
+                    if (Objects.isNull(refund.platform_id)) {
+                        refund.platform_id = 127;
+                    }
+                }
+            }
+        }
     }
-  }
 
-  @Override
-  public void customize(Parameters parameters, Object rawParameters, Object config) throws ParametersCustomizingException {
-    WangdianConfig wangdianConfig = (WangdianConfig) config;
-    parameters.put("sid", wangdianConfig.getSellerId());
-    parameters.put("appkey", wangdianConfig.getAppKey());
-    parameters.put("timestamp", TimestampUtils.unixTimestamp());
+    @Override
+    public void customize(Parameters parameters, Object rawParameters, Object config) throws ParametersCustomizingException {
+        WangdianConfig wangdianConfig = (WangdianConfig) config;
+        parameters.put("sid", wangdianConfig.getSellerId());
+        parameters.put("appkey", wangdianConfig.getAppKey());
+        parameters.put("timestamp", TimestampUtils.unixTimestamp());
 
-    StringBuilder builder = new StringBuilder();
-    for (Parameter<?> newParameter : parameters) {
-      String name = newParameter.getName();
-      String value = String.valueOf(newParameter.getValue());
-      builder.append(";").append(String.format("%02d", name.length())).append('-').append(name);
-      builder.append(':').append(String.format("%04d", value.length())).append('-').append(value);
+        StringBuilder builder = new StringBuilder();
+        for (Parameter<?> newParameter : parameters) {
+            String name = newParameter.getName();
+            String value = String.valueOf(newParameter.getValue());
+            builder.append(";").append(String.format("%02d", name.length())).append('-').append(name);
+            builder.append(':').append(String.format("%04d", value.length())).append('-').append(value);
+        }
+        builder.append(wangdianConfig.getAppSecret());
+
+        parameters.put("sign", DigestUtils.md5Hex(builder.substring(1)));
     }
-    builder.append(wangdianConfig.getAppSecret());
 
-    parameters.put("sign", DigestUtils.md5Hex(builder.substring(1)));
-  }
-
-  @Override
-  public boolean supports(Object config) {
-    return config instanceof WangdianConfig;
-  }
+    @Override
+    public boolean supports(Object config) {
+        return config instanceof WangdianConfig;
+    }
 }

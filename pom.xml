@@ -6,7 +6,7 @@
 
     <groupId>work.gaigeshen</groupId>
     <artifactId>tripartite</artifactId>
-    <version>1.8.0</version>
+    <version>1.9.0</version>
     <modules>
         <module>tripartite-core</module>
         <module>tripartite-wangdian</module>
@@ -47,7 +47,7 @@
 
     <properties>
         <bcprov.jdk15on.version>1.70</bcprov.jdk15on.version>
-        <jackson.version>2.13.3</jackson.version>
+        <jackson.version>2.13.4.1</jackson.version>
         <gson.version>2.9.0</gson.version>
         <guava.version>31.1-jre</guava.version>
         <commons.lang.version>3.8.1</commons.lang.version>

@@ -11,11 +11,11 @@ import work.gaigeshen.tripartite.core.interceptor.InterceptingException;
 public class WangdianResponseTypeInterceptor extends AbstractInterceptor {
 
     @Override
-  protected void updateRequest(Request request) throws InterceptingException {
-  }
+    protected void updateRequest(Request request) throws InterceptingException {
+    }
 
-  @Override
-  protected void validateResponse(Request request, Response response) throws InterceptingException {
-    response.headers().putValue("Content-Type", "application/json");
-  }
+    @Override
+    protected void validateResponse(Request request, Response response) throws InterceptingException {
+        response.headers().putValue("Content-Type", "application/json");
+    }
 }

@@ -7,7 +7,7 @@ package work.gaigeshen.tripartite.wangdian.openapi.response;
  */
 public abstract class AbstractWangdianResponse implements WangdianResponse {
 
-  public Integer code;
+    public Integer code;
 
-  public String message;
+    public String message;
 }

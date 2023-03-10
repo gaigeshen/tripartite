@@ -14,39 +14,39 @@ import java.util.Objects;
  */
 public interface WechatCertificates {
 
-  boolean verify(String serialNumber, String sign, byte[] content) throws WechatCertificateException;
+    boolean verify(String serialNumber, String sign, byte[] content) throws WechatCertificateException;
 
-  boolean verify(X509Certificate certificate, String sign, byte[] content) throws WechatCertificateException;
+    boolean verify(X509Certificate certificate, String sign, byte[] content) throws WechatCertificateException;
 
-  X509Certificate getValidCertificate() throws WechatCertificateException;
+    X509Certificate getValidCertificate() throws WechatCertificateException;
 
-  String encrypt(X509Certificate certificate, byte[] content) throws WechatCertificateEncryptionException;
+    String encrypt(X509Certificate certificate, byte[] content) throws WechatCertificateEncryptionException;
 
-  default String encrypt(byte[] content) throws WechatCertificateException {
-    if (Objects.isNull(content)) {
-      throw new IllegalArgumentException("content cannot be null");
+    default String encrypt(byte[] content) throws WechatCertificateException {
+        if (Objects.isNull(content)) {
+            throw new IllegalArgumentException("content cannot be null");
+        }
+        return encrypt(getValidCertificate(), content);
     }
-    return encrypt(getValidCertificate(), content);
-  }
 
-  X509Certificate loadCertificate(X509Certificate certificate);
+    X509Certificate loadCertificate(X509Certificate certificate);
 
-  X509Certificate loadCertificate(InputStream inputStream) throws WechatCertificateException;
+    X509Certificate loadCertificate(InputStream inputStream) throws WechatCertificateException;
 
-  default X509Certificate loadCertificate(String certificateContent, Charset charset) throws WechatCertificateException {
-    if (Objects.isNull(certificateContent)) {
-      throw new IllegalArgumentException("certificate content cannot be null");
+    default X509Certificate loadCertificate(String certificateContent, Charset charset) throws WechatCertificateException {
+        if (Objects.isNull(certificateContent)) {
+            throw new IllegalArgumentException("certificate content cannot be null");
+        }
+        if (Objects.isNull(charset)) {
+            throw new IllegalArgumentException("charset cannot be null");
+        }
+        return loadCertificate(new ByteArrayInputStream(certificateContent.getBytes(charset)));
     }
-    if (Objects.isNull(charset)) {
-      throw new IllegalArgumentException("charset cannot be null");
-    }
-    return loadCertificate(new ByteArrayInputStream(certificateContent.getBytes(charset)));
-  }
 
-  default X509Certificate loadCertificate(String certificateContent) throws WechatCertificateException {
-    if (Objects.isNull(certificateContent)) {
-      throw new IllegalArgumentException("certificate content cannot be null");
+    default X509Certificate loadCertificate(String certificateContent) throws WechatCertificateException {
+        if (Objects.isNull(certificateContent)) {
+            throw new IllegalArgumentException("certificate content cannot be null");
+        }
+        return loadCertificate(certificateContent, StandardCharsets.UTF_8);
     }
-    return loadCertificate(certificateContent, StandardCharsets.UTF_8);
-  }
 }

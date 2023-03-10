@@ -8,7 +8,6 @@ import work.gaigeshen.tripartite.wangdian.openapi.parameters.WangdianParametersC
 import java.math.BigDecimal;
 
 /**
- *
  * @author gaigeshen
  */
 @Parameters(
@@ -16,30 +15,30 @@ import java.math.BigDecimal;
 )
 public class PurchaseProviderCreateParameters implements WangdianParameters {
 
-  @Parameter
-  public String provider_no;
+    @Parameter
+    public String provider_no;
 
-  @Parameter
-  public String provider_name;
+    @Parameter
+    public String provider_name;
 
-  @Parameter
-  public BigDecimal min_purchase_num;
+    @Parameter
+    public BigDecimal min_purchase_num;
 
-  @Parameter
-  public Integer purchase_cycle_days;
+    @Parameter
+    public Integer purchase_cycle_days;
 
-  @Parameter
-  public Integer arrive_cycle_days;
+    @Parameter
+    public Integer arrive_cycle_days;
 
-  @Parameter
-  public String contact;
+    @Parameter
+    public String contact;
 
-  @Parameter
-  public String mobile;
+    @Parameter
+    public String mobile;
 
-  @Parameter
-  public String address;
+    @Parameter
+    public String address;
 
-  @Parameter
-  public Integer is_disabled;
+    @Parameter
+    public Integer is_disabled;
 }

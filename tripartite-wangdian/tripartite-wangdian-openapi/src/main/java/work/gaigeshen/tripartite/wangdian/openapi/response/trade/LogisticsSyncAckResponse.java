@@ -5,18 +5,17 @@ import work.gaigeshen.tripartite.wangdian.openapi.response.AbstractWangdianRespo
 import java.util.Collection;
 
 /**
- *
  * @author gaigeshen
  */
 public class LogisticsSyncAckResponse extends AbstractWangdianResponse {
 
-  public Collection<Error> errors;
+    public Collection<Error> errors;
 
 
-  public static class Error {
+    public static class Error {
 
-    public Integer rec_id;
+        public Integer rec_id;
 
-    public String error;
-  }
+        public String error;
+    }
 }

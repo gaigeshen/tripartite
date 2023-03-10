@@ -9,174 +9,173 @@ import java.util.Objects;
  */
 public class AlipayConfig {
 
-  private final String serverUrl;
+    private final String serverUrl;
 
-  private final String notifyUrl;
+    private final String notifyUrl;
 
-  private final String appId;
+    private final String appId;
 
-  private final AlipayPrivateKey privateKey;
+    private final AlipayPrivateKey privateKey;
 
-  private final AlipayRootCertificate rootCertificate;
+    private final AlipayRootCertificate rootCertificate;
 
-  private final AlipayCertificates certificates;
+    private final AlipayCertificates certificates;
 
-  private AlipayConfig(Builder builder) {
-    this.serverUrl = builder.serverUrl;
-    this.notifyUrl = builder.notifyUrl;
-    this.appId = builder.appId;
-    this.privateKey = builder.privateKey;
-    this.rootCertificate = builder.rootCertificate;
-    this.certificates = builder.certificates;
-  }
-
-  public static Builder builder() {
-    return new Builder();
-  }
-
-  public String getServerUrl() {
-    return serverUrl;
-  }
-
-  public String getNotifyUrl() {
-    return notifyUrl;
-  }
-
-  public String getAppId() {
-    return appId;
-  }
-
-  public AlipayPrivateKey getPrivateKey() {
-    return privateKey;
-  }
-
-  public AlipayRootCertificate getRootCertificate() {
-    return rootCertificate;
-  }
-
-  public AlipayCertificates getCertificates() {
-    return certificates;
-  }
-
-  @Override
-  public int hashCode() {
-    return appId.hashCode();
-  }
-
-  @Override
-  public boolean equals(Object obj) {
-    if (this == obj) {
-      return true;
-    }
-    if (Objects.isNull(obj) || getClass() != obj.getClass()) {
-      return false;
-    }
-    return appId.equals(((AlipayConfig) obj).appId);
-  }
-
-  @Override
-  public String toString() {
-    return "AlipayConfig: " + appId;
-  }
-
-  /**
-   *
-   * @author gaigeshen
-   */
-  public static class Builder {
-
-    private String serverUrl;
-
-    private String notifyUrl;
-
-    private String appId;
-
-    private AlipayPrivateKey privateKey;
-
-    private AlipayRootCertificate rootCertificate;
-
-    private AlipayCertificates certificates;
-
-    public void setServerUrl(String serverUrl) {
-      this.serverUrl = serverUrl;
+    private AlipayConfig(Builder builder) {
+        this.serverUrl = builder.serverUrl;
+        this.notifyUrl = builder.notifyUrl;
+        this.appId = builder.appId;
+        this.privateKey = builder.privateKey;
+        this.rootCertificate = builder.rootCertificate;
+        this.certificates = builder.certificates;
     }
 
-    public void setNotifyUrl(String notifyUrl) {
-      this.notifyUrl = notifyUrl;
+    public static Builder builder() {
+        return new Builder();
     }
 
-    public void setAppId(String appId) {
-      this.appId = appId;
+    public String getServerUrl() {
+        return serverUrl;
     }
 
-    public void setPrivateKey(AlipayPrivateKey privateKey) {
-      this.privateKey = privateKey;
+    public String getNotifyUrl() {
+        return notifyUrl;
     }
 
-    public void setRootCertificate(AlipayRootCertificate rootCertificates) {
-      this.rootCertificate = rootCertificates;
+    public String getAppId() {
+        return appId;
     }
 
-    public void setCertificates(AlipayCertificates certificates) {
-      this.certificates = certificates;
+    public AlipayPrivateKey getPrivateKey() {
+        return privateKey;
     }
 
-    public void setPrivateKeyContent(String privateKeyContent, String certContent) throws AlipayPrivateKeyException, AlipayCertificateException {
-      setPrivateKey(DefaultAlipayPrivateKey.load(privateKeyContent, certContent));
+    public AlipayRootCertificate getRootCertificate() {
+        return rootCertificate;
     }
 
-    public void setRootCertificateContent(String rootCertificateContent) throws AlipayCertificateException {
-      setRootCertificate(DefaultAlipayRootCertificate.load(rootCertificateContent));
+    public AlipayCertificates getCertificates() {
+        return certificates;
     }
 
-    public void setCertificateContent(String certificateContent) throws AlipayCertificateException {
-      setCertificates(DefaultAlipayCertificates.load(certificateContent));
+    @Override
+    public int hashCode() {
+        return appId.hashCode();
     }
 
-    public void setPrivateKeyClasspath(String privateKeyClasspath, String certClasspath) throws AlipayPrivateKeyException, AlipayCertificateException {
-      setPrivateKey(DefaultAlipayPrivateKey.loadClasspath(privateKeyClasspath, certClasspath));
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (Objects.isNull(obj) || getClass() != obj.getClass()) {
+            return false;
+        }
+        return appId.equals(((AlipayConfig) obj).appId);
     }
 
-    public void setRootCertificateClasspath(String rootCertificateClasspath) throws AlipayCertificateException {
-      setRootCertificate(DefaultAlipayRootCertificate.loadClasspath(rootCertificateClasspath));
+    @Override
+    public String toString() {
+        return "AlipayConfig: " + appId;
     }
 
-    public void setCertificateClasspath(String certificateClasspath) throws AlipayCertificateException {
-      setCertificates(DefaultAlipayCertificates.loadClasspath(certificateClasspath));
-    }
+    /**
+     * @author gaigeshen
+     */
+    public static class Builder {
 
-    public void setPrivateKeyFile(String privateKeyFilename, String certFilename) throws AlipayPrivateKeyException, AlipayCertificateException {
-      setPrivateKey(DefaultAlipayPrivateKey.loadFile(privateKeyFilename, certFilename));
-    }
+        private String serverUrl;
 
-    public void setRootCertificateFile(String rootCertificateFilename) throws AlipayCertificateException {
-      setRootCertificate(DefaultAlipayRootCertificate.loadFile(rootCertificateFilename));
-    }
+        private String notifyUrl;
 
-    public void setCertificateFile(String certificateFilename) throws AlipayCertificateException {
-      setCertificates(DefaultAlipayCertificates.loadFile(certificateFilename));
-    }
+        private String appId;
 
-    public AlipayConfig build() throws AlipayConfigException {
-      if (Objects.isNull(serverUrl)) {
-        throw new AlipayConfigException("'serverUrl' not found");
-      }
-      if (Objects.isNull(notifyUrl)) {
-        throw new AlipayConfigException("'notifyUrl' not found");
-      }
-      if (Objects.isNull(appId)) {
-        throw new AlipayConfigException("'appId' not found");
-      }
-      if (Objects.isNull(privateKey)) {
-        throw new AlipayConfigException("'privateKey' not found");
-      }
-      if (Objects.isNull(rootCertificate)) {
-        throw new AlipayConfigException("'rootCertificate' not found");
-      }
-      if (Objects.isNull(certificates)) {
-        throw new AlipayConfigException("'certificates' not found");
-      }
-      return new AlipayConfig(this);
+        private AlipayPrivateKey privateKey;
+
+        private AlipayRootCertificate rootCertificate;
+
+        private AlipayCertificates certificates;
+
+        public void setServerUrl(String serverUrl) {
+            this.serverUrl = serverUrl;
+        }
+
+        public void setNotifyUrl(String notifyUrl) {
+            this.notifyUrl = notifyUrl;
+        }
+
+        public void setAppId(String appId) {
+            this.appId = appId;
+        }
+
+        public void setPrivateKey(AlipayPrivateKey privateKey) {
+            this.privateKey = privateKey;
+        }
+
+        public void setRootCertificate(AlipayRootCertificate rootCertificates) {
+            this.rootCertificate = rootCertificates;
+        }
+
+        public void setCertificates(AlipayCertificates certificates) {
+            this.certificates = certificates;
+        }
+
+        public void setPrivateKeyContent(String privateKeyContent, String certContent) throws AlipayPrivateKeyException, AlipayCertificateException {
+            setPrivateKey(DefaultAlipayPrivateKey.load(privateKeyContent, certContent));
+        }
+
+        public void setRootCertificateContent(String rootCertificateContent) throws AlipayCertificateException {
+            setRootCertificate(DefaultAlipayRootCertificate.load(rootCertificateContent));
+        }
+
+        public void setCertificateContent(String certificateContent) throws AlipayCertificateException {
+            setCertificates(DefaultAlipayCertificates.load(certificateContent));
+        }
+
+        public void setPrivateKeyClasspath(String privateKeyClasspath, String certClasspath) throws AlipayPrivateKeyException, AlipayCertificateException {
+            setPrivateKey(DefaultAlipayPrivateKey.loadClasspath(privateKeyClasspath, certClasspath));
+        }
+
+        public void setRootCertificateClasspath(String rootCertificateClasspath) throws AlipayCertificateException {
+            setRootCertificate(DefaultAlipayRootCertificate.loadClasspath(rootCertificateClasspath));
+        }
+
+        public void setCertificateClasspath(String certificateClasspath) throws AlipayCertificateException {
+            setCertificates(DefaultAlipayCertificates.loadClasspath(certificateClasspath));
+        }
+
+        public void setPrivateKeyFile(String privateKeyFilename, String certFilename) throws AlipayPrivateKeyException, AlipayCertificateException {
+            setPrivateKey(DefaultAlipayPrivateKey.loadFile(privateKeyFilename, certFilename));
+        }
+
+        public void setRootCertificateFile(String rootCertificateFilename) throws AlipayCertificateException {
+            setRootCertificate(DefaultAlipayRootCertificate.loadFile(rootCertificateFilename));
+        }
+
+        public void setCertificateFile(String certificateFilename) throws AlipayCertificateException {
+            setCertificates(DefaultAlipayCertificates.loadFile(certificateFilename));
+        }
+
+        public AlipayConfig build() throws AlipayConfigException {
+            if (Objects.isNull(serverUrl)) {
+                throw new AlipayConfigException("'serverUrl' not found");
+            }
+            if (Objects.isNull(notifyUrl)) {
+                throw new AlipayConfigException("'notifyUrl' not found");
+            }
+            if (Objects.isNull(appId)) {
+                throw new AlipayConfigException("'appId' not found");
+            }
+            if (Objects.isNull(privateKey)) {
+                throw new AlipayConfigException("'privateKey' not found");
+            }
+            if (Objects.isNull(rootCertificate)) {
+                throw new AlipayConfigException("'rootCertificate' not found");
+            }
+            if (Objects.isNull(certificates)) {
+                throw new AlipayConfigException("'certificates' not found");
+            }
+            return new AlipayConfig(this);
+        }
     }
-  }
 }

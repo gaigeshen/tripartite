@@ -7,10 +7,10 @@ package work.gaigeshen.tripartite.pay.wechat.config;
  */
 public interface WechatPrivateKey {
 
-  String sign(byte[] content) throws WechatPrivateKeyException;
+    String sign(byte[] content) throws WechatPrivateKeyException;
 
-  byte[] decrypt(String cipherText) throws WechatPrivateKeyException;
+    byte[] decrypt(String cipherText) throws WechatPrivateKeyException;
 
-  String getCertSerialNumber();
+    String getCertSerialNumber();
 
 }
