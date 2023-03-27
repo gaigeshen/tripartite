@@ -5,6 +5,7 @@ import work.gaigeshen.tripartite.core.parameter.converter.Parameters;
 import work.gaigeshen.tripartite.ding.openapi.parameters.DingApiParameters;
 
 /**
+ * 定制应用获取访问令牌的参数
  *
  * @author gaigeshen
  */
