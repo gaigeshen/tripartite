@@ -5,38 +5,37 @@ import work.gaigeshen.tripartite.his.procurement.openapi.parameters.HisProcureme
 import java.math.BigDecimal;
 
 /**
- *
  * @author gaigeshen
  */
 public class HisProcurementTakeDeliveryInputData implements HisProcurementInputData {
 
-  private String medinsCode;
+    private String medinsCode;
 
-  private String shpCode;
+    private String shpCode;
 
-  private BigDecimal shppCnt;
+    private BigDecimal shppCnt;
 
-  public String getMedinsCode() {
-    return medinsCode;
-  }
+    public String getMedinsCode() {
+        return medinsCode;
+    }
 
-  public void setMedinsCode(String medinsCode) {
-    this.medinsCode = medinsCode;
-  }
+    public void setMedinsCode(String medinsCode) {
+        this.medinsCode = medinsCode;
+    }
 
-  public String getShpCode() {
-    return shpCode;
-  }
+    public String getShpCode() {
+        return shpCode;
+    }
 
-  public void setShpCode(String shpCode) {
-    this.shpCode = shpCode;
-  }
+    public void setShpCode(String shpCode) {
+        this.shpCode = shpCode;
+    }
 
-  public BigDecimal getShppCnt() {
-    return shppCnt;
-  }
+    public BigDecimal getShppCnt() {
+        return shppCnt;
+    }
 
-  public void setShppCnt(BigDecimal shppCnt) {
-    this.shppCnt = shppCnt;
-  }
+    public void setShppCnt(BigDecimal shppCnt) {
+        this.shppCnt = shppCnt;
+    }
 }

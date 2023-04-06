@@ -5,101 +5,100 @@ import work.gaigeshen.tripartite.his.procurement.openapi.parameters.HisProcureme
 import java.util.Collection;
 
 /**
- *
  * @author gaigeshen
  */
 public class HisProcurementOrderListInputData implements HisProcurementInputData {
 
-  private String medinsCode;
+    private String medinsCode;
 
-  private String purcCode;
+    private String purcCode;
 
-  private String delventpCode;
+    private String delventpCode;
 
-  private String crteTimeUn;
+    private String crteTimeUn;
 
-  private String crteTimeEn;
+    private String crteTimeEn;
 
-  private Integer current;
+    private Integer current;
 
-  private Integer size;
+    private Integer size;
 
-  private Collection<ListItem> list;
+    private Collection<ListItem> list;
 
-  public String getMedinsCode() {
-    return medinsCode;
-  }
-
-  public void setMedinsCode(String medinsCode) {
-    this.medinsCode = medinsCode;
-  }
-
-  public String getPurcCode() {
-    return purcCode;
-  }
-
-  public void setPurcCode(String purcCode) {
-    this.purcCode = purcCode;
-  }
-
-  public String getDelventpCode() {
-    return delventpCode;
-  }
-
-  public void setDelventpCode(String delventpCode) {
-    this.delventpCode = delventpCode;
-  }
-
-  public String getCrteTimeUn() {
-    return crteTimeUn;
-  }
-
-  public void setCrteTimeUn(String crteTimeUn) {
-    this.crteTimeUn = crteTimeUn;
-  }
-
-  public String getCrteTimeEn() {
-    return crteTimeEn;
-  }
-
-  public void setCrteTimeEn(String crteTimeEn) {
-    this.crteTimeEn = crteTimeEn;
-  }
-
-  public Integer getCurrent() {
-    return current;
-  }
-
-  public void setCurrent(Integer current) {
-    this.current = current;
-  }
-
-  public Integer getSize() {
-    return size;
-  }
-
-  public void setSize(Integer size) {
-    this.size = size;
-  }
-
-  public Collection<ListItem> getList() {
-    return list;
-  }
-
-  public void setList(Collection<ListItem> list) {
-    this.list = list;
-  }
-
-  public static class ListItem {
-
-    private String ordDetlId;
-
-    public String getOrdDetlId() {
-      return ordDetlId;
+    public String getMedinsCode() {
+        return medinsCode;
     }
 
-    public void setOrdDetlId(String ordDetlId) {
-      this.ordDetlId = ordDetlId;
+    public void setMedinsCode(String medinsCode) {
+        this.medinsCode = medinsCode;
     }
-  }
+
+    public String getPurcCode() {
+        return purcCode;
+    }
+
+    public void setPurcCode(String purcCode) {
+        this.purcCode = purcCode;
+    }
+
+    public String getDelventpCode() {
+        return delventpCode;
+    }
+
+    public void setDelventpCode(String delventpCode) {
+        this.delventpCode = delventpCode;
+    }
+
+    public String getCrteTimeUn() {
+        return crteTimeUn;
+    }
+
+    public void setCrteTimeUn(String crteTimeUn) {
+        this.crteTimeUn = crteTimeUn;
+    }
+
+    public String getCrteTimeEn() {
+        return crteTimeEn;
+    }
+
+    public void setCrteTimeEn(String crteTimeEn) {
+        this.crteTimeEn = crteTimeEn;
+    }
+
+    public Integer getCurrent() {
+        return current;
+    }
+
+    public void setCurrent(Integer current) {
+        this.current = current;
+    }
+
+    public Integer getSize() {
+        return size;
+    }
+
+    public void setSize(Integer size) {
+        this.size = size;
+    }
+
+    public Collection<ListItem> getList() {
+        return list;
+    }
+
+    public void setList(Collection<ListItem> list) {
+        this.list = list;
+    }
+
+    public static class ListItem {
+
+        private String ordDetlId;
+
+        public String getOrdDetlId() {
+            return ordDetlId;
+        }
+
+        public void setOrdDetlId(String ordDetlId) {
+            this.ordDetlId = ordDetlId;
+        }
+    }
 }

@@ -9,23 +9,22 @@ import work.gaigeshen.tripartite.his.procurement.openapi.config.HisProcurementCo
 import java.util.Objects;
 
 /**
- *
  * @author gaigeshen
  */
 public class DefaultHisProcurementMatClient extends HisProcurementAbstractClient implements HisProcurementMatClient {
 
-  public DefaultHisProcurementMatClient(HisProcurementConfig config, WebExecutor executor) {
-    super(config, executor);
-  }
-
-  public static DefaultHisProcurementMatClient create(HisProcurementConfig config, AbstractInterceptor... interceptors) {
-    if (Objects.isNull(interceptors)) {
-      throw new IllegalArgumentException("interceptors cannot be null");
+    public DefaultHisProcurementMatClient(HisProcurementConfig config, WebExecutor executor) {
+        super(config, executor);
     }
-    RestTemplateWebExecutor executor = RestTemplateWebExecutor.create();
-    executor.setInterceptors(interceptors);
-    executor.setParametersConverter(new ParametersMetadataParametersConverter(config));
-    return new DefaultHisProcurementMatClient(config, executor);
-  }
+
+    public static DefaultHisProcurementMatClient create(HisProcurementConfig config, AbstractInterceptor... interceptors) {
+        if (Objects.isNull(interceptors)) {
+            throw new IllegalArgumentException("interceptors cannot be null");
+        }
+        RestTemplateWebExecutor executor = RestTemplateWebExecutor.create();
+        executor.setInterceptors(interceptors);
+        executor.setParametersConverter(new ParametersMetadataParametersConverter(config));
+        return new DefaultHisProcurementMatClient(config, executor);
+    }
 
 }

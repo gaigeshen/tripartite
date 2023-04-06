@@ -13,18 +13,18 @@ import java.util.Objects;
  */
 public class DefaultHisProcurementMedClient extends HisProcurementAbstractClient implements HisProcurementMedClient {
 
-  protected DefaultHisProcurementMedClient(HisProcurementConfig config, WebExecutor executor) {
-    super(config, executor);
-  }
-
-  public static DefaultHisProcurementMedClient create(HisProcurementConfig config, AbstractInterceptor... interceptors) {
-    if (Objects.isNull(interceptors)) {
-      throw new IllegalArgumentException("interceptors cannot be null");
+    protected DefaultHisProcurementMedClient(HisProcurementConfig config, WebExecutor executor) {
+        super(config, executor);
     }
-    RestTemplateWebExecutor executor = RestTemplateWebExecutor.create();
-    executor.setInterceptors(interceptors);
-    executor.setParametersConverter(new ParametersMetadataParametersConverter(config));
-    return new DefaultHisProcurementMedClient(config, executor);
-  }
+
+    public static DefaultHisProcurementMedClient create(HisProcurementConfig config, AbstractInterceptor... interceptors) {
+        if (Objects.isNull(interceptors)) {
+            throw new IllegalArgumentException("interceptors cannot be null");
+        }
+        RestTemplateWebExecutor executor = RestTemplateWebExecutor.create();
+        executor.setInterceptors(interceptors);
+        executor.setParametersConverter(new ParametersMetadataParametersConverter(config));
+        return new DefaultHisProcurementMedClient(config, executor);
+    }
 
 }

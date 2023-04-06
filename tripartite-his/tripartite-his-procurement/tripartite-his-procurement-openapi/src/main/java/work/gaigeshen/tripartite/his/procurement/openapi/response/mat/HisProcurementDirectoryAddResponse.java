@@ -9,37 +9,37 @@ import java.util.Collection;
  */
 public class HisProcurementDirectoryAddResponse extends AbstractHisProcurementResponse {
 
-  public Collection<ListItem> dataList;
+    public Collection<ListItem> dataList;
 
-  public Collection<ListItem> getDataList() {
-    return dataList;
-  }
-
-  public void setDataList(Collection<ListItem> dataList) {
-    this.dataList = dataList;
-  }
-
-  public static class ListItem {
-
-    private String pubonlnId;
-
-    private String hospListId;
-
-    public String getPubonlnId() {
-      return pubonlnId;
+    public Collection<ListItem> getDataList() {
+        return dataList;
     }
 
-    public void setPubonlnId(String pubonlnId) {
-      this.pubonlnId = pubonlnId;
+    public void setDataList(Collection<ListItem> dataList) {
+        this.dataList = dataList;
     }
 
-    public String getHospListId() {
-      return hospListId;
-    }
+    public static class ListItem {
 
-    public void setHospListId(String hospListId) {
-      this.hospListId = hospListId;
+        private String pubonlnId;
+
+        private String hospListId;
+
+        public String getPubonlnId() {
+            return pubonlnId;
+        }
+
+        public void setPubonlnId(String pubonlnId) {
+            this.pubonlnId = pubonlnId;
+        }
+
+        public String getHospListId() {
+            return hospListId;
+        }
+
+        public void setHospListId(String hospListId) {
+            this.hospListId = hospListId;
+        }
     }
-  }
 
 }

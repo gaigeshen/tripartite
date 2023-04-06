@@ -10,18 +10,18 @@ import work.gaigeshen.tripartite.his.procurement.openapi.config.HisProcurementCo
  */
 public class HisProcurementParametersCustomizer implements ParametersCustomizer {
 
-  @Override
-  public void beforeConvert(Object rawParameters, Object config) throws ParametersCustomizingException {
+    @Override
+    public void beforeConvert(Object rawParameters, Object config) throws ParametersCustomizingException {
 
-  }
+    }
 
-  @Override
-  public void customize(Parameters parameters, Object rawParameters, Object config) throws ParametersCustomizingException {
+    @Override
+    public void customize(Parameters parameters, Object rawParameters, Object config) throws ParametersCustomizingException {
 
-  }
+    }
 
-  @Override
-  public boolean supports(Object config) {
-    return config instanceof HisProcurementConfig;
-  }
+    @Override
+    public boolean supports(Object config) {
+        return config instanceof HisProcurementConfig;
+    }
 }

@@ -9,89 +9,89 @@ import java.util.Collection;
  */
 public class HisProcurementPurchaseOrderSendResponse extends AbstractHisProcurementResponse {
 
-  private String PurcCode;
+    private String PurcCode;
 
-  private String purcPlanCode;
+    private String purcPlanCode;
 
-  private Collection<OrdDetlIdListItem> ordDetlIdList;
+    private Collection<OrdDetlIdListItem> ordDetlIdList;
 
-  private Collection<OrdIdListItem> ordIdList;
+    private Collection<OrdIdListItem> ordIdList;
 
-  public String getPurcCode() {
-    return PurcCode;
-  }
-
-  public void setPurcCode(String purcCode) {
-    PurcCode = purcCode;
-  }
-
-  public String getPurcPlanCode() {
-    return purcPlanCode;
-  }
-
-  public void setPurcPlanCode(String purcPlanCode) {
-    this.purcPlanCode = purcPlanCode;
-  }
-
-  public Collection<OrdDetlIdListItem> getOrdDetlIdList() {
-    return ordDetlIdList;
-  }
-
-  public void setOrdDetlIdList(Collection<OrdDetlIdListItem> ordDetlIdList) {
-    this.ordDetlIdList = ordDetlIdList;
-  }
-
-  public Collection<OrdIdListItem> getOrdIdList() {
-    return ordIdList;
-  }
-
-  public void setOrdIdList(Collection<OrdIdListItem> ordIdList) {
-    this.ordIdList = ordIdList;
-  }
-
-  public static class OrdDetlIdListItem {
-
-    private String ordDetlId;
-
-    private String purcPlanDetId;
-
-    private String ordId;
-
-    public String getOrdDetlId() {
-      return ordDetlId;
+    public String getPurcCode() {
+        return PurcCode;
     }
 
-    public void setOrdDetlId(String ordDetlId) {
-      this.ordDetlId = ordDetlId;
+    public void setPurcCode(String purcCode) {
+        PurcCode = purcCode;
     }
 
-    public String getPurcPlanDetId() {
-      return purcPlanDetId;
+    public String getPurcPlanCode() {
+        return purcPlanCode;
     }
 
-    public void setPurcPlanDetId(String purcPlanDetId) {
-      this.purcPlanDetId = purcPlanDetId;
+    public void setPurcPlanCode(String purcPlanCode) {
+        this.purcPlanCode = purcPlanCode;
     }
 
-    public String getOrdId() {
-      return ordId;
+    public Collection<OrdDetlIdListItem> getOrdDetlIdList() {
+        return ordDetlIdList;
     }
 
-    public void setOrdId(String ordId) {
-      this.ordId = ordId;
-    }
-  }
-
-  public static class OrdIdListItem {
-
-    private String ordId;
-
-    public String getOrdId() {
-      return ordId;
+    public void setOrdDetlIdList(Collection<OrdDetlIdListItem> ordDetlIdList) {
+        this.ordDetlIdList = ordDetlIdList;
     }
 
-    public void setOrdId(String ordId) {
-      this.ordId = ordId;
+    public Collection<OrdIdListItem> getOrdIdList() {
+        return ordIdList;
     }
-  }
+
+    public void setOrdIdList(Collection<OrdIdListItem> ordIdList) {
+        this.ordIdList = ordIdList;
+    }
+
+    public static class OrdDetlIdListItem {
+
+        private String ordDetlId;
+
+        private String purcPlanDetId;
+
+        private String ordId;
+
+        public String getOrdDetlId() {
+            return ordDetlId;
+        }
+
+        public void setOrdDetlId(String ordDetlId) {
+            this.ordDetlId = ordDetlId;
+        }
+
+        public String getPurcPlanDetId() {
+            return purcPlanDetId;
+        }
+
+        public void setPurcPlanDetId(String purcPlanDetId) {
+            this.purcPlanDetId = purcPlanDetId;
+        }
+
+        public String getOrdId() {
+            return ordId;
+        }
+
+        public void setOrdId(String ordId) {
+            this.ordId = ordId;
+        }
+    }
+
+    public static class OrdIdListItem {
+
+        private String ordId;
+
+        public String getOrdId() {
+            return ordId;
+        }
+
+        public void setOrdId(String ordId) {
+            this.ordId = ordId;
+        }
+    }
 }

@@ -9,166 +9,166 @@ import java.util.Collection;
  */
 public class HisProcurementStorehouseListResponse extends AbstractHisProcurementResponse {
 
-  private Integer currentPageNumber;
+    private Integer currentPageNumber;
 
-  private Integer totalPageCount;
+    private Integer totalPageCount;
 
-  private Integer totalRecordCount;
+    private Integer totalRecordCount;
 
-  private Collection<ListItem> dataList;
+    private Collection<ListItem> dataList;
 
-  public Integer getCurrentPageNumber() {
-    return currentPageNumber;
-  }
-
-  public void setCurrentPageNumber(Integer currentPageNumber) {
-    this.currentPageNumber = currentPageNumber;
-  }
-
-  public Integer getTotalPageCount() {
-    return totalPageCount;
-  }
-
-  public void setTotalPageCount(Integer totalPageCount) {
-    this.totalPageCount = totalPageCount;
-  }
-
-  public Integer getTotalRecordCount() {
-    return totalRecordCount;
-  }
-
-  public void setTotalRecordCount(Integer totalRecordCount) {
-    this.totalRecordCount = totalRecordCount;
-  }
-
-  public Collection<ListItem> getDataList() {
-    return dataList;
-  }
-
-  public void setDataList(Collection<ListItem> dataList) {
-    this.dataList = dataList;
-  }
-
-  public static class ListItem {
-
-    private String conerName;
-
-    private String entpCode;
-
-    private String mcsFlag;
-
-    private String defFlag;
-
-    private String prov;
-
-    private String city;
-
-    private String coty;
-
-    private String invottl;
-
-    private String addrId;
-
-    private String addr;
-
-    private String conerTel;
-
-    private String stroomName;
-
-    public String getConerName() {
-      return conerName;
+    public Integer getCurrentPageNumber() {
+        return currentPageNumber;
     }
 
-    public void setConerName(String conerName) {
-      this.conerName = conerName;
+    public void setCurrentPageNumber(Integer currentPageNumber) {
+        this.currentPageNumber = currentPageNumber;
     }
 
-    public String getEntpCode() {
-      return entpCode;
+    public Integer getTotalPageCount() {
+        return totalPageCount;
     }
 
-    public void setEntpCode(String entpCode) {
-      this.entpCode = entpCode;
+    public void setTotalPageCount(Integer totalPageCount) {
+        this.totalPageCount = totalPageCount;
     }
 
-    public String getMcsFlag() {
-      return mcsFlag;
+    public Integer getTotalRecordCount() {
+        return totalRecordCount;
     }
 
-    public void setMcsFlag(String mcsFlag) {
-      this.mcsFlag = mcsFlag;
+    public void setTotalRecordCount(Integer totalRecordCount) {
+        this.totalRecordCount = totalRecordCount;
     }
 
-    public String getDefFlag() {
-      return defFlag;
+    public Collection<ListItem> getDataList() {
+        return dataList;
     }
 
-    public void setDefFlag(String defFlag) {
-      this.defFlag = defFlag;
+    public void setDataList(Collection<ListItem> dataList) {
+        this.dataList = dataList;
     }
 
-    public String getProv() {
-      return prov;
-    }
+    public static class ListItem {
 
-    public void setProv(String prov) {
-      this.prov = prov;
-    }
+        private String conerName;
 
-    public String getCity() {
-      return city;
-    }
+        private String entpCode;
 
-    public void setCity(String city) {
-      this.city = city;
-    }
+        private String mcsFlag;
 
-    public String getCoty() {
-      return coty;
-    }
+        private String defFlag;
 
-    public void setCoty(String coty) {
-      this.coty = coty;
-    }
+        private String prov;
 
-    public String getInvottl() {
-      return invottl;
-    }
+        private String city;
 
-    public void setInvottl(String invottl) {
-      this.invottl = invottl;
-    }
+        private String coty;
 
-    public String getAddrId() {
-      return addrId;
-    }
+        private String invottl;
 
-    public void setAddrId(String addrId) {
-      this.addrId = addrId;
-    }
+        private String addrId;
 
-    public String getAddr() {
-      return addr;
-    }
+        private String addr;
 
-    public void setAddr(String addr) {
-      this.addr = addr;
-    }
+        private String conerTel;
 
-    public String getConerTel() {
-      return conerTel;
-    }
+        private String stroomName;
 
-    public void setConerTel(String conerTel) {
-      this.conerTel = conerTel;
-    }
+        public String getConerName() {
+            return conerName;
+        }
 
-    public String getStroomName() {
-      return stroomName;
-    }
+        public void setConerName(String conerName) {
+            this.conerName = conerName;
+        }
 
-    public void setStroomName(String stroomName) {
-      this.stroomName = stroomName;
+        public String getEntpCode() {
+            return entpCode;
+        }
+
+        public void setEntpCode(String entpCode) {
+            this.entpCode = entpCode;
+        }
+
+        public String getMcsFlag() {
+            return mcsFlag;
+        }
+
+        public void setMcsFlag(String mcsFlag) {
+            this.mcsFlag = mcsFlag;
+        }
+
+        public String getDefFlag() {
+            return defFlag;
+        }
+
+        public void setDefFlag(String defFlag) {
+            this.defFlag = defFlag;
+        }
+
+        public String getProv() {
+            return prov;
+        }
+
+        public void setProv(String prov) {
+            this.prov = prov;
+        }
+
+        public String getCity() {
+            return city;
+        }
+
+        public void setCity(String city) {
+            this.city = city;
+        }
+
+        public String getCoty() {
+            return coty;
+        }
+
+        public void setCoty(String coty) {
+            this.coty = coty;
+        }
+
+        public String getInvottl() {
+            return invottl;
+        }
+
+        public void setInvottl(String invottl) {
+            this.invottl = invottl;
+        }
+
+        public String getAddrId() {
+            return addrId;
+        }
+
+        public void setAddrId(String addrId) {
+            this.addrId = addrId;
+        }
+
+        public String getAddr() {
+            return addr;
+        }
+
+        public void setAddr(String addr) {
+            this.addr = addr;
+        }
+
+        public String getConerTel() {
+            return conerTel;
+        }
+
+        public void setConerTel(String conerTel) {
+            this.conerTel = conerTel;
+        }
+
+        public String getStroomName() {
+            return stroomName;
+        }
+
+        public void setStroomName(String stroomName) {
+            this.stroomName = stroomName;
+        }
     }
-  }
 }

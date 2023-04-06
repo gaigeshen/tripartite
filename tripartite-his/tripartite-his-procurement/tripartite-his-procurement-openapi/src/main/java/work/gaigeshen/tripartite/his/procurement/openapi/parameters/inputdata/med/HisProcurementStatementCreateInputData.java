@@ -3,38 +3,37 @@ package work.gaigeshen.tripartite.his.procurement.openapi.parameters.inputdata.m
 import work.gaigeshen.tripartite.his.procurement.openapi.parameters.HisProcurementInputData;
 
 /**
- *
  * @author gaigeshen
  */
 public class HisProcurementStatementCreateInputData implements HisProcurementInputData {
 
-  private String medinsCode;
+    private String medinsCode;
 
-  private String delvEntpCode;
+    private String delvEntpCode;
 
-  private String delvEntpName;
+    private String delvEntpName;
 
-  public String getMedinsCode() {
-    return medinsCode;
-  }
+    public String getMedinsCode() {
+        return medinsCode;
+    }
 
-  public void setMedinsCode(String medinsCode) {
-    this.medinsCode = medinsCode;
-  }
+    public void setMedinsCode(String medinsCode) {
+        this.medinsCode = medinsCode;
+    }
 
-  public String getDelvEntpCode() {
-    return delvEntpCode;
-  }
+    public String getDelvEntpCode() {
+        return delvEntpCode;
+    }
 
-  public void setDelvEntpCode(String delvEntpCode) {
-    this.delvEntpCode = delvEntpCode;
-  }
+    public void setDelvEntpCode(String delvEntpCode) {
+        this.delvEntpCode = delvEntpCode;
+    }
 
-  public String getDelvEntpName() {
-    return delvEntpName;
-  }
+    public String getDelvEntpName() {
+        return delvEntpName;
+    }
 
-  public void setDelvEntpName(String delvEntpName) {
-    this.delvEntpName = delvEntpName;
-  }
+    public void setDelvEntpName(String delvEntpName) {
+        this.delvEntpName = delvEntpName;
+    }
 }

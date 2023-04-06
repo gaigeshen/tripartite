@@ -10,336 +10,336 @@ import java.util.Collection;
  */
 public class HisProcurementDirectoryUsedListResponse extends AbstractHisProcurementResponse {
 
-  private Collection<ListItem> dataList;
+    private Collection<ListItem> dataList;
 
-  private Integer currentPageNumber;
+    private Integer currentPageNumber;
 
-  private Integer totalPageCount;
+    private Integer totalPageCount;
 
-  private Integer totalRecordCount;
+    private Integer totalRecordCount;
 
-  public Collection<ListItem> getDataList() {
-    return dataList;
-  }
-
-  public void setDataList(Collection<ListItem> dataList) {
-    this.dataList = dataList;
-  }
-
-  public Integer getCurrentPageNumber() {
-    return currentPageNumber;
-  }
-
-  public void setCurrentPageNumber(Integer currentPageNumber) {
-    this.currentPageNumber = currentPageNumber;
-  }
-
-  public Integer getTotalPageCount() {
-    return totalPageCount;
-  }
-
-  public void setTotalPageCount(Integer totalPageCount) {
-    this.totalPageCount = totalPageCount;
-  }
-
-  public Integer getTotalRecordCount() {
-    return totalRecordCount;
-  }
-
-  public void setTotalRecordCount(Integer totalRecordCount) {
-    this.totalRecordCount = totalRecordCount;
-  }
-
-  public static class ListItem {
-
-    private String itemCodg;
-
-    private BigDecimal convrat;
-
-    private String medinsListCodg;
-
-    private String prodId;
-
-    private String hospListId;
-
-    private BigDecimal hospPurcPric;
-
-    private String AddDateTime;
-
-    private String admorgCode;
-
-    private String aprvno;
-
-    private String dosform;
-
-    private String prodName;
-
-    private String medinsName;
-
-    private String delventpCode;
-
-    private String itemname;
-
-    private String drugInfoId;
-
-    private String prodBigPac;
-
-    private String prodSpec;
-
-    private String delventpName;
-
-    private String prodCode;
-
-    private String pubonlnRsltId;
-
-    private String pubonlnStas;
-
-    private String prodPac;
-
-    private String UpdateTime;
-
-    private String pacmatl;
-
-    private BigDecimal pubonlnPric;
-
-    private String hospBidprcuItemId;
-
-    private String prodSoucName;
-
-    private String medinsCode;
-
-    private String admorgName;
-
-    public String getItemCodg() {
-      return itemCodg;
+    public Collection<ListItem> getDataList() {
+        return dataList;
     }
 
-    public void setItemCodg(String itemCodg) {
-      this.itemCodg = itemCodg;
+    public void setDataList(Collection<ListItem> dataList) {
+        this.dataList = dataList;
     }
 
-    public BigDecimal getConvrat() {
-      return convrat;
+    public Integer getCurrentPageNumber() {
+        return currentPageNumber;
     }
 
-    public void setConvrat(BigDecimal convrat) {
-      this.convrat = convrat;
+    public void setCurrentPageNumber(Integer currentPageNumber) {
+        this.currentPageNumber = currentPageNumber;
     }
 
-    public String getMedinsListCodg() {
-      return medinsListCodg;
+    public Integer getTotalPageCount() {
+        return totalPageCount;
     }
 
-    public void setMedinsListCodg(String medinsListCodg) {
-      this.medinsListCodg = medinsListCodg;
+    public void setTotalPageCount(Integer totalPageCount) {
+        this.totalPageCount = totalPageCount;
     }
 
-    public String getProdId() {
-      return prodId;
+    public Integer getTotalRecordCount() {
+        return totalRecordCount;
     }
 
-    public void setProdId(String prodId) {
-      this.prodId = prodId;
+    public void setTotalRecordCount(Integer totalRecordCount) {
+        this.totalRecordCount = totalRecordCount;
     }
 
-    public String getHospListId() {
-      return hospListId;
-    }
+    public static class ListItem {
 
-    public void setHospListId(String hospListId) {
-      this.hospListId = hospListId;
-    }
+        private String itemCodg;
 
-    public BigDecimal getHospPurcPric() {
-      return hospPurcPric;
-    }
+        private BigDecimal convrat;
 
-    public void setHospPurcPric(BigDecimal hospPurcPric) {
-      this.hospPurcPric = hospPurcPric;
-    }
+        private String medinsListCodg;
 
-    public String getAddDateTime() {
-      return AddDateTime;
-    }
+        private String prodId;
 
-    public void setAddDateTime(String addDateTime) {
-      AddDateTime = addDateTime;
-    }
+        private String hospListId;
 
-    public String getAdmorgCode() {
-      return admorgCode;
-    }
+        private BigDecimal hospPurcPric;
 
-    public void setAdmorgCode(String admorgCode) {
-      this.admorgCode = admorgCode;
-    }
+        private String AddDateTime;
 
-    public String getAprvno() {
-      return aprvno;
-    }
+        private String admorgCode;
 
-    public void setAprvno(String aprvno) {
-      this.aprvno = aprvno;
-    }
+        private String aprvno;
 
-    public String getDosform() {
-      return dosform;
-    }
+        private String dosform;
 
-    public void setDosform(String dosform) {
-      this.dosform = dosform;
-    }
+        private String prodName;
 
-    public String getProdName() {
-      return prodName;
-    }
+        private String medinsName;
 
-    public void setProdName(String prodName) {
-      this.prodName = prodName;
-    }
+        private String delventpCode;
 
-    public String getMedinsName() {
-      return medinsName;
-    }
+        private String itemname;
 
-    public void setMedinsName(String medinsName) {
-      this.medinsName = medinsName;
-    }
+        private String drugInfoId;
 
-    public String getDelventpCode() {
-      return delventpCode;
-    }
+        private String prodBigPac;
 
-    public void setDelventpCode(String delventpCode) {
-      this.delventpCode = delventpCode;
-    }
+        private String prodSpec;
 
-    public String getItemname() {
-      return itemname;
-    }
+        private String delventpName;
 
-    public void setItemname(String itemname) {
-      this.itemname = itemname;
-    }
+        private String prodCode;
 
-    public String getDrugInfoId() {
-      return drugInfoId;
-    }
+        private String pubonlnRsltId;
 
-    public void setDrugInfoId(String drugInfoId) {
-      this.drugInfoId = drugInfoId;
-    }
+        private String pubonlnStas;
 
-    public String getProdBigPac() {
-      return prodBigPac;
-    }
+        private String prodPac;
 
-    public void setProdBigPac(String prodBigPac) {
-      this.prodBigPac = prodBigPac;
-    }
+        private String UpdateTime;
 
-    public String getProdSpec() {
-      return prodSpec;
-    }
+        private String pacmatl;
 
-    public void setProdSpec(String prodSpec) {
-      this.prodSpec = prodSpec;
-    }
+        private BigDecimal pubonlnPric;
 
-    public String getDelventpName() {
-      return delventpName;
-    }
+        private String hospBidprcuItemId;
 
-    public void setDelventpName(String delventpName) {
-      this.delventpName = delventpName;
-    }
+        private String prodSoucName;
 
-    public String getProdCode() {
-      return prodCode;
-    }
+        private String medinsCode;
 
-    public void setProdCode(String prodCode) {
-      this.prodCode = prodCode;
-    }
+        private String admorgName;
 
-    public String getPubonlnRsltId() {
-      return pubonlnRsltId;
-    }
+        public String getItemCodg() {
+            return itemCodg;
+        }
 
-    public void setPubonlnRsltId(String pubonlnRsltId) {
-      this.pubonlnRsltId = pubonlnRsltId;
-    }
+        public void setItemCodg(String itemCodg) {
+            this.itemCodg = itemCodg;
+        }
 
-    public String getPubonlnStas() {
-      return pubonlnStas;
-    }
+        public BigDecimal getConvrat() {
+            return convrat;
+        }
 
-    public void setPubonlnStas(String pubonlnStas) {
-      this.pubonlnStas = pubonlnStas;
-    }
+        public void setConvrat(BigDecimal convrat) {
+            this.convrat = convrat;
+        }
 
-    public String getProdPac() {
-      return prodPac;
-    }
+        public String getMedinsListCodg() {
+            return medinsListCodg;
+        }
 
-    public void setProdPac(String prodPac) {
-      this.prodPac = prodPac;
-    }
+        public void setMedinsListCodg(String medinsListCodg) {
+            this.medinsListCodg = medinsListCodg;
+        }
 
-    public String getUpdateTime() {
-      return UpdateTime;
-    }
+        public String getProdId() {
+            return prodId;
+        }
 
-    public void setUpdateTime(String updateTime) {
-      UpdateTime = updateTime;
-    }
+        public void setProdId(String prodId) {
+            this.prodId = prodId;
+        }
 
-    public String getPacmatl() {
-      return pacmatl;
-    }
+        public String getHospListId() {
+            return hospListId;
+        }
 
-    public void setPacmatl(String pacmatl) {
-      this.pacmatl = pacmatl;
-    }
+        public void setHospListId(String hospListId) {
+            this.hospListId = hospListId;
+        }
 
-    public BigDecimal getPubonlnPric() {
-      return pubonlnPric;
-    }
+        public BigDecimal getHospPurcPric() {
+            return hospPurcPric;
+        }
 
-    public void setPubonlnPric(BigDecimal pubonlnPric) {
-      this.pubonlnPric = pubonlnPric;
-    }
+        public void setHospPurcPric(BigDecimal hospPurcPric) {
+            this.hospPurcPric = hospPurcPric;
+        }
 
-    public String getHospBidprcuItemId() {
-      return hospBidprcuItemId;
-    }
+        public String getAddDateTime() {
+            return AddDateTime;
+        }
 
-    public void setHospBidprcuItemId(String hospBidprcuItemId) {
-      this.hospBidprcuItemId = hospBidprcuItemId;
-    }
+        public void setAddDateTime(String addDateTime) {
+            AddDateTime = addDateTime;
+        }
 
-    public String getProdSoucName() {
-      return prodSoucName;
-    }
+        public String getAdmorgCode() {
+            return admorgCode;
+        }
 
-    public void setProdSoucName(String prodSoucName) {
-      this.prodSoucName = prodSoucName;
-    }
+        public void setAdmorgCode(String admorgCode) {
+            this.admorgCode = admorgCode;
+        }
 
-    public String getMedinsCode() {
-      return medinsCode;
-    }
+        public String getAprvno() {
+            return aprvno;
+        }
 
-    public void setMedinsCode(String medinsCode) {
-      this.medinsCode = medinsCode;
-    }
+        public void setAprvno(String aprvno) {
+            this.aprvno = aprvno;
+        }
 
-    public String getAdmorgName() {
-      return admorgName;
-    }
+        public String getDosform() {
+            return dosform;
+        }
 
-    public void setAdmorgName(String admorgName) {
-      this.admorgName = admorgName;
+        public void setDosform(String dosform) {
+            this.dosform = dosform;
+        }
+
+        public String getProdName() {
+            return prodName;
+        }
+
+        public void setProdName(String prodName) {
+            this.prodName = prodName;
+        }
+
+        public String getMedinsName() {
+            return medinsName;
+        }
+
+        public void setMedinsName(String medinsName) {
+            this.medinsName = medinsName;
+        }
+
+        public String getDelventpCode() {
+            return delventpCode;
+        }
+
+        public void setDelventpCode(String delventpCode) {
+            this.delventpCode = delventpCode;
+        }
+
+        public String getItemname() {
+            return itemname;
+        }
+
+        public void setItemname(String itemname) {
+            this.itemname = itemname;
+        }
+
+        public String getDrugInfoId() {
+            return drugInfoId;
+        }
+
+        public void setDrugInfoId(String drugInfoId) {
+            this.drugInfoId = drugInfoId;
+        }
+
+        public String getProdBigPac() {
+            return prodBigPac;
+        }
+
+        public void setProdBigPac(String prodBigPac) {
+            this.prodBigPac = prodBigPac;
+        }
+
+        public String getProdSpec() {
+            return prodSpec;
+        }
+
+        public void setProdSpec(String prodSpec) {
+            this.prodSpec = prodSpec;
+        }
+
+        public String getDelventpName() {
+            return delventpName;
+        }
+
+        public void setDelventpName(String delventpName) {
+            this.delventpName = delventpName;
+        }
+
+        public String getProdCode() {
+            return prodCode;
+        }
+
+        public void setProdCode(String prodCode) {
+            this.prodCode = prodCode;
+        }
+
+        public String getPubonlnRsltId() {
+            return pubonlnRsltId;
+        }
+
+        public void setPubonlnRsltId(String pubonlnRsltId) {
+            this.pubonlnRsltId = pubonlnRsltId;
+        }
+
+        public String getPubonlnStas() {
+            return pubonlnStas;
+        }
+
+        public void setPubonlnStas(String pubonlnStas) {
+            this.pubonlnStas = pubonlnStas;
+        }
+
+        public String getProdPac() {
+            return prodPac;
+        }
+
+        public void setProdPac(String prodPac) {
+            this.prodPac = prodPac;
+        }
+
+        public String getUpdateTime() {
+            return UpdateTime;
+        }
+
+        public void setUpdateTime(String updateTime) {
+            UpdateTime = updateTime;
+        }
+
+        public String getPacmatl() {
+            return pacmatl;
+        }
+
+        public void setPacmatl(String pacmatl) {
+            this.pacmatl = pacmatl;
+        }
+
+        public BigDecimal getPubonlnPric() {
+            return pubonlnPric;
+        }
+
+        public void setPubonlnPric(BigDecimal pubonlnPric) {
+            this.pubonlnPric = pubonlnPric;
+        }
+
+        public String getHospBidprcuItemId() {
+            return hospBidprcuItemId;
+        }
+
+        public void setHospBidprcuItemId(String hospBidprcuItemId) {
+            this.hospBidprcuItemId = hospBidprcuItemId;
+        }
+
+        public String getProdSoucName() {
+            return prodSoucName;
+        }
+
+        public void setProdSoucName(String prodSoucName) {
+            this.prodSoucName = prodSoucName;
+        }
+
+        public String getMedinsCode() {
+            return medinsCode;
+        }
+
+        public void setMedinsCode(String medinsCode) {
+            this.medinsCode = medinsCode;
+        }
+
+        public String getAdmorgName() {
+            return admorgName;
+        }
+
+        public void setAdmorgName(String admorgName) {
+            this.admorgName = admorgName;
+        }
     }
-  }
 }
