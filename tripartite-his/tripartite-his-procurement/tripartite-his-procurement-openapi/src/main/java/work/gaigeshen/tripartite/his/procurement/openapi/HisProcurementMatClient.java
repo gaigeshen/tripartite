@@ -5,7 +5,7 @@ import work.gaigeshen.tripartite.his.procurement.openapi.parameters.inputdata.ma
 import work.gaigeshen.tripartite.his.procurement.openapi.response.mat.*;
 
 /**
- * 浙江省医保信息平台客户端，此客户端只针对耗材类型
+ * 浙江省两定平台客户端，此客户端只针对耗材类型
  *
  * @author gaigeshen
  */

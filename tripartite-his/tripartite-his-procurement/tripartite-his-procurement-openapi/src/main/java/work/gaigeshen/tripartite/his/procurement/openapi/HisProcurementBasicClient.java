@@ -10,6 +10,8 @@ import work.gaigeshen.tripartite.his.procurement.openapi.response.basic.HisProcu
 import work.gaigeshen.tripartite.his.procurement.openapi.response.basic.HisProcurementStorehouseSaveResponse;
 
 /**
+ * 浙江省两定平台客户端
+ *
  * @author gaigeshen
  */
 public interface HisProcurementBasicClient {
