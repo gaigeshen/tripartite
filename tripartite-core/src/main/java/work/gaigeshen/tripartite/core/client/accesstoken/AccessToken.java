@@ -1,6 +1,7 @@
 package work.gaigeshen.tripartite.core.client.accesstoken;
 
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * @author gaigeshen
@@ -81,6 +82,18 @@ public class AccessToken {
         }
 
         public AccessToken build() {
+            if (Objects.isNull(accessToken)) {
+                throw new IllegalArgumentException("accessToken");
+            }
+            if (expiresIn < 0) {
+                throw new IllegalArgumentException("expiresIn");
+            }
+            if (expiresTimestamp < 0) {
+                throw new IllegalArgumentException("expiresTimestamp");
+            }
+            if (Objects.isNull(updateTime)) {
+                throw new IllegalArgumentException("updateTime");
+            }
             return new AccessToken(this);
         }
     }
