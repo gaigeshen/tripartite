@@ -54,7 +54,6 @@
         <commons.collection.version>4.4</commons.collection.version>
         <commons.codec.version>1.13</commons.codec.version>
         <commons.io.version>2.11.0</commons.io.version>
-        <commons.dbutils.version>1.7</commons.dbutils.version>
         <slf4j.version>1.7.30</slf4j.version>
         <logback.version>1.2.11</logback.version>
         <spring.web.version>4.3.30.RELEASE</spring.web.version>
@@ -107,11 +106,6 @@
                 <groupId>commons-io</groupId>
                 <artifactId>commons-io</artifactId>
                 <version>${commons.io.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>commons-dbutils</groupId>
-                <artifactId>commons-dbutils</artifactId>
-                <version>${commons.dbutils.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.slf4j</groupId>
