@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  work.gaigeshen.tripartite.openai.spring.boot.autoconfigure.OpenAiAutoConfiguration
