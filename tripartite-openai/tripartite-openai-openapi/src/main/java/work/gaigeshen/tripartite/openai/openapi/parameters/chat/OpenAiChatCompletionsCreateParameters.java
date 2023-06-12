@@ -6,10 +6,14 @@ import work.gaigeshen.tripartite.openai.openapi.parameters.OpenAiParameters;
 
 import java.util.List;
 
+/**
+ *
+ * @author gaigeshen
+ */
 @Parameters(
         converter = JsonParametersConverter.class
 )
-public class OpenAiChatCompletionsParameters extends OpenAiParameters {
+public class OpenAiChatCompletionsCreateParameters extends OpenAiParameters {
 
     public String model;
 

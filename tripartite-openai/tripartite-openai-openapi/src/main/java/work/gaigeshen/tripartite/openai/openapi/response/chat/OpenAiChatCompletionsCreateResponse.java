@@ -4,7 +4,11 @@ import work.gaigeshen.tripartite.openai.openapi.response.OpenAiResponse;
 
 import java.util.List;
 
-public class OpenAiChatCompletionsResponse extends OpenAiResponse {
+/**
+ *
+ * @author gaigeshen
+ */
+public class OpenAiChatCompletionsCreateResponse extends OpenAiResponse {
 
     public String id;
 
