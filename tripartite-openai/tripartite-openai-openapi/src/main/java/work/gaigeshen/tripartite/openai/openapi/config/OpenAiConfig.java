@@ -50,9 +50,6 @@ public class OpenAiConfig implements Config {
 
     @Override
     public String toString() {
-        return "OpenAiConfig{" +
-                "apiKey='" + apiKey + '\'' +
-                ", organization='" + organization + '\'' +
-                '}';
+        return "OpenAiConfig: " + apiKey + "/" + organization;
     }
 }
