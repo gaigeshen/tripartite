@@ -48,7 +48,7 @@ public interface OpenAiClient extends Client<OpenAiConfig> {
      * @throws ClientException 执行请求的时候发生异常
      * @see <a href="https://platform.openai.com/docs/api-reference/files/upload">接口文档</a>
      */
-    default OpenAiFileUploadResponse createEmbeddings(OpenAiFileUploadParameters parameters) throws ClientException {
+    default OpenAiFileUploadResponse uploadFile(OpenAiFileUploadParameters parameters) throws ClientException {
         return execute(parameters, OpenAiFileUploadResponse.class, "/v1/files");
     }
 }
