@@ -1,4 +1,4 @@
-package work.gaigeshen.tripartite.openai.openapi.response.chat;
+package work.gaigeshen.tripartite.openai.openapi.response.embeddings;
 
 import work.gaigeshen.tripartite.openai.openapi.response.OpenAiResponse;
 

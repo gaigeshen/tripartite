@@ -1,4 +1,4 @@
-package work.gaigeshen.tripartite.openai.openapi.parameters.chat;
+package work.gaigeshen.tripartite.openai.openapi.parameters.file;
 
 import work.gaigeshen.tripartite.core.parameter.converter.JsonParametersConverter;
 import work.gaigeshen.tripartite.core.parameter.converter.Parameters;
@@ -11,9 +11,9 @@ import work.gaigeshen.tripartite.openai.openapi.parameters.OpenAiParameters;
 @Parameters(
         converter = JsonParametersConverter.class
 )
-public class OpenAiEmbeddingsCreateParameters extends OpenAiParameters {
+public class OpenAiFileUploadParameters extends OpenAiParameters {
 
-    public String model;
+    public String file;
 
-    public String input;
+    public String purpose;
 }

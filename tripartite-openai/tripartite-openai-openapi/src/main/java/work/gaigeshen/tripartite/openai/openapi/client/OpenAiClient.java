@@ -4,9 +4,11 @@ import work.gaigeshen.tripartite.core.client.Client;
 import work.gaigeshen.tripartite.core.client.ClientException;
 import work.gaigeshen.tripartite.openai.openapi.config.OpenAiConfig;
 import work.gaigeshen.tripartite.openai.openapi.parameters.chat.OpenAiChatCompletionsCreateParameters;
-import work.gaigeshen.tripartite.openai.openapi.parameters.chat.OpenAiEmbeddingsCreateParameters;
+import work.gaigeshen.tripartite.openai.openapi.parameters.embeddings.OpenAiEmbeddingsCreateParameters;
+import work.gaigeshen.tripartite.openai.openapi.parameters.file.OpenAiFileUploadParameters;
 import work.gaigeshen.tripartite.openai.openapi.response.chat.OpenAiChatCompletionsCreateResponse;
-import work.gaigeshen.tripartite.openai.openapi.response.chat.OpenAiEmbeddingsCreateResponse;
+import work.gaigeshen.tripartite.openai.openapi.response.embeddings.OpenAiEmbeddingsCreateResponse;
+import work.gaigeshen.tripartite.openai.openapi.response.file.OpenAiFileUploadResponse;
 
 /**
  *
@@ -36,5 +38,17 @@ public interface OpenAiClient extends Client<OpenAiConfig> {
      */
     default OpenAiEmbeddingsCreateResponse createEmbeddings(OpenAiEmbeddingsCreateParameters parameters) throws ClientException {
         return execute(parameters, OpenAiEmbeddingsCreateResponse.class, "/v1/embeddings");
+    }
+
+    /**
+     * 文件上传
+     *
+     * @param parameters 文件上传参数
+     * @return 文件上传结果
+     * @throws ClientException 执行请求的时候发生异常
+     * @see <a href="https://platform.openai.com/docs/api-reference/files/upload">接口文档</a>
+     */
+    default OpenAiFileUploadResponse createEmbeddings(OpenAiFileUploadParameters parameters) throws ClientException {
+        return execute(parameters, OpenAiFileUploadResponse.class, "/v1/files");
     }
 }
