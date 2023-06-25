@@ -7,23 +7,23 @@ package work.gaigeshen.tripartite.his.procurement.openapi.accesstoken;
  */
 public class HisProcurementAccessTokenRefreshException extends HisProcurementAccessTokenUpdateException {
 
-  public HisProcurementAccessTokenRefreshException(String message) {
-    super(message);
-  }
+    public HisProcurementAccessTokenRefreshException(String message) {
+        super(message);
+    }
 
-  public HisProcurementAccessTokenRefreshException(String message, Throwable cause) {
-    super(message, cause);
-  }
+    public HisProcurementAccessTokenRefreshException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
-  @Override
-  public HisProcurementAccessTokenRefreshException setCurrentAccessToken(HisProcurementAccessToken currentAccessToken) {
-    super.setCurrentAccessToken(currentAccessToken);
-    return this;
-  }
+    @Override
+    public HisProcurementAccessTokenRefreshException setCurrentAccessToken(HisProcurementAccessToken currentAccessToken) {
+        super.setCurrentAccessToken(currentAccessToken);
+        return this;
+    }
 
-  @Override
-  public HisProcurementAccessTokenRefreshException setCanRetry(boolean canRetry) {
-    super.setCanRetry(canRetry);
-    return this;
-  }
+    @Override
+    public HisProcurementAccessTokenRefreshException setCanRetry(boolean canRetry) {
+        super.setCanRetry(canRetry);
+        return this;
+    }
 }

@@ -4,6 +4,8 @@ import work.gaigeshen.tripartite.core.parameter.converter.JsonParametersConverte
 import work.gaigeshen.tripartite.core.parameter.converter.Parameters;
 import work.gaigeshen.tripartite.ding.openapi.parameters.DingOapiParameters;
 
+import java.util.Collection;
+
 /**
  *
  * @author gaigeshen
@@ -30,6 +32,8 @@ public class DingMessageAsyncSendParameters extends DingOapiParameters {
         public Markdown markdown;
 
         public OA oa;
+
+        public ActionCard action_card;
     }
 
     public static class Markdown {
@@ -62,5 +66,27 @@ public class DingMessageAsyncSendParameters extends DingOapiParameters {
         public String title;
 
         public String content;
+    }
+
+    public static class ActionCard {
+
+        public String title;
+
+        public String markdown;
+
+        public String single_title;
+
+        public String single_url;
+
+        public String btn_orientation;
+
+        public Collection<ActionCardBtnJson> btn_json_list;
+    }
+
+    public static class ActionCardBtnJson {
+
+        public String title;
+
+        public String action_url;
     }
 }

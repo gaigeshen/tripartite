@@ -9,46 +9,46 @@ import java.util.Collection;
  */
 public class HisProcurementStatementDetailAddResponse extends AbstractHisProcurementResponse {
 
-  private Collection<ListItem> dataList;
+    private Collection<ListItem> dataList;
 
-  public Collection<ListItem> getDataList() {
-    return dataList;
-  }
-
-  public void setDataList(Collection<ListItem> dataList) {
-    this.dataList = dataList;
-  }
-
-  public static class ListItem {
-
-    private Integer returnCode;
-
-    private String returnMsg;
-
-    private String payyDetlId;
-
-    public Integer getReturnCode() {
-      return returnCode;
+    public Collection<ListItem> getDataList() {
+        return dataList;
     }
 
-    public void setReturnCode(Integer returnCode) {
-      this.returnCode = returnCode;
+    public void setDataList(Collection<ListItem> dataList) {
+        this.dataList = dataList;
     }
 
-    public String getReturnMsg() {
-      return returnMsg;
-    }
+    public static class ListItem {
 
-    public void setReturnMsg(String returnMsg) {
-      this.returnMsg = returnMsg;
-    }
+        private Integer returnCode;
 
-    public String getPayyDetlId() {
-      return payyDetlId;
-    }
+        private String returnMsg;
 
-    public void setPayyDetlId(String payyDetlId) {
-      this.payyDetlId = payyDetlId;
+        private String payyDetlId;
+
+        public Integer getReturnCode() {
+            return returnCode;
+        }
+
+        public void setReturnCode(Integer returnCode) {
+            this.returnCode = returnCode;
+        }
+
+        public String getReturnMsg() {
+            return returnMsg;
+        }
+
+        public void setReturnMsg(String returnMsg) {
+            this.returnMsg = returnMsg;
+        }
+
+        public String getPayyDetlId() {
+            return payyDetlId;
+        }
+
+        public void setPayyDetlId(String payyDetlId) {
+            this.payyDetlId = payyDetlId;
+        }
     }
-  }
 }

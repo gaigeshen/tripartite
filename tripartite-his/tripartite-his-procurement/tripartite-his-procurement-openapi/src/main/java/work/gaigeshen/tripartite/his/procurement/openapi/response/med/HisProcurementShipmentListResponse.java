@@ -10,506 +10,506 @@ import java.util.Collection;
  */
 public class HisProcurementShipmentListResponse extends AbstractHisProcurementResponse {
 
-  private Collection<ListItem> dataList;
+    private Collection<ListItem> dataList;
 
-  private Integer currentPageNumber;
+    private Integer currentPageNumber;
 
-  private Integer totalPageCount;
+    private Integer totalPageCount;
 
-  private Integer totalRecordCount;
+    private Integer totalRecordCount;
 
-  public Collection<ListItem> getDataList() {
-    return dataList;
-  }
+    public Collection<ListItem> getDataList() {
+        return dataList;
+    }
 
-  public void setDataList(Collection<ListItem> dataList) {
-    this.dataList = dataList;
-  }
+    public void setDataList(Collection<ListItem> dataList) {
+        this.dataList = dataList;
+    }
 
-  public Integer getCurrentPageNumber() {
-    return currentPageNumber;
-  }
+    public Integer getCurrentPageNumber() {
+        return currentPageNumber;
+    }
 
-  public void setCurrentPageNumber(Integer currentPageNumber) {
-    this.currentPageNumber = currentPageNumber;
-  }
+    public void setCurrentPageNumber(Integer currentPageNumber) {
+        this.currentPageNumber = currentPageNumber;
+    }
 
-  public Integer getTotalPageCount() {
-    return totalPageCount;
-  }
+    public Integer getTotalPageCount() {
+        return totalPageCount;
+    }
 
-  public void setTotalPageCount(Integer totalPageCount) {
-    this.totalPageCount = totalPageCount;
-  }
+    public void setTotalPageCount(Integer totalPageCount) {
+        this.totalPageCount = totalPageCount;
+    }
 
-  public Integer getTotalRecordCount() {
-    return totalRecordCount;
-  }
+    public Integer getTotalRecordCount() {
+        return totalRecordCount;
+    }
 
-  public void setTotalRecordCount(Integer totalRecordCount) {
-    this.totalRecordCount = totalRecordCount;
-  }
+    public void setTotalRecordCount(Integer totalRecordCount) {
+        this.totalRecordCount = totalRecordCount;
+    }
 
-  public static class ListItem {
+    public static class ListItem {
 
-    private String planDetlMemo;
+        private String planDetlMemo;
 
-    private BigDecimal shpPric;
+        private BigDecimal shpPric;
 
-    private String outstoTime;
+        private String outstoTime;
 
-    private BigDecimal shpCnt;
+        private BigDecimal shpCnt;
 
-    private String invoicePrimaryIds;
+        private String invoicePrimaryIds;
 
-    private String ordDetlId;
+        private String ordDetlId;
 
-    private BigDecimal purcCnt;
+        private BigDecimal purcCnt;
 
-    private BigDecimal retnCnt;
+        private BigDecimal retnCnt;
 
-    private String cnclTime;
+        private String cnclTime;
 
-    private String prodId;
+        private String prodId;
 
-    private BigDecimal avlShpCnt;
+        private BigDecimal avlShpCnt;
 
-    private String expyEndtime;
+        private String expyEndtime;
 
-    private String hospListId;
+        private String hospListId;
 
-    private String ordId;
+        private String ordId;
 
-    private String admorgCode;
+        private String admorgCode;
 
-    private String purcPlanCode;
+        private String purcPlanCode;
 
-    private String ordCode;
+        private String ordCode;
 
-    private String hospItemId;
+        private String hospItemId;
 
-    private BigDecimal shppCnt;
+        private BigDecimal shppCnt;
 
-    private String prodName;
+        private String prodName;
 
-    private String shpStas;
+        private String shpStas;
 
-    private String medinsName;
+        private String medinsName;
 
-    private String delventpCode;
+        private String delventpCode;
 
-    private String shpTime;
+        private String shpTime;
 
-    private String manuLotnum;
+        private String manuLotnum;
 
-    private String shppTime;
+        private String shppTime;
 
-    private String cnclType;
+        private String cnclType;
 
-    private String itemname;
+        private String itemname;
 
-    private String shpMemo;
+        private String shpMemo;
 
-    private BigDecimal purcAmt;
+        private BigDecimal purcAmt;
 
-    private BigDecimal rtnbCnt;
+        private BigDecimal rtnbCnt;
 
-    private BigDecimal shpAmt;
+        private BigDecimal shpAmt;
 
-    private String shpCode;
+        private String shpCode;
 
-    private String invoiceCode;
+        private String invoiceCode;
 
-    private String sendTime;
+        private String sendTime;
 
-    private String delventpName;
+        private String delventpName;
 
-    private BigDecimal shppAmt;
+        private BigDecimal shppAmt;
 
-    private String pubonlnRsltId;
+        private String pubonlnRsltId;
 
-    private String shpId;
+        private String shpId;
 
-    private String delventpCnfmShppTime;
+        private String delventpCnfmShppTime;
 
-    private String delventpCnfmShppStas;
+        private String delventpCnfmShppStas;
 
-    private BigDecimal ordSumamt;
+        private BigDecimal ordSumamt;
 
-    private String invoiceId;
+        private String invoiceId;
 
-    private String medinsCode;
+        private String medinsCode;
 
-    private String admorgName;
+        private String admorgName;
 
-    private BigDecimal purcpric;
+        private BigDecimal purcpric;
 
-    public String getPlanDetlMemo() {
-      return planDetlMemo;
-    }
+        public String getPlanDetlMemo() {
+            return planDetlMemo;
+        }
 
-    public void setPlanDetlMemo(String planDetlMemo) {
-      this.planDetlMemo = planDetlMemo;
-    }
+        public void setPlanDetlMemo(String planDetlMemo) {
+            this.planDetlMemo = planDetlMemo;
+        }
 
-    public BigDecimal getShpPric() {
-      return shpPric;
-    }
+        public BigDecimal getShpPric() {
+            return shpPric;
+        }
 
-    public void setShpPric(BigDecimal shpPric) {
-      this.shpPric = shpPric;
-    }
+        public void setShpPric(BigDecimal shpPric) {
+            this.shpPric = shpPric;
+        }
 
-    public String getOutstoTime() {
-      return outstoTime;
-    }
+        public String getOutstoTime() {
+            return outstoTime;
+        }
 
-    public void setOutstoTime(String outstoTime) {
-      this.outstoTime = outstoTime;
-    }
+        public void setOutstoTime(String outstoTime) {
+            this.outstoTime = outstoTime;
+        }
 
-    public BigDecimal getShpCnt() {
-      return shpCnt;
-    }
+        public BigDecimal getShpCnt() {
+            return shpCnt;
+        }
 
-    public void setShpCnt(BigDecimal shpCnt) {
-      this.shpCnt = shpCnt;
-    }
+        public void setShpCnt(BigDecimal shpCnt) {
+            this.shpCnt = shpCnt;
+        }
 
-    public String getInvoicePrimaryIds() {
-      return invoicePrimaryIds;
-    }
+        public String getInvoicePrimaryIds() {
+            return invoicePrimaryIds;
+        }
 
-    public void setInvoicePrimaryIds(String invoicePrimaryIds) {
-      this.invoicePrimaryIds = invoicePrimaryIds;
-    }
+        public void setInvoicePrimaryIds(String invoicePrimaryIds) {
+            this.invoicePrimaryIds = invoicePrimaryIds;
+        }
 
-    public String getOrdDetlId() {
-      return ordDetlId;
-    }
+        public String getOrdDetlId() {
+            return ordDetlId;
+        }
 
-    public void setOrdDetlId(String ordDetlId) {
-      this.ordDetlId = ordDetlId;
-    }
+        public void setOrdDetlId(String ordDetlId) {
+            this.ordDetlId = ordDetlId;
+        }
 
-    public BigDecimal getPurcCnt() {
-      return purcCnt;
-    }
+        public BigDecimal getPurcCnt() {
+            return purcCnt;
+        }
 
-    public void setPurcCnt(BigDecimal purcCnt) {
-      this.purcCnt = purcCnt;
-    }
+        public void setPurcCnt(BigDecimal purcCnt) {
+            this.purcCnt = purcCnt;
+        }
 
-    public BigDecimal getRetnCnt() {
-      return retnCnt;
-    }
+        public BigDecimal getRetnCnt() {
+            return retnCnt;
+        }
 
-    public void setRetnCnt(BigDecimal retnCnt) {
-      this.retnCnt = retnCnt;
-    }
+        public void setRetnCnt(BigDecimal retnCnt) {
+            this.retnCnt = retnCnt;
+        }
 
-    public String getCnclTime() {
-      return cnclTime;
-    }
+        public String getCnclTime() {
+            return cnclTime;
+        }
 
-    public void setCnclTime(String cnclTime) {
-      this.cnclTime = cnclTime;
-    }
+        public void setCnclTime(String cnclTime) {
+            this.cnclTime = cnclTime;
+        }
 
-    public String getProdId() {
-      return prodId;
-    }
+        public String getProdId() {
+            return prodId;
+        }
 
-    public void setProdId(String prodId) {
-      this.prodId = prodId;
-    }
+        public void setProdId(String prodId) {
+            this.prodId = prodId;
+        }
 
-    public BigDecimal getAvlShpCnt() {
-      return avlShpCnt;
-    }
+        public BigDecimal getAvlShpCnt() {
+            return avlShpCnt;
+        }
 
-    public void setAvlShpCnt(BigDecimal avlShpCnt) {
-      this.avlShpCnt = avlShpCnt;
-    }
+        public void setAvlShpCnt(BigDecimal avlShpCnt) {
+            this.avlShpCnt = avlShpCnt;
+        }
 
-    public String getExpyEndtime() {
-      return expyEndtime;
-    }
+        public String getExpyEndtime() {
+            return expyEndtime;
+        }
 
-    public void setExpyEndtime(String expyEndtime) {
-      this.expyEndtime = expyEndtime;
-    }
+        public void setExpyEndtime(String expyEndtime) {
+            this.expyEndtime = expyEndtime;
+        }
 
-    public String getHospListId() {
-      return hospListId;
-    }
+        public String getHospListId() {
+            return hospListId;
+        }
 
-    public void setHospListId(String hospListId) {
-      this.hospListId = hospListId;
-    }
+        public void setHospListId(String hospListId) {
+            this.hospListId = hospListId;
+        }
 
-    public String getOrdId() {
-      return ordId;
-    }
+        public String getOrdId() {
+            return ordId;
+        }
 
-    public void setOrdId(String ordId) {
-      this.ordId = ordId;
-    }
+        public void setOrdId(String ordId) {
+            this.ordId = ordId;
+        }
 
-    public String getAdmorgCode() {
-      return admorgCode;
-    }
+        public String getAdmorgCode() {
+            return admorgCode;
+        }
 
-    public void setAdmorgCode(String admorgCode) {
-      this.admorgCode = admorgCode;
-    }
+        public void setAdmorgCode(String admorgCode) {
+            this.admorgCode = admorgCode;
+        }
 
-    public String getPurcPlanCode() {
-      return purcPlanCode;
-    }
+        public String getPurcPlanCode() {
+            return purcPlanCode;
+        }
 
-    public void setPurcPlanCode(String purcPlanCode) {
-      this.purcPlanCode = purcPlanCode;
-    }
+        public void setPurcPlanCode(String purcPlanCode) {
+            this.purcPlanCode = purcPlanCode;
+        }
 
-    public String getOrdCode() {
-      return ordCode;
-    }
+        public String getOrdCode() {
+            return ordCode;
+        }
 
-    public void setOrdCode(String ordCode) {
-      this.ordCode = ordCode;
-    }
+        public void setOrdCode(String ordCode) {
+            this.ordCode = ordCode;
+        }
 
-    public String getHospItemId() {
-      return hospItemId;
-    }
+        public String getHospItemId() {
+            return hospItemId;
+        }
 
-    public void setHospItemId(String hospItemId) {
-      this.hospItemId = hospItemId;
-    }
+        public void setHospItemId(String hospItemId) {
+            this.hospItemId = hospItemId;
+        }
 
-    public BigDecimal getShppCnt() {
-      return shppCnt;
-    }
+        public BigDecimal getShppCnt() {
+            return shppCnt;
+        }
 
-    public void setShppCnt(BigDecimal shppCnt) {
-      this.shppCnt = shppCnt;
-    }
+        public void setShppCnt(BigDecimal shppCnt) {
+            this.shppCnt = shppCnt;
+        }
 
-    public String getProdName() {
-      return prodName;
-    }
+        public String getProdName() {
+            return prodName;
+        }
 
-    public void setProdName(String prodName) {
-      this.prodName = prodName;
-    }
+        public void setProdName(String prodName) {
+            this.prodName = prodName;
+        }
 
-    public String getShpStas() {
-      return shpStas;
-    }
+        public String getShpStas() {
+            return shpStas;
+        }
 
-    public void setShpStas(String shpStas) {
-      this.shpStas = shpStas;
-    }
+        public void setShpStas(String shpStas) {
+            this.shpStas = shpStas;
+        }
 
-    public String getMedinsName() {
-      return medinsName;
-    }
+        public String getMedinsName() {
+            return medinsName;
+        }
 
-    public void setMedinsName(String medinsName) {
-      this.medinsName = medinsName;
-    }
+        public void setMedinsName(String medinsName) {
+            this.medinsName = medinsName;
+        }
 
-    public String getDelventpCode() {
-      return delventpCode;
-    }
+        public String getDelventpCode() {
+            return delventpCode;
+        }
 
-    public void setDelventpCode(String delventpCode) {
-      this.delventpCode = delventpCode;
-    }
+        public void setDelventpCode(String delventpCode) {
+            this.delventpCode = delventpCode;
+        }
 
-    public String getShpTime() {
-      return shpTime;
-    }
+        public String getShpTime() {
+            return shpTime;
+        }
 
-    public void setShpTime(String shpTime) {
-      this.shpTime = shpTime;
-    }
+        public void setShpTime(String shpTime) {
+            this.shpTime = shpTime;
+        }
 
-    public String getManuLotnum() {
-      return manuLotnum;
-    }
+        public String getManuLotnum() {
+            return manuLotnum;
+        }
 
-    public void setManuLotnum(String manuLotnum) {
-      this.manuLotnum = manuLotnum;
-    }
+        public void setManuLotnum(String manuLotnum) {
+            this.manuLotnum = manuLotnum;
+        }
 
-    public String getShppTime() {
-      return shppTime;
-    }
+        public String getShppTime() {
+            return shppTime;
+        }
 
-    public void setShppTime(String shppTime) {
-      this.shppTime = shppTime;
-    }
+        public void setShppTime(String shppTime) {
+            this.shppTime = shppTime;
+        }
 
-    public String getCnclType() {
-      return cnclType;
-    }
+        public String getCnclType() {
+            return cnclType;
+        }
 
-    public void setCnclType(String cnclType) {
-      this.cnclType = cnclType;
-    }
+        public void setCnclType(String cnclType) {
+            this.cnclType = cnclType;
+        }
 
-    public String getItemname() {
-      return itemname;
-    }
+        public String getItemname() {
+            return itemname;
+        }
 
-    public void setItemname(String itemname) {
-      this.itemname = itemname;
-    }
+        public void setItemname(String itemname) {
+            this.itemname = itemname;
+        }
 
-    public String getShpMemo() {
-      return shpMemo;
-    }
+        public String getShpMemo() {
+            return shpMemo;
+        }
 
-    public void setShpMemo(String shpMemo) {
-      this.shpMemo = shpMemo;
-    }
+        public void setShpMemo(String shpMemo) {
+            this.shpMemo = shpMemo;
+        }
 
-    public BigDecimal getPurcAmt() {
-      return purcAmt;
-    }
+        public BigDecimal getPurcAmt() {
+            return purcAmt;
+        }
 
-    public void setPurcAmt(BigDecimal purcAmt) {
-      this.purcAmt = purcAmt;
-    }
+        public void setPurcAmt(BigDecimal purcAmt) {
+            this.purcAmt = purcAmt;
+        }
 
-    public BigDecimal getRtnbCnt() {
-      return rtnbCnt;
-    }
+        public BigDecimal getRtnbCnt() {
+            return rtnbCnt;
+        }
 
-    public void setRtnbCnt(BigDecimal rtnbCnt) {
-      this.rtnbCnt = rtnbCnt;
-    }
+        public void setRtnbCnt(BigDecimal rtnbCnt) {
+            this.rtnbCnt = rtnbCnt;
+        }
 
-    public BigDecimal getShpAmt() {
-      return shpAmt;
-    }
+        public BigDecimal getShpAmt() {
+            return shpAmt;
+        }
 
-    public void setShpAmt(BigDecimal shpAmt) {
-      this.shpAmt = shpAmt;
-    }
+        public void setShpAmt(BigDecimal shpAmt) {
+            this.shpAmt = shpAmt;
+        }
 
-    public String getShpCode() {
-      return shpCode;
-    }
+        public String getShpCode() {
+            return shpCode;
+        }
 
-    public void setShpCode(String shpCode) {
-      this.shpCode = shpCode;
-    }
+        public void setShpCode(String shpCode) {
+            this.shpCode = shpCode;
+        }
 
-    public String getInvoiceCode() {
-      return invoiceCode;
-    }
+        public String getInvoiceCode() {
+            return invoiceCode;
+        }
 
-    public void setInvoiceCode(String invoiceCode) {
-      this.invoiceCode = invoiceCode;
-    }
+        public void setInvoiceCode(String invoiceCode) {
+            this.invoiceCode = invoiceCode;
+        }
 
-    public String getSendTime() {
-      return sendTime;
-    }
+        public String getSendTime() {
+            return sendTime;
+        }
 
-    public void setSendTime(String sendTime) {
-      this.sendTime = sendTime;
-    }
+        public void setSendTime(String sendTime) {
+            this.sendTime = sendTime;
+        }
 
-    public String getDelventpName() {
-      return delventpName;
-    }
+        public String getDelventpName() {
+            return delventpName;
+        }
 
-    public void setDelventpName(String delventpName) {
-      this.delventpName = delventpName;
-    }
+        public void setDelventpName(String delventpName) {
+            this.delventpName = delventpName;
+        }
 
-    public BigDecimal getShppAmt() {
-      return shppAmt;
-    }
+        public BigDecimal getShppAmt() {
+            return shppAmt;
+        }
 
-    public void setShppAmt(BigDecimal shppAmt) {
-      this.shppAmt = shppAmt;
-    }
+        public void setShppAmt(BigDecimal shppAmt) {
+            this.shppAmt = shppAmt;
+        }
 
-    public String getPubonlnRsltId() {
-      return pubonlnRsltId;
-    }
+        public String getPubonlnRsltId() {
+            return pubonlnRsltId;
+        }
 
-    public void setPubonlnRsltId(String pubonlnRsltId) {
-      this.pubonlnRsltId = pubonlnRsltId;
-    }
+        public void setPubonlnRsltId(String pubonlnRsltId) {
+            this.pubonlnRsltId = pubonlnRsltId;
+        }
 
-    public String getShpId() {
-      return shpId;
-    }
+        public String getShpId() {
+            return shpId;
+        }
 
-    public void setShpId(String shpId) {
-      this.shpId = shpId;
-    }
+        public void setShpId(String shpId) {
+            this.shpId = shpId;
+        }
 
-    public String getDelventpCnfmShppTime() {
-      return delventpCnfmShppTime;
-    }
+        public String getDelventpCnfmShppTime() {
+            return delventpCnfmShppTime;
+        }
 
-    public void setDelventpCnfmShppTime(String delventpCnfmShppTime) {
-      this.delventpCnfmShppTime = delventpCnfmShppTime;
-    }
+        public void setDelventpCnfmShppTime(String delventpCnfmShppTime) {
+            this.delventpCnfmShppTime = delventpCnfmShppTime;
+        }
 
-    public String getDelventpCnfmShppStas() {
-      return delventpCnfmShppStas;
-    }
+        public String getDelventpCnfmShppStas() {
+            return delventpCnfmShppStas;
+        }
 
-    public void setDelventpCnfmShppStas(String delventpCnfmShppStas) {
-      this.delventpCnfmShppStas = delventpCnfmShppStas;
-    }
+        public void setDelventpCnfmShppStas(String delventpCnfmShppStas) {
+            this.delventpCnfmShppStas = delventpCnfmShppStas;
+        }
 
-    public BigDecimal getOrdSumamt() {
-      return ordSumamt;
-    }
+        public BigDecimal getOrdSumamt() {
+            return ordSumamt;
+        }
 
-    public void setOrdSumamt(BigDecimal ordSumamt) {
-      this.ordSumamt = ordSumamt;
-    }
+        public void setOrdSumamt(BigDecimal ordSumamt) {
+            this.ordSumamt = ordSumamt;
+        }
 
-    public String getInvoiceId() {
-      return invoiceId;
-    }
+        public String getInvoiceId() {
+            return invoiceId;
+        }
 
-    public void setInvoiceId(String invoiceId) {
-      this.invoiceId = invoiceId;
-    }
+        public void setInvoiceId(String invoiceId) {
+            this.invoiceId = invoiceId;
+        }
 
-    public String getMedinsCode() {
-      return medinsCode;
-    }
+        public String getMedinsCode() {
+            return medinsCode;
+        }
 
-    public void setMedinsCode(String medinsCode) {
-      this.medinsCode = medinsCode;
-    }
+        public void setMedinsCode(String medinsCode) {
+            this.medinsCode = medinsCode;
+        }
 
-    public String getAdmorgName() {
-      return admorgName;
-    }
+        public String getAdmorgName() {
+            return admorgName;
+        }
 
-    public void setAdmorgName(String admorgName) {
-      this.admorgName = admorgName;
-    }
+        public void setAdmorgName(String admorgName) {
+            this.admorgName = admorgName;
+        }
 
-    public BigDecimal getPurcpric() {
-      return purcpric;
-    }
+        public BigDecimal getPurcpric() {
+            return purcpric;
+        }
 
-    public void setPurcpric(BigDecimal purcpric) {
-      this.purcpric = purcpric;
+        public void setPurcpric(BigDecimal purcpric) {
+            this.purcpric = purcpric;
+        }
     }
-  }
 }

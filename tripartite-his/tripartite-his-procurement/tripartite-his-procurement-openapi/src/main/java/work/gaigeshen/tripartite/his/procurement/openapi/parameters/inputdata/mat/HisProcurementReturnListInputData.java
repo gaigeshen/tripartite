@@ -3,68 +3,67 @@ package work.gaigeshen.tripartite.his.procurement.openapi.parameters.inputdata.m
 import work.gaigeshen.tripartite.his.procurement.openapi.parameters.HisProcurementInputData;
 
 /**
- *
  * @author gaigeshen
  */
 public class HisProcurementReturnListInputData implements HisProcurementInputData {
 
-  private String medinsCode;
+    private String medinsCode;
 
-  private String retnCode;
+    private String retnCode;
 
-  private String strUpTime;
+    private String strUpTime;
 
-  private String endUpTime;
+    private String endUpTime;
 
-  private Integer current;
+    private Integer current;
 
-  private Integer size;
+    private Integer size;
 
-  public String getMedinsCode() {
-    return medinsCode;
-  }
+    public String getMedinsCode() {
+        return medinsCode;
+    }
 
-  public void setMedinsCode(String medinsCode) {
-    this.medinsCode = medinsCode;
-  }
+    public void setMedinsCode(String medinsCode) {
+        this.medinsCode = medinsCode;
+    }
 
-  public String getRetnCode() {
-    return retnCode;
-  }
+    public String getRetnCode() {
+        return retnCode;
+    }
 
-  public void setRetnCode(String retnCode) {
-    this.retnCode = retnCode;
-  }
+    public void setRetnCode(String retnCode) {
+        this.retnCode = retnCode;
+    }
 
-  public String getStrUpTime() {
-    return strUpTime;
-  }
+    public String getStrUpTime() {
+        return strUpTime;
+    }
 
-  public void setStrUpTime(String strUpTime) {
-    this.strUpTime = strUpTime;
-  }
+    public void setStrUpTime(String strUpTime) {
+        this.strUpTime = strUpTime;
+    }
 
-  public String getEndUpTime() {
-    return endUpTime;
-  }
+    public String getEndUpTime() {
+        return endUpTime;
+    }
 
-  public void setEndUpTime(String endUpTime) {
-    this.endUpTime = endUpTime;
-  }
+    public void setEndUpTime(String endUpTime) {
+        this.endUpTime = endUpTime;
+    }
 
-  public Integer getCurrent() {
-    return current;
-  }
+    public Integer getCurrent() {
+        return current;
+    }
 
-  public void setCurrent(Integer current) {
-    this.current = current;
-  }
+    public void setCurrent(Integer current) {
+        this.current = current;
+    }
 
-  public Integer getSize() {
-    return size;
-  }
+    public Integer getSize() {
+        return size;
+    }
 
-  public void setSize(Integer size) {
-    this.size = size;
-  }
+    public void setSize(Integer size) {
+        this.size = size;
+    }
 }

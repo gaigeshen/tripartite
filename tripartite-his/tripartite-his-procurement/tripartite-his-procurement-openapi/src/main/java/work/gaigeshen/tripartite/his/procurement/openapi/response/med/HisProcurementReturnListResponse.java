@@ -9,47 +9,47 @@ import java.util.Collection;
  */
 public class HisProcurementReturnListResponse extends AbstractHisProcurementResponse {
 
-  private Integer currentPageNumber;
+    private Integer currentPageNumber;
 
-  private Integer totalPageCount;
+    private Integer totalPageCount;
 
-  private Integer totalRecordCount;
+    private Integer totalRecordCount;
 
-  private Collection<ListItem> dataList;
+    private Collection<ListItem> dataList;
 
-  public Integer getCurrentPageNumber() {
-    return currentPageNumber;
-  }
+    public Integer getCurrentPageNumber() {
+        return currentPageNumber;
+    }
 
-  public void setCurrentPageNumber(Integer currentPageNumber) {
-    this.currentPageNumber = currentPageNumber;
-  }
+    public void setCurrentPageNumber(Integer currentPageNumber) {
+        this.currentPageNumber = currentPageNumber;
+    }
 
-  public Integer getTotalPageCount() {
-    return totalPageCount;
-  }
+    public Integer getTotalPageCount() {
+        return totalPageCount;
+    }
 
-  public void setTotalPageCount(Integer totalPageCount) {
-    this.totalPageCount = totalPageCount;
-  }
+    public void setTotalPageCount(Integer totalPageCount) {
+        this.totalPageCount = totalPageCount;
+    }
 
-  public Integer getTotalRecordCount() {
-    return totalRecordCount;
-  }
+    public Integer getTotalRecordCount() {
+        return totalRecordCount;
+    }
 
-  public void setTotalRecordCount(Integer totalRecordCount) {
-    this.totalRecordCount = totalRecordCount;
-  }
+    public void setTotalRecordCount(Integer totalRecordCount) {
+        this.totalRecordCount = totalRecordCount;
+    }
 
-  public Collection<ListItem> getDataList() {
-    return dataList;
-  }
+    public Collection<ListItem> getDataList() {
+        return dataList;
+    }
 
-  public void setDataList(Collection<ListItem> dataList) {
-    this.dataList = dataList;
-  }
+    public void setDataList(Collection<ListItem> dataList) {
+        this.dataList = dataList;
+    }
 
-  public static class ListItem {
+    public static class ListItem {
 
-  }
+    }
 }

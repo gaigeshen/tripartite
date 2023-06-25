@@ -7,11 +7,11 @@ import work.gaigeshen.tripartite.his.procurement.openapi.HisProcurementClientExc
  */
 public class HisProcurementAccessTokenException extends HisProcurementClientException {
 
-  public HisProcurementAccessTokenException(String message) {
-    super(message);
-  }
+    public HisProcurementAccessTokenException(String message) {
+        super(message);
+    }
 
-  public HisProcurementAccessTokenException(String message, Throwable cause) {
-    super(message, cause);
-  }
+    public HisProcurementAccessTokenException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }

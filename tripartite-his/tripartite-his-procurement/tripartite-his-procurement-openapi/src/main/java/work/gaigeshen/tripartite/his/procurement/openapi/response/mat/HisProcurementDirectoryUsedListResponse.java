@@ -10,256 +10,256 @@ import java.util.Collection;
  */
 public class HisProcurementDirectoryUsedListResponse extends AbstractHisProcurementResponse {
 
-  private Collection<ListItem> dataList;
+    private Collection<ListItem> dataList;
 
-  private Integer currentPageNumber;
+    private Integer currentPageNumber;
 
-  private Integer totalPageCount;
+    private Integer totalPageCount;
 
-  private Integer totalRecordCount;
+    private Integer totalRecordCount;
 
-  public Collection<ListItem> getDataList() {
-    return dataList;
-  }
-
-  public void setDataList(Collection<ListItem> dataList) {
-    this.dataList = dataList;
-  }
-
-  public Integer getCurrentPageNumber() {
-    return currentPageNumber;
-  }
-
-  public void setCurrentPageNumber(Integer currentPageNumber) {
-    this.currentPageNumber = currentPageNumber;
-  }
-
-  public Integer getTotalPageCount() {
-    return totalPageCount;
-  }
-
-  public void setTotalPageCount(Integer totalPageCount) {
-    this.totalPageCount = totalPageCount;
-  }
-
-  public Integer getTotalRecordCount() {
-    return totalRecordCount;
-  }
-
-  public void setTotalRecordCount(Integer totalRecordCount) {
-    this.totalRecordCount = totalRecordCount;
-  }
-
-  public static class ListItem {
-
-    private String zclassName;
-
-    private String mcsCode;
-
-    private String mcsRegno;
-
-    private String regcert;
-
-    private String minpacuntName;
-
-    private String mcsMol;
-
-    private String prxyEntpCode;
-
-    private String prxyEntpName;
-
-    private String mcsSpec;
-
-    private String hospListId;
-
-    private BigDecimal hospPurcPric;
-
-    private String prodentpCode;
-
-    private String prodentpName;
-
-    private String delventpName;
-
-    private String mcsInfoId;
-
-    private String pubonlnRsltId;
-
-    private String secondDirectory;
-
-    private String primDirectory;
-
-    private String prodName;
-
-    private BigDecimal pubonlnPric;
-
-    private String delventpCode;
-
-    public String getZclassName() {
-      return zclassName;
+    public Collection<ListItem> getDataList() {
+        return dataList;
     }
 
-    public void setZclassName(String zclassName) {
-      this.zclassName = zclassName;
+    public void setDataList(Collection<ListItem> dataList) {
+        this.dataList = dataList;
     }
 
-    public String getMcsCode() {
-      return mcsCode;
+    public Integer getCurrentPageNumber() {
+        return currentPageNumber;
     }
 
-    public void setMcsCode(String mcsCode) {
-      this.mcsCode = mcsCode;
+    public void setCurrentPageNumber(Integer currentPageNumber) {
+        this.currentPageNumber = currentPageNumber;
     }
 
-    public String getMcsRegno() {
-      return mcsRegno;
+    public Integer getTotalPageCount() {
+        return totalPageCount;
     }
 
-    public void setMcsRegno(String mcsRegno) {
-      this.mcsRegno = mcsRegno;
+    public void setTotalPageCount(Integer totalPageCount) {
+        this.totalPageCount = totalPageCount;
     }
 
-    public String getRegcert() {
-      return regcert;
+    public Integer getTotalRecordCount() {
+        return totalRecordCount;
     }
 
-    public void setRegcert(String regcert) {
-      this.regcert = regcert;
+    public void setTotalRecordCount(Integer totalRecordCount) {
+        this.totalRecordCount = totalRecordCount;
     }
 
-    public String getMinpacuntName() {
-      return minpacuntName;
-    }
+    public static class ListItem {
 
-    public void setMinpacuntName(String minpacuntName) {
-      this.minpacuntName = minpacuntName;
-    }
+        private String zclassName;
 
-    public String getMcsMol() {
-      return mcsMol;
-    }
+        private String mcsCode;
 
-    public void setMcsMol(String mcsMol) {
-      this.mcsMol = mcsMol;
-    }
+        private String mcsRegno;
 
-    public String getPrxyEntpCode() {
-      return prxyEntpCode;
-    }
+        private String regcert;
 
-    public void setPrxyEntpCode(String prxyEntpCode) {
-      this.prxyEntpCode = prxyEntpCode;
-    }
+        private String minpacuntName;
 
-    public String getPrxyEntpName() {
-      return prxyEntpName;
-    }
+        private String mcsMol;
 
-    public void setPrxyEntpName(String prxyEntpName) {
-      this.prxyEntpName = prxyEntpName;
-    }
+        private String prxyEntpCode;
 
-    public String getMcsSpec() {
-      return mcsSpec;
-    }
+        private String prxyEntpName;
 
-    public void setMcsSpec(String mcsSpec) {
-      this.mcsSpec = mcsSpec;
-    }
+        private String mcsSpec;
 
-    public String getHospListId() {
-      return hospListId;
-    }
+        private String hospListId;
 
-    public void setHospListId(String hospListId) {
-      this.hospListId = hospListId;
-    }
+        private BigDecimal hospPurcPric;
 
-    public BigDecimal getHospPurcPric() {
-      return hospPurcPric;
-    }
+        private String prodentpCode;
 
-    public void setHospPurcPric(BigDecimal hospPurcPric) {
-      this.hospPurcPric = hospPurcPric;
-    }
+        private String prodentpName;
 
-    public String getProdentpCode() {
-      return prodentpCode;
-    }
+        private String delventpName;
 
-    public void setProdentpCode(String prodentpCode) {
-      this.prodentpCode = prodentpCode;
-    }
+        private String mcsInfoId;
 
-    public String getProdentpName() {
-      return prodentpName;
-    }
+        private String pubonlnRsltId;
 
-    public void setProdentpName(String prodentpName) {
-      this.prodentpName = prodentpName;
-    }
+        private String secondDirectory;
 
-    public String getDelventpName() {
-      return delventpName;
-    }
+        private String primDirectory;
 
-    public void setDelventpName(String delventpName) {
-      this.delventpName = delventpName;
-    }
+        private String prodName;
 
-    public String getMcsInfoId() {
-      return mcsInfoId;
-    }
+        private BigDecimal pubonlnPric;
 
-    public void setMcsInfoId(String mcsInfoId) {
-      this.mcsInfoId = mcsInfoId;
-    }
+        private String delventpCode;
 
-    public String getPubonlnRsltId() {
-      return pubonlnRsltId;
-    }
+        public String getZclassName() {
+            return zclassName;
+        }
 
-    public void setPubonlnRsltId(String pubonlnRsltId) {
-      this.pubonlnRsltId = pubonlnRsltId;
-    }
+        public void setZclassName(String zclassName) {
+            this.zclassName = zclassName;
+        }
 
-    public String getSecondDirectory() {
-      return secondDirectory;
-    }
+        public String getMcsCode() {
+            return mcsCode;
+        }
 
-    public void setSecondDirectory(String secondDirectory) {
-      this.secondDirectory = secondDirectory;
-    }
+        public void setMcsCode(String mcsCode) {
+            this.mcsCode = mcsCode;
+        }
 
-    public String getPrimDirectory() {
-      return primDirectory;
-    }
+        public String getMcsRegno() {
+            return mcsRegno;
+        }
 
-    public void setPrimDirectory(String primDirectory) {
-      this.primDirectory = primDirectory;
-    }
+        public void setMcsRegno(String mcsRegno) {
+            this.mcsRegno = mcsRegno;
+        }
 
-    public String getProdName() {
-      return prodName;
-    }
+        public String getRegcert() {
+            return regcert;
+        }
 
-    public void setProdName(String prodName) {
-      this.prodName = prodName;
-    }
+        public void setRegcert(String regcert) {
+            this.regcert = regcert;
+        }
 
-    public BigDecimal getPubonlnPric() {
-      return pubonlnPric;
-    }
+        public String getMinpacuntName() {
+            return minpacuntName;
+        }
 
-    public void setPubonlnPric(BigDecimal pubonlnPric) {
-      this.pubonlnPric = pubonlnPric;
-    }
+        public void setMinpacuntName(String minpacuntName) {
+            this.minpacuntName = minpacuntName;
+        }
 
-    public String getDelventpCode() {
-      return delventpCode;
-    }
+        public String getMcsMol() {
+            return mcsMol;
+        }
 
-    public void setDelventpCode(String delventpCode) {
-      this.delventpCode = delventpCode;
+        public void setMcsMol(String mcsMol) {
+            this.mcsMol = mcsMol;
+        }
+
+        public String getPrxyEntpCode() {
+            return prxyEntpCode;
+        }
+
+        public void setPrxyEntpCode(String prxyEntpCode) {
+            this.prxyEntpCode = prxyEntpCode;
+        }
+
+        public String getPrxyEntpName() {
+            return prxyEntpName;
+        }
+
+        public void setPrxyEntpName(String prxyEntpName) {
+            this.prxyEntpName = prxyEntpName;
+        }
+
+        public String getMcsSpec() {
+            return mcsSpec;
+        }
+
+        public void setMcsSpec(String mcsSpec) {
+            this.mcsSpec = mcsSpec;
+        }
+
+        public String getHospListId() {
+            return hospListId;
+        }
+
+        public void setHospListId(String hospListId) {
+            this.hospListId = hospListId;
+        }
+
+        public BigDecimal getHospPurcPric() {
+            return hospPurcPric;
+        }
+
+        public void setHospPurcPric(BigDecimal hospPurcPric) {
+            this.hospPurcPric = hospPurcPric;
+        }
+
+        public String getProdentpCode() {
+            return prodentpCode;
+        }
+
+        public void setProdentpCode(String prodentpCode) {
+            this.prodentpCode = prodentpCode;
+        }
+
+        public String getProdentpName() {
+            return prodentpName;
+        }
+
+        public void setProdentpName(String prodentpName) {
+            this.prodentpName = prodentpName;
+        }
+
+        public String getDelventpName() {
+            return delventpName;
+        }
+
+        public void setDelventpName(String delventpName) {
+            this.delventpName = delventpName;
+        }
+
+        public String getMcsInfoId() {
+            return mcsInfoId;
+        }
+
+        public void setMcsInfoId(String mcsInfoId) {
+            this.mcsInfoId = mcsInfoId;
+        }
+
+        public String getPubonlnRsltId() {
+            return pubonlnRsltId;
+        }
+
+        public void setPubonlnRsltId(String pubonlnRsltId) {
+            this.pubonlnRsltId = pubonlnRsltId;
+        }
+
+        public String getSecondDirectory() {
+            return secondDirectory;
+        }
+
+        public void setSecondDirectory(String secondDirectory) {
+            this.secondDirectory = secondDirectory;
+        }
+
+        public String getPrimDirectory() {
+            return primDirectory;
+        }
+
+        public void setPrimDirectory(String primDirectory) {
+            this.primDirectory = primDirectory;
+        }
+
+        public String getProdName() {
+            return prodName;
+        }
+
+        public void setProdName(String prodName) {
+            this.prodName = prodName;
+        }
+
+        public BigDecimal getPubonlnPric() {
+            return pubonlnPric;
+        }
+
+        public void setPubonlnPric(BigDecimal pubonlnPric) {
+            this.pubonlnPric = pubonlnPric;
+        }
+
+        public String getDelventpCode() {
+            return delventpCode;
+        }
+
+        public void setDelventpCode(String delventpCode) {
+            this.delventpCode = delventpCode;
+        }
     }
-  }
 }

@@ -14,34 +14,34 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class DefaultHisProcurementAccessTokenStore implements HisProcurementAccessTokenStore {
 
-  private final Map<HisProcurementConfig, HisProcurementAccessToken> internalStore = new ConcurrentHashMap<>();
+    private final Map<HisProcurementConfig, HisProcurementAccessToken> internalStore = new ConcurrentHashMap<>();
 
-  @Override
-  public boolean save(HisProcurementConfig config, HisProcurementAccessToken accessToken) throws HisProcurementAccessTokenStoreException {
-    if (Objects.isNull(accessToken)) {
-      throw new IllegalArgumentException("accessToken cannot be null");
+    @Override
+    public boolean save(HisProcurementConfig config, HisProcurementAccessToken accessToken) throws HisProcurementAccessTokenStoreException {
+        if (Objects.isNull(accessToken)) {
+            throw new IllegalArgumentException("accessToken cannot be null");
+        }
+        return Objects.isNull(internalStore.put(config, accessToken));
     }
-    return Objects.isNull(internalStore.put(config, accessToken));
-  }
 
-  @Override
-  public void delete(HisProcurementConfig config) throws HisProcurementAccessTokenStoreException {
-    if (Objects.isNull(config)) {
-      throw new IllegalArgumentException("config cannot be null");
+    @Override
+    public void delete(HisProcurementConfig config) throws HisProcurementAccessTokenStoreException {
+        if (Objects.isNull(config)) {
+            throw new IllegalArgumentException("config cannot be null");
+        }
+        internalStore.remove(config);
     }
-    internalStore.remove(config);
-  }
 
-  @Override
-  public HisProcurementAccessToken find(HisProcurementConfig config) throws HisProcurementAccessTokenStoreException {
-    if (Objects.isNull(config)) {
-      throw new IllegalArgumentException("config cannot be null");
+    @Override
+    public HisProcurementAccessToken find(HisProcurementConfig config) throws HisProcurementAccessTokenStoreException {
+        if (Objects.isNull(config)) {
+            throw new IllegalArgumentException("config cannot be null");
+        }
+        return internalStore.get(config);
     }
-    return internalStore.get(config);
-  }
 
-  @Override
-  public Map<HisProcurementConfig, HisProcurementAccessToken> findAll() throws HisProcurementAccessTokenStoreException {
-    return new HashMap<>(internalStore);
-  }
+    @Override
+    public Map<HisProcurementConfig, HisProcurementAccessToken> findAll() throws HisProcurementAccessTokenStoreException {
+        return new HashMap<>(internalStore);
+    }
 }

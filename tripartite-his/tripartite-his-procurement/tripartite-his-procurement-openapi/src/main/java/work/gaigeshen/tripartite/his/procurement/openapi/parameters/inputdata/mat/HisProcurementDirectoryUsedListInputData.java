@@ -3,48 +3,47 @@ package work.gaigeshen.tripartite.his.procurement.openapi.parameters.inputdata.m
 import work.gaigeshen.tripartite.his.procurement.openapi.parameters.HisProcurementInputData;
 
 /**
- *
  * @author gaigeshen
  */
 public class HisProcurementDirectoryUsedListInputData implements HisProcurementInputData {
 
-  private String mcsCode;
+    private String mcsCode;
 
-  private String hospListId;
+    private String hospListId;
 
-  private Integer current;
+    private Integer current;
 
-  private Integer size;
+    private Integer size;
 
-  public String getMcsCode() {
-    return mcsCode;
-  }
+    public String getMcsCode() {
+        return mcsCode;
+    }
 
-  public void setMcsCode(String mcsCode) {
-    this.mcsCode = mcsCode;
-  }
+    public void setMcsCode(String mcsCode) {
+        this.mcsCode = mcsCode;
+    }
 
-  public String getHospListId() {
-    return hospListId;
-  }
+    public String getHospListId() {
+        return hospListId;
+    }
 
-  public void setHospListId(String hospListId) {
-    this.hospListId = hospListId;
-  }
+    public void setHospListId(String hospListId) {
+        this.hospListId = hospListId;
+    }
 
-  public Integer getCurrent() {
-    return current;
-  }
+    public Integer getCurrent() {
+        return current;
+    }
 
-  public void setCurrent(Integer current) {
-    this.current = current;
-  }
+    public void setCurrent(Integer current) {
+        this.current = current;
+    }
 
-  public Integer getSize() {
-    return size;
-  }
+    public Integer getSize() {
+        return size;
+    }
 
-  public void setSize(Integer size) {
-    this.size = size;
-  }
+    public void setSize(Integer size) {
+        this.size = size;
+    }
 }

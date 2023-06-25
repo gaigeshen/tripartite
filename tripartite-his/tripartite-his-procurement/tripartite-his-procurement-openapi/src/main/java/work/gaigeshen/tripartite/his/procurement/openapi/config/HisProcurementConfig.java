@@ -1,11 +1,13 @@
 package work.gaigeshen.tripartite.his.procurement.openapi.config;
 
+import work.gaigeshen.tripartite.core.client.config.Config;
+
 import java.util.Objects;
 
 /**
  * @author gaigeshen
  */
-public class HisProcurementConfig {
+public class HisProcurementConfig implements Config {
 
     public static final String CONFIG_TYPE_MAT = "mat";
 

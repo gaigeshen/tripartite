@@ -7,13 +7,13 @@ import work.gaigeshen.tripartite.his.procurement.openapi.response.AbstractHisPro
  */
 public class HisProcurementPurchaseOrderCancelResponse extends AbstractHisProcurementResponse {
 
-  private String PurcCode;
+    private String PurcCode;
 
-  public String getPurcCode() {
-    return PurcCode;
-  }
+    public String getPurcCode() {
+        return PurcCode;
+    }
 
-  public void setPurcCode(String purcCode) {
-    PurcCode = purcCode;
-  }
+    public void setPurcCode(String purcCode) {
+        PurcCode = purcCode;
+    }
 }

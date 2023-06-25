@@ -8,47 +8,45 @@ import work.gaigeshen.tripartite.his.procurement.openapi.response.HisProcurement
 import java.util.Objects;
 
 /**
- *
  * @author gaigeshen
  */
 public class DefaultHisProcurementAccessTokenRefresher implements HisProcurementAccessTokenRefresher {
 
-  private final HisProcurementClientSelector hisProcurementClientSelector;
+    private final HisProcurementClientSelector hisProcurementClientSelector;
 
-  public DefaultHisProcurementAccessTokenRefresher(HisProcurementClientSelector hisProcurementClientSelector) {
-    if (Objects.isNull(hisProcurementClientSelector)) {
-      throw new IllegalArgumentException("hisProcurementClientSelector cannot be null");
+    public DefaultHisProcurementAccessTokenRefresher(HisProcurementClientSelector hisProcurementClientSelector) {
+        if (Objects.isNull(hisProcurementClientSelector)) {
+            throw new IllegalArgumentException("hisProcurementClientSelector cannot be null");
+        }
+        this.hisProcurementClientSelector = hisProcurementClientSelector;
     }
-    this.hisProcurementClientSelector = hisProcurementClientSelector;
-  }
 
-  @Override
-  public HisProcurementAccessToken refresh(HisProcurementConfig config, HisProcurementAccessToken oldAccessToken)
-          throws HisProcurementAccessTokenRefreshException {
-    HisProcurementBasicClient client;
-    try {
-      client = hisProcurementClientSelector.select(config, oldAccessToken);
-    } catch (Exception e) {
-      throw new HisProcurementAccessTokenRefreshException("could not find his procurement client: " + oldAccessToken);
+    @Override
+    public HisProcurementAccessToken refresh(HisProcurementConfig config, HisProcurementAccessToken oldAccessToken)
+            throws HisProcurementAccessTokenRefreshException {
+        HisProcurementBasicClient client;
+        try {
+            client = hisProcurementClientSelector.select(config, oldAccessToken);
+        } catch (Exception e) {
+            throw new HisProcurementAccessTokenRefreshException("could not find his procurement client: " + oldAccessToken);
+        }
+        HisProcurementAccessTokenParameters parameters = new HisProcurementAccessTokenParameters(
+                config.getAppCode(), config.getAuthCode());
+        HisProcurementAccessTokenResponse response;
+        try {
+            response = client.execute(parameters, HisProcurementAccessTokenResponse.class, config.getAccessTokenUri());
+        } catch (Exception e) {
+            throw new HisProcurementAccessTokenRefreshException("could not refresh access token", e)
+                    .setCurrentAccessToken(oldAccessToken).setCanRetry(true);
+        }
+        return HisProcurementAccessTokenHelper.createAccessToken(config, response.getAccessToken());
     }
-    HisProcurementAccessTokenParameters parameters = new HisProcurementAccessTokenParameters(
-            config.getAppCode(), config.getAuthCode());
-    HisProcurementAccessTokenResponse response;
-    try {
-      response = client.execute(parameters, HisProcurementAccessTokenResponse.class, config.getAccessTokenUri());
-    } catch (Exception e) {
-      throw new HisProcurementAccessTokenRefreshException("could not refresh access token", e)
-              .setCurrentAccessToken(oldAccessToken).setCanRetry(true);
-    }
-    return HisProcurementAccessTokenHelper.createAccessToken(config, response.getAccessToken());
-  }
 
-  /**
-   *
-   * @author gaigeshen
-   */
-  @FunctionalInterface
-  public interface HisProcurementClientSelector {
-    HisProcurementBasicClient select(HisProcurementConfig config, HisProcurementAccessToken oldAccessToken);
-  }
+    /**
+     * @author gaigeshen
+     */
+    @FunctionalInterface
+    public interface HisProcurementClientSelector {
+        HisProcurementBasicClient select(HisProcurementConfig config, HisProcurementAccessToken oldAccessToken);
+    }
 }

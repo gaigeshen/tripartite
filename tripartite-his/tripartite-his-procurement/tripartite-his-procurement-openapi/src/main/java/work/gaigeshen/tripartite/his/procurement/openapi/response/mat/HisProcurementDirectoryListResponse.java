@@ -10,256 +10,256 @@ import java.util.Collection;
  */
 public class HisProcurementDirectoryListResponse extends AbstractHisProcurementResponse {
 
-  private Collection<ListItem> dataList;
+    private Collection<ListItem> dataList;
 
-  private Integer currentPageNumber;
+    private Integer currentPageNumber;
 
-  private Integer totalPageCount;
+    private Integer totalPageCount;
 
-  private Integer totalRecordCount;
+    private Integer totalRecordCount;
 
-  public Collection<ListItem> getDataList() {
-    return dataList;
-  }
-
-  public void setDataList(Collection<ListItem> dataList) {
-    this.dataList = dataList;
-  }
-
-  public Integer getCurrentPageNumber() {
-    return currentPageNumber;
-  }
-
-  public void setCurrentPageNumber(Integer currentPageNumber) {
-    this.currentPageNumber = currentPageNumber;
-  }
-
-  public Integer getTotalPageCount() {
-    return totalPageCount;
-  }
-
-  public void setTotalPageCount(Integer totalPageCount) {
-    this.totalPageCount = totalPageCount;
-  }
-
-  public Integer getTotalRecordCount() {
-    return totalRecordCount;
-  }
-
-  public void setTotalRecordCount(Integer totalRecordCount) {
-    this.totalRecordCount = totalRecordCount;
-  }
-
-  public static class ListItem {
-
-    private String mcsCode;
-
-    private String prodName;
-
-    private String mcsRegno;
-
-    private String mcsRegcertName;
-
-    private String prodSpec;
-
-    private String mcsMol;
-
-    private String zclassCode;
-
-    private String zclassName;
-
-    private String primDirectory;
-
-    private String secondDirectory;
-
-    private String prodentpCode;
-
-    private String prxyEntpCode;
-
-    private String prodentpName;
-
-    private BigDecimal pubonlnPric;
-
-    private String mcsType;
-
-    private String origin;
-
-    private String unt;
-
-    private String pubonlnType;
-
-    private String tenditmId;
-
-    private String tenditmName;
-
-    private String mcsInfoId;
-
-    public String getMcsCode() {
-      return mcsCode;
+    public Collection<ListItem> getDataList() {
+        return dataList;
     }
 
-    public void setMcsCode(String mcsCode) {
-      this.mcsCode = mcsCode;
+    public void setDataList(Collection<ListItem> dataList) {
+        this.dataList = dataList;
     }
 
-    public String getProdName() {
-      return prodName;
+    public Integer getCurrentPageNumber() {
+        return currentPageNumber;
     }
 
-    public void setProdName(String prodName) {
-      this.prodName = prodName;
+    public void setCurrentPageNumber(Integer currentPageNumber) {
+        this.currentPageNumber = currentPageNumber;
     }
 
-    public String getMcsRegno() {
-      return mcsRegno;
+    public Integer getTotalPageCount() {
+        return totalPageCount;
     }
 
-    public void setMcsRegno(String mcsRegno) {
-      this.mcsRegno = mcsRegno;
+    public void setTotalPageCount(Integer totalPageCount) {
+        this.totalPageCount = totalPageCount;
     }
 
-    public String getMcsRegcertName() {
-      return mcsRegcertName;
+    public Integer getTotalRecordCount() {
+        return totalRecordCount;
     }
 
-    public void setMcsRegcertName(String mcsRegcertName) {
-      this.mcsRegcertName = mcsRegcertName;
+    public void setTotalRecordCount(Integer totalRecordCount) {
+        this.totalRecordCount = totalRecordCount;
     }
 
-    public String getProdSpec() {
-      return prodSpec;
-    }
+    public static class ListItem {
 
-    public void setProdSpec(String prodSpec) {
-      this.prodSpec = prodSpec;
-    }
+        private String mcsCode;
 
-    public String getMcsMol() {
-      return mcsMol;
-    }
+        private String prodName;
 
-    public void setMcsMol(String mcsMol) {
-      this.mcsMol = mcsMol;
-    }
+        private String mcsRegno;
 
-    public String getZclassCode() {
-      return zclassCode;
-    }
+        private String mcsRegcertName;
 
-    public void setZclassCode(String zclassCode) {
-      this.zclassCode = zclassCode;
-    }
+        private String prodSpec;
 
-    public String getZclassName() {
-      return zclassName;
-    }
+        private String mcsMol;
 
-    public void setZclassName(String zclassName) {
-      this.zclassName = zclassName;
-    }
+        private String zclassCode;
 
-    public String getPrimDirectory() {
-      return primDirectory;
-    }
+        private String zclassName;
 
-    public void setPrimDirectory(String primDirectory) {
-      this.primDirectory = primDirectory;
-    }
+        private String primDirectory;
 
-    public String getSecondDirectory() {
-      return secondDirectory;
-    }
+        private String secondDirectory;
 
-    public void setSecondDirectory(String secondDirectory) {
-      this.secondDirectory = secondDirectory;
-    }
+        private String prodentpCode;
 
-    public String getProdentpCode() {
-      return prodentpCode;
-    }
+        private String prxyEntpCode;
 
-    public void setProdentpCode(String prodentpCode) {
-      this.prodentpCode = prodentpCode;
-    }
+        private String prodentpName;
 
-    public String getPrxyEntpCode() {
-      return prxyEntpCode;
-    }
+        private BigDecimal pubonlnPric;
 
-    public void setPrxyEntpCode(String prxyEntpCode) {
-      this.prxyEntpCode = prxyEntpCode;
-    }
+        private String mcsType;
 
-    public String getProdentpName() {
-      return prodentpName;
-    }
+        private String origin;
 
-    public void setProdentpName(String prodentpName) {
-      this.prodentpName = prodentpName;
-    }
+        private String unt;
 
-    public BigDecimal getPubonlnPric() {
-      return pubonlnPric;
-    }
+        private String pubonlnType;
 
-    public void setPubonlnPric(BigDecimal pubonlnPric) {
-      this.pubonlnPric = pubonlnPric;
-    }
+        private String tenditmId;
 
-    public String getMcsType() {
-      return mcsType;
-    }
+        private String tenditmName;
 
-    public void setMcsType(String mcsType) {
-      this.mcsType = mcsType;
-    }
+        private String mcsInfoId;
 
-    public String getOrigin() {
-      return origin;
-    }
+        public String getMcsCode() {
+            return mcsCode;
+        }
 
-    public void setOrigin(String origin) {
-      this.origin = origin;
-    }
+        public void setMcsCode(String mcsCode) {
+            this.mcsCode = mcsCode;
+        }
 
-    public String getUnt() {
-      return unt;
-    }
+        public String getProdName() {
+            return prodName;
+        }
 
-    public void setUnt(String unt) {
-      this.unt = unt;
-    }
+        public void setProdName(String prodName) {
+            this.prodName = prodName;
+        }
 
-    public String getPubonlnType() {
-      return pubonlnType;
-    }
+        public String getMcsRegno() {
+            return mcsRegno;
+        }
 
-    public void setPubonlnType(String pubonlnType) {
-      this.pubonlnType = pubonlnType;
-    }
+        public void setMcsRegno(String mcsRegno) {
+            this.mcsRegno = mcsRegno;
+        }
 
-    public String getTenditmId() {
-      return tenditmId;
-    }
+        public String getMcsRegcertName() {
+            return mcsRegcertName;
+        }
 
-    public void setTenditmId(String tenditmId) {
-      this.tenditmId = tenditmId;
-    }
+        public void setMcsRegcertName(String mcsRegcertName) {
+            this.mcsRegcertName = mcsRegcertName;
+        }
 
-    public String getTenditmName() {
-      return tenditmName;
-    }
+        public String getProdSpec() {
+            return prodSpec;
+        }
 
-    public void setTenditmName(String tenditmName) {
-      this.tenditmName = tenditmName;
-    }
+        public void setProdSpec(String prodSpec) {
+            this.prodSpec = prodSpec;
+        }
 
-    public String getMcsInfoId() {
-      return mcsInfoId;
-    }
+        public String getMcsMol() {
+            return mcsMol;
+        }
 
-    public void setMcsInfoId(String mcsInfoId) {
-      this.mcsInfoId = mcsInfoId;
+        public void setMcsMol(String mcsMol) {
+            this.mcsMol = mcsMol;
+        }
+
+        public String getZclassCode() {
+            return zclassCode;
+        }
+
+        public void setZclassCode(String zclassCode) {
+            this.zclassCode = zclassCode;
+        }
+
+        public String getZclassName() {
+            return zclassName;
+        }
+
+        public void setZclassName(String zclassName) {
+            this.zclassName = zclassName;
+        }
+
+        public String getPrimDirectory() {
+            return primDirectory;
+        }
+
+        public void setPrimDirectory(String primDirectory) {
+            this.primDirectory = primDirectory;
+        }
+
+        public String getSecondDirectory() {
+            return secondDirectory;
+        }
+
+        public void setSecondDirectory(String secondDirectory) {
+            this.secondDirectory = secondDirectory;
+        }
+
+        public String getProdentpCode() {
+            return prodentpCode;
+        }
+
+        public void setProdentpCode(String prodentpCode) {
+            this.prodentpCode = prodentpCode;
+        }
+
+        public String getPrxyEntpCode() {
+            return prxyEntpCode;
+        }
+
+        public void setPrxyEntpCode(String prxyEntpCode) {
+            this.prxyEntpCode = prxyEntpCode;
+        }
+
+        public String getProdentpName() {
+            return prodentpName;
+        }
+
+        public void setProdentpName(String prodentpName) {
+            this.prodentpName = prodentpName;
+        }
+
+        public BigDecimal getPubonlnPric() {
+            return pubonlnPric;
+        }
+
+        public void setPubonlnPric(BigDecimal pubonlnPric) {
+            this.pubonlnPric = pubonlnPric;
+        }
+
+        public String getMcsType() {
+            return mcsType;
+        }
+
+        public void setMcsType(String mcsType) {
+            this.mcsType = mcsType;
+        }
+
+        public String getOrigin() {
+            return origin;
+        }
+
+        public void setOrigin(String origin) {
+            this.origin = origin;
+        }
+
+        public String getUnt() {
+            return unt;
+        }
+
+        public void setUnt(String unt) {
+            this.unt = unt;
+        }
+
+        public String getPubonlnType() {
+            return pubonlnType;
+        }
+
+        public void setPubonlnType(String pubonlnType) {
+            this.pubonlnType = pubonlnType;
+        }
+
+        public String getTenditmId() {
+            return tenditmId;
+        }
+
+        public void setTenditmId(String tenditmId) {
+            this.tenditmId = tenditmId;
+        }
+
+        public String getTenditmName() {
+            return tenditmName;
+        }
+
+        public void setTenditmName(String tenditmName) {
+            this.tenditmName = tenditmName;
+        }
+
+        public String getMcsInfoId() {
+            return mcsInfoId;
+        }
+
+        public void setMcsInfoId(String mcsInfoId) {
+            this.mcsInfoId = mcsInfoId;
+        }
     }
-  }
 }

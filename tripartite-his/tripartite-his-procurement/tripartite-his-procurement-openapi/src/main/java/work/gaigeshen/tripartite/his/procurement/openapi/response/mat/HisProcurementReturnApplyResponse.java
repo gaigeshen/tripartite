@@ -7,13 +7,13 @@ import work.gaigeshen.tripartite.his.procurement.openapi.response.AbstractHisPro
  */
 public class HisProcurementReturnApplyResponse extends AbstractHisProcurementResponse {
 
-  private String retnCode;
+    private String retnCode;
 
-  public String getRetnCode() {
-    return retnCode;
-  }
+    public String getRetnCode() {
+        return retnCode;
+    }
 
-  public void setRetnCode(String retnCode) {
-    this.retnCode = retnCode;
-  }
+    public void setRetnCode(String retnCode) {
+        this.retnCode = retnCode;
+    }
 }
