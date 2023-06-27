@@ -38,6 +38,8 @@ public class DefaultDingClient extends AbstractWebExecutorClient<DingConfig> imp
 
     private final AccessTokenManager<DingConfig> accessTokenManager;
 
+    private final RateLimiterService rateLimiterService;
+
     protected DefaultDingClient(DingConfig config, AccessTokenManager<DingConfig> accessTokenManager) {
         if (Objects.isNull(config)) {
             throw new IllegalArgumentException("config cannot be null");
@@ -47,6 +49,7 @@ public class DefaultDingClient extends AbstractWebExecutorClient<DingConfig> imp
         }
         this.config = config;
         this.accessTokenManager = accessTokenManager;
+        this.rateLimiterService = RateLimiterService.create(16);
     }
 
     /**
@@ -134,7 +137,7 @@ public class DefaultDingClient extends AbstractWebExecutorClient<DingConfig> imp
 
     @Override
     public RateLimiterService getRateLimiterService() {
-        return RateLimiterService.create(16);
+        return rateLimiterService;
     }
 
     @Override
