@@ -21,11 +21,14 @@ public class DefaultOpenAiClient extends AbstractWebExecutorClient<OpenAiConfig>
 
     private final OpenAiConfig openAiConfig;
 
+    private final RateLimiterService rateLimiterService;
+
     public DefaultOpenAiClient(OpenAiConfig openAiConfig) {
         if (Objects.isNull(openAiConfig)) {
             throw new IllegalArgumentException("openAiConfig cannot be null");
         }
         this.openAiConfig = openAiConfig;
+        this.rateLimiterService = RateLimiterService.create(1);
     }
 
     @Override
@@ -35,7 +38,7 @@ public class DefaultOpenAiClient extends AbstractWebExecutorClient<OpenAiConfig>
 
     @Override
     public RateLimiterService getRateLimiterService() {
-        return RateLimiterService.create(1);
+        return rateLimiterService;
     }
 
     @Override
