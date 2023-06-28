@@ -12,6 +12,7 @@ import work.gaigeshen.tripartite.ding.openapi.parameters.oapi.process.*;
 import work.gaigeshen.tripartite.ding.openapi.parameters.oapi.user.DingUserByCodeGetParameters;
 import work.gaigeshen.tripartite.ding.openapi.parameters.oapi.user.DingUserByDepartmentListParameters;
 import work.gaigeshen.tripartite.ding.openapi.parameters.oapi.user.DingUserByMobileGetParameters;
+import work.gaigeshen.tripartite.ding.openapi.parameters.oapi.user.DingUserByUserIdGetParameters;
 import work.gaigeshen.tripartite.ding.openapi.response.oapi.chat.DingChatCreateResponse;
 import work.gaigeshen.tripartite.ding.openapi.response.oapi.department.DingDepartmentListResponse;
 import work.gaigeshen.tripartite.ding.openapi.response.oapi.department.DingDepartmentParentByUserListResponse;
@@ -21,6 +22,7 @@ import work.gaigeshen.tripartite.ding.openapi.response.oapi.process.*;
 import work.gaigeshen.tripartite.ding.openapi.response.oapi.user.DingUserByCodeGetResponse;
 import work.gaigeshen.tripartite.ding.openapi.response.oapi.user.DingUserByDepartmentListResponse;
 import work.gaigeshen.tripartite.ding.openapi.response.oapi.user.DingUserByMobileGetResponse;
+import work.gaigeshen.tripartite.ding.openapi.response.oapi.user.DingUserByUserIdGetResponse;
 
 /**
  * 钉钉旧版接口客户端
@@ -51,6 +53,18 @@ public interface DingOapiClient extends Client<DingConfig> {
      */
     default DingUserByCodeGetResponse userGetByCode(DingUserByCodeGetParameters parameters) throws ClientException {
         return execute(parameters, DingUserByCodeGetResponse.class, "/topapi/v2/user/getuserinfo?access_token={access_token}", getAccessTokenValue());
+    }
+
+    /**
+     * 通过用户标识获取用户信息
+     *
+     * @param parameters 请求参数不能为空
+     * @return 响应结果不为空
+     * @throws ClientException 执行请求的时候发生异常
+     * @see <a href="https://open.dingtalk.com/document/orgapp/query-user-details">接口文档</a>
+     */
+    default DingUserByUserIdGetResponse userGetByUserId(DingUserByUserIdGetParameters parameters) throws ClientException {
+        return execute(parameters, DingUserByUserIdGetResponse.class, "/topapi/v2/user/get?access_token={access_token}", getAccessTokenValue());
     }
 
     /**
