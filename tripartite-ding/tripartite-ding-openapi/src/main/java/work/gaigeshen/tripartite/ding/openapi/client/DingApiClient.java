@@ -94,7 +94,7 @@ public interface DingApiClient extends Client<DingConfig> {
      * @param taskId 任务标识不能为空
      * @return 响应结果不为空
      * @throws ClientException 执行请求的时候发生异常
-     * @see <a href="https://open.dingtalk.com/document/orgapp/updates-dingtalk-to-do-tasks">接口文档</a>
+     * @see <a href="https://open.dingtalk.com/document/orgapp/update-dingtalk-to-do-status">接口文档</a>
      */
     default DingTaskExecutorStatusUpdateResponse taskUpdateExecutorStatus(DingTaskExecutorStatusUpdateParameters parameters, String unionId, String taskId) throws ClientException {
         return execute(parameters, DingTaskExecutorStatusUpdateResponse.class, "/v1.0/todo/users/{unionId}/tasks/{taskId}/executorStatus", unionId, taskId);
