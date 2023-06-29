@@ -139,15 +139,18 @@ public abstract class AbstractWebExecutorClient<C extends Config> implements Cli
     }
 
     /**
-     * 检查限流依赖此接口客户端的限流服务对象，如果没有设置则不会有限流，如果当前被限流则调用此方法会被阻塞
+     * 检查限流依赖此接口客户端的限流服务对象，如果没有设置则不会有限流，如果当前被限流则调用此方法会抛出异常
      *
      * @param serverUrl 限流针对不同的服务器访问地址
+     * @throws ClientException 被限流的情况会抛出此异常
      */
-    protected void checkRateLimit(String serverUrl) {
+    protected void checkRateLimit(String serverUrl) throws ClientException {
         RateLimiterService rateLimiterService = getRateLimiterService();
         if (Objects.isNull(rateLimiterService)) {
             return;
         }
-        rateLimiterService.acquire(serverUrl);
+        if (!rateLimiterService.acquire(serverUrl, (long) 2)) {
+            throw new ClientException("could not acquire permits: " + serverUrl);
+        }
     }
 }
