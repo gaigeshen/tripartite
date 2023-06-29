@@ -83,7 +83,7 @@ public interface DingApiClient extends Client<DingConfig> {
      * @see <a href="https://open.dingtalk.com/document/orgapp/updates-dingtalk-to-do-tasks">接口文档</a>
      */
     default DingTaskUpdateResponse taskUpdate(DingTaskUpdateParameters parameters, String unionId, String taskId) throws ClientException {
-        return execute(parameters, DingTaskUpdateResponse.class, "/v1.0/todo/users/{unionId}/tasks/{taskId}", unionId, taskId);
+        return executePut(parameters, DingTaskUpdateResponse.class, "/v1.0/todo/users/{unionId}/tasks/{taskId}", unionId, taskId);
     }
 
     /**
@@ -97,6 +97,6 @@ public interface DingApiClient extends Client<DingConfig> {
      * @see <a href="https://open.dingtalk.com/document/orgapp/update-dingtalk-to-do-status">接口文档</a>
      */
     default DingTaskExecutorStatusUpdateResponse taskUpdateExecutorStatus(DingTaskExecutorStatusUpdateParameters parameters, String unionId, String taskId) throws ClientException {
-        return execute(parameters, DingTaskExecutorStatusUpdateResponse.class, "/v1.0/todo/users/{unionId}/tasks/{taskId}/executorStatus", unionId, taskId);
+        return executePut(parameters, DingTaskExecutorStatusUpdateResponse.class, "/v1.0/todo/users/{unionId}/tasks/{taskId}/executorStatus", unionId, taskId);
     }
 }
