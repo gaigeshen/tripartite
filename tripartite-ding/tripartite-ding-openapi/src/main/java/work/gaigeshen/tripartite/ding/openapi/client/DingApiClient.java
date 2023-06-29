@@ -96,7 +96,7 @@ public interface DingApiClient extends Client<DingConfig> {
      * @throws ClientException 执行请求的时候发生异常
      * @see <a href="https://open.dingtalk.com/document/orgapp/updates-dingtalk-to-do-tasks">接口文档</a>
      */
-    default DingTaskExecutorStatusUpdateResponse taskUpdate(DingTaskExecutorStatusUpdateParameters parameters, String unionId, String taskId) throws ClientException {
+    default DingTaskExecutorStatusUpdateResponse taskUpdateExecutorStatus(DingTaskExecutorStatusUpdateParameters parameters, String unionId, String taskId) throws ClientException {
         return execute(parameters, DingTaskExecutorStatusUpdateResponse.class, "/v1.0/todo/users/{unionId}/tasks/{taskId}/executorStatus", unionId, taskId);
     }
 }
