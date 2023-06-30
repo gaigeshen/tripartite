@@ -2,6 +2,7 @@ package work.gaigeshen.tripartite.core.ratelimiter;
 
 import com.google.common.util.concurrent.RateLimiter;
 
+import java.time.Duration;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
@@ -37,6 +38,20 @@ public class GuavaRateLimiterService implements RateLimiterService {
             double permitsPerSecond = getPermitsPerSecond();
             return RateLimiter.create(permitsPerSecond);
         }).acquire(permits);
+    }
+
+    @Override
+    public boolean acquire(String key, int permits, long timeout) {
+        if (Objects.isNull(key)) {
+            throw new IllegalArgumentException("key cannot be null");
+        }
+        if (permits <= 0) {
+            throw new IllegalArgumentException("permits is invalid");
+        }
+        return rateLimiters.computeIfAbsent(key, k -> {
+            double permitsPerSecond = getPermitsPerSecond();
+            return RateLimiter.create(permitsPerSecond);
+        }).tryAcquire(permits, Duration.ofSeconds(timeout));
     }
 
     @Override
