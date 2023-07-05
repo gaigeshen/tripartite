@@ -86,7 +86,7 @@ public class RestTemplateWebExecutor implements WebExecutor {
         }
         if (interceptors.length > 0) {
             Interceptors newInterceptors = new Interceptors(interceptors);
-            restTemplate.getInterceptors().add(new HttpInterceptorInterceptors(newInterceptors));
+            restTemplate.getInterceptors().add(0, new HttpInterceptorInterceptors(newInterceptors));
         }
     }
 
