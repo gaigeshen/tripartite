@@ -522,32 +522,45 @@ public class RestTemplateWebExecutor implements WebExecutor {
 
         @Override
         public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution) throws IOException {
+            if (!log.isDebugEnabled()) {
+                return execution.execute(request, body);
+            }
+            log.debug(">>>> URI: [{}] {}", request.getMethod(), request.getURI());
+            log.debug(">>>> Headers: {}", request.getHeaders());
+
+            MediaType bodyType = request.getHeaders().getContentType();
+            if (isLoggableContent(bodyType)) {
+                log.debug(">>>> Body: {}", new String(body, StandardCharsets.UTF_8));
+            }
+
             ClientHttpResponse response = execution.execute(request, body);
 
-            log.info(">>>> URI: [{}] {}", request.getMethod(), request.getURI());
-            log.info(">>>> Headers: {}", request.getHeaders());
-            log.info(">>>> Body: {}", new String(body, StandardCharsets.UTF_8));
-
-            log.info("<<<< Status: {}", response.getStatusCode());
-            log.info("<<<< Headers: {}", response.getHeaders());
+            log.debug("<<<< Status: {}", response.getStatusCode());
+            log.debug("<<<< Headers: {}", response.getHeaders());
 
             if (!(response instanceof HttpResponseResponse)) {
                 return response;
             }
-            MediaType contentType = response.getHeaders().getContentType();
-            if (Objects.isNull(contentType)) {
+            MediaType responseType = response.getHeaders().getContentType();
+            if (Objects.isNull(responseType)) {
                 return response;
             }
-            for (MediaType loggableMediaType : LOGGABLE_MEDIA_TYPE) {
-                if (loggableMediaType.includes(contentType)) {
-                    HttpResponseResponse httpResponse = (HttpResponseResponse) response;
-                    String responseBody = httpResponse.bodyString(StandardCharsets.UTF_8);
-                    httpResponse.buffered(responseBody.getBytes(StandardCharsets.UTF_8));
-                    log.info("<<<< Body: {}", responseBody);
-                    break;
-                }
+            if (isLoggableContent(responseType)) {
+                HttpResponseResponse httpResponse = (HttpResponseResponse) response;
+                String responseBody = httpResponse.bodyString(StandardCharsets.UTF_8);
+                httpResponse.buffered(responseBody.getBytes(StandardCharsets.UTF_8));
+                log.debug("<<<< Body: {}", responseBody);
             }
             return response;
+        }
+
+        private boolean isLoggableContent(MediaType contentType) {
+            for (MediaType loggableMediaType : LOGGABLE_MEDIA_TYPE) {
+                if (loggableMediaType.includes(contentType)) {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 
