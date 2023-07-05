@@ -522,18 +522,21 @@ public class RestTemplateWebExecutor implements WebExecutor {
 
         @Override
         public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution) throws IOException {
-            log.info(">>>> URI: [{}] {}", request.getMethod(), request.getURI());
-            log.info(">>>> Headers: {}", request.getHeaders());
+            if (!log.isDebugEnabled()) {
+                return execution.execute(request, body);
+            }
+            log.debug(">>>> URI: [{}] {}", request.getMethod(), request.getURI());
+            log.debug(">>>> Headers: {}", request.getHeaders());
 
             MediaType bodyType = request.getHeaders().getContentType();
             if (isLoggableContent(bodyType)) {
-                log.info(">>>> Body: {}", new String(body, StandardCharsets.UTF_8));
+                log.debug(">>>> Body: {}", new String(body, StandardCharsets.UTF_8));
             }
 
             ClientHttpResponse response = execution.execute(request, body);
 
-            log.info("<<<< Status: {}", response.getStatusCode());
-            log.info("<<<< Headers: {}", response.getHeaders());
+            log.debug("<<<< Status: {}", response.getStatusCode());
+            log.debug("<<<< Headers: {}", response.getHeaders());
 
             if (!(response instanceof HttpResponseResponse)) {
                 return response;
@@ -546,7 +549,7 @@ public class RestTemplateWebExecutor implements WebExecutor {
                 HttpResponseResponse httpResponse = (HttpResponseResponse) response;
                 String responseBody = httpResponse.bodyString(StandardCharsets.UTF_8);
                 httpResponse.buffered(responseBody.getBytes(StandardCharsets.UTF_8));
-                log.info("<<<< Body: {}", responseBody);
+                log.debug("<<<< Body: {}", responseBody);
             }
             return response;
         }
