@@ -6,14 +6,13 @@
 
     <groupId>work.gaigeshen</groupId>
     <artifactId>tripartite</artifactId>
-    <version>1.12.1</version>
+    <version>1.13.0-SNAPSHOT</version>
     <modules>
         <module>tripartite-core</module>
         <module>tripartite-wangdian</module>
         <module>tripartite-ding</module>
         <module>tripartite-pay</module>
         <module>tripartite-his</module>
-        <module>tripartite-openai</module>
     </modules>
 
     <packaging>pom</packaging>
