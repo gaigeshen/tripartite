@@ -195,6 +195,39 @@ public class RestTemplateWebExecutor implements WebExecutor {
     }
 
     @Override
+    public <T> T executeDelete(String url, Parameters parameters, Class<T> responseClass, Object... uriVariables) throws WebException {
+        if (Objects.isNull(url) || Objects.isNull(parameters)) {
+            throw new IllegalArgumentException("url and parameters cannot be null");
+        }
+        if (Objects.isNull(responseClass)) {
+            throw new IllegalArgumentException("response class cannot be null");
+        }
+        return executeInternalDelete(url, parameters, createResponseExtractor(responseClass), uriVariables);
+    }
+
+    @Override
+    public <T> T executeDelete(String url, Parameters parameters, ResponseConverter<T> converter, Object... uriVariables) throws WebException {
+        if (Objects.isNull(url) || Objects.isNull(parameters)) {
+            throw new IllegalArgumentException("url and parameters cannot be null");
+        }
+        if (Objects.isNull(converter)) {
+            throw new IllegalArgumentException("response converter cannot be null");
+        }
+        return executeInternalDelete(url, parameters, createResponseExtractor(converter), uriVariables);
+    }
+
+    @Override
+    public void executeDelete(String url, Parameters parameters, ResponseConsumer consumer, Object... uriVariables) throws WebException {
+        if (Objects.isNull(url) || Objects.isNull(parameters)) {
+            throw new IllegalArgumentException("url and parameters cannot be null");
+        }
+        if (Objects.isNull(consumer)) {
+            throw new IllegalArgumentException("response consumer cannot be null");
+        }
+        executeInternalDelete(url, parameters, createResponseExtractor(consumer), uriVariables);
+    }
+
+    @Override
     public <T> T execute(String url, Object parameters, Class<T> responseClass, Object... uriVariables) throws WebException {
         if (Objects.isNull(url) || Objects.isNull(parameters)) {
             throw new IllegalArgumentException("url and parameters cannot be null");
@@ -258,6 +291,39 @@ public class RestTemplateWebExecutor implements WebExecutor {
             throw new IllegalArgumentException("response consumer cannot be null");
         }
         executePut(url, convertParameters(parameters), consumer, uriVariables);
+    }
+
+    @Override
+    public <T> T executeDelete(String url, Object parameters, Class<T> responseClass, Object... uriVariables) throws WebException {
+        if (Objects.isNull(url) || Objects.isNull(parameters)) {
+            throw new IllegalArgumentException("url and parameters cannot be null");
+        }
+        if (Objects.isNull(responseClass)) {
+            throw new IllegalArgumentException("response class cannot be null");
+        }
+        return executeDelete(url, convertParameters(parameters), responseClass, uriVariables);
+    }
+
+    @Override
+    public <T> T executeDelete(String url, Object parameters, ResponseConverter<T> converter, Object... uriVariables) throws WebException {
+        if (Objects.isNull(url) || Objects.isNull(parameters)) {
+            throw new IllegalArgumentException("url and parameters cannot be null");
+        }
+        if (Objects.isNull(converter)) {
+            throw new IllegalArgumentException("response converter cannot be null");
+        }
+        return executeDelete(url, convertParameters(parameters), converter, uriVariables);
+    }
+
+    @Override
+    public void executeDelete(String url, Object parameters, ResponseConsumer consumer, Object... uriVariables) throws WebException {
+        if (Objects.isNull(url) || Objects.isNull(parameters)) {
+            throw new IllegalArgumentException("url and parameters cannot be null");
+        }
+        if (Objects.isNull(consumer)) {
+            throw new IllegalArgumentException("response consumer cannot be null");
+        }
+        executeDelete(url, convertParameters(parameters), consumer, uriVariables);
     }
 
     @Override
@@ -326,6 +392,39 @@ public class RestTemplateWebExecutor implements WebExecutor {
         executePut(url, creator.create(), consumer, uriVariables);
     }
 
+    @Override
+    public <T> T executeDelete(String url, ParametersCreator creator, Class<T> responseClass, Object... uriVariables) throws WebException {
+        if (Objects.isNull(url) || Objects.isNull(creator)) {
+            throw new IllegalArgumentException("url and parameters creator cannot be null");
+        }
+        if (Objects.isNull(responseClass)) {
+            throw new IllegalArgumentException("response class cannot be null");
+        }
+        return executeDelete(url, creator.create(), responseClass, uriVariables);
+    }
+
+    @Override
+    public <T> T executeDelete(String url, ParametersCreator creator, ResponseConverter<T> converter, Object... uriVariables) throws WebException {
+        if (Objects.isNull(url) || Objects.isNull(creator)) {
+            throw new IllegalArgumentException("url and parameters creator cannot be null");
+        }
+        if (Objects.isNull(converter)) {
+            throw new IllegalArgumentException("response converter cannot be null");
+        }
+        return executeDelete(url, creator.create(), converter, uriVariables);
+    }
+
+    @Override
+    public void executeDelete(String url, ParametersCreator creator, ResponseConsumer consumer, Object... uriVariables) throws WebException {
+        if (Objects.isNull(url) || Objects.isNull(creator)) {
+            throw new IllegalArgumentException("url and parameters creator cannot be null");
+        }
+        if (Objects.isNull(consumer)) {
+            throw new IllegalArgumentException("response consumer cannot be null");
+        }
+        executeDelete(url, creator.create(), consumer, uriVariables);
+    }
+
     private <T> T executeInternal(String url, ResponseExtractor<T> extractor, Object... uriVariables) throws WebExecutionException {
         try {
             return restTemplate.execute(url, GET, wrapParametersRequestCallback(null), extractor, uriVariables);
@@ -345,6 +444,14 @@ public class RestTemplateWebExecutor implements WebExecutor {
     private <T> T executeInternalPut(String url, Parameters parameters, ResponseExtractor<T> extractor, Object... uriVariables) throws WebExecutionException {
         try {
             return restTemplate.execute(url, PUT, wrapParametersRequestCallback(parameters), extractor, uriVariables);
+        } catch (RestClientException e) {
+            throw new WebExecutionException(e.getMessage(), e);
+        }
+    }
+
+    private <T> T executeInternalDelete(String url, Parameters parameters, ResponseExtractor<T> extractor, Object... uriVariables) throws WebExecutionException {
+        try {
+            return restTemplate.execute(url, DELETE, wrapParametersRequestCallback(parameters), extractor, uriVariables);
         } catch (RestClientException e) {
             throw new WebExecutionException(e.getMessage(), e);
         }
