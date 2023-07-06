@@ -48,6 +48,20 @@ public abstract class AbstractWebExecutorClient<C extends Config> implements Cli
     protected void initInternal() throws ClientException { }
 
     @Override
+    public <R extends ClientResponse, P extends ClientParameters> R executeDelete(
+            P parameters, Class<R> responseClass, String path, Object... uriVariables
+    ) throws ClientException {
+        String serverUrl = getServerHost(parameters, responseClass).getServerUrl(path);
+        checkRateLimit(serverUrl + "_delete");
+        try {
+            R response = webExecutor.executeDelete(serverUrl, parameters, responseClass, uriVariables);
+            return validateResponse(response);
+        } catch (WebException e) {
+            throw new ClientException(e.getMessage(), e);
+        }
+    }
+
+    @Override
     public final <R extends ClientResponse, P extends ClientParameters> R executePut(
             P parameters, Class<R> responseClass, String path, Object... uriVariables
     ) throws ClientException {

@@ -7,12 +7,14 @@ import work.gaigeshen.tripartite.ding.openapi.parameters.api.robot.DingRobotGrou
 import work.gaigeshen.tripartite.ding.openapi.parameters.api.robot.DingRobotGroupMessageRecallParameters;
 import work.gaigeshen.tripartite.ding.openapi.parameters.api.robot.DingRobotGroupMessageSendParameters;
 import work.gaigeshen.tripartite.ding.openapi.parameters.api.task.DingTaskCreateParameters;
+import work.gaigeshen.tripartite.ding.openapi.parameters.api.task.DingTaskDeleteParameters;
 import work.gaigeshen.tripartite.ding.openapi.parameters.api.task.DingTaskExecutorStatusUpdateParameters;
 import work.gaigeshen.tripartite.ding.openapi.parameters.api.task.DingTaskUpdateParameters;
 import work.gaigeshen.tripartite.ding.openapi.response.api.robot.DingRobotGroupMessageQueryResponse;
 import work.gaigeshen.tripartite.ding.openapi.response.api.robot.DingRobotGroupMessageRecallResponse;
 import work.gaigeshen.tripartite.ding.openapi.response.api.robot.DingRobotGroupMessageSendResponse;
 import work.gaigeshen.tripartite.ding.openapi.response.api.task.DingTaskCreateResponse;
+import work.gaigeshen.tripartite.ding.openapi.response.api.task.DingTaskDeleteResponse;
 import work.gaigeshen.tripartite.ding.openapi.response.api.task.DingTaskExecutorStatusUpdateResponse;
 import work.gaigeshen.tripartite.ding.openapi.response.api.task.DingTaskUpdateResponse;
 
@@ -84,6 +86,20 @@ public interface DingApiClient extends Client<DingConfig> {
      */
     default DingTaskUpdateResponse taskUpdate(DingTaskUpdateParameters parameters, String unionId, String taskId) throws ClientException {
         return executePut(parameters, DingTaskUpdateResponse.class, "/v1.0/todo/users/{unionId}/tasks/{taskId}", unionId, taskId);
+    }
+
+    /**
+     * 代办任务删除
+     *
+     * @param parameters 请求参数不能为空
+     * @param unionId 任务创建者的用户标识不能为空
+     * @param taskId 任务标识不能为空
+     * @return 响应结果不为空
+     * @throws ClientException 执行请求的时候发生异常
+     * @see <a href="https://open.dingtalk.com/document/orgapp/delete-dingtalk-to-do-tasks">接口文档</a>
+     */
+    default DingTaskDeleteResponse taskDelete(DingTaskDeleteParameters parameters, String unionId, String taskId) throws ClientException {
+        return executeDelete(parameters, DingTaskDeleteResponse.class, "/v1.0/todo/users/{unionId}/tasks/{taskId}", unionId, taskId);
     }
 
     /**

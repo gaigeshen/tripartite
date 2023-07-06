@@ -14,6 +14,8 @@ import java.util.Collection;
 )
 public class DingTaskCreateParameters extends DingApiParameters {
 
+    public String sourceId;
+
     public String subject;
 
     public String description;
@@ -25,4 +27,13 @@ public class DingTaskCreateParameters extends DingApiParameters {
     public Collection<String> executorIds;
 
     public Collection<String> participantIds;
+
+    public DetailUrl detailUrl;
+
+    public static class DetailUrl {
+
+        public String appUrl;
+
+        public String pcUrl;
+    }
 }

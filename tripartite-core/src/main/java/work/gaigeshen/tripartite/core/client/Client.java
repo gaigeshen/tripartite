@@ -37,6 +37,22 @@ public interface Client<C extends Config> extends ServerHosts {
      * @param <P> 表示需要传递的参数的类型
      * @throws ClientException 执行接口调用操作的时候发生异常
      */
+    <R extends ClientResponse, P extends ClientParameters> R executeDelete(
+            P parameters, Class<R> responseClass, String path, Object... uriVariables
+    ) throws ClientException;
+
+    /**
+     * 执行接口调用操作
+     *
+     * @param parameters 需要传递的参数对象
+     * @param responseClass 响应对象的类型
+     * @param path 接口的路径
+     * @param uriVariables 接口路径中的变量值
+     * @return 返回响应对象
+     * @param <R> 表示响应对象的类型
+     * @param <P> 表示需要传递的参数的类型
+     * @throws ClientException 执行接口调用操作的时候发生异常
+     */
     <R extends ClientResponse, P extends ClientParameters> R executePut(
             P parameters, Class<R> responseClass, String path, Object... uriVariables
     ) throws ClientException;
