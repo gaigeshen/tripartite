@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  work.gaigeshen.tripartite.retrofit.spring.boot.autoconfigure.RetrofitConfiguration
