@@ -13,7 +13,6 @@
         <module>tripartite-ding</module>
         <module>tripartite-pay</module>
         <module>tripartite-his</module>
-        <module>tripartite-retrofit</module>
     </modules>
 
     <packaging>pom</packaging>
