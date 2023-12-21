@@ -92,6 +92,8 @@ public class HisProcurementDirectoryListResponse extends AbstractHisProcurementR
 
         private String tenditmName;
 
+        private String pubonlnId;
+
         private String mcsInfoId;
 
         public String getMcsCode() {
@@ -252,6 +254,14 @@ public class HisProcurementDirectoryListResponse extends AbstractHisProcurementR
 
         public void setTenditmName(String tenditmName) {
             this.tenditmName = tenditmName;
+        }
+
+        public String getPubonlnId() {
+            return pubonlnId;
+        }
+
+        public void setPubonlnId(String pubonlnId) {
+            this.pubonlnId = pubonlnId;
         }
 
         public String getMcsInfoId() {

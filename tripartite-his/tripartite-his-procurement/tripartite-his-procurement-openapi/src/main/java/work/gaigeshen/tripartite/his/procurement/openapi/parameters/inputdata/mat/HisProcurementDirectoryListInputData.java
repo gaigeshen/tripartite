@@ -11,6 +11,12 @@ public class HisProcurementDirectoryListInputData implements HisProcurementInput
 
     private String mcsInfoId;
 
+    private String prodName;
+
+    private String mcsRegno;
+
+    private String pubonlnId;
+
     private String strUpTime;
 
     private String endUpTime;
@@ -33,6 +39,30 @@ public class HisProcurementDirectoryListInputData implements HisProcurementInput
 
     public void setMcsInfoId(String mcsInfoId) {
         this.mcsInfoId = mcsInfoId;
+    }
+
+    public String getProdName() {
+        return prodName;
+    }
+
+    public void setProdName(String prodName) {
+        this.prodName = prodName;
+    }
+
+    public String getMcsRegno() {
+        return mcsRegno;
+    }
+
+    public void setMcsRegno(String mcsRegno) {
+        this.mcsRegno = mcsRegno;
+    }
+
+    public String getPubonlnId() {
+        return pubonlnId;
+    }
+
+    public void setPubonlnId(String pubonlnId) {
+        this.pubonlnId = pubonlnId;
     }
 
     public String getStrUpTime() {
