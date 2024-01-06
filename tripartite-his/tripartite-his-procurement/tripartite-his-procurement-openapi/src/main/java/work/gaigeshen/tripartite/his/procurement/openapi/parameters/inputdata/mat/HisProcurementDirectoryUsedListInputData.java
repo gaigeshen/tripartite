@@ -17,6 +17,10 @@ public class HisProcurementDirectoryUsedListInputData implements HisProcurementI
 
     private String mcsRegno;
 
+    private String strUpTime;
+
+    private String endUpTime;
+
     private Integer current;
 
     private Integer size;
@@ -59,6 +63,22 @@ public class HisProcurementDirectoryUsedListInputData implements HisProcurementI
 
     public void setMcsRegno(String mcsRegno) {
         this.mcsRegno = mcsRegno;
+    }
+
+    public String getStrUpTime() {
+        return strUpTime;
+    }
+
+    public void setStrUpTime(String strUpTime) {
+        this.strUpTime = strUpTime;
+    }
+
+    public String getEndUpTime() {
+        return endUpTime;
+    }
+
+    public void setEndUpTime(String endUpTime) {
+        this.endUpTime = endUpTime;
     }
 
     public Integer getCurrent() {
