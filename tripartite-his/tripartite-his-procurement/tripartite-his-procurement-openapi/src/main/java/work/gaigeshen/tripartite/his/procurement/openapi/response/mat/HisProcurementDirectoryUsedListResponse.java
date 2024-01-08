@@ -94,6 +94,8 @@ public class HisProcurementDirectoryUsedListResponse extends AbstractHisProcurem
 
         private String delventpCode;
 
+        private String updtTime;
+
         public String getZclassName() {
             return zclassName;
         }
@@ -260,6 +262,14 @@ public class HisProcurementDirectoryUsedListResponse extends AbstractHisProcurem
 
         public void setDelventpCode(String delventpCode) {
             this.delventpCode = delventpCode;
+        }
+
+        public String getUpdtTime() {
+            return updtTime;
+        }
+
+        public void setUpdtTime(String updtTime) {
+            this.updtTime = updtTime;
         }
     }
 }
