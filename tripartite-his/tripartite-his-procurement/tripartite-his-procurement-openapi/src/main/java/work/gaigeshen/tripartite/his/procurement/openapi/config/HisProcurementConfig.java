@@ -13,6 +13,10 @@ public class HisProcurementConfig implements Config {
 
     public static final String CONFIG_TYPE_MED = "med";
 
+    private final Integer connectTimeout;
+
+    private final Integer readTimeout;
+
     private final String serverHost;
 
     private final String accessTokenUri;
@@ -30,6 +34,8 @@ public class HisProcurementConfig implements Config {
     private final String secret;
 
     private HisProcurementConfig(Builder builder) {
+        this.connectTimeout = builder.connectTimeout;
+        this.readTimeout = builder.readTimeout;
         this.serverHost = builder.serverHost;
         this.accessTokenUri = builder.accessTokenUri;
         this.serviceUri = builder.serviceUri;
@@ -42,6 +48,14 @@ public class HisProcurementConfig implements Config {
 
     public static Builder builder() {
         return new Builder();
+    }
+
+    public Integer getConnectTimeout() {
+        return connectTimeout;
+    }
+
+    public Integer getReadTimeout() {
+        return readTimeout;
     }
 
     public String getServerHost() {
@@ -103,6 +117,10 @@ public class HisProcurementConfig implements Config {
      */
     public static class Builder {
 
+        private Integer connectTimeout;
+
+        private Integer readTimeout;
+
         private String serverHost;
 
         private String accessTokenUri;
@@ -118,6 +136,16 @@ public class HisProcurementConfig implements Config {
         private String authCode;
 
         private String secret;
+
+        public Builder setConnectTimeout(Integer connectTimeout) {
+            this.connectTimeout = connectTimeout;
+            return this;
+        }
+
+        public Builder setReadTimeout(Integer readTimeout) {
+            this.readTimeout = readTimeout;
+            return this;
+        }
 
         public Builder setServerHost(String serverHost) {
             this.serverHost = serverHost;

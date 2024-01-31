@@ -32,12 +32,12 @@ public class DefaultHisProcurementClientCreator implements HisProcurementClientC
             throw new IllegalArgumentException("config and config type cannot be null");
         }
         HisProcurementAccessTokenClient accessTokenClient = HisProcurementAccessTokenClient.create(config);
-        HisProcurementClientAccessTokenInterceptor interceptor = new HisProcurementClientAccessTokenInterceptor(
-                accessTokenClient, accessTokenManager);
+        HisProcurementClientAccessTokenInterceptor interceptor = new HisProcurementClientAccessTokenInterceptor(accessTokenClient, accessTokenManager);
         log.info("creating his procurement client: {}", config);
         if (Objects.equals(CONFIG_TYPE_MAT, config.getType())) {
             return DefaultHisProcurementMatClient.create(config, interceptor);
-        } else if (Objects.equals(CONFIG_TYPE_MED, config.getType())) {
+        }
+        else if (Objects.equals(CONFIG_TYPE_MED, config.getType())) {
             return DefaultHisProcurementMedClient.create(config, interceptor);
         }
         throw new HisProcurementClientCreationException("config type [ " + config.getType() + " ] not supported");
