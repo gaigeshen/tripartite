@@ -38,6 +38,7 @@ public class HisProcurementAutoConfiguration {
     Collection<HisProcurementBasicClient> hisProcurementClients = new ArrayList<>();
     for (Client client : hisProcurementProperties.getClients()) {
       HisProcurementConfig config = HisProcurementConfig.builder()
+              .setConnectTimeout(client.getConnectTimeout()).setReadTimeout(client.getReadTimeout())
               .setServerHost(client.getServerHost())
               .setAccessTokenUri(client.getAccessTokenUri()).setServiceUri(client.getServiceUri())
               .setAccount(client.getAccount()).setType(client.getType())

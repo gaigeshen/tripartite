@@ -47,30 +47,27 @@ public class RestTemplateWebExecutor implements WebExecutor {
 
     private ParametersConverter parametersConverter;
 
-    protected RestTemplateWebExecutor(RestTemplate template) {
+    protected RestTemplateWebExecutor(RestTemplate template, boolean disableSslValidation) {
         if (Objects.isNull(template)) {
             throw new IllegalArgumentException("restTemplate cannot be null");
         }
         template.getInterceptors().add(0, new LoggerInterceptor());
         this.restTemplate = template;
-    }
-
-    public static RestTemplateWebExecutor create(RestTemplate template) {
-        if (Objects.isNull(template)) {
-            throw new IllegalArgumentException("restTemplate cannot be null");
-        }
-        return new RestTemplateWebExecutor(template);
-    }
-
-    public static RestTemplateWebExecutor create(boolean disableSslValidation) {
         if (disableSslValidation) {
             HttpsURLConnectionConfigurer.defaultDisableSSLValidation();
         }
-        return create(new RestTemplate());
+    }
+
+    public static RestTemplateWebExecutor create(RestTemplate template, boolean disableSslValidation) {
+        return new RestTemplateWebExecutor(template, disableSslValidation);
+    }
+
+    public static RestTemplateWebExecutor create(RestTemplate template) {
+        return new RestTemplateWebExecutor(template, true);
     }
 
     public static RestTemplateWebExecutor create() {
-        return create(true);
+        return new RestTemplateWebExecutor(new RestTemplate(), true);
     }
 
     public void setParametersConverter(ParametersConverter converter) {

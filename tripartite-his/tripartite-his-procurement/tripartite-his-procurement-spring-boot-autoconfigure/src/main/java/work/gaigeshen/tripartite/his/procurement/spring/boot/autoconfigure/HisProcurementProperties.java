@@ -28,6 +28,10 @@ public class HisProcurementProperties {
    */
   public static class Client {
 
+    private Integer connectTimeout;
+
+    private Integer readTimeout;
+
     private String serverHost;
 
     private String accessTokenUri;
@@ -43,6 +47,22 @@ public class HisProcurementProperties {
     private String authCode;
 
     private String secret;
+
+    public Integer getConnectTimeout() {
+      return connectTimeout;
+    }
+
+    public void setConnectTimeout(Integer connectTimeout) {
+      this.connectTimeout = connectTimeout;
+    }
+
+    public Integer getReadTimeout() {
+      return readTimeout;
+    }
+
+    public void setReadTimeout(Integer readTimeout) {
+      this.readTimeout = readTimeout;
+    }
 
     public String getServerHost() {
       return serverHost;
