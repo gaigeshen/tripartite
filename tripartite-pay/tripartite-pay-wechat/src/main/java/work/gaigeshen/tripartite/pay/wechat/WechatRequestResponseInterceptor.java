@@ -37,7 +37,7 @@ public class WechatRequestResponseInterceptor extends AbstractInterceptor {
         String requestPath = StringUtils.substringAfter(StringUtils.substringAfter(requestUrl, "//"), "/");
 
         StringBuilder signContent = new StringBuilder();
-        signContent.append(request.method()).append("\n").append(requestPath).append("\n");
+        signContent.append(request.method()).append("\n").append("/").append(requestPath).append("\n");
 
         String timestamp = TimestampUtils.unixTimestamp();
         signContent.append(timestamp).append("\n");
