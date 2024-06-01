@@ -130,7 +130,7 @@ public class DefaultWechatClient implements WechatClient {
             throw new IllegalArgumentException("response class and uri cannot be null");
         }
         try {
-            R response = executor.execute(config.getServerHost() + uri, parameters, responseClass);
+            R response = executor.execute(config.getServerHost() + uri, parameters, responseClass, uriVariables);
             return validateResponse(response);
         } catch (WebException e) {
             throw new WechatClientException(e.getMessage(), e);
@@ -146,7 +146,7 @@ public class DefaultWechatClient implements WechatClient {
             throw new IllegalArgumentException("response converter and uri cannot be null");
         }
         try {
-            R response = executor.execute(config.getServerHost() + uri, parameters, converter);
+            R response = executor.execute(config.getServerHost() + uri, parameters, converter, uriVariables);
             return validateResponse(response);
         } catch (WebException e) {
             throw new WechatClientException(e.getMessage(), e);
@@ -162,7 +162,7 @@ public class DefaultWechatClient implements WechatClient {
             throw new IllegalArgumentException("response consumer and uri cannot be null");
         }
         try {
-            executor.execute(config.getServerHost() + uri, parameters, consumer);
+            executor.execute(config.getServerHost() + uri, parameters, consumer, uriVariables);
         } catch (WebException e) {
             throw new WechatClientException(e.getMessage(), e);
         }

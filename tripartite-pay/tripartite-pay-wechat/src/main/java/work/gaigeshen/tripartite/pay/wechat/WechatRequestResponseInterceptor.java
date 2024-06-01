@@ -37,7 +37,7 @@ public class WechatRequestResponseInterceptor extends AbstractInterceptor {
         String requestPath = StringUtils.substringAfter(StringUtils.substringAfter(requestUrl, "//"), "/");
 
         StringBuilder signContent = new StringBuilder();
-        signContent.append(request.method()).append("\n").append(requestPath).append("\n");
+        signContent.append(request.method()).append("\n").append("/").append(requestPath).append("\n");
 
         String timestamp = TimestampUtils.unixTimestamp();
         signContent.append(timestamp).append("\n");
@@ -54,7 +54,7 @@ public class WechatRequestResponseInterceptor extends AbstractInterceptor {
                 + "\",signature=\"" + privateKey.sign(signContent.toString().getBytes(StandardCharsets.UTF_8)) + "\"";
 
         Headers headers = request.headers();
-        headers.putValue("User-Agent", "Tripartite/1.0.0");
+        headers.putValue("User-Agent", "Tripartite/Any");
         headers.putValue("Authorization", "WECHATPAY2-SHA256-RSA2048 " + signInfo);
     }
 
