@@ -22,6 +22,11 @@
             <optional>true</optional>
         </dependency>
         <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
             <groupId>work.gaigeshen</groupId>
             <artifactId>tripartite-wangdian-openapi</artifactId>
             <version>${project.version}</version>

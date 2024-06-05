@@ -1,5 +1,6 @@
 package work.gaigeshen.tripartite.ding.spring.boot.autoconfigure;
 
+import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.util.ArrayList;
@@ -11,23 +12,17 @@ import java.util.List;
  * @author gaigeshen
  */
 @ConfigurationProperties("ding")
+@Data
 public class DingProperties {
 
     private List<Client> clients = new ArrayList<>();
-
-    public List<Client> getClients() {
-        return clients;
-    }
-
-    public void setClients(List<Client> clients) {
-        this.clients = clients;
-    }
 
     /**
      * 钉钉配置信息
      *
      * @author gaigeshen
      */
+    @Data
     public static class Client {
 
         /**
@@ -69,69 +64,5 @@ public class DingProperties {
          * 异步通知或者回调通知的签名令牌（定制应用不可用）
          */
         private String token;
-
-        public String getApiServerHost() {
-            return apiServerHost;
-        }
-
-        public void setApiServerHost(String apiServerHost) {
-            this.apiServerHost = apiServerHost;
-        }
-
-        public String getOapiServerHost() {
-            return oapiServerHost;
-        }
-
-        public void setOapiServerHost(String oapiServerHost) {
-            this.oapiServerHost = oapiServerHost;
-        }
-
-        public String getAuthCorpId() {
-            return authCorpId;
-        }
-
-        public void setAuthCorpId(String authCorpId) {
-            this.authCorpId = authCorpId;
-        }
-
-        public String getAgentId() {
-            return agentId;
-        }
-
-        public void setAgentId(String agentId) {
-            this.agentId = agentId;
-        }
-
-        public String getAppKey() {
-            return appKey;
-        }
-
-        public void setAppKey(String appKey) {
-            this.appKey = appKey;
-        }
-
-        public String getAppSecret() {
-            return appSecret;
-        }
-
-        public void setAppSecret(String appSecret) {
-            this.appSecret = appSecret;
-        }
-
-        public String getSecretKey() {
-            return secretKey;
-        }
-
-        public void setSecretKey(String secretKey) {
-            this.secretKey = secretKey;
-        }
-
-        public String getToken() {
-            return token;
-        }
-
-        public void setToken(String token) {
-            this.token = token;
-        }
     }
 }
