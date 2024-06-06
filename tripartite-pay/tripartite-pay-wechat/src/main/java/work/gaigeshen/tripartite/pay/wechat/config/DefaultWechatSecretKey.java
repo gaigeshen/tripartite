@@ -5,6 +5,7 @@ import org.apache.commons.io.IOUtils;
 import javax.crypto.Cipher;
 import javax.crypto.spec.GCMParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
@@ -42,6 +43,22 @@ public class DefaultWechatSecretKey implements WechatSecretKey {
         return new DefaultWechatSecretKey(secretKeyContent.getBytes(StandardCharsets.UTF_8));
     }
 
+    public static DefaultWechatSecretKey load(InputStream inputStream) throws WechatSecretKeyException {
+        if (Objects.isNull(inputStream)) {
+            throw new IllegalArgumentException("secret key input stream cannot be null");
+        }
+        try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
+            byte[] buffer = new byte[4096];
+            int len;
+            while ((len = inputStream.read(buffer)) != -1) {
+                out.write(buffer, 0, len);
+            }
+            return load(out.toString("utf-8"));
+        } catch (IOException e) {
+            throw new WechatSecretKeyException("could not read secret key", e);
+        }
+    }
+
     public static DefaultWechatSecretKey loadClasspath(String classpath) throws WechatSecretKeyException {
         if (Objects.isNull(classpath)) {
             throw new IllegalArgumentException("secret key classpath cannot be null");
@@ -64,11 +81,10 @@ public class DefaultWechatSecretKey implements WechatSecretKey {
         if (!Files.isReadable(path)) {
             throw new IllegalArgumentException("file not readable: " + filename);
         }
-        try {
-            String secretKeyContent = new String(Files.readAllBytes(path), StandardCharsets.UTF_8);
-            return load(secretKeyContent);
+        try (InputStream inputStream = Files.newInputStream(path)) {
+            return load(inputStream);
         } catch (IOException e) {
-            throw new WechatSecretKeyException("could not load from filename: " + filename, e);
+            throw new WechatSecretKeyException("could not load from file: " + filename, e);
         }
     }
 

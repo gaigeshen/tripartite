@@ -15,56 +15,55 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- *
  * @author gaigeshen
  */
-@EnableConfigurationProperties({ HisProcurementProperties.class })
-@ConditionalOnClass({ HisProcurementBasicClient.class })
+@EnableConfigurationProperties({HisProcurementProperties.class})
+@ConditionalOnClass({HisProcurementBasicClient.class})
 @Configuration
 public class HisProcurementAutoConfiguration {
 
-  private static final Logger log = LoggerFactory.getLogger(HisProcurementAutoConfiguration.class);
+    private static final Logger log = LoggerFactory.getLogger(HisProcurementAutoConfiguration.class);
 
-  private final HisProcurementProperties hisProcurementProperties;
+    private final HisProcurementProperties hisProcurementProperties;
 
-  public HisProcurementAutoConfiguration(HisProcurementProperties hisProcurementProperties) {
-    this.hisProcurementProperties = hisProcurementProperties;
-  }
-
-  @Bean
-  public HisProcurementClients hisProcurementClients() {
-    HisProcurementAccessTokenManager accessTokenManager = hisProcurementAccessTokenManager();
-    HisProcurementClientCreator hisProcurementClientCreator = new DefaultHisProcurementClientCreator(accessTokenManager);
-    Collection<HisProcurementBasicClient> hisProcurementClients = new ArrayList<>();
-    for (Client client : hisProcurementProperties.getClients()) {
-      HisProcurementConfig config = HisProcurementConfig.builder()
-              .setConnectTimeout(client.getConnectTimeout()).setReadTimeout(client.getReadTimeout())
-              .setServerHost(client.getServerHost())
-              .setAccessTokenUri(client.getAccessTokenUri()).setServiceUri(client.getServiceUri())
-              .setAccount(client.getAccount()).setType(client.getType())
-              .setAppCode(client.getAppCode()).setAuthCode(client.getAuthCode()).setSecret(client.getSecret())
-              .build();
-      HisProcurementBasicClient procurementClient = hisProcurementClientCreator.create(config);
-      hisProcurementClients.add(procurementClient);
-      log.info("loaded his procurement client: {}", config);
+    public HisProcurementAutoConfiguration(HisProcurementProperties hisProcurementProperties) {
+        this.hisProcurementProperties = hisProcurementProperties;
     }
-    return new DefaultHisProcurementClients(hisProcurementClients, hisProcurementClientCreator);
-  }
 
-  @Bean(destroyMethod = "shutdown")
-  public HisProcurementAccessTokenManager hisProcurementAccessTokenManager() {
-    return new DefaultHisProcurementAccessTokenManager(
-            hisProcurementAccessTokenStore(), hisProcurementAccessTokenRefresher());
-  }
+    @Bean
+    public HisProcurementClients hisProcurementClients() {
+        HisProcurementAccessTokenManager accessTokenManager = hisProcurementAccessTokenManager();
+        HisProcurementClientCreator hisProcurementClientCreator = new DefaultHisProcurementClientCreator(accessTokenManager);
+        Collection<HisProcurementBasicClient> hisProcurementClients = new ArrayList<>();
+        for (Client client : hisProcurementProperties.getClients()) {
+            HisProcurementConfig config = HisProcurementConfig.builder()
+                    .setConnectTimeout(client.getConnectTimeout()).setReadTimeout(client.getReadTimeout())
+                    .setServerHost(client.getServerHost())
+                    .setAccessTokenUri(client.getAccessTokenUri()).setServiceUri(client.getServiceUri())
+                    .setAccount(client.getAccount()).setType(client.getType())
+                    .setAppCode(client.getAppCode()).setAuthCode(client.getAuthCode()).setSecret(client.getSecret())
+                    .build();
+            HisProcurementBasicClient procurementClient = hisProcurementClientCreator.create(config);
+            hisProcurementClients.add(procurementClient);
+            log.info("loaded his procurement client: {}", config);
+        }
+        return new DefaultHisProcurementClients(hisProcurementClients, hisProcurementClientCreator);
+    }
 
-  @Bean
-  public HisProcurementAccessTokenRefresher hisProcurementAccessTokenRefresher() {
-    return new DefaultHisProcurementAccessTokenRefresher(
-            (cfg, oat) -> hisProcurementClients().getClientOrCreate(cfg));
-  }
+    @Bean(destroyMethod = "shutdown")
+    public HisProcurementAccessTokenManager hisProcurementAccessTokenManager() {
+        return new DefaultHisProcurementAccessTokenManager(
+                hisProcurementAccessTokenStore(), hisProcurementAccessTokenRefresher());
+    }
 
-  @Bean
-  public HisProcurementAccessTokenStore hisProcurementAccessTokenStore() {
-    return new DefaultHisProcurementAccessTokenStore();
-  }
+    @Bean
+    public HisProcurementAccessTokenRefresher hisProcurementAccessTokenRefresher() {
+        return new DefaultHisProcurementAccessTokenRefresher(
+                (cfg, oat) -> hisProcurementClients().getClientOrCreate(cfg));
+    }
+
+    @Bean
+    public HisProcurementAccessTokenStore hisProcurementAccessTokenStore() {
+        return new DefaultHisProcurementAccessTokenStore();
+    }
 }

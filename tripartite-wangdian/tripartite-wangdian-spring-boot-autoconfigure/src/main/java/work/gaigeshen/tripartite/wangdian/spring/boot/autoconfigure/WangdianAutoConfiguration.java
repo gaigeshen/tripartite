@@ -12,36 +12,35 @@ import work.gaigeshen.tripartite.wangdian.openapi.WangdianResponseTypeIntercepto
 import work.gaigeshen.tripartite.wangdian.openapi.config.WangdianConfig;
 
 /**
- *
  * @author gaigeshen
  */
-@EnableConfigurationProperties({ WangdianProperties.class })
-@ConditionalOnClass({ WangdianClient.class })
+@EnableConfigurationProperties({WangdianProperties.class})
+@ConditionalOnClass({WangdianClient.class})
 @Configuration
 public class WangdianAutoConfiguration {
 
-  private static final Logger log = LoggerFactory.getLogger(WangdianAutoConfiguration.class);
+    private static final Logger log = LoggerFactory.getLogger(WangdianAutoConfiguration.class);
 
-  private final WangdianProperties wangdianProperties;
+    private final WangdianProperties wangdianProperties;
 
-  public WangdianAutoConfiguration(WangdianProperties wangdianProperties) {
-    this.wangdianProperties = wangdianProperties;
-  }
+    public WangdianAutoConfiguration(WangdianProperties wangdianProperties) {
+        this.wangdianProperties = wangdianProperties;
+    }
 
-  @Bean
-  public WangdianClient wangdianClient() {
-    WangdianConfig.Builder builder = WangdianConfig.builder();
+    @Bean
+    public WangdianClient wangdianClient() {
+        WangdianConfig.Builder builder = WangdianConfig.builder();
 
-    builder.setServerHost(wangdianProperties.getServerHost());
-    builder.setSellerId(wangdianProperties.getSellerId());
-    builder.setShopNo(wangdianProperties.getShopNo());
-    builder.setAppKey(wangdianProperties.getAppKey());
-    builder.setAppSecret(wangdianProperties.getAppSecret());
+        builder.setServerHost(wangdianProperties.getServerHost());
+        builder.setSellerId(wangdianProperties.getSellerId());
+        builder.setShopNo(wangdianProperties.getShopNo());
+        builder.setAppKey(wangdianProperties.getAppKey());
+        builder.setAppSecret(wangdianProperties.getAppSecret());
 
-    WangdianConfig config = builder.build();
+        WangdianConfig config = builder.build();
 
-    log.info("loaded wangdian client: {}", config);
+        log.info("loaded wangdian client: {}", config);
 
-    return DefaultWangdianClient.create(config, new WangdianResponseTypeInterceptor());
-  }
+        return DefaultWangdianClient.create(config, new WangdianResponseTypeInterceptor());
+    }
 }
