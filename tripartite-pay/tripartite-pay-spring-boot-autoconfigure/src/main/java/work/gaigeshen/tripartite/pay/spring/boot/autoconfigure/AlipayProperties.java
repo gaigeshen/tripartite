@@ -11,7 +11,7 @@ import java.util.List;
  *
  * @author gaigeshen
  */
-@ConfigurationProperties("alipay")
+@ConfigurationProperties("spring.alipay")
 @Data
 public class AlipayProperties {
 

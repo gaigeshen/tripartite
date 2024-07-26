@@ -11,7 +11,7 @@ import java.util.List;
  *
  * @author gaigeshen
  */
-@ConfigurationProperties("ding")
+@ConfigurationProperties("spring.ding")
 @Data
 public class DingProperties {
 

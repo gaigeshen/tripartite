@@ -1,2 +1,0 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  work.gaigeshen.tripartite.wangdian.spring.boot.autoconfigure.WangdianAutoConfiguration

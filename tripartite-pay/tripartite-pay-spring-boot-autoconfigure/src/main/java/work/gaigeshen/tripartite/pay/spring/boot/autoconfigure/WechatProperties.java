@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * @author gaigeshen
  */
-@ConfigurationProperties("wechat")
+@ConfigurationProperties("spring.wechat")
 @Data
 public class WechatProperties {
 
