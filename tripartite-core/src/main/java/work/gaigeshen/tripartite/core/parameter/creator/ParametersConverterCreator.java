@@ -5,6 +5,7 @@ import work.gaigeshen.tripartite.core.parameter.converter.MultipartParametersPar
 import work.gaigeshen.tripartite.core.parameter.converter.ParametersConverter;
 import work.gaigeshen.tripartite.core.parameter.Parameters;
 import work.gaigeshen.tripartite.core.parameter.converter.ParametersParametersConverter;
+import work.gaigeshen.tripartite.core.util.ArgumentValidate;
 
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -27,9 +28,8 @@ public class ParametersConverterCreator implements ParametersCreator {
      * @param rawParameters 原始的请求参数对象不能为空
      */
     public ParametersConverterCreator(ParametersConverter converter, Object rawParameters) {
-        if (Objects.isNull(converter) || Objects.isNull(rawParameters)) {
-            throw new IllegalArgumentException("parameters converter and raw parameters object cannot be null");
-        }
+        ArgumentValidate.notTrue(Objects.isNull(converter) || Objects.isNull(rawParameters),
+                "parameters converter and raw parameters object cannot be null");
         this.converter = converter;
         this.rawParameters = rawParameters;
     }
@@ -42,9 +42,8 @@ public class ParametersConverterCreator implements ParametersCreator {
      * @return 请求参数创建器对象实例
      */
     public static ParametersConverterCreator jsonConverter(Object rawParameters, Consumer<Parameters> customizer) {
-        if (Objects.isNull(rawParameters) || Objects.isNull(customizer)) {
-            throw new IllegalArgumentException("raw parameters object and parameters customizer cannot be null");
-        }
+        ArgumentValidate.notTrue(Objects.isNull(rawParameters) || Objects.isNull(customizer),
+                "raw parameters object and parameters customizer cannot be null");
         return new ParametersConverterCreator(JsonParametersConverter.INSTANCE, rawParameters) {
             @Override
             protected void overrideParameters(Parameters parameters) {
@@ -61,9 +60,8 @@ public class ParametersConverterCreator implements ParametersCreator {
      * @return 请求参数创建器对象实例
      */
     public static ParametersConverterCreator parametersConverter(Object rawParameters, Consumer<Parameters> customizer) {
-        if (Objects.isNull(rawParameters) || Objects.isNull(customizer)) {
-            throw new IllegalArgumentException("raw parameters object and parameters customizer cannot be null");
-        }
+        ArgumentValidate.notTrue(Objects.isNull(rawParameters) || Objects.isNull(customizer),
+                "raw parameters object and parameters customizer cannot be null");
         return new ParametersConverterCreator(ParametersParametersConverter.INSTANCE, rawParameters) {
             @Override
             protected void overrideParameters(Parameters parameters) {
@@ -80,9 +78,8 @@ public class ParametersConverterCreator implements ParametersCreator {
      * @return 请求参数创建器对象实例
      */
     public static ParametersConverterCreator multipartParametersConverter(Object rawParameters, Consumer<Parameters> customizer) {
-        if (Objects.isNull(rawParameters) || Objects.isNull(customizer)) {
-            throw new IllegalArgumentException("raw parameters object and parameters customizer cannot be null");
-        }
+        ArgumentValidate.notTrue(Objects.isNull(rawParameters) || Objects.isNull(customizer),
+                "raw parameters object and parameters customizer cannot be null");
         return new ParametersConverterCreator(MultipartParametersParametersConverter.INSTANCE, rawParameters) {
             @Override
             protected void overrideParameters(Parameters parameters) {

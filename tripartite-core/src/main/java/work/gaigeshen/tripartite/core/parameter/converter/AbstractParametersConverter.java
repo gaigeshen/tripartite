@@ -3,6 +3,7 @@ package work.gaigeshen.tripartite.core.parameter.converter;
 import work.gaigeshen.tripartite.core.parameter.Parameters;
 import work.gaigeshen.tripartite.core.parameter.typed.ParameterResolver;
 import work.gaigeshen.tripartite.core.parameter.typed.converter.DefaultParameterConverter;
+import work.gaigeshen.tripartite.core.util.ArgumentValidate;
 
 import java.lang.reflect.Field;
 import java.util.Map;
@@ -17,13 +18,9 @@ public abstract class AbstractParametersConverter implements ParametersConverter
 
     @Override
     public final Parameters convert(Object parameters) throws ParametersConversionException {
-        if (Objects.isNull(parameters)) {
-            throw new IllegalArgumentException("parameters cannot be null");
-        }
+        ArgumentValidate.notNull(parameters, "parameters cannot be null");
         Parameters initialParameters = initParameters(parameters);
-        if (Objects.isNull(initialParameters)) {
-            throw new IllegalArgumentException("init parameters cannot be null");
-        }
+        ArgumentValidate.notNull(initialParameters, "init parameters cannot be null");
         if (parameters instanceof Map) {
             for (Map.Entry<?, ?> entry : ((Map<?, ?>) parameters).entrySet()) {
                 Object value = entry.getValue();

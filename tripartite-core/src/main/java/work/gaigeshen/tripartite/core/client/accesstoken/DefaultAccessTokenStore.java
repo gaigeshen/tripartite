@@ -1,6 +1,7 @@
 package work.gaigeshen.tripartite.core.client.accesstoken;
 
 import work.gaigeshen.tripartite.core.client.config.Config;
+import work.gaigeshen.tripartite.core.util.ArgumentValidate;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,25 +19,19 @@ public class DefaultAccessTokenStore<C extends Config> implements AccessTokenSto
 
     @Override
     public boolean save(C config, AccessToken accessToken) throws AccessTokenStoreException {
-        if (Objects.isNull(accessToken)) {
-            throw new IllegalArgumentException("accessToken cannot be null");
-        }
+        ArgumentValidate.notNull(accessToken, "accessToken cannot be null");
         return Objects.isNull(internalStore.put(config, accessToken));
     }
 
     @Override
     public void delete(C config) throws AccessTokenStoreException {
-        if (Objects.isNull(config)) {
-            throw new IllegalArgumentException("config cannot be null");
-        }
+        ArgumentValidate.notNull(config, "config cannot be null");
         internalStore.remove(config);
     }
 
     @Override
     public AccessToken find(C config) throws AccessTokenStoreException {
-        if (Objects.isNull(config)) {
-            throw new IllegalArgumentException("config cannot be null");
-        }
+        ArgumentValidate.notNull(config, "config cannot be null");
         return internalStore.get(config);
     }
 

@@ -1,6 +1,7 @@
 package work.gaigeshen.tripartite.core.interceptor;
 
 import work.gaigeshen.tripartite.core.WebExecutionException;
+import work.gaigeshen.tripartite.core.util.ArgumentValidate;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -16,9 +17,7 @@ public class Interceptors {
     private final List<Interceptor> interceptors = new ArrayList<>();
 
     public Interceptors(Interceptor... interceptors) {
-        if (Objects.isNull(interceptors)) {
-            throw new IllegalArgumentException("interceptors cannot be null");
-        }
+        ArgumentValidate.notNull(interceptors, "interceptors cannot be null");
         for (Interceptor interceptor : interceptors) {
             if (Objects.isNull(interceptor)) {
                 continue;
@@ -31,13 +30,10 @@ public class Interceptors {
         return !interceptors.isEmpty();
     }
 
-    public Interceptor.Response intercept(Interceptor.Request request, Execution execution) throws InterceptingException, WebExecutionException {
-        if (Objects.isNull(request)) {
-            throw new IllegalArgumentException("request cannot be null");
-        }
-        if (Objects.isNull(execution)) {
-            throw new IllegalArgumentException("execution cannot be null");
-        }
+    public Interceptor.Response intercept(Interceptor.Request request, Execution execution)
+            throws InterceptingException, WebExecutionException {
+        ArgumentValidate.notTrue(Objects.isNull(request) || Objects.isNull(execution),
+                "request and execution cannot be null");
         return new InternalChain(interceptors, execution).intercept(request);
     }
 

@@ -1,6 +1,7 @@
 package work.gaigeshen.tripartite.core.parameter.typed;
 
 import work.gaigeshen.tripartite.core.parameter.Parameter;
+import work.gaigeshen.tripartite.core.util.ArgumentValidate;
 
 import java.util.Objects;
 
@@ -14,9 +15,8 @@ public class AbstractParameter<T> implements Parameter<T> {
     private final T value;
 
     public AbstractParameter(String name, T value) {
-        if (Objects.isNull(name) || Objects.isNull(value)) {
-            throw new IllegalArgumentException("name and value cannot be null");
-        }
+        ArgumentValidate.notTrue(Objects.isNull(name) || Objects.isNull(value),
+                "name and value cannot be null");
         this.name = name;
         this.value = value;
     }
@@ -49,9 +49,7 @@ public class AbstractParameter<T> implements Parameter<T> {
 
     @Override
     public final int compareTo(Parameter<?> parameter) {
-        if (Objects.isNull(parameter)) {
-            throw new IllegalArgumentException("parameters cannot be null");
-        }
+        ArgumentValidate.notNull(parameter, "parameters cannot be null");
         return getName().compareTo(parameter.getName());
     }
 }

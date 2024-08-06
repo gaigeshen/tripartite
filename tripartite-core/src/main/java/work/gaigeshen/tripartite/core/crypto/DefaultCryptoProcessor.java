@@ -1,5 +1,7 @@
 package work.gaigeshen.tripartite.core.crypto;
 
+import work.gaigeshen.tripartite.core.util.ArgumentValidate;
+
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
@@ -7,7 +9,6 @@ import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
 import java.security.SecureRandom;
 import java.util.Base64;
-import java.util.Objects;
 
 /**
  * @author gaigeshen
@@ -17,9 +18,7 @@ public class DefaultCryptoProcessor implements CryptoProcessor {
     private final byte[] secret;
 
     public DefaultCryptoProcessor(String secret) {
-        if (Objects.isNull(secret)) {
-            throw new IllegalArgumentException("secret cannot be null");
-        }
+        ArgumentValidate.notNull(secret, "secret cannot be null");
         this.secret = secret.getBytes(StandardCharsets.UTF_8);
     }
 

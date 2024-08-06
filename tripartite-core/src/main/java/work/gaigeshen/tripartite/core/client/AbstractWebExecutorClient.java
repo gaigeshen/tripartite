@@ -10,6 +10,7 @@ import work.gaigeshen.tripartite.core.interceptor.AbstractInterceptor;
 import work.gaigeshen.tripartite.core.parameter.converter.ParametersConverter;
 import work.gaigeshen.tripartite.core.parameter.converter.ParametersMetadataParametersConverter;
 import work.gaigeshen.tripartite.core.ratelimiter.RateLimiterService;
+import work.gaigeshen.tripartite.core.util.ArgumentValidate;
 
 import java.util.Collections;
 import java.util.List;
@@ -33,9 +34,7 @@ public abstract class AbstractWebExecutorClient<C extends Config> implements Cli
     public synchronized void init() throws ClientException {
         if (Objects.isNull(webExecutor)) {
             webExecutor = createWebExecutor();
-            if (Objects.isNull(webExecutor)) {
-                throw new ClientException("web executor created cannot be null");
-            }
+            ArgumentValidate.notNull(webExecutor, "web executor created cannot be null");
             initInternal();
         }
     }
@@ -112,9 +111,7 @@ public abstract class AbstractWebExecutorClient<C extends Config> implements Cli
      * @throws ClientException 校验失败的时候可以抛出此异常
      */
     protected <R extends ClientResponse> R validateResponse(R response) throws ClientException {
-        if (Objects.isNull(response)) {
-            throw new ClientException("could not validate null response");
-        }
+        ArgumentValidate.notNull(response, "could not validate null response");
         return response;
     }
 

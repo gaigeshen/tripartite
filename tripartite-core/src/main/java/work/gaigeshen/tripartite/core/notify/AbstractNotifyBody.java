@@ -1,6 +1,6 @@
 package work.gaigeshen.tripartite.core.notify;
 
-import java.util.Objects;
+import work.gaigeshen.tripartite.core.util.ArgumentValidate;
 
 /**
  * 抽象的异步通知数据体
@@ -12,9 +12,7 @@ public abstract class AbstractNotifyBody extends AbstractNotifyContent implement
     private final byte[] body;
 
     protected AbstractNotifyBody(byte[] body) {
-        if (Objects.isNull(body)) {
-            throw new IllegalArgumentException("body cannot be null");
-        }
+        ArgumentValidate.notNull(body, "body cannot be null");
         this.body = body;
     }
 

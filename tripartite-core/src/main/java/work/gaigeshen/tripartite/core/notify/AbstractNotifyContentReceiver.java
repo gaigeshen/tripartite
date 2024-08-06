@@ -2,6 +2,7 @@ package work.gaigeshen.tripartite.core.notify;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import work.gaigeshen.tripartite.core.util.ArgumentValidate;
 
 import java.util.List;
 import java.util.Objects;
@@ -23,9 +24,7 @@ public abstract class AbstractNotifyContentReceiver<C extends NotifyContent> imp
      * @param processors 新的异步通知数据处理器集合不能为空
      */
     public final void setProcessors(List<NotifyContentProcessor<C>> processors) {
-        if (Objects.isNull(processors)) {
-            throw new IllegalArgumentException("notify parameters processors cannot be null");
-        }
+        ArgumentValidate.notNull(processors, "notify parameters processors cannot be null");
         this.processors.setProcessors(processors);
     }
 
@@ -42,9 +41,7 @@ public abstract class AbstractNotifyContentReceiver<C extends NotifyContent> imp
 
     @Override
     public final void receive(C content) throws NotifyContentException {
-        if (Objects.isNull(content)) {
-            throw new IllegalArgumentException("notify content cannot be null");
-        }
+        ArgumentValidate.notNull(content, "notify content cannot be null");
         log.info("<<<< Notify Content: {}", content);
         C validated = validate(content);
         if (Objects.isNull(validated)) {

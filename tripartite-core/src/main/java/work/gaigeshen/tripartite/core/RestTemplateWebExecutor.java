@@ -26,6 +26,7 @@ import work.gaigeshen.tripartite.core.parameter.converter.ParametersConverter;
 import work.gaigeshen.tripartite.core.parameter.creator.ParametersCreator;
 import work.gaigeshen.tripartite.core.response.consumer.ResponseConsumer;
 import work.gaigeshen.tripartite.core.response.converter.ResponseConverter;
+import work.gaigeshen.tripartite.core.util.ArgumentValidate;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -48,9 +49,7 @@ public class RestTemplateWebExecutor implements WebExecutor {
     private ParametersConverter parametersConverter;
 
     protected RestTemplateWebExecutor(RestTemplate template, boolean disableSslValidation) {
-        if (Objects.isNull(template)) {
-            throw new IllegalArgumentException("restTemplate cannot be null");
-        }
+        ArgumentValidate.notNull(template, "restTemplate cannot be null");
         template.getInterceptors().add(0, new LoggerInterceptor());
         this.restTemplate = template;
         if (disableSslValidation) {
@@ -71,16 +70,12 @@ public class RestTemplateWebExecutor implements WebExecutor {
     }
 
     public void setParametersConverter(ParametersConverter converter) {
-        if (Objects.isNull(converter)) {
-            throw new IllegalArgumentException("parameters converter cannot be null");
-        }
+        ArgumentValidate.notNull(converter, "converter cannot be null");
         this.parametersConverter = converter;
     }
 
     public void setInterceptors(Interceptor... interceptors) {
-        if (Objects.isNull(interceptors)) {
-            throw new IllegalArgumentException("interceptors cannot be null");
-        }
+        ArgumentValidate.notNull(interceptors, "interceptors cannot be null");
         if (interceptors.length > 0) {
             Interceptors newInterceptors = new Interceptors(interceptors);
             restTemplate.getInterceptors().add(0, new HttpInterceptorInterceptors(newInterceptors));
@@ -94,335 +89,165 @@ public class RestTemplateWebExecutor implements WebExecutor {
 
     @Override
     public <T> T execute(String url, Class<T> responseClass, Object... uriVariables) throws WebException {
-        if (Objects.isNull(url)) {
-            throw new IllegalArgumentException("url and parameters cannot be null");
-        }
-        if (Objects.isNull(responseClass)) {
-            throw new IllegalArgumentException("response class cannot be null");
-        }
         return executeInternal(url, createResponseExtractor(responseClass), uriVariables);
     }
 
     @Override
     public <T> T execute(String url, ResponseConverter<T> converter, Object... uriVariables) throws WebException {
-        if (Objects.isNull(url)) {
-            throw new IllegalArgumentException("url and parameters cannot be null");
-        }
-        if (Objects.isNull(converter)) {
-            throw new IllegalArgumentException("response converter cannot be null");
-        }
         return executeInternal(url, createResponseExtractor(converter), uriVariables);
     }
 
     @Override
     public void execute(String url, ResponseConsumer consumer, Object... uriVariables) throws WebException {
-        if (Objects.isNull(url)) {
-            throw new IllegalArgumentException("url and parameters cannot be null");
-        }
-        if (Objects.isNull(consumer)) {
-            throw new IllegalArgumentException("response consumer cannot be null");
-        }
         executeInternal(url, createResponseExtractor(consumer), uriVariables);
     }
 
     @Override
     public <T> T execute(String url, Parameters parameters, Class<T> responseClass, Object... uriVariables) throws WebException {
-        if (Objects.isNull(url) || Objects.isNull(parameters)) {
-            throw new IllegalArgumentException("url and parameters cannot be null");
-        }
-        if (Objects.isNull(responseClass)) {
-            throw new IllegalArgumentException("response class cannot be null");
-        }
         return executeInternal(url, parameters, createResponseExtractor(responseClass), uriVariables);
     }
 
     @Override
     public <T> T execute(String url, Parameters parameters, ResponseConverter<T> converter, Object... uriVariables) throws WebException {
-        if (Objects.isNull(url) || Objects.isNull(parameters)) {
-            throw new IllegalArgumentException("url and parameters cannot be null");
-        }
-        if (Objects.isNull(converter)) {
-            throw new IllegalArgumentException("response converter cannot be null");
-        }
         return executeInternal(url, parameters, createResponseExtractor(converter), uriVariables);
     }
 
     @Override
     public void execute(String url, Parameters parameters, ResponseConsumer consumer, Object... uriVariables) throws WebException {
-        if (Objects.isNull(url) || Objects.isNull(parameters)) {
-            throw new IllegalArgumentException("url and parameters cannot be null");
-        }
-        if (Objects.isNull(consumer)) {
-            throw new IllegalArgumentException("response consumer cannot be null");
-        }
         executeInternal(url, parameters, createResponseExtractor(consumer), uriVariables);
     }
 
     @Override
     public <T> T executePut(String url, Parameters parameters, Class<T> responseClass, Object... uriVariables) throws WebException {
-        if (Objects.isNull(url) || Objects.isNull(parameters)) {
-            throw new IllegalArgumentException("url and parameters cannot be null");
-        }
-        if (Objects.isNull(responseClass)) {
-            throw new IllegalArgumentException("response class cannot be null");
-        }
         return executeInternalPut(url, parameters, createResponseExtractor(responseClass), uriVariables);
     }
 
     @Override
     public <T> T executePut(String url, Parameters parameters, ResponseConverter<T> converter, Object... uriVariables) throws WebException {
-        if (Objects.isNull(url) || Objects.isNull(parameters)) {
-            throw new IllegalArgumentException("url and parameters cannot be null");
-        }
-        if (Objects.isNull(converter)) {
-            throw new IllegalArgumentException("response converter cannot be null");
-        }
         return executeInternalPut(url, parameters, createResponseExtractor(converter), uriVariables);
     }
 
     @Override
     public void executePut(String url, Parameters parameters, ResponseConsumer consumer, Object... uriVariables) throws WebException {
-        if (Objects.isNull(url) || Objects.isNull(parameters)) {
-            throw new IllegalArgumentException("url and parameters cannot be null");
-        }
-        if (Objects.isNull(consumer)) {
-            throw new IllegalArgumentException("response consumer cannot be null");
-        }
         executeInternalPut(url, parameters, createResponseExtractor(consumer), uriVariables);
     }
 
     @Override
     public <T> T executeDelete(String url, Parameters parameters, Class<T> responseClass, Object... uriVariables) throws WebException {
-        if (Objects.isNull(url) || Objects.isNull(parameters)) {
-            throw new IllegalArgumentException("url and parameters cannot be null");
-        }
-        if (Objects.isNull(responseClass)) {
-            throw new IllegalArgumentException("response class cannot be null");
-        }
         return executeInternalDelete(url, parameters, createResponseExtractor(responseClass), uriVariables);
     }
 
     @Override
     public <T> T executeDelete(String url, Parameters parameters, ResponseConverter<T> converter, Object... uriVariables) throws WebException {
-        if (Objects.isNull(url) || Objects.isNull(parameters)) {
-            throw new IllegalArgumentException("url and parameters cannot be null");
-        }
-        if (Objects.isNull(converter)) {
-            throw new IllegalArgumentException("response converter cannot be null");
-        }
         return executeInternalDelete(url, parameters, createResponseExtractor(converter), uriVariables);
     }
 
     @Override
     public void executeDelete(String url, Parameters parameters, ResponseConsumer consumer, Object... uriVariables) throws WebException {
-        if (Objects.isNull(url) || Objects.isNull(parameters)) {
-            throw new IllegalArgumentException("url and parameters cannot be null");
-        }
-        if (Objects.isNull(consumer)) {
-            throw new IllegalArgumentException("response consumer cannot be null");
-        }
         executeInternalDelete(url, parameters, createResponseExtractor(consumer), uriVariables);
     }
 
     @Override
     public <T> T execute(String url, Object parameters, Class<T> responseClass, Object... uriVariables) throws WebException {
-        if (Objects.isNull(url) || Objects.isNull(parameters)) {
-            throw new IllegalArgumentException("url and parameters cannot be null");
-        }
-        if (Objects.isNull(responseClass)) {
-            throw new IllegalArgumentException("response class cannot be null");
-        }
         return execute(url, convertParameters(parameters), responseClass, uriVariables);
     }
 
     @Override
     public <T> T execute(String url, Object parameters, ResponseConverter<T> converter, Object... uriVariables) throws WebException {
-        if (Objects.isNull(url) || Objects.isNull(parameters)) {
-            throw new IllegalArgumentException("url and parameters cannot be null");
-        }
-        if (Objects.isNull(converter)) {
-            throw new IllegalArgumentException("response converter cannot be null");
-        }
         return execute(url, convertParameters(parameters), converter, uriVariables);
     }
 
     @Override
     public void execute(String url, Object parameters, ResponseConsumer consumer, Object... uriVariables) throws WebException {
-        if (Objects.isNull(url) || Objects.isNull(parameters)) {
-            throw new IllegalArgumentException("url and parameters cannot be null");
-        }
-        if (Objects.isNull(consumer)) {
-            throw new IllegalArgumentException("response consumer cannot be null");
-        }
         execute(url, convertParameters(parameters), consumer, uriVariables);
     }
 
     @Override
     public <T> T executePut(String url, Object parameters, Class<T> responseClass, Object... uriVariables) throws WebException {
-        if (Objects.isNull(url) || Objects.isNull(parameters)) {
-            throw new IllegalArgumentException("url and parameters cannot be null");
-        }
-        if (Objects.isNull(responseClass)) {
-            throw new IllegalArgumentException("response class cannot be null");
-        }
         return executePut(url, convertParameters(parameters), responseClass, uriVariables);
     }
 
     @Override
     public <T> T executePut(String url, Object parameters, ResponseConverter<T> converter, Object... uriVariables) throws WebException {
-        if (Objects.isNull(url) || Objects.isNull(parameters)) {
-            throw new IllegalArgumentException("url and parameters cannot be null");
-        }
-        if (Objects.isNull(converter)) {
-            throw new IllegalArgumentException("response converter cannot be null");
-        }
         return executePut(url, convertParameters(parameters), converter, uriVariables);
     }
 
     @Override
     public void executePut(String url, Object parameters, ResponseConsumer consumer, Object... uriVariables) throws WebException {
-        if (Objects.isNull(url) || Objects.isNull(parameters)) {
-            throw new IllegalArgumentException("url and parameters cannot be null");
-        }
-        if (Objects.isNull(consumer)) {
-            throw new IllegalArgumentException("response consumer cannot be null");
-        }
         executePut(url, convertParameters(parameters), consumer, uriVariables);
     }
 
     @Override
     public <T> T executeDelete(String url, Object parameters, Class<T> responseClass, Object... uriVariables) throws WebException {
-        if (Objects.isNull(url) || Objects.isNull(parameters)) {
-            throw new IllegalArgumentException("url and parameters cannot be null");
-        }
-        if (Objects.isNull(responseClass)) {
-            throw new IllegalArgumentException("response class cannot be null");
-        }
         return executeDelete(url, convertParameters(parameters), responseClass, uriVariables);
     }
 
     @Override
     public <T> T executeDelete(String url, Object parameters, ResponseConverter<T> converter, Object... uriVariables) throws WebException {
-        if (Objects.isNull(url) || Objects.isNull(parameters)) {
-            throw new IllegalArgumentException("url and parameters cannot be null");
-        }
-        if (Objects.isNull(converter)) {
-            throw new IllegalArgumentException("response converter cannot be null");
-        }
         return executeDelete(url, convertParameters(parameters), converter, uriVariables);
     }
 
     @Override
     public void executeDelete(String url, Object parameters, ResponseConsumer consumer, Object... uriVariables) throws WebException {
-        if (Objects.isNull(url) || Objects.isNull(parameters)) {
-            throw new IllegalArgumentException("url and parameters cannot be null");
-        }
-        if (Objects.isNull(consumer)) {
-            throw new IllegalArgumentException("response consumer cannot be null");
-        }
         executeDelete(url, convertParameters(parameters), consumer, uriVariables);
     }
 
     @Override
     public <T> T execute(String url, ParametersCreator creator, Class<T> responseClass, Object... uriVariables) throws WebException {
-        if (Objects.isNull(url) || Objects.isNull(creator)) {
-            throw new IllegalArgumentException("url and parameters creator cannot be null");
-        }
-        if (Objects.isNull(responseClass)) {
-            throw new IllegalArgumentException("response class cannot be null");
-        }
+        ArgumentValidate.notNull(creator, "creator cannot be null");
         return execute(url, creator.create(), responseClass, uriVariables);
     }
 
     @Override
     public <T> T execute(String url, ParametersCreator creator, ResponseConverter<T> converter, Object... uriVariables) throws WebException {
-        if (Objects.isNull(url) || Objects.isNull(creator)) {
-            throw new IllegalArgumentException("url and parameters creator cannot be null");
-        }
-        if (Objects.isNull(converter)) {
-            throw new IllegalArgumentException("response converter cannot be null");
-        }
+        ArgumentValidate.notNull(creator, "creator cannot be null");
         return execute(url, creator.create(), converter, uriVariables);
     }
 
     @Override
     public void execute(String url, ParametersCreator creator, ResponseConsumer consumer, Object... uriVariables) throws WebException {
-        if (Objects.isNull(url) || Objects.isNull(creator)) {
-            throw new IllegalArgumentException("url and parameters creator cannot be null");
-        }
-        if (Objects.isNull(consumer)) {
-            throw new IllegalArgumentException("response consumer cannot be null");
-        }
+        ArgumentValidate.notNull(creator, "creator cannot be null");
         execute(url, creator.create(), consumer, uriVariables);
     }
 
     @Override
     public <T> T executePut(String url, ParametersCreator creator, Class<T> responseClass, Object... uriVariables) throws WebException {
-        if (Objects.isNull(url) || Objects.isNull(creator)) {
-            throw new IllegalArgumentException("url and parameters creator cannot be null");
-        }
-        if (Objects.isNull(responseClass)) {
-            throw new IllegalArgumentException("response class cannot be null");
-        }
+        ArgumentValidate.notNull(creator, "creator cannot be null");
         return executePut(url, creator.create(), responseClass, uriVariables);
     }
 
     @Override
     public <T> T executePut(String url, ParametersCreator creator, ResponseConverter<T> converter, Object... uriVariables) throws WebException {
-        if (Objects.isNull(url) || Objects.isNull(creator)) {
-            throw new IllegalArgumentException("url and parameters creator cannot be null");
-        }
-        if (Objects.isNull(converter)) {
-            throw new IllegalArgumentException("response converter cannot be null");
-        }
+        ArgumentValidate.notNull(creator, "creator cannot be null");
         return executePut(url, creator.create(), converter, uriVariables);
     }
 
     @Override
     public void executePut(String url, ParametersCreator creator, ResponseConsumer consumer, Object... uriVariables) throws WebException {
-        if (Objects.isNull(url) || Objects.isNull(creator)) {
-            throw new IllegalArgumentException("url and parameters creator cannot be null");
-        }
-        if (Objects.isNull(consumer)) {
-            throw new IllegalArgumentException("response consumer cannot be null");
-        }
+        ArgumentValidate.notNull(creator, "creator cannot be null");
         executePut(url, creator.create(), consumer, uriVariables);
     }
 
     @Override
     public <T> T executeDelete(String url, ParametersCreator creator, Class<T> responseClass, Object... uriVariables) throws WebException {
-        if (Objects.isNull(url) || Objects.isNull(creator)) {
-            throw new IllegalArgumentException("url and parameters creator cannot be null");
-        }
-        if (Objects.isNull(responseClass)) {
-            throw new IllegalArgumentException("response class cannot be null");
-        }
+        ArgumentValidate.notNull(creator, "creator cannot be null");
         return executeDelete(url, creator.create(), responseClass, uriVariables);
     }
 
     @Override
     public <T> T executeDelete(String url, ParametersCreator creator, ResponseConverter<T> converter, Object... uriVariables) throws WebException {
-        if (Objects.isNull(url) || Objects.isNull(creator)) {
-            throw new IllegalArgumentException("url and parameters creator cannot be null");
-        }
-        if (Objects.isNull(converter)) {
-            throw new IllegalArgumentException("response converter cannot be null");
-        }
+        ArgumentValidate.notNull(creator, "creator cannot be null");
         return executeDelete(url, creator.create(), converter, uriVariables);
     }
 
     @Override
     public void executeDelete(String url, ParametersCreator creator, ResponseConsumer consumer, Object... uriVariables) throws WebException {
-        if (Objects.isNull(url) || Objects.isNull(creator)) {
-            throw new IllegalArgumentException("url and parameters creator cannot be null");
-        }
-        if (Objects.isNull(consumer)) {
-            throw new IllegalArgumentException("response consumer cannot be null");
-        }
+        ArgumentValidate.notNull(creator, "creator cannot be null");
         executeDelete(url, creator.create(), consumer, uriVariables);
     }
 
     private <T> T executeInternal(String url, ResponseExtractor<T> extractor, Object... uriVariables) throws WebExecutionException {
+        ArgumentValidate.notBlank(url, "url cannot be blank");
         try {
             return restTemplate.execute(url, GET, wrapParametersRequestCallback(null), extractor, uriVariables);
         } catch (RestClientException e) {
@@ -431,6 +256,8 @@ public class RestTemplateWebExecutor implements WebExecutor {
     }
 
     private <T> T executeInternal(String url, Parameters parameters, ResponseExtractor<T> extractor, Object... uriVariables) throws WebExecutionException {
+        ArgumentValidate.notBlank(url, "url cannot be blank");
+        ArgumentValidate.notNull(parameters, "parameters cannot be null");
         try {
             return restTemplate.execute(url, POST, wrapParametersRequestCallback(parameters), extractor, uriVariables);
         } catch (RestClientException e) {
@@ -439,6 +266,8 @@ public class RestTemplateWebExecutor implements WebExecutor {
     }
 
     private <T> T executeInternalPut(String url, Parameters parameters, ResponseExtractor<T> extractor, Object... uriVariables) throws WebExecutionException {
+        ArgumentValidate.notBlank(url, "url cannot be blank");
+        ArgumentValidate.notNull(parameters, "parameters cannot be null");
         try {
             return restTemplate.execute(url, PUT, wrapParametersRequestCallback(parameters), extractor, uriVariables);
         } catch (RestClientException e) {
@@ -447,6 +276,8 @@ public class RestTemplateWebExecutor implements WebExecutor {
     }
 
     private <T> T executeInternalDelete(String url, Parameters parameters, ResponseExtractor<T> extractor, Object... uriVariables) throws WebExecutionException {
+        ArgumentValidate.notBlank(url, "url cannot be blank");
+        ArgumentValidate.notNull(parameters, "parameters cannot be null");
         try {
             return restTemplate.execute(url, DELETE, wrapParametersRequestCallback(parameters), extractor, uriVariables);
         } catch (RestClientException e) {
@@ -455,9 +286,7 @@ public class RestTemplateWebExecutor implements WebExecutor {
     }
 
     private Parameters convertParameters(Object parameters) throws ParametersConversionException {
-        if (Objects.isNull(parameters)) {
-            throw new IllegalArgumentException("parameters cannot be null");
-        }
+        ArgumentValidate.notNull(parameters, "parameters cannot be null");
         if (Objects.isNull(parametersConverter)) {
             throw new ParametersConversionException("missing parameters converter");
         }
@@ -465,23 +294,17 @@ public class RestTemplateWebExecutor implements WebExecutor {
     }
 
     private <T> ResponseExtractor<T> createResponseExtractor(Class<T> responseClass) {
-        if (Objects.isNull(responseClass)) {
-            throw new IllegalArgumentException("response class cannot be null");
-        }
+        ArgumentValidate.notNull(responseClass, "responseClass cannot be null");
         return new HttpMessageConverterExtractor<>(responseClass, restTemplate.getMessageConverters());
     }
 
     private <R> ResponseExtractor<R> createResponseExtractor(ResponseConverter<R> converter) {
-        if (Objects.isNull(converter)) {
-            throw new IllegalArgumentException("response converter cannot be null");
-        }
+        ArgumentValidate.notNull(converter, "converter cannot be null");
         return new ResponseConverterExtractor<>(converter);
     }
 
     private ResponseExtractor<Void> createResponseExtractor(ResponseConsumer consumer) {
-        if (Objects.isNull(consumer)) {
-            throw new IllegalArgumentException("response consumer cannot be null");
-        }
+        ArgumentValidate.notNull(consumer, "consumer cannot be null");
         return new ResponseConsumerExtractor(consumer);
     }
 
@@ -549,9 +372,7 @@ public class RestTemplateWebExecutor implements WebExecutor {
         private final ResponseConverter<R> converter;
 
         private ResponseConverterExtractor(ResponseConverter<R> converter) {
-            if (Objects.isNull(converter)) {
-                throw new IllegalArgumentException("response converter cannot be null");
-            }
+            ArgumentValidate.notNull(converter, "converter cannot be null");
             this.converter = converter;
         }
 
@@ -571,9 +392,7 @@ public class RestTemplateWebExecutor implements WebExecutor {
         private final ResponseConsumer consumer;
 
         private ResponseConsumerExtractor(ResponseConsumer consumer) {
-            if (Objects.isNull(consumer)) {
-                throw new IllegalArgumentException("response consumer cannot be null");
-            }
+            ArgumentValidate.notNull(consumer, "consumer cannot be null");
             this.consumer = consumer;
         }
 
@@ -594,9 +413,7 @@ public class RestTemplateWebExecutor implements WebExecutor {
         private final Interceptors interceptors;
 
         private HttpInterceptorInterceptors(Interceptors interceptors) {
-            if (Objects.isNull(interceptors)) {
-                throw new IllegalArgumentException("interceptors cannot be null");
-            }
+            ArgumentValidate.notNull(interceptors, "interceptors cannot be null");
             this.interceptors = interceptors;
         }
 
@@ -676,17 +493,13 @@ public class RestTemplateWebExecutor implements WebExecutor {
         private final ClientHttpRequestExecution execution;
 
         private HttpRequestExecution(ClientHttpRequestExecution execution) {
-            if (Objects.isNull(execution)) {
-                throw new IllegalArgumentException("http request execution cannot be null");
-            }
+            ArgumentValidate.notNull(execution, "http request execution cannot be null");
             this.execution = execution;
         }
 
         @Override
         public Interceptor.Response execute(Interceptor.Request request) throws WebExecutionException {
-            if (!(request instanceof HttpRequestRequest)) {
-                throw new IllegalArgumentException("can only support HttpRequestRequest");
-            }
+            ArgumentValidate.notTrue(!(request instanceof HttpRequestRequest), "can only support HttpRequestRequest");
             HttpRequest httpRequest = ((HttpRequestRequest) request).httpRequest;
             try {
                 ClientHttpResponse httpResponse = execution.execute(httpRequest, request.bodyBytes());
@@ -707,12 +520,8 @@ public class RestTemplateWebExecutor implements WebExecutor {
         private final byte[] bodyBytes;
 
         private HttpRequestRequest(HttpRequest httpRequest, byte[] bodyBytes) {
-            if (Objects.isNull(httpRequest)) {
-                throw new IllegalArgumentException("http request cannot be null");
-            }
-            if (Objects.isNull(bodyBytes)) {
-                throw new IllegalArgumentException("body bytes cannot be null");
-            }
+            ArgumentValidate.notNull(httpRequest, "httpRequest cannot be null");
+            ArgumentValidate.notNull(bodyBytes, "bodyBytes cannot be null");
             this.httpRequest = httpRequest;
             this.bodyBytes = bodyBytes;
         }
@@ -753,9 +562,7 @@ public class RestTemplateWebExecutor implements WebExecutor {
         private byte[] buffer;
 
         private HttpResponseResponse(ClientHttpResponse httpResponse) {
-            if (Objects.isNull(httpResponse)) {
-                throw new IllegalArgumentException("http response cannot be null");
-            }
+            ArgumentValidate.notNull(httpResponse, "httpResponse cannot be null");
             this.httpResponse = httpResponse;
         }
 
@@ -819,31 +626,17 @@ public class RestTemplateWebExecutor implements WebExecutor {
         private final HttpHeaders httpHeaders;
 
         private HttpHeadersHeaders(HttpHeaders httpHeaders) {
-            if (Objects.isNull(httpHeaders)) {
-                throw new IllegalArgumentException("http headers cannot be null");
-            }
+            ArgumentValidate.notNull(httpHeaders, "httpHeaders cannot be null");
             this.httpHeaders = httpHeaders;
         }
 
         @Override
         public void addValue(String name, String value) {
-            if (Objects.isNull(name)) {
-                throw new IllegalArgumentException("name cannot be null");
-            }
-            if (Objects.isNull(value)) {
-                throw new IllegalArgumentException("value cannot be null");
-            }
             addValues(name, Collections.singletonList(value));
         }
 
         @Override
         public void addValues(String name, List<String> values) {
-            if (Objects.isNull(name)) {
-                throw new IllegalArgumentException("name cannot be null");
-            }
-            if (Objects.isNull(values) || values.isEmpty()) {
-                throw new IllegalArgumentException("values cannot be null or empty");
-            }
             for (String value : values) {
                 httpHeaders.add(name, value);
             }
@@ -851,55 +644,31 @@ public class RestTemplateWebExecutor implements WebExecutor {
 
         @Override
         public void putValue(String name, String value) {
-            if (Objects.isNull(name)) {
-                throw new IllegalArgumentException("name cannot be null");
-            }
-            if (Objects.isNull(value)) {
-                throw new IllegalArgumentException("value cannot be null");
-            }
             putValues(name, Collections.singletonList(value));
         }
 
         @Override
         public void putValues(String name, List<String> values) {
-            if (Objects.isNull(name)) {
-                throw new IllegalArgumentException("name cannot be null");
-            }
-            if (Objects.isNull(values) || values.isEmpty()) {
-                throw new IllegalArgumentException("values cannot be null or empty");
-            }
             httpHeaders.put(name, values);
         }
 
         @Override
         public List<String> getValues(String name) {
-            if (Objects.isNull(name)) {
-                throw new IllegalArgumentException("name cannot be null");
-            }
             return httpHeaders.get(name);
         }
 
         @Override
         public String getValue(String name) {
-            if (Objects.isNull(name)) {
-                throw new IllegalArgumentException("name cannot be null");
-            }
             return httpHeaders.getFirst(name);
         }
 
         @Override
         public boolean contains(String name) {
-            if (Objects.isNull(name)) {
-                throw new IllegalArgumentException("name cannot be null");
-            }
             return httpHeaders.containsKey(name);
         }
 
         @Override
         public void remove(String name) {
-            if (Objects.isNull(name)) {
-                throw new IllegalArgumentException("name cannot be null");
-            }
             httpHeaders.remove(name);
         }
 

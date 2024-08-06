@@ -1,11 +1,11 @@
 package work.gaigeshen.tripartite.core.response.consumer;
 
 import work.gaigeshen.tripartite.core.header.Headers;
+import work.gaigeshen.tripartite.core.util.ArgumentValidate;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Objects;
 
 /**
  * 响应结果数据消费器
@@ -17,9 +17,7 @@ public class OutputStreamResponseConsumer implements ResponseConsumer {
     private final OutputStream outputStream;
 
     public OutputStreamResponseConsumer(OutputStream outputStream) {
-        if (Objects.isNull(outputStream)) {
-            throw new IllegalArgumentException("output stream cannot be null");
-        }
+        ArgumentValidate.notNull(outputStream, "outputStream cannot be null");
         this.outputStream = outputStream;
     }
 

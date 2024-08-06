@@ -1,11 +1,13 @@
 package work.gaigeshen.tripartite.core.parameter.typed;
 
+import lombok.Getter;
 import work.gaigeshen.tripartite.core.parameter.Parameters;
 import work.gaigeshen.tripartite.core.parameter.typed.converter.BooleanFormatterParameterConverter;
 import work.gaigeshen.tripartite.core.parameter.typed.converter.DateFormatterParameterConverter;
 import work.gaigeshen.tripartite.core.parameter.typed.converter.DefaultParameterConverter;
 import work.gaigeshen.tripartite.core.parameter.typed.converter.DefaultJsonParameterConverter;
 import work.gaigeshen.tripartite.core.parameter.typed.converter.ParameterConverter;
+import work.gaigeshen.tripartite.core.util.ArgumentValidate;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -34,15 +36,9 @@ public class ParameterResolver {
      * @throws IllegalAccessException 可能在读取参数值的时候发生异常
      */
     public static void addParameter(Parameters parameters, Field field, Object target) throws IllegalAccessException {
-        if (Objects.isNull(parameters)) {
-            throw new IllegalArgumentException("parameters cannot be null");
-        }
-        if (Objects.isNull(field)) {
-            throw new IllegalArgumentException("field cannot be null");
-        }
-        if (Objects.isNull(target)) {
-            throw new IllegalArgumentException("target object cannot be null");
-        }
+        ArgumentValidate.notNull(parameters, "parameters cannot be null");
+        ArgumentValidate.notNull(field, "field cannot be null");
+        ArgumentValidate.notNull(target, "target cannot be null");
         field.setAccessible(true);
         Object value = field.get(target);
         if (Objects.isNull(value)) {
@@ -60,9 +56,7 @@ public class ParameterResolver {
      * @throws ParameterMetadataException 无法获取该字段上配置的元数据配置
      */
     public static Metadata getMetadata(Field field) throws ParameterMetadataException {
-        if (Objects.isNull(field)) {
-            throw new IllegalArgumentException("field cannot be null");
-        }
+        ArgumentValidate.notNull(field, "field cannot be null");
         return FIELD_MAPPING_METADATA.computeIfAbsent(field, f -> {
             Parameter metadata = f.getAnnotation(Parameter.class);
             if (Objects.isNull(metadata)) {
@@ -103,6 +97,7 @@ public class ParameterResolver {
      * @author gaigeshen
      * @see Parameter
      */
+    @Getter
     public static class Metadata {
 
         private final String name;
@@ -110,19 +105,10 @@ public class ParameterResolver {
         private final ParameterConverter converter;
 
         private Metadata(String name, ParameterConverter converter) {
-            if (Objects.isNull(name) || Objects.isNull(converter)) {
-                throw new IllegalArgumentException("name and converter cannot be null");
-            }
+            ArgumentValidate.notTrue(Objects.isNull(name) || Objects.isNull(converter),
+                    "name and converter cannot be null");
             this.name = name;
             this.converter = converter;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public ParameterConverter getConverter() {
-            return converter;
         }
     }
 }

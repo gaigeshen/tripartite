@@ -2,6 +2,7 @@ package work.gaigeshen.tripartite.core.util.json;
 
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
+import work.gaigeshen.tripartite.core.util.ArgumentValidate;
 
 import java.util.*;
 
@@ -16,9 +17,7 @@ public class GsonJsonCodec implements JsonCodec {
     private final Gson gson;
 
     public GsonJsonCodec(Gson gson) {
-        if (Objects.isNull(gson)) {
-            throw new IllegalArgumentException("gson cannot be null");
-        }
+        ArgumentValidate.notNull(gson, "gson cannot be null");
         this.gson = gson;
     }
 
@@ -28,33 +27,27 @@ public class GsonJsonCodec implements JsonCodec {
 
     @Override
     public String encode(Object obj) {
-        if (Objects.isNull(obj)) {
-            throw new IllegalArgumentException("object cannot be null");
-        }
+        ArgumentValidate.notNull(obj, "object cannot be null");
         return gson.toJson(obj);
     }
 
     @Override
     public <T> T decodeObject(String json, Class<T> resultClass) {
-        if (Objects.isNull(json) || Objects.isNull(resultClass)) {
-            throw new IllegalArgumentException("json and result class cannot be null");
-        }
+        ArgumentValidate.notTrue(Objects.isNull(json) || Objects.isNull(resultClass),
+                "json and result class cannot be null");
         return gson.fromJson(json, resultClass);
     }
 
     @Override
     public <E> Collection<E> decodeCollection(String json, Class<E> itemClass) {
-        if (Objects.isNull(json) || Objects.isNull(itemClass)) {
-            throw new IllegalArgumentException("json and item class cannot be null");
-        }
+        ArgumentValidate.notTrue(Objects.isNull(json) || Objects.isNull(itemClass),
+                "json and item class cannot be null");
         return gson.fromJson(json, TypeToken.getParameterized(ArrayList.class, itemClass).getType());
     }
 
     @Override
     public Map<String, Object> decodeObject(String json) {
-        if (Objects.isNull(json)) {
-            throw new IllegalArgumentException("json cannot be null");
-        }
+        ArgumentValidate.notNull(json, "json cannot be null");
         JsonElement jsonElement = JsonParser.parseString(json);
         if (!(jsonElement instanceof JsonObject)) {
             throw new IllegalArgumentException("could not decode json to map instance: " + json);
@@ -64,9 +57,7 @@ public class GsonJsonCodec implements JsonCodec {
 
     @Override
     public Collection<Object> decodeCollection(String json) {
-        if (Objects.isNull(json)) {
-            throw new IllegalArgumentException("json cannot be null");
-        }
+        ArgumentValidate.notNull(json, "json cannot be null");
         JsonElement jsonElement = JsonParser.parseString(json);
         if (!(jsonElement instanceof JsonArray)) {
             throw new IllegalArgumentException("could not decode json to list instance: " + json);

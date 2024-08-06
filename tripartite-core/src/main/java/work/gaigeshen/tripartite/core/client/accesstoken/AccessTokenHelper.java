@@ -2,6 +2,7 @@ package work.gaigeshen.tripartite.core.client.accesstoken;
 
 import org.apache.commons.lang3.StringUtils;
 import work.gaigeshen.tripartite.core.client.config.Config;
+import work.gaigeshen.tripartite.core.util.ArgumentValidate;
 
 import java.util.Date;
 import java.util.Objects;
@@ -20,9 +21,7 @@ public class AccessTokenHelper {
      * @return 剩余有效时长单位秒
      */
     public static long getRemainingDuration(AccessToken accessToken) {
-        if (Objects.isNull(accessToken)) {
-            throw new IllegalArgumentException("accessToken cannot be null");
-        }
+        ArgumentValidate.notNull(accessToken, "accessToken cannot be null");
         if (isExpired(accessToken)) {
             return 0;
         }
@@ -38,9 +37,8 @@ public class AccessTokenHelper {
      * @return 新的访问令牌
      */
     public static AccessToken createAccessToken(Config config, String newAccessToken, long expireInSeconds) {
-        if (Objects.isNull(config) || Objects.isNull(newAccessToken)) {
-            throw new IllegalArgumentException("config and new access token value cannot be null");
-        }
+        ArgumentValidate.notTrue(Objects.isNull(config) || Objects.isNull(newAccessToken),
+                "config and new access token value cannot be null");
         AccessToken.Builder builder = AccessToken.builder()
                 .setAccessToken(newAccessToken).setExpiresIn(expireInSeconds)
                 .setExpiresTimestamp(System.currentTimeMillis() / 1000 + expireInSeconds)
@@ -55,9 +53,7 @@ public class AccessTokenHelper {
      * @return 是否已经过期
      */
     public static boolean isExpired(AccessToken accessToken) {
-        if (Objects.isNull(accessToken)) {
-            throw new IllegalArgumentException("accessToken cannot be null");
-        }
+        ArgumentValidate.notNull(accessToken, "accessToken cannot be null");
         return accessToken.getExpiresTimestamp() <= System.currentTimeMillis() / 1000;
     }
 
@@ -68,9 +64,7 @@ public class AccessTokenHelper {
      * @return 是否有效
      */
     public static boolean isValid(AccessToken accessToken) {
-        if (Objects.isNull(accessToken)) {
-            throw new IllegalArgumentException("accessToken cannot be null");
-        }
+        ArgumentValidate.notNull(accessToken, "accessToken cannot be null");
         return !StringUtils.isAnyBlank(accessToken.getAccessToken());
     }
 }

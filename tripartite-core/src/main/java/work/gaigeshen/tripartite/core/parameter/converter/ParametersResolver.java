@@ -1,5 +1,8 @@
 package work.gaigeshen.tripartite.core.parameter.converter;
 
+import lombok.Getter;
+import work.gaigeshen.tripartite.core.util.ArgumentValidate;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -21,9 +24,7 @@ public class ParametersResolver {
      * @throws ParametersMetadataException 无法获取请求参数元数据
      */
     public static Metadata getMetadata(Class<?> parametersClass) throws ParametersMetadataException {
-        if (Objects.isNull(parametersClass)) {
-            throw new IllegalArgumentException("parameters class cannot be null");
-        }
+        ArgumentValidate.notNull(parametersClass, "parameters class cannot be null");
         return CLASS_MAPPING_METADATA.computeIfAbsent(parametersClass, cls -> {
             Parameters metadata = cls.getAnnotation(Parameters.class);
             if (Objects.isNull(metadata)) {
@@ -72,6 +73,7 @@ public class ParametersResolver {
      * @author gaigeshen
      * @see Parameters
      */
+    @Getter
     public static class Metadata {
 
         private final ParametersConverter converter;
@@ -79,19 +81,10 @@ public class ParametersResolver {
         private final ParametersCustomizer customizer;
 
         public Metadata(ParametersConverter converter, ParametersCustomizer customizer) {
-            if (Objects.isNull(converter) || Objects.isNull(customizer)) {
-                throw new IllegalArgumentException("converter and customizer cannot be null");
-            }
+            ArgumentValidate.notTrue(Objects.isNull(converter) || Objects.isNull(customizer),
+                    "converter and customizer cannot be null");
             this.converter = converter;
             this.customizer = customizer;
-        }
-
-        public ParametersConverter getConverter() {
-            return converter;
-        }
-
-        public ParametersCustomizer getCustomizer() {
-            return customizer;
         }
     }
 }

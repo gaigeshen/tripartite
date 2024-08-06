@@ -2,8 +2,7 @@ package work.gaigeshen.tripartite.core.client;
 
 import work.gaigeshen.tripartite.core.client.config.Config;
 import work.gaigeshen.tripartite.core.client.config.ConfigRepository;
-
-import java.util.Objects;
+import work.gaigeshen.tripartite.core.util.ArgumentValidate;
 
 /**
  * 默认的接口客户端加载器
@@ -17,12 +16,8 @@ public class DefaultClientsLoader<C extends Config> implements ClientsLoader<C> 
     private final ConfigRepository<C> configRepository;
 
     public DefaultClientsLoader(Clients<C> clients, ConfigRepository<C> configRepository) {
-        if (Objects.isNull(clients)) {
-            throw new IllegalArgumentException("clients cannot be null");
-        }
-        if (Objects.isNull(configRepository)) {
-            throw new IllegalArgumentException("config repository cannot be null");
-        }
+        ArgumentValidate.notNull(clients, "clients cannot be null");
+        ArgumentValidate.notNull(configRepository, "configRepository cannot be null");
         this.clients = clients;
         this.configRepository = configRepository;
     }

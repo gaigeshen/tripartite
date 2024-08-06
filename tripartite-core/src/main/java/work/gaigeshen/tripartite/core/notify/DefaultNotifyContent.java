@@ -1,7 +1,8 @@
 package work.gaigeshen.tripartite.core.notify;
 
+import work.gaigeshen.tripartite.core.util.ArgumentValidate;
+
 import java.util.Iterator;
-import java.util.Objects;
 
 /**
  * 默认的异步通知数据，是异步通知参数同时也是异步通知数据体，二者接口都已实现，如果不想额外实现自定义的异步通知数据，可以考虑直接使用此类
@@ -15,9 +16,7 @@ public class DefaultNotifyContent extends AbstractNotifyContent implements Notif
     private final NotifyBody notifyBody;
 
     private DefaultNotifyContent(byte[] body) {
-        if (Objects.isNull(body)) {
-            throw new IllegalArgumentException("body cannot be null");
-        }
+        ArgumentValidate.notNull(body, "body cannot be null");
         this.notifyParameters = new AbstractNotifyParameters() { };
         this.notifyBody = new AbstractNotifyBody(body) { };
     }

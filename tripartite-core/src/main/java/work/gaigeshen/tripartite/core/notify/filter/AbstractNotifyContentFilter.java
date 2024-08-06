@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import work.gaigeshen.tripartite.core.notify.NotifyContent;
 import work.gaigeshen.tripartite.core.notify.NotifyContentReceiver;
+import work.gaigeshen.tripartite.core.util.ArgumentValidate;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -26,9 +27,7 @@ public abstract class AbstractNotifyContentFilter<C extends NotifyContent> imple
     private final NotifyContentReceiver<C> receiver;
 
     protected AbstractNotifyContentFilter(NotifyContentReceiver<C> receiver) {
-        if (Objects.isNull(receiver)) {
-            throw new IllegalArgumentException("notify content receiver cannot be null");
-        }
+        ArgumentValidate.notNull(receiver, "notify content receiver cannot be null");
         this.receiver = receiver;
     }
 
