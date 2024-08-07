@@ -1,5 +1,7 @@
 package work.gaigeshen.tripartite.pay.wechat.config;
 
+import work.gaigeshen.tripartite.core.util.ArgumentValidate;
+
 import javax.crypto.Cipher;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -26,23 +28,15 @@ public class DefaultWechatPrivateKey implements WechatPrivateKey {
     private final String certSerialNumber;
 
     public DefaultWechatPrivateKey(PrivateKey privateKey, String certSerialNumber) {
-        if (Objects.isNull(privateKey)) {
-            throw new IllegalArgumentException("private key cannot be null");
-        }
-        if (Objects.isNull(certSerialNumber)) {
-            throw new IllegalArgumentException("certificate serial number cannot be null");
-        }
+        ArgumentValidate.notNull(privateKey, "privateKey cannot be null");
+        ArgumentValidate.notNull(certSerialNumber, "certSerialNumber cannot be null");
         this.privateKey = privateKey;
         this.certSerialNumber = certSerialNumber;
     }
 
     public static DefaultWechatPrivateKey load(String privateKeyContent, String certSerialNumber) throws WechatPrivateKeyException {
-        if (Objects.isNull(privateKeyContent)) {
-            throw new IllegalArgumentException("private key content cannot be null");
-        }
-        if (Objects.isNull(certSerialNumber)) {
-            throw new IllegalArgumentException("certificate serial number cannot be null");
-        }
+        ArgumentValidate.notNull(privateKeyContent, "privateKeyContent cannot be null");
+        ArgumentValidate.notNull(certSerialNumber, "certSerialNumber cannot be null");
         try {
             KeyFactory factory = KeyFactory.getInstance("RSA");
             KeySpec ks = new PKCS8EncodedKeySpec(Base64.getDecoder().decode(privateKeyContent));
@@ -58,12 +52,8 @@ public class DefaultWechatPrivateKey implements WechatPrivateKey {
     }
 
     public static DefaultWechatPrivateKey load(InputStream inputStream, String certSerialNumber) throws WechatPrivateKeyException {
-        if (Objects.isNull(inputStream)) {
-            throw new IllegalArgumentException("private key input stream cannot be null");
-        }
-        if (Objects.isNull(certSerialNumber)) {
-            throw new IllegalArgumentException("certificate serial number cannot be null");
-        }
+        ArgumentValidate.notNull(inputStream, "inputStream cannot be null");
+        ArgumentValidate.notNull(certSerialNumber, "certSerialNumber cannot be null");
         try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
             byte[] buffer = new byte[4096];
             int len;
@@ -77,12 +67,8 @@ public class DefaultWechatPrivateKey implements WechatPrivateKey {
     }
 
     public static DefaultWechatPrivateKey loadClasspath(String classpath, String certSerialNumber) throws WechatPrivateKeyException {
-        if (Objects.isNull(classpath)) {
-            throw new IllegalArgumentException("classpath cannot be null");
-        }
-        if (Objects.isNull(certSerialNumber)) {
-            throw new IllegalArgumentException("certificate serial number cannot be null");
-        }
+        ArgumentValidate.notNull(classpath, "classpath cannot be null");
+        ArgumentValidate.notNull(certSerialNumber, "certSerialNumber cannot be null");
         try (InputStream in = DefaultWechatPrivateKey.class.getClassLoader().getResourceAsStream(classpath)) {
             if (Objects.isNull(in)) {
                 throw new WechatPrivateKeyException("could not read resource: " + classpath);
@@ -94,12 +80,8 @@ public class DefaultWechatPrivateKey implements WechatPrivateKey {
     }
 
     public static DefaultWechatPrivateKey loadFile(String filename, String certSerialNumber) throws WechatPrivateKeyException {
-        if (Objects.isNull(filename)) {
-            throw new IllegalArgumentException("filename cannot be null");
-        }
-        if (Objects.isNull(certSerialNumber)) {
-            throw new IllegalArgumentException("certificate serial number cannot be null");
-        }
+        ArgumentValidate.notNull(filename, "filename cannot be null");
+        ArgumentValidate.notNull(certSerialNumber, "certSerialNumber cannot be null");
         Path path = Paths.get(filename);
         if (!Files.isReadable(path)) {
             throw new IllegalArgumentException("file not readable: " + filename);
@@ -113,9 +95,7 @@ public class DefaultWechatPrivateKey implements WechatPrivateKey {
 
     @Override
     public String sign(byte[] content) throws WechatPrivateKeyException {
-        if (Objects.isNull(content)) {
-            throw new IllegalArgumentException("content cannot be null");
-        }
+        ArgumentValidate.notNull(content, "content cannot be null");
         try {
             Signature signature = Signature.getInstance("SHA256withRSA");
             signature.initSign(privateKey);
@@ -133,9 +113,7 @@ public class DefaultWechatPrivateKey implements WechatPrivateKey {
 
     @Override
     public byte[] decrypt(String cipherText) throws WechatPrivateKeyException {
-        if (Objects.isNull(cipherText)) {
-            throw new IllegalArgumentException("cipher text cannot be null");
-        }
+        ArgumentValidate.notNull(cipherText, "cipherText cannot be null");
         try {
             Cipher cipher = Cipher.getInstance("RSA/ECB/OAEPWithSHA-1AndMGF1Padding");
             cipher.init(Cipher.DECRYPT_MODE, privateKey);

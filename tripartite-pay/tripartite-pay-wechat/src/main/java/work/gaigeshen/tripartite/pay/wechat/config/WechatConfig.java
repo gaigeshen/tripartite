@@ -1,10 +1,14 @@
 package work.gaigeshen.tripartite.pay.wechat.config;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.Objects;
 
 /**
  * @author gaigeshen
  */
+@Getter
 public class WechatConfig {
 
     private final String serverHost;
@@ -35,34 +39,6 @@ public class WechatConfig {
         return new Builder();
     }
 
-    public String getServerHost() {
-        return serverHost;
-    }
-
-    public String getNotifyUrl() {
-        return notifyUrl;
-    }
-
-    public String getAppId() {
-        return appId;
-    }
-
-    public String getMerchantId() {
-        return merchantId;
-    }
-
-    public WechatSecretKey getSecretKey() {
-        return secretKey;
-    }
-
-    public WechatPrivateKey getPrivateKey() {
-        return privateKey;
-    }
-
-    public WechatCertificates getCertificates() {
-        return certificates;
-    }
-
     @Override
     public int hashCode() {
         return Objects.hash(appId, merchantId);
@@ -88,6 +64,7 @@ public class WechatConfig {
     /**
      * @author gaigeshen
      */
+    @Setter
     public static class Builder {
 
         private String serverHost;
@@ -103,34 +80,6 @@ public class WechatConfig {
         private WechatPrivateKey privateKey;
 
         private WechatCertificates certificates;
-
-        public void setServerHost(String serverHost) {
-            this.serverHost = serverHost;
-        }
-
-        public void setNotifyUrl(String notifyUrl) {
-            this.notifyUrl = notifyUrl;
-        }
-
-        public void setAppId(String appId) {
-            this.appId = appId;
-        }
-
-        public void setMerchantId(String merchantId) {
-            this.merchantId = merchantId;
-        }
-
-        public void setSecretKey(WechatSecretKey secretKey) {
-            this.secretKey = secretKey;
-        }
-
-        public void setPrivateKey(WechatPrivateKey privateKey) {
-            this.privateKey = privateKey;
-        }
-
-        public void setCertificates(WechatCertificates certificates) {
-            this.certificates = certificates;
-        }
 
         public void setSecretKeyContent(String secretKeyContent) throws WechatSecretKeyException {
             setSecretKey(DefaultWechatSecretKey.load(secretKeyContent));

@@ -1,8 +1,9 @@
 package work.gaigeshen.tripartite.pay.wechat.config;
 
+import work.gaigeshen.tripartite.core.util.ArgumentValidate;
+
 import java.io.InputStream;
 import java.security.cert.X509Certificate;
-import java.util.Objects;
 
 /**
  * 微信平台证书装饰
@@ -14,9 +15,7 @@ public abstract class WechatCertificatesDecorator implements WechatCertificates 
     private final WechatCertificates certificates;
 
     public WechatCertificatesDecorator(WechatCertificates certificates) {
-        if (Objects.isNull(certificates)) {
-            throw new IllegalArgumentException("wechat certificates cannot be null");
-        }
+        ArgumentValidate.notNull(certificates, "certificates cannot be null");
         this.certificates = certificates;
     }
 

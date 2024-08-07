@@ -3,6 +3,7 @@ package work.gaigeshen.tripartite.pay.alipay.notify;
 import work.gaigeshen.tripartite.core.notify.AbstractNotifyContentReceiver;
 import work.gaigeshen.tripartite.core.notify.NotifyContentIncorrectException;
 import work.gaigeshen.tripartite.core.notify.NotifyParameters;
+import work.gaigeshen.tripartite.core.util.ArgumentValidate;
 import work.gaigeshen.tripartite.pay.alipay.config.AlipayCertificates;
 import work.gaigeshen.tripartite.pay.alipay.AlipayClients;
 
@@ -21,9 +22,7 @@ public class AlipayNotifyParametersReceiver extends AbstractNotifyContentReceive
     private final AlipayClients alipayClients;
 
     public AlipayNotifyParametersReceiver(AlipayClients alipayClients) {
-        if (Objects.isNull(alipayClients)) {
-            throw new IllegalArgumentException("alipay clients cannot be null");
-        }
+        ArgumentValidate.notNull(alipayClients, "alipayClients cannot be null");
         this.alipayClients = alipayClients;
     }
 

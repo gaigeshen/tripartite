@@ -1,5 +1,6 @@
 package work.gaigeshen.tripartite.pay.wechat;
 
+import work.gaigeshen.tripartite.core.util.ArgumentValidate;
 import work.gaigeshen.tripartite.pay.wechat.config.WechatConfig;
 
 import java.util.Collection;
@@ -25,9 +26,7 @@ public class DefaultWechatClients implements WechatClients {
      * @param wechatClients 微信支付客户端集合不能为空
      */
     public DefaultWechatClients(Collection<WechatClient> wechatClients) {
-        if (Objects.isNull(wechatClients)) {
-            throw new IllegalArgumentException("wechat clients cannot be null");
-        }
+        ArgumentValidate.notNull(wechatClients, "wechatClients cannot be null");
         for (WechatClient wechatClient : wechatClients) {
             this.wechatClients.put(wechatClient.getWechatConfig(), wechatClient);
         }
@@ -35,9 +34,7 @@ public class DefaultWechatClients implements WechatClients {
 
     @Override
     public WechatClient getClient(Predicate<WechatConfig> predicate) throws WechatClientNotFountException {
-        if (Objects.isNull(predicate)) {
-            throw new IllegalArgumentException("predicate cannot be null");
-        }
+        ArgumentValidate.notNull(predicate, "predicate cannot be null");
         WechatClient wechatClient = findWechatClient(predicate);
         if (Objects.isNull(wechatClient)) {
             throw new WechatClientNotFountException("could not find wechat client");
@@ -55,9 +52,7 @@ public class DefaultWechatClients implements WechatClients {
     }
 
     private WechatClient findWechatClient(Predicate<WechatConfig> predicate) {
-        if (Objects.isNull(predicate)) {
-            throw new IllegalArgumentException("predicate cannot be null");
-        }
+        ArgumentValidate.notNull(predicate, "predicate cannot be null");
         for (Map.Entry<WechatConfig, WechatClient> entry : wechatClients.entrySet()) {
             if (predicate.test(entry.getKey())) {
                 return entry.getValue();

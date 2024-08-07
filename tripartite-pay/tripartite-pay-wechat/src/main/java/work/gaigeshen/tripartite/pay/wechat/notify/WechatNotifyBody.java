@@ -1,5 +1,6 @@
 package work.gaigeshen.tripartite.pay.wechat.notify;
 
+import lombok.Getter;
 import work.gaigeshen.tripartite.core.notify.AbstractNotifyBody;
 
 import java.util.Objects;
@@ -9,6 +10,7 @@ import java.util.Objects;
  *
  * @author gaigeshen
  */
+@Getter
 public class WechatNotifyBody extends AbstractNotifyBody {
     /**
      * 应用编号
@@ -44,22 +46,6 @@ public class WechatNotifyBody extends AbstractNotifyBody {
         }
         this.appId = appId;
         this.merchantId = merchantId;
-    }
-
-    public String getAppId() {
-        return appId;
-    }
-
-    public String getMerchantId() {
-        return merchantId;
-    }
-
-    public String getEventType() {
-        return eventType;
-    }
-
-    public String getResource() {
-        return resource;
     }
 
     void setEventType(String eventType) {

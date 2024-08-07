@@ -13,6 +13,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
             <groupId>work.gaigeshen</groupId>
             <artifactId>tripartite-core</artifactId>
             <version>${project.version}</version>

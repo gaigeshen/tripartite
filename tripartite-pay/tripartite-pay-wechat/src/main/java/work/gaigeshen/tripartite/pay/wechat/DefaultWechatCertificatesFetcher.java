@@ -1,5 +1,6 @@
 package work.gaigeshen.tripartite.pay.wechat;
 
+import work.gaigeshen.tripartite.core.util.ArgumentValidate;
 import work.gaigeshen.tripartite.pay.wechat.config.AutoUpdateWechatCertificates;
 import work.gaigeshen.tripartite.pay.wechat.config.WechatSecretKey;
 import work.gaigeshen.tripartite.pay.wechat.response.WechatResponse;
@@ -28,9 +29,7 @@ public class DefaultWechatCertificatesFetcher implements AutoUpdateWechatCertifi
      * @param wechatClient 需要微信支付客户端
      */
     public DefaultWechatCertificatesFetcher(WechatClient wechatClient) {
-        if (Objects.isNull(wechatClient)) {
-            throw new IllegalArgumentException("wechat client cannot be null");
-        }
+        ArgumentValidate.notNull(wechatClient, "wechatClient cannot be null");
         this.wechatClient = wechatClient;
         this.secretKey = wechatClient.getWechatConfig().getSecretKey();
     }
