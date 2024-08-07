@@ -1,5 +1,6 @@
 package work.gaigeshen.tripartite.his.procurement.openapi.accesstoken;
 
+import work.gaigeshen.tripartite.core.util.ArgumentValidate;
 import work.gaigeshen.tripartite.his.procurement.openapi.config.HisProcurementConfig;
 
 import java.util.HashMap;
@@ -18,25 +19,20 @@ public class DefaultHisProcurementAccessTokenStore implements HisProcurementAcce
 
     @Override
     public boolean save(HisProcurementConfig config, HisProcurementAccessToken accessToken) throws HisProcurementAccessTokenStoreException {
-        if (Objects.isNull(accessToken)) {
-            throw new IllegalArgumentException("accessToken cannot be null");
-        }
+        ArgumentValidate.notNull(config, "config cannot be null");
+        ArgumentValidate.notNull(accessToken, "accessToken cannot be null");
         return Objects.isNull(internalStore.put(config, accessToken));
     }
 
     @Override
     public void delete(HisProcurementConfig config) throws HisProcurementAccessTokenStoreException {
-        if (Objects.isNull(config)) {
-            throw new IllegalArgumentException("config cannot be null");
-        }
+        ArgumentValidate.notNull(config, "config cannot be null");
         internalStore.remove(config);
     }
 
     @Override
     public HisProcurementAccessToken find(HisProcurementConfig config) throws HisProcurementAccessTokenStoreException {
-        if (Objects.isNull(config)) {
-            throw new IllegalArgumentException("config cannot be null");
-        }
+        ArgumentValidate.notNull(config, "config cannot be null");
         return internalStore.get(config);
     }
 

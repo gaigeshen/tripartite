@@ -1,11 +1,10 @@
 package work.gaigeshen.tripartite.his.procurement.openapi.accesstoken;
 
+import work.gaigeshen.tripartite.core.util.ArgumentValidate;
 import work.gaigeshen.tripartite.his.procurement.openapi.HisProcurementBasicClient;
 import work.gaigeshen.tripartite.his.procurement.openapi.config.HisProcurementConfig;
 import work.gaigeshen.tripartite.his.procurement.openapi.parameters.HisProcurementAccessTokenParameters;
 import work.gaigeshen.tripartite.his.procurement.openapi.response.HisProcurementAccessTokenResponse;
-
-import java.util.Objects;
 
 /**
  * @author gaigeshen
@@ -15,9 +14,7 @@ public class DefaultHisProcurementAccessTokenRefresher implements HisProcurement
     private final HisProcurementClientSelector hisProcurementClientSelector;
 
     public DefaultHisProcurementAccessTokenRefresher(HisProcurementClientSelector hisProcurementClientSelector) {
-        if (Objects.isNull(hisProcurementClientSelector)) {
-            throw new IllegalArgumentException("hisProcurementClientSelector cannot be null");
-        }
+        ArgumentValidate.notNull(hisProcurementClientSelector, "hisProcurementClientSelector cannot be null");
         this.hisProcurementClientSelector = hisProcurementClientSelector;
     }
 

@@ -1,10 +1,10 @@
 package work.gaigeshen.tripartite.his.procurement.openapi.accesstoken;
 
 import org.apache.commons.lang3.StringUtils;
+import work.gaigeshen.tripartite.core.util.ArgumentValidate;
 import work.gaigeshen.tripartite.his.procurement.openapi.config.HisProcurementConfig;
 
 import java.util.Date;
-import java.util.Objects;
 
 /**
  * @author gaigeshen
@@ -25,9 +25,7 @@ public class HisProcurementAccessTokenHelper {
      * @return 剩余有效时长单位秒
      */
     public static long getRemainingDuration(HisProcurementAccessToken accessToken) {
-        if (Objects.isNull(accessToken)) {
-            throw new IllegalArgumentException("accessToken cannot be null");
-        }
+        ArgumentValidate.notNull(accessToken, "accessToken cannot be null");
         if (isExpired(accessToken)) {
             return 0;
         }
@@ -42,9 +40,8 @@ public class HisProcurementAccessTokenHelper {
      * @return 新的访问令牌
      */
     public static HisProcurementAccessToken createAccessToken(HisProcurementConfig config, String newAccessToken) {
-        if (Objects.isNull(config) || Objects.isNull(newAccessToken)) {
-            throw new IllegalArgumentException("config and new access token value cannot be null");
-        }
+        ArgumentValidate.notNull(config, "config cannot be null");
+        ArgumentValidate.notNull(newAccessToken, "newAccessToken cannot be null");
         HisProcurementAccessToken.Builder builder = HisProcurementAccessToken.builder();
         builder.setAccessToken(newAccessToken);
         builder.setAccount(config.getAccount());
@@ -62,9 +59,7 @@ public class HisProcurementAccessTokenHelper {
      * @return 是否已经过期
      */
     public static boolean isExpired(HisProcurementAccessToken accessToken) {
-        if (Objects.isNull(accessToken)) {
-            throw new IllegalArgumentException("accessToken cannot be null");
-        }
+        ArgumentValidate.notNull(accessToken, "accessToken cannot be null");
         return accessToken.getExpiresTimestamp() <= System.currentTimeMillis() / 1000;
     }
 
@@ -75,9 +70,7 @@ public class HisProcurementAccessTokenHelper {
      * @return 是否有效
      */
     public static boolean isValid(HisProcurementAccessToken accessToken) {
-        if (Objects.isNull(accessToken)) {
-            throw new IllegalArgumentException("accessToken cannot be null");
-        }
+        ArgumentValidate.notNull(accessToken, "accessToken cannot be null");
         return !StringUtils.isAnyBlank(accessToken.getAccessToken(), accessToken.getAccount(), accessToken.getType());
     }
 }

@@ -1,5 +1,6 @@
 package work.gaigeshen.tripartite.his.procurement.openapi;
 
+import work.gaigeshen.tripartite.core.util.ArgumentValidate;
 import work.gaigeshen.tripartite.his.procurement.openapi.config.HisProcurementConfig;
 
 import java.util.Collection;
@@ -20,12 +21,8 @@ public class DefaultHisProcurementClients implements HisProcurementClients {
     public DefaultHisProcurementClients(
             Collection<HisProcurementBasicClient> hisProcurementClients,
             HisProcurementClientCreator hisProcurementClientCreator) {
-        if (Objects.isNull(hisProcurementClients)) {
-            throw new IllegalArgumentException("his procurement clients cannot be null");
-        }
-        if (Objects.isNull(hisProcurementClientCreator)) {
-            throw new IllegalArgumentException("his procurement client creator cannot be null");
-        }
+        ArgumentValidate.notNull(hisProcurementClients, "hisProcurementClients cannot be null");
+        ArgumentValidate.notNull(hisProcurementClientCreator, "hisProcurementClientCreator cannot be null");
         for (HisProcurementBasicClient hisProcurementClient : hisProcurementClients) {
             this.hisProcurementClients.put(hisProcurementClient.getHisProcurementConfig(), hisProcurementClient);
         }
@@ -35,9 +32,7 @@ public class DefaultHisProcurementClients implements HisProcurementClients {
     @Override
     public HisProcurementBasicClient getClient(Predicate<HisProcurementConfig> predicate)
             throws HisProcurementClientNotFoundException {
-        if (Objects.isNull(predicate)) {
-            throw new IllegalArgumentException("predicate cannot be null");
-        }
+        ArgumentValidate.notNull(predicate, "predicate cannot be null");
         HisProcurementBasicClient hisProcurementClient = findHisProcurementClient(predicate);
         if (Objects.isNull(hisProcurementClient)) {
             throw new HisProcurementClientNotFoundException("could not find his procurement client");
@@ -48,16 +43,12 @@ public class DefaultHisProcurementClients implements HisProcurementClients {
     @Override
     public HisProcurementBasicClient getClientOrCreate(HisProcurementConfig config)
             throws HisProcurementClientCreationException {
-        if (Objects.isNull(config)) {
-            throw new IllegalArgumentException("config cannot be null");
-        }
+        ArgumentValidate.notNull(config, "config cannot be null");
         return hisProcurementClients.computeIfAbsent(config, hisProcurementClientCreator::create);
     }
 
     private HisProcurementBasicClient findHisProcurementClient(Predicate<HisProcurementConfig> predicate) {
-        if (Objects.isNull(predicate)) {
-            throw new IllegalArgumentException("predicate cannot be null");
-        }
+        ArgumentValidate.notNull(predicate, "predicate cannot be null");
         for (Map.Entry<HisProcurementConfig, HisProcurementBasicClient> entry : hisProcurementClients.entrySet()) {
             if (predicate.test(entry.getKey())) {
                 return entry.getValue();
