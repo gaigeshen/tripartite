@@ -7,6 +7,7 @@ import work.gaigeshen.tripartite.core.client.Clients;
 import work.gaigeshen.tripartite.core.notify.AbstractNotifyContentReceiver;
 import work.gaigeshen.tripartite.core.notify.DefaultNotifyContent;
 import work.gaigeshen.tripartite.core.notify.NotifyContentIncorrectException;
+import work.gaigeshen.tripartite.core.util.ArgumentValidate;
 import work.gaigeshen.tripartite.core.util.json.JsonCodec;
 import work.gaigeshen.tripartite.ding.openapi.config.DingConfig;
 
@@ -30,9 +31,7 @@ public class DingNotifyContentReceiver extends AbstractNotifyContentReceiver<Def
     private final Clients<DingConfig> dingClients;
 
     public DingNotifyContentReceiver(Clients<DingConfig> clients) {
-        if (Objects.isNull(clients)) {
-            throw new IllegalArgumentException("clients cannot be null");
-        }
+        ArgumentValidate.notNull(clients, "clients cannot be null");
         this.dingClients = clients;
     }
 
@@ -89,12 +88,9 @@ public class DingNotifyContentReceiver extends AbstractNotifyContentReceiver<Def
      * @return 返回该密文的签名
      */
     public static String genSignature(DingConfig config, String timestamp, String nonce, String encrypted) {
-        if (Objects.isNull(config)) {
-            throw new IllegalArgumentException("config cannot be null");
-        }
-        if (Objects.isNull(timestamp) || Objects.isNull(nonce) || Objects.isNull(encrypted)) {
-            throw new IllegalArgumentException("timestamp and nonce and encrypted cannot be null");
-        }
+        ArgumentValidate.notNull(config, "config cannot be null");
+        ArgumentValidate.notTrue(Objects.isNull(timestamp) || Objects.isNull(nonce) || Objects.isNull(encrypted),
+                "timestamp and nonce and encrypted cannot be null");
         String[] message = new String[]{config.getToken(), timestamp, nonce, encrypted};
         Arrays.sort(message);
         return DigestUtils.sha1Hex(String.join("", message));
@@ -109,12 +105,8 @@ public class DingNotifyContentReceiver extends AbstractNotifyContentReceiver<Def
      * @throws GeneralSecurityException 加密通用异常
      */
     public static String encrypt(DingConfig config, String plainText) throws GeneralSecurityException {
-        if (Objects.isNull(config)) {
-            throw new IllegalArgumentException("config cannot be null");
-        }
-        if (Objects.isNull(plainText)) {
-            throw new IllegalArgumentException("plain text cannot be null");
-        }
+        ArgumentValidate.notNull(config, "config cannot be null");
+        ArgumentValidate.notNull(plainText, "plainText cannot be null");
         byte[] secretKeyBytes = Base64.decodeBase64(config.getSecretKey() + "=");
 
         byte[] randomBytes = RandomStringUtils.randomAscii(16).getBytes();
@@ -164,12 +156,8 @@ public class DingNotifyContentReceiver extends AbstractNotifyContentReceiver<Def
      * @throws GeneralSecurityException 解密通用异常
      */
     public static String decrypt(DingConfig config, String encrypted) throws GeneralSecurityException {
-        if (Objects.isNull(config)) {
-            throw new IllegalArgumentException("config cannot be null");
-        }
-        if (Objects.isNull(encrypted)) {
-            throw new IllegalArgumentException("encrypted text cannot be null");
-        }
+        ArgumentValidate.notNull(config, "config cannot be null");
+        ArgumentValidate.notNull(encrypted, "encrypted cannot be null");
         byte[] secretKeyBytes = Base64.decodeBase64(config.getSecretKey() + "=");
 
         SecretKeySpec keySpec = new SecretKeySpec(secretKeyBytes, "AES");

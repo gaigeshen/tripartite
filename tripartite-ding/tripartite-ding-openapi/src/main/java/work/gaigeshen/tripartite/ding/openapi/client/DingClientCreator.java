@@ -6,9 +6,8 @@ import work.gaigeshen.tripartite.core.client.Client;
 import work.gaigeshen.tripartite.core.client.ClientCreationException;
 import work.gaigeshen.tripartite.core.client.ClientCreator;
 import work.gaigeshen.tripartite.core.client.accesstoken.AccessTokenManager;
+import work.gaigeshen.tripartite.core.util.ArgumentValidate;
 import work.gaigeshen.tripartite.ding.openapi.config.DingConfig;
-
-import java.util.Objects;
 
 /**
  *
@@ -21,9 +20,7 @@ public class DingClientCreator implements ClientCreator<DingConfig> {
     private final AccessTokenManager<DingConfig> accessTokenManager;
 
     public DingClientCreator(AccessTokenManager<DingConfig> accessTokenManager) {
-        if (Objects.isNull(accessTokenManager)) {
-            throw new IllegalArgumentException("access token manager cannot be null");
-        }
+        ArgumentValidate.notNull(accessTokenManager, "accessTokenManager cannot be null");
         this.accessTokenManager = accessTokenManager;
     }
 
