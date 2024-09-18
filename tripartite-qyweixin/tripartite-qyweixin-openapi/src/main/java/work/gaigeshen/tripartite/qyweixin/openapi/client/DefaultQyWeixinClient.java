@@ -54,6 +54,7 @@ public class DefaultQyWeixinClient extends AbstractWebExecutorClient<QyWeixinCon
      *
      * @return 获取到的访问令牌
      * @throws ClientException 无法获取访问令牌
+     * @see <a href="https://developer.work.weixin.qq.com/document/path/91039">接口文档</a>
      */
     public AccessToken getNewAccessToken() throws ClientException {
         String path = "/cgi-bin/gettoken?corpid={corpid}&corpsecret={corpsecret}";
