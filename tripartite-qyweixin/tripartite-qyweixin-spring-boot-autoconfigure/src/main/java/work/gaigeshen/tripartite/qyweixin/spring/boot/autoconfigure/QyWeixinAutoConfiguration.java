@@ -18,6 +18,7 @@ import work.gaigeshen.tripartite.qyweixin.openapi.config.QyWeixinConfig;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 企业微信自动配置
@@ -49,10 +50,12 @@ public class QyWeixinAutoConfiguration {
             if (!StringUtils.hasText(client.getCorpId()) || !StringUtils.hasText(client.getCorpSecret())) {
                 throw new IllegalStateException("corpId and corpSecret cannot be blank");
             }
+            if (Objects.isNull(client.getAgentId())) {
+                throw new IllegalStateException("agentId cannot be null");
+            }
             QyWeixinConfig dingConfig = QyWeixinConfig.builder()
-                    .setServerHost(client.getServerHost())
-                    .setCorpId(client.getCorpId())
-                    .setCorpSecret(client.getCorpSecret())
+                    .setServerHost(client.getServerHost()).setCorpId(client.getCorpId())
+                    .setCorpSecret(client.getCorpSecret()).setAgentId(client.getAgentId())
                     .build();
             dingClients.add(dingClientCreator.create(dingConfig));
             log.info("loaded qyweixin client: {}", dingConfig);

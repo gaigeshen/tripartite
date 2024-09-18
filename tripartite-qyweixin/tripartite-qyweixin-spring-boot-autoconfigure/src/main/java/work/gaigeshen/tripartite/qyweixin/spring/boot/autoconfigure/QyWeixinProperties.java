@@ -39,5 +39,10 @@ public class QyWeixinProperties {
          * 应用的凭证密钥
          */
         private String corpSecret;
+
+        /**
+         * 应用标识
+         */
+        private Integer agentId;
     }
 }

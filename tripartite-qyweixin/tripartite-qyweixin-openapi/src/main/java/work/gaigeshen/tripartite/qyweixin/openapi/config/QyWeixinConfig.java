@@ -28,10 +28,16 @@ public class QyWeixinConfig implements Config {
      */
     private final String corpSecret;
 
+    /**
+     * 应用标识
+     */
+    private final Integer agentId;
+
     private QyWeixinConfig(Builder builder) {
         this.serverHost = builder.serverHost;
         this.corpId = builder.corpId;
         this.corpSecret = builder.corpSecret;
+        this.agentId = builder.agentId;
     }
 
     public static Builder builder() {
@@ -47,17 +53,17 @@ public class QyWeixinConfig implements Config {
             return false;
         }
         QyWeixinConfig that = (QyWeixinConfig) o;
-        return Objects.equals(corpId, that.corpId);
+        return Objects.equals(corpId, that.corpId) && Objects.equals(agentId, that.agentId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(corpId);
+        return Objects.hash(corpId, agentId);
     }
 
     @Override
     public String toString() {
-        return "QyWexinConfig: " + corpId;
+        return "QyWeixinConfig: " + corpId + ", " + agentId;
     }
 
     /**
@@ -71,6 +77,8 @@ public class QyWeixinConfig implements Config {
 
         private String corpSecret;
 
+        private Integer agentId;
+
         public Builder setServerHost(String serverHost) {
             this.serverHost = serverHost;
             return this;
@@ -83,6 +91,11 @@ public class QyWeixinConfig implements Config {
 
         public Builder setCorpSecret(String corpSecret) {
             this.corpSecret = corpSecret;
+            return this;
+        }
+
+        public Builder setAgentId(Integer agentId) {
+            this.agentId = agentId;
             return this;
         }
 
