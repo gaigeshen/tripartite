@@ -35,7 +35,7 @@ public class DefaultQyWeixinClient extends AbstractWebExecutorClient<QyWeixinCon
         ArgumentValidate.notNull(accessTokenManager, "accessTokenManager cannot be null");
         this.config = config;
         this.accessTokenManager = accessTokenManager;
-        this.rateLimiterService = RateLimiterService.create(16);
+        this.rateLimiterService = RateLimiterService.create(100);
     }
 
     /**
