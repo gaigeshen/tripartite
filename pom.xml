@@ -10,8 +10,9 @@
     <modules>
         <module>tripartite-core</module>
         <module>tripartite-ding</module>
-        <module>tripartite-pay</module>
         <module>tripartite-his</module>
+        <module>tripartite-pay</module>
+        <module>tripartite-qyweixin</module>
     </modules>
 
     <packaging>pom</packaging>
