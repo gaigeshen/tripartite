@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import work.gaigeshen.tripartite.core.client.config.Config;
 import work.gaigeshen.tripartite.core.util.ArgumentValidate;
 
+import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -66,6 +67,15 @@ public class DefaultAccessTokenManager<C extends Config> implements AccessTokenM
             return accessTokenStore.find(config);
         } catch (AccessTokenStoreException e) {
             throw new AccessTokenManagerException("could not find access token: " + config, e);
+        }
+    }
+
+    @Override
+    public Map<C, AccessToken> findAllAccessTokens() throws AccessTokenManagerException {
+        try {
+            return accessTokenStore.findAll();
+        } catch (AccessTokenStoreException e) {
+            throw new AccessTokenManagerException("could not find all access tokens", e);
         }
     }
 
