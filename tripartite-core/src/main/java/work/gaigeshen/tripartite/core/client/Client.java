@@ -97,7 +97,8 @@ public interface Client<C extends Config> extends ServerHosts {
     /**
      * 返回访问令牌的值
      *
-     * @return 访问令牌的值，默认如果没有访问令牌管理器，则返回空对象
+     * @return 访问令牌的值，当前没有获取到访问令牌对象则返回空字符串
+     * @see #getAccessToken()
      */
     default String getAccessTokenValue() {
         AccessToken accessToken = getAccessToken();
@@ -108,6 +109,7 @@ public interface Client<C extends Config> extends ServerHosts {
      * 返回访问令牌对象
      *
      * @return 访问令牌对象，默认如果没有访问令牌管理器，则返回空对象
+     * @see #getAccessTokenManager()
      */
     default AccessToken getAccessToken() {
         AccessTokenManager<C> accessTokenManager = getAccessTokenManager();
