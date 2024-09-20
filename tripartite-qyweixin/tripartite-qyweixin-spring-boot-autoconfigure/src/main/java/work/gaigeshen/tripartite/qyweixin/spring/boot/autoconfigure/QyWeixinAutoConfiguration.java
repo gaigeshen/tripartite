@@ -36,11 +36,11 @@ public class QyWeixinAutoConfiguration {
 
     @Bean
     public ClientsLoader<QyWeixinConfig> qyWeixinClientsLoader() {
-        return new DefaultClientsLoader<>(dingClients(), qyWeixinConfigRepository()).load();
+        return new DefaultClientsLoader<>(qyWeixinClients(), qyWeixinConfigRepository()).load();
     }
 
     @Bean
-    public Clients<QyWeixinConfig> dingClients() {
+    public Clients<QyWeixinConfig> qyWeixinClients() {
         ClientCreator<QyWeixinConfig> dingClientCreator = new QyWexinClientCreator(qyWeixinAccessTokenManager());
         List<Client<QyWeixinConfig>> dingClients = new ArrayList<>();
         for (QyWeixinProperties.Client client : qyWeixinProperties.getClients()) {
@@ -72,7 +72,7 @@ public class QyWeixinAutoConfiguration {
     public AccessTokenRefresher<QyWeixinConfig> qyWeixinAccessTokenRefresher() {
         return (config, oat) -> {
             try {
-                DefaultQyWeixinClient qyWeixinClient = (DefaultQyWeixinClient) dingClients().getClientOrCreate(config);
+                DefaultQyWeixinClient qyWeixinClient = (DefaultQyWeixinClient) qyWeixinClients().getClientOrCreate(config);
                 return qyWeixinClient.getNewAccessToken();
             } catch (ClientException e) {
                 throw new AccessTokenRefreshException(e.getMessage(), e).setCurrentAccessToken(oat).setCanRetry(true);
