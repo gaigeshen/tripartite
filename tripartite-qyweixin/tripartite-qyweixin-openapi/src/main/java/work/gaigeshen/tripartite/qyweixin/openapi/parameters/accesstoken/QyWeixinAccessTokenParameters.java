@@ -1,8 +1,8 @@
-package work.gaigeshen.tripartite.qyweixin.openapi.parameters.api;
+package work.gaigeshen.tripartite.qyweixin.openapi.parameters.accesstoken;
 
 import work.gaigeshen.tripartite.core.parameter.converter.JsonParametersConverter;
 import work.gaigeshen.tripartite.core.parameter.converter.Parameters;
-import work.gaigeshen.tripartite.qyweixin.openapi.parameters.QyWeixinApiParameters;
+import work.gaigeshen.tripartite.qyweixin.openapi.parameters.QyWeixinParameters;
 
 /**
  *
@@ -11,7 +11,7 @@ import work.gaigeshen.tripartite.qyweixin.openapi.parameters.QyWeixinApiParamete
 @Parameters(
         converter = JsonParametersConverter.class
 )
-public class QyWeixinAccessTokenParameters extends QyWeixinApiParameters {
+public class QyWeixinAccessTokenParameters extends QyWeixinParameters {
 
     private String corpId;
 

@@ -1,8 +1,8 @@
-package work.gaigeshen.tripartite.qyweixin.openapi.parameters.api.user;
+package work.gaigeshen.tripartite.qyweixin.openapi.parameters.user;
 
 import work.gaigeshen.tripartite.core.parameter.converter.JsonParametersConverter;
 import work.gaigeshen.tripartite.core.parameter.converter.Parameters;
-import work.gaigeshen.tripartite.qyweixin.openapi.parameters.QyWeixinApiParameters;
+import work.gaigeshen.tripartite.qyweixin.openapi.parameters.QyWeixinParameters;
 
 /**
  *
@@ -11,7 +11,7 @@ import work.gaigeshen.tripartite.qyweixin.openapi.parameters.QyWeixinApiParamete
 @Parameters(
         converter = JsonParametersConverter.class
 )
-public class QyWeixinUserIdByMobileGetParameters extends QyWeixinApiParameters {
+public class QyWeixinUserIdByMobileGetParameters extends QyWeixinParameters {
 
     public String mobile;
 }

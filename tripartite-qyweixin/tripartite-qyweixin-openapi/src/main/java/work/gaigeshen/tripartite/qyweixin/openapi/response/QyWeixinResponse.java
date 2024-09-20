@@ -7,7 +7,7 @@ import work.gaigeshen.tripartite.core.client.response.ClientResponse;
  *
  * @author gaigeshen
  */
-public abstract class QyWeixinApiResponse implements ClientResponse {
+public abstract class QyWeixinResponse implements ClientResponse {
 
     public Integer errcode;
 

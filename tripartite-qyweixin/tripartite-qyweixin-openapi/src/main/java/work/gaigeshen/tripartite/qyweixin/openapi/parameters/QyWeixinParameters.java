@@ -7,6 +7,6 @@ import work.gaigeshen.tripartite.core.client.parameters.ClientParameters;
  *
  * @author gaigeshen
  */
-public abstract class QyWeixinApiParameters implements ClientParameters {
+public abstract class QyWeixinParameters implements ClientParameters {
 
 }

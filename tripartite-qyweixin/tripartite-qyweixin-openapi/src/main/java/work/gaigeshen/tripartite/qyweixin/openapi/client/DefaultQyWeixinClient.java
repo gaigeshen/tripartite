@@ -11,8 +11,8 @@ import work.gaigeshen.tripartite.core.client.response.ClientResponse;
 import work.gaigeshen.tripartite.core.ratelimiter.RateLimiterService;
 import work.gaigeshen.tripartite.core.util.ArgumentValidate;
 import work.gaigeshen.tripartite.qyweixin.openapi.config.QyWeixinConfig;
-import work.gaigeshen.tripartite.qyweixin.openapi.response.QyWeixinApiResponse;
-import work.gaigeshen.tripartite.qyweixin.openapi.response.api.QyWeixinAccessTokenResponse;
+import work.gaigeshen.tripartite.qyweixin.openapi.response.QyWeixinResponse;
+import work.gaigeshen.tripartite.qyweixin.openapi.response.accesstoken.QyWeixinAccessTokenResponse;
 
 import java.util.Collection;
 import java.util.Objects;
@@ -96,10 +96,10 @@ public class DefaultQyWeixinClient extends AbstractWebExecutorClient<QyWeixinCon
     @Override
     protected <R extends ClientResponse> R validateResponse(R response) throws ClientException {
         R preValidated = super.validateResponse(response);
-        if (preValidated instanceof QyWeixinApiResponse) {
-            QyWeixinApiResponse qyWeixinApiResponse = (QyWeixinApiResponse) preValidated;
-            if (!Objects.equals(0, qyWeixinApiResponse.errcode)) {
-                throw new ClientException("[ " + qyWeixinApiResponse.errcode + " ] - [ " + qyWeixinApiResponse.errmsg + " ]");
+        if (preValidated instanceof QyWeixinResponse) {
+            QyWeixinResponse qyWeixinResponse = (QyWeixinResponse) preValidated;
+            if (!Objects.equals(0, qyWeixinResponse.errcode)) {
+                throw new ClientException("[ " + qyWeixinResponse.errcode + " ] - [ " + qyWeixinResponse.errmsg + " ]");
             }
         }
         return preValidated;

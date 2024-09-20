@@ -3,12 +3,12 @@ package work.gaigeshen.tripartite.qyweixin.openapi.client;
 import work.gaigeshen.tripartite.core.client.Client;
 import work.gaigeshen.tripartite.core.client.ClientException;
 import work.gaigeshen.tripartite.qyweixin.openapi.config.QyWeixinConfig;
-import work.gaigeshen.tripartite.qyweixin.openapi.parameters.api.message.QyWeixinMessageSendParameters;
-import work.gaigeshen.tripartite.qyweixin.openapi.parameters.api.user.QyWeixinUserIdByEmailGetParameters;
-import work.gaigeshen.tripartite.qyweixin.openapi.parameters.api.user.QyWeixinUserIdByMobileGetParameters;
-import work.gaigeshen.tripartite.qyweixin.openapi.response.api.message.QyWeixinMessageSendResponse;
-import work.gaigeshen.tripartite.qyweixin.openapi.response.api.user.QyWeixinUserIdByEmailGetResponse;
-import work.gaigeshen.tripartite.qyweixin.openapi.response.api.user.QyWeixinUserIdByMobileGetResponse;
+import work.gaigeshen.tripartite.qyweixin.openapi.parameters.message.QyWeixinMessageSendParameters;
+import work.gaigeshen.tripartite.qyweixin.openapi.parameters.user.QyWeixinUserIdByEmailGetParameters;
+import work.gaigeshen.tripartite.qyweixin.openapi.parameters.user.QyWeixinUserIdByMobileGetParameters;
+import work.gaigeshen.tripartite.qyweixin.openapi.response.message.QyWeixinMessageSendResponse;
+import work.gaigeshen.tripartite.qyweixin.openapi.response.user.QyWeixinUserIdByEmailGetResponse;
+import work.gaigeshen.tripartite.qyweixin.openapi.response.user.QyWeixinUserIdByMobileGetResponse;
 
 /**
  * 企业微信接口客户端
