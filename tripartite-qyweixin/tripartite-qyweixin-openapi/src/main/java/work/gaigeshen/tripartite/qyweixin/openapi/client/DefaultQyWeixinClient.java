@@ -98,7 +98,7 @@ public class DefaultQyWeixinClient extends AbstractWebExecutorClient<QyWeixinCon
         R preValidated = super.validateResponse(response);
         if (preValidated instanceof QyWeixinResponse) {
             QyWeixinResponse qyWeixinResponse = (QyWeixinResponse) preValidated;
-            if (!Objects.equals(0, qyWeixinResponse.errcode)) {
+            if (Objects.nonNull(qyWeixinResponse.errcode) && !Objects.equals(0, qyWeixinResponse.errcode)) {
                 throw new ClientException("[ " + qyWeixinResponse.errcode + " ] - [ " + qyWeixinResponse.errmsg + " ]");
             }
         }

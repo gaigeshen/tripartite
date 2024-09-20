@@ -41,6 +41,31 @@ public class QyWeixinProperties {
         private String corpSecret;
 
         /**
+         * 服务商的凭证密钥
+         */
+        private String providerSecret;
+
+        /**
+         * 代开发应用模板标识
+         */
+        private String suiteId;
+
+        /**
+         * 代开发应用模板凭证密钥
+         */
+        private String suiteSecret;
+
+        /**
+         * 用于校验回调签名
+         */
+        private String token;
+
+        /**
+         * 用于加解密回调内容
+         */
+        private String aesKey;
+
+        /**
          * 应用标识
          */
         private Integer agentId;

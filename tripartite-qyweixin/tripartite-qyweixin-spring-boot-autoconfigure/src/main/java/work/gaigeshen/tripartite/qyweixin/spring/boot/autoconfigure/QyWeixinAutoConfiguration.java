@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.StringUtils;
@@ -15,10 +16,13 @@ import work.gaigeshen.tripartite.qyweixin.openapi.client.DefaultQyWeixinClient;
 import work.gaigeshen.tripartite.qyweixin.openapi.client.QyWeixinClient;
 import work.gaigeshen.tripartite.qyweixin.openapi.client.QyWexinClientCreator;
 import work.gaigeshen.tripartite.qyweixin.openapi.config.QyWeixinConfig;
+import work.gaigeshen.tripartite.qyweixin.openapi.notify.QyWeixinCallbackNotifyContentProcessor;
+import work.gaigeshen.tripartite.qyweixin.openapi.notify.QyWeixinNotifyContentFilter;
+import work.gaigeshen.tripartite.qyweixin.openapi.notify.QyWeixinNotifyContentReceiver;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * 企业微信自动配置
@@ -34,6 +38,24 @@ public class QyWeixinAutoConfiguration {
 
     private final QyWeixinProperties qyWeixinProperties;
 
+    private final List<QyWeixinCallbackNotifyContentProcessor> processors;
+
+    @Bean
+    public QyWeixinNotifyContentReceiver qyWeixinNotifyContentReceiver(Clients<QyWeixinConfig> clients) {
+        QyWeixinNotifyContentReceiver receiver = new QyWeixinNotifyContentReceiver(clients);
+        receiver.setProcessors(new ArrayList<>(processors));
+        return receiver;
+    }
+
+    @Bean
+    public FilterRegistrationBean qyWeixinNotifyContentFilter(QyWeixinNotifyContentReceiver receiver) {
+        QyWeixinNotifyContentFilter filter = new QyWeixinNotifyContentFilter(receiver);
+        FilterRegistrationBean filterBean = new FilterRegistrationBean();
+        filterBean.setUrlPatterns(Collections.singletonList("/qyweixin-notify-receiver"));
+        filterBean.setFilter(filter);
+        return filterBean;
+    }
+
     @Bean
     public ClientsLoader<QyWeixinConfig> qyWeixinClientsLoader() {
         return new DefaultClientsLoader<>(qyWeixinClients(), qyWeixinConfigRepository()).load();
@@ -44,21 +66,21 @@ public class QyWeixinAutoConfiguration {
         ClientCreator<QyWeixinConfig> dingClientCreator = new QyWexinClientCreator(qyWeixinAccessTokenManager());
         List<Client<QyWeixinConfig>> dingClients = new ArrayList<>();
         for (QyWeixinProperties.Client client : qyWeixinProperties.getClients()) {
-            if (!StringUtils.hasText(client.getServerHost())) {
-                throw new IllegalStateException("serverHost cannot be blank");
+            if (!StringUtils.hasText(client.getServerHost()) || !StringUtils.hasText(client.getCorpId())) {
+                throw new IllegalStateException("serverHost and corpId cannot be blank");
             }
-            if (!StringUtils.hasText(client.getCorpId()) || !StringUtils.hasText(client.getCorpSecret())) {
-                throw new IllegalStateException("corpId and corpSecret cannot be blank");
+            if (!StringUtils.hasText(client.getCorpSecret()) && !StringUtils.hasText(client.getProviderSecret())) {
+                throw new IllegalStateException("corpSecret or providerSecret cannot be blank");
             }
-            if (Objects.isNull(client.getAgentId())) {
-                throw new IllegalStateException("agentId cannot be null");
-            }
-            QyWeixinConfig dingConfig = QyWeixinConfig.builder()
+            QyWeixinConfig qyWeixinConfig = QyWeixinConfig.builder()
                     .setServerHost(client.getServerHost()).setCorpId(client.getCorpId())
-                    .setCorpSecret(client.getCorpSecret()).setAgentId(client.getAgentId())
+                    .setCorpSecret(client.getCorpSecret()).setProviderSecret(client.getProviderSecret())
+                    .setSuiteId(client.getSuiteId()).setSuiteSecret(client.getSuiteSecret())
+                    .setAgentId(client.getAgentId())
+                    .setToken(client.getToken()).setAesKey(client.getAesKey())
                     .build();
-            dingClients.add(dingClientCreator.create(dingConfig));
-            log.info("loaded qyweixin client: {}", dingConfig);
+            dingClients.add(dingClientCreator.create(qyWeixinConfig));
+            log.info("loaded qyweixin client: {}", qyWeixinConfig);
         }
         return new DefaultClients<>(dingClients, dingClientCreator);
     }

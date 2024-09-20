@@ -11,9 +11,11 @@ import work.gaigeshen.tripartite.qyweixin.openapi.parameters.QyWeixinParameters;
 @Parameters(
         converter = JsonParametersConverter.class
 )
-public class QyWeixinAccessTokenParameters extends QyWeixinParameters {
+public class QyWeixinSuiteAccessTokenParameters extends QyWeixinParameters {
 
-    public String corpId;
+    public String suite_id;
 
-    public String corpSecret;
+    public String suite_secret;
+
+    public String suite_ticket;
 }
