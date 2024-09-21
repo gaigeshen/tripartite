@@ -1,12 +1,11 @@
 package work.gaigeshen.tripartite.qyweixin.openapi.notify;
 
-import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import work.gaigeshen.tripartite.core.notify.AbstractNotifyContentProcessor;
 import work.gaigeshen.tripartite.core.notify.DefaultNotifyContent;
 import work.gaigeshen.tripartite.core.notify.NotifyContentProcessingException;
+import work.gaigeshen.tripartite.core.util.xml.XmlCodec;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -15,9 +14,7 @@ import java.util.Objects;
  *
  * @author gaigeshen
  */
-public abstract class QyWeixinCallbackNotifyContentProcessor extends AbstractNotifyContentProcessor<DefaultNotifyContent> {
-
-    private final XmlMapper xmlMapper = XmlMapper.builder().build();
+public abstract class QyWeixinMessageNotifyContentProcessor extends AbstractNotifyContentProcessor<DefaultNotifyContent> {
 
     @Override
     protected final boolean supports(DefaultNotifyContent content) {
@@ -46,11 +43,7 @@ public abstract class QyWeixinCallbackNotifyContentProcessor extends AbstractNot
         if (Objects.isNull(decrypted)) {
             return Collections.emptyMap();
         }
-        try {
-            return xmlMapper.readValue(decrypted, HashMap.class);
-        } catch (Exception e) {
-            throw new NotifyContentProcessingException("could not read callback content: " + content, e);
-        }
+        return XmlCodec.instance().decodeObject(decrypted, Map.class);
     }
 
     /**

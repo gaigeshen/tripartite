@@ -1,6 +1,5 @@
 package work.gaigeshen.tripartite.qyweixin.openapi.notify;
 
-import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -10,7 +9,9 @@ import work.gaigeshen.tripartite.core.notify.AbstractNotifyContentReceiver;
 import work.gaigeshen.tripartite.core.notify.DefaultNotifyContent;
 import work.gaigeshen.tripartite.core.notify.NotifyContentIncorrectException;
 import work.gaigeshen.tripartite.core.util.ArgumentValidate;
+import work.gaigeshen.tripartite.core.util.xml.XmlCodec;
 import work.gaigeshen.tripartite.qyweixin.openapi.config.QyWeixinConfig;
+import work.gaigeshen.tripartite.qyweixin.openapi.notify.message.ReceiveMessage;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
@@ -19,8 +20,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -32,26 +31,14 @@ public class QyWeixinNotifyContentReceiver extends AbstractNotifyContentReceiver
 
     private final Clients<QyWeixinConfig> qyWeixinClients;
 
-    private final XmlMapper xmlMapper;
-
     public QyWeixinNotifyContentReceiver(Clients<QyWeixinConfig> clients) {
         ArgumentValidate.notNull(clients, "clients cannot be null");
         this.qyWeixinClients = clients;
-        this.xmlMapper = XmlMapper.builder().build();
     }
 
     @Override
     protected DefaultNotifyContent validate(DefaultNotifyContent content) throws NotifyContentIncorrectException {
-        String suiteId = (String) content.getValue("suite_id");
-        String agentId = (String) content.getValue("agent_id");
-        QyWeixinConfig qyWeixinConfig;
-        if (StringUtils.isNotBlank(suiteId)) {
-            qyWeixinConfig = qyWeixinClients.getConfig(cfg -> Objects.equals(cfg.getSuiteId(), suiteId));
-        } else if (StringUtils.isNotBlank(agentId)) {
-            qyWeixinConfig = qyWeixinClients.getConfig(cfg -> Objects.equals(cfg.getAgentId(), Integer.parseInt(agentId)));
-        } else {
-            throw new NotifyContentIncorrectException("could not find [suite_id] or [agent_id] parameter: " + content);
-        }
+        QyWeixinConfig qyWeixinConfig = determineConfig(content);
         content.put("qy_weixin_config", qyWeixinConfig);
         String signature = (String) content.getValue("msg_signature");
         if (StringUtils.isBlank(signature)) {
@@ -77,13 +64,12 @@ public class QyWeixinNotifyContentReceiver extends AbstractNotifyContentReceiver
             }
             return content;
         }
-        Map<?, ?> receivedMessage;
-        try {
-            receivedMessage = xmlMapper.readValue(content.getBodyAsString(), HashMap.class);
-        } catch (Exception e) {
-            throw new NotifyContentIncorrectException("could not read request body: " + content, e);
+        String bodyString = content.getBodyAsString();
+        if (StringUtils.isBlank(bodyString)) {
+            throw new NotifyContentIncorrectException("could not find request body: " + content);
         }
-        String encrypted = (String) receivedMessage.get("Encrypt");
+        ReceiveMessage receiveMessage = XmlCodec.instance().decodeObject(bodyString, ReceiveMessage.class);
+        String encrypted = receiveMessage.getEncrypt();
         if (StringUtils.isBlank(encrypted)) {
             throw new NotifyContentIncorrectException("request body field [Encrypt] is blank: " + content);
         }
@@ -96,6 +82,25 @@ public class QyWeixinNotifyContentReceiver extends AbstractNotifyContentReceiver
             throw new NotifyContentIncorrectException("could not decrypt: " + content, e);
         }
         return content;
+    }
+
+    /**
+     * 确定企业微信配置信息，由于企业微信推送通知数据的时候不会表明是哪个应用，所以需要配置回调地址的时候手动加上相关参数
+     *
+     * @param content 异步通知数据
+     * @return 企业微信配置信息，如果没有在回调地址中配置相关参数或者获取配置信息失败的情况，会抛出异常
+     * @throws NotifyContentIncorrectException 没有成功获取到企业微信配置信息
+     */
+    private QyWeixinConfig determineConfig(DefaultNotifyContent content) throws NotifyContentIncorrectException {
+        String suiteId = (String) content.getValue("suite_id");
+        if (StringUtils.isNotBlank(suiteId)) {
+            return qyWeixinClients.getConfig(cfg -> Objects.equals(cfg.getSuiteId(), suiteId));
+        }
+        String agentId = (String) content.getValue("agent_id");
+        if (StringUtils.isNotBlank(agentId)) {
+            return qyWeixinClients.getConfig(cfg -> Objects.equals(cfg.getAgentId(), Integer.parseInt(agentId)));
+        }
+        throw new NotifyContentIncorrectException("could not determine config: " + content);
     }
 
     /**
