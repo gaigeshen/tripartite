@@ -6,6 +6,7 @@ import work.gaigeshen.tripartite.core.notify.NotifyContentProcessingException;
 import work.gaigeshen.tripartite.core.util.xml.XmlCodec;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -24,9 +25,9 @@ public abstract class QyWeixinMessageNotifyContentProcessor extends AbstractNoti
     @Override
     protected final void processInternal(DefaultNotifyContent content, ProcessorChain<DefaultNotifyContent> chain)
             throws NotifyContentProcessingException {
-        Map<?, ?> callbackContent = extractCallbackContent(content);
-        if (supportsCallbackContent(callbackContent)) {
-            processCallbackContent(callbackContent, content, chain);
+        Map<?, ?> messageContent = extractMessageContent(content);
+        if (supportsMessageContent(messageContent)) {
+            processMessageContent(messageContent, content, chain);
         } else {
             chain.process(content);
         }
@@ -38,29 +39,29 @@ public abstract class QyWeixinMessageNotifyContentProcessor extends AbstractNoti
      * @param content 通知数据
      * @return 回调通知内容
      */
-    protected Map<?, ?> extractCallbackContent(DefaultNotifyContent content) throws NotifyContentProcessingException {
+    protected Map<?, ?> extractMessageContent(DefaultNotifyContent content) throws NotifyContentProcessingException {
         String decrypted = (String) content.getValue("decrypted");
         if (Objects.isNull(decrypted)) {
             return Collections.emptyMap();
         }
-        return XmlCodec.instance().decodeObject(decrypted, Map.class);
+        return XmlCodec.instance().decodeObject(decrypted, HashMap.class);
     }
 
     /**
      * 子类需要实现此方法，确定此处理器是否能处理该回调通知内容
      *
-     * @param callbackContent 回调通知内容
+     * @param messageContent 回调通知内容
      * @return 返回是否能处理该回调通知内容，只有能处理该回调通知内容的时候才会继续调用处理方法
-     * @see #processCallbackContent(Map, DefaultNotifyContent, ProcessorChain)
+     * @see #processMessageContent(Map, DefaultNotifyContent, ProcessorChain)
      */
-    protected abstract boolean supportsCallbackContent(Map<?, ?> callbackContent);
+    protected abstract boolean supportsMessageContent(Map<?, ?> messageContent);
 
     /**
      * 处理回调通知内容的方法
      *
-     * @param callbackContent 回调通知内容
+     * @param messageContent 回调通知内容
      * @param content 原始的通知数据
      * @param chain 通知数据处理器链不为空，用于决定是否继续处理
      */
-    protected abstract void processCallbackContent(Map<?, ?> callbackContent, DefaultNotifyContent content, ProcessorChain<DefaultNotifyContent> chain);
+    protected abstract void processMessageContent(Map<?, ?> messageContent, DefaultNotifyContent content, ProcessorChain<DefaultNotifyContent> chain);
 }

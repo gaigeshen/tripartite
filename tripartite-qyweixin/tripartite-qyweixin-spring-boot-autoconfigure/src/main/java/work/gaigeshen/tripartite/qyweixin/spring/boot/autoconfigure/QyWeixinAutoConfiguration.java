@@ -16,7 +16,7 @@ import work.gaigeshen.tripartite.qyweixin.openapi.client.DefaultQyWeixinClient;
 import work.gaigeshen.tripartite.qyweixin.openapi.client.QyWeixinClient;
 import work.gaigeshen.tripartite.qyweixin.openapi.client.QyWexinClientCreator;
 import work.gaigeshen.tripartite.qyweixin.openapi.config.QyWeixinConfig;
-import work.gaigeshen.tripartite.qyweixin.openapi.notify.QyWeixinCallbackNotifyContentProcessor;
+import work.gaigeshen.tripartite.qyweixin.openapi.notify.QyWeixinMessageNotifyContentProcessor;
 import work.gaigeshen.tripartite.qyweixin.openapi.notify.QyWeixinNotifyContentFilter;
 import work.gaigeshen.tripartite.qyweixin.openapi.notify.QyWeixinNotifyContentReceiver;
 
@@ -38,7 +38,7 @@ public class QyWeixinAutoConfiguration {
 
     private final QyWeixinProperties qyWeixinProperties;
 
-    private final List<QyWeixinCallbackNotifyContentProcessor> processors;
+    private final List<QyWeixinMessageNotifyContentProcessor> processors;
 
     @Bean
     public QyWeixinNotifyContentReceiver qyWeixinNotifyContentReceiver(Clients<QyWeixinConfig> clients) {

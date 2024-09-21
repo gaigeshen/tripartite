@@ -17,7 +17,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
 
 /**
- * 企业微信异步通知数据过滤器，用于接收异步通知数据和响应处理结果给企业微信服务器，具体的响应格式参见企业微信文档
+ * 企业微信回调通知数据过滤器，用于接收回调通知数据和响应处理结果给企业微信服务器，具体的响应格式参见企业微信文档
  *
  * @author gaigeshen
  */
