@@ -1,5 +1,6 @@
 package work.gaigeshen.tripartite.qyweixin.openapi.client;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import work.gaigeshen.tripartite.core.client.Client;
@@ -27,12 +28,20 @@ public class QyWexinClientCreator implements ClientCreator<QyWeixinConfig> {
     @Override
     public Client<QyWeixinConfig> create(QyWeixinConfig config) throws ClientCreationException {
         log.info("creating qyweixin client: {}", config);
-        DefaultQyWeixinClient dingClient = DefaultQyWeixinClient.create(config, accessTokenManager);
+        Client<QyWeixinConfig> qyWeixinClient;
         try {
-            dingClient.init();
-        } catch (Exception e) {
+            if (StringUtils.isNotBlank(config.getProviderSecret())) {
+                qyWeixinClient = DefaultQyWeixinProviderClient.create(config, accessTokenManager);
+                log.info("qyweixin provider client created: {}", qyWeixinClient);
+            } else {
+                qyWeixinClient = DefaultQyWeixinClient.create(config, accessTokenManager);
+                log.info("qyweixin client created: {}", qyWeixinClient);
+            }
+            qyWeixinClient.init();
+        }
+        catch (Exception e) {
             throw new ClientCreationException(e.getMessage(), e);
         }
-        return dingClient;
+        return qyWeixinClient;
     }
 }
