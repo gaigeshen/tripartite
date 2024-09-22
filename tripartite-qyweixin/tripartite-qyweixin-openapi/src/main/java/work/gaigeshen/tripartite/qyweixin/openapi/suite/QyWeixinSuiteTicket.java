@@ -10,19 +10,36 @@ import java.util.Objects;
  * @author gaigeshen
  */
 @Getter
-public class SuiteTicket {
+public class QyWeixinSuiteTicket {
 
     private final String ticket;
 
     private final String suiteId;
 
-    private SuiteTicket(Builder builder) {
+    private QyWeixinSuiteTicket(Builder builder) {
         this.ticket = builder.ticket;
         this.suiteId = builder.suiteId;
     }
 
     public static Builder builder() {
         return new Builder();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        QyWeixinSuiteTicket that = (QyWeixinSuiteTicket) o;
+        return Objects.equals(suiteId, that.suiteId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(suiteId);
     }
 
     @Override
@@ -49,14 +66,14 @@ public class SuiteTicket {
             return this;
         }
 
-        public SuiteTicket build() {
+        public QyWeixinSuiteTicket build() {
             if (Objects.isNull(ticket)) {
                 throw new IllegalArgumentException("ticket");
             }
             if (Objects.isNull(suiteId)) {
                 throw new IllegalArgumentException("suiteId");
             }
-            return new SuiteTicket(this);
+            return new QyWeixinSuiteTicket(this);
         }
     }
 }

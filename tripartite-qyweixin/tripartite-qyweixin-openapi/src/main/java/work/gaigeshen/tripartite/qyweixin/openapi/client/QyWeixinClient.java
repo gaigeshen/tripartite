@@ -1,8 +1,6 @@
 package work.gaigeshen.tripartite.qyweixin.openapi.client;
 
-import work.gaigeshen.tripartite.core.client.Client;
 import work.gaigeshen.tripartite.core.client.ClientException;
-import work.gaigeshen.tripartite.qyweixin.openapi.config.QyWeixinConfig;
 import work.gaigeshen.tripartite.qyweixin.openapi.parameters.message.QyWeixinMessageSendParameters;
 import work.gaigeshen.tripartite.qyweixin.openapi.parameters.user.QyWeixinUserIdByEmailGetParameters;
 import work.gaigeshen.tripartite.qyweixin.openapi.parameters.user.QyWeixinUserIdByMobileGetParameters;
@@ -15,7 +13,7 @@ import work.gaigeshen.tripartite.qyweixin.openapi.response.user.QyWeixinUserIdBy
  *
  * @author gaigeshen
  */
-public interface QyWeixinClient extends Client<QyWeixinConfig> {
+public interface QyWeixinClient extends BaseQyWeixinClient {
 
     /**
      * 通过手机号获取用户标识

@@ -13,30 +13,24 @@ import java.util.concurrent.ConcurrentHashMap;
  *
  * @author gaigeshen
  */
-public class DefaultSuiteTicketStore<C extends Config> implements SuiteTicketStore<C> {
+public class DefaultQyWeixinSuiteTicketStore<C extends Config> implements QyWeixinSuiteTicketStore<C> {
 
-    private final Map<C, SuiteTicket> internalStore = new ConcurrentHashMap<>();
+    private final Map<C, QyWeixinSuiteTicket> internalStore = new ConcurrentHashMap<>();
 
     @Override
-    public boolean save(C config, SuiteTicket suiteTicket) {
+    public boolean save(C config, QyWeixinSuiteTicket suiteTicket) {
         ArgumentValidate.notNull(suiteTicket, "suiteTicket cannot be null");
         return Objects.isNull(internalStore.put(config, suiteTicket));
     }
 
     @Override
-    public void delete(C config) {
-        ArgumentValidate.notNull(config, "config cannot be null");
-        internalStore.remove(config);
-    }
-
-    @Override
-    public SuiteTicket find(C config) {
+    public QyWeixinSuiteTicket find(C config) {
         ArgumentValidate.notNull(config, "config cannot be null");
         return internalStore.get(config);
     }
 
     @Override
-    public Map<C, SuiteTicket> findAll() {
+    public Map<C, QyWeixinSuiteTicket> findAll() {
         return new HashMap<>(internalStore);
     }
 }

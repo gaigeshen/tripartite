@@ -4,15 +4,14 @@ import work.gaigeshen.tripartite.core.client.ClientException;
 import work.gaigeshen.tripartite.core.client.accesstoken.AccessToken;
 import work.gaigeshen.tripartite.core.client.accesstoken.AccessTokenHelper;
 import work.gaigeshen.tripartite.core.client.accesstoken.AccessTokenManager;
+import work.gaigeshen.tripartite.core.util.ArgumentValidate;
 import work.gaigeshen.tripartite.qyweixin.openapi.config.QyWeixinConfig;
 import work.gaigeshen.tripartite.qyweixin.openapi.parameters.accesstoken.QyWeixinProviderAccessTokenParameters;
-import work.gaigeshen.tripartite.qyweixin.openapi.parameters.message.QyWeixinMessageSendParameters;
-import work.gaigeshen.tripartite.qyweixin.openapi.parameters.user.QyWeixinUserIdByEmailGetParameters;
-import work.gaigeshen.tripartite.qyweixin.openapi.parameters.user.QyWeixinUserIdByMobileGetParameters;
+import work.gaigeshen.tripartite.qyweixin.openapi.parameters.accesstoken.QyWeixinSuiteAccessTokenParameters;
 import work.gaigeshen.tripartite.qyweixin.openapi.response.accesstoken.QyWeixinProviderAccessTokenResponse;
-import work.gaigeshen.tripartite.qyweixin.openapi.response.message.QyWeixinMessageSendResponse;
-import work.gaigeshen.tripartite.qyweixin.openapi.response.user.QyWeixinUserIdByEmailGetResponse;
-import work.gaigeshen.tripartite.qyweixin.openapi.response.user.QyWeixinUserIdByMobileGetResponse;
+import work.gaigeshen.tripartite.qyweixin.openapi.response.accesstoken.QyWeixinSuiteAccessTokenResponse;
+import work.gaigeshen.tripartite.qyweixin.openapi.suite.QyWeixinSuiteTicket;
+import work.gaigeshen.tripartite.qyweixin.openapi.suite.QyWeixinSuiteTicketStore;
 
 import java.util.Objects;
 
@@ -21,57 +20,68 @@ import java.util.Objects;
  *
  * @author gaigeshen
  */
-public class DefaultQyWeixinProviderClient extends DefaultQyWeixinClient implements QyWeixinProviderClient {
+public class DefaultQyWeixinProviderClient extends AbstractQyWeixinClient implements QyWeixinProviderClient {
 
-    protected DefaultQyWeixinProviderClient(QyWeixinConfig config, AccessTokenManager<QyWeixinConfig> accessTokenManager) {
+    private final AccessTokenManager<QyWeixinConfig> suiteAccessTokenManager;
+
+    private final QyWeixinSuiteTicketStore<QyWeixinConfig> suiteTicketStore;
+
+    protected DefaultQyWeixinProviderClient(QyWeixinConfig config, AccessTokenManager<QyWeixinConfig> accessTokenManager,
+                                            AccessTokenManager<QyWeixinConfig> suiteAccessTokenManager,
+                                            QyWeixinSuiteTicketStore<QyWeixinConfig> suiteTicketStore) {
         super(config, accessTokenManager);
+        ArgumentValidate.notNull(suiteAccessTokenManager, "suiteAccessTokenManager cannot be null");
+        ArgumentValidate.notNull(suiteTicketStore, "suiteTicketStore cannot be null");
+        this.suiteAccessTokenManager = suiteAccessTokenManager;
+        this.suiteTicketStore = suiteTicketStore;
     }
 
-    /**
-     * 创建默认的企业微信接口客户端，需要企业微信配置信息和访问令牌管理器
-     *
-     * @param config 企业微信配置信息
-     * @param accessTokenManager 访问令牌管理器
-     * @return 企业微信接口客户端
-     */
-    static DefaultQyWeixinProviderClient create(QyWeixinConfig config, AccessTokenManager<QyWeixinConfig> accessTokenManager) {
-        return new DefaultQyWeixinProviderClient(config, accessTokenManager);
-    }
-
-    /**
-     * 服务商获取访问令牌的方式不同
-     *
-     * @return 获取到的访问令牌
-     * @throws ClientException 无法获取访问令牌
-     * @see <a href="https://developer.work.weixin.qq.com/document/path/96237">接口文档</a>
-     */
     public AccessToken getNewAccessToken() throws ClientException {
-        String path = "/cgi-bin/service/get_provider_token";
         QyWeixinConfig config = getConfig();
+        String path = "/cgi-bin/service/get_provider_token";
         QyWeixinProviderAccessTokenParameters parameters = new QyWeixinProviderAccessTokenParameters();
         parameters.corpId = config.getCorpId();
-        parameters.providerSecret = config.getProviderSecret();
+        parameters.providerSecret = config.getCorpSecret();
         QyWeixinProviderAccessTokenResponse response = execute(parameters, QyWeixinProviderAccessTokenResponse.class, path);
         String accessToken = response.provider_access_token;
         Long expireIn = response.expires_in;
         if (Objects.isNull(accessToken) || Objects.isNull(expireIn)) {
-            throw new ClientException("acquired access token is invalid: " + config);
+            throw new ClientException("acquired provider access token is invalid: " + config);
+        }
+        return AccessTokenHelper.createAccessToken(config, accessToken, expireIn);
+    }
+
+    public AccessToken getNewSuiteAccessToken() throws ClientException {
+        QyWeixinConfig config = getConfig();
+        QyWeixinSuiteTicket suiteTicket = suiteTicketStore.find(config);
+        if (Objects.isNull(suiteTicket)) {
+            throw new ClientException("suite ticket not found: " + config);
+        }
+        String path = "/cgi-bin/service/get_suite_token";
+        QyWeixinSuiteAccessTokenParameters parameters = new QyWeixinSuiteAccessTokenParameters();
+        parameters.suite_id = config.getSuiteId();
+        parameters.suite_secret = config.getSuiteSecret();
+        parameters.suite_ticket = config.getSuiteSecret();
+        QyWeixinSuiteAccessTokenResponse response = execute(parameters, QyWeixinSuiteAccessTokenResponse.class, path);
+        String accessToken = response.suite_access_token;
+        Long expireIn = response.expires_in;
+        if (Objects.isNull(accessToken) || Objects.isNull(expireIn)) {
+            throw new ClientException("acquired suite access token is invalid: " + config);
         }
         return AccessTokenHelper.createAccessToken(config, accessToken, expireIn);
     }
 
     @Override
-    public QyWeixinUserIdByMobileGetResponse userIdGetByMobile(QyWeixinUserIdByMobileGetParameters parameters) throws ClientException {
-        throw new ClientException("could not call this method by suite client");
+    public AccessTokenManager<QyWeixinConfig> getSuiteAccessTokenManager() {
+        return suiteAccessTokenManager;
     }
 
     @Override
-    public QyWeixinUserIdByEmailGetResponse userIdGetByMobile(QyWeixinUserIdByEmailGetParameters parameters) throws ClientException {
-        throw new ClientException("could not call this method by suite client");
-    }
-
-    @Override
-    public QyWeixinMessageSendResponse messageSend(QyWeixinMessageSendParameters parameters) throws ClientException {
-        throw new ClientException("could not call this method by suite client");
+    public void setNewSuiteTicket(QyWeixinSuiteTicket suiteTicket) {
+        QyWeixinConfig config = getConfig();
+        if (suiteTicketStore.save(config, suiteTicket)) {
+            AccessToken newSuiteAccessToken = getNewSuiteAccessToken();
+            suiteAccessTokenManager.addNewAccessToken(config, newSuiteAccessToken);
+        }
     }
 }

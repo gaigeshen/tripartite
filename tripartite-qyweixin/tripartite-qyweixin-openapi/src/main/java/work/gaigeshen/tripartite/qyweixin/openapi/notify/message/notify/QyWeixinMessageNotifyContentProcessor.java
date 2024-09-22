@@ -1,4 +1,4 @@
-package work.gaigeshen.tripartite.qyweixin.openapi.notify;
+package work.gaigeshen.tripartite.qyweixin.openapi.notify.message.notify;
 
 import work.gaigeshen.tripartite.core.notify.AbstractNotifyContentProcessor;
 import work.gaigeshen.tripartite.core.notify.DefaultNotifyContent;

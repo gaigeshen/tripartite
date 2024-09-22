@@ -15,7 +15,15 @@ import java.util.List;
 @Data
 public class QyWeixinProperties {
 
+    /**
+     * 配置信息集合
+     */
     private List<Client> clients = new ArrayList<>();
+
+    /**
+     * 是否开启服务商模式
+     */
+    private Boolean provider = false;
 
     /**
      * 企业微信配置信息
