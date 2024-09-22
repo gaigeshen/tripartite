@@ -1,7 +1,9 @@
 package work.gaigeshen.tripartite.qyweixin.openapi.client;
 
 import work.gaigeshen.tripartite.core.client.ClientException;
+import work.gaigeshen.tripartite.qyweixin.openapi.parameters.auth.QyWeixinAuthInfoGetParameters;
 import work.gaigeshen.tripartite.qyweixin.openapi.parameters.auth.QyWeixinPermanentCodeGetParameters;
+import work.gaigeshen.tripartite.qyweixin.openapi.response.auth.QyWeixinAuthInfoGetResponse;
 import work.gaigeshen.tripartite.qyweixin.openapi.response.auth.QyWeixinPermanentCodeGetResponse;
 
 /**
@@ -20,6 +22,18 @@ public interface QyWeixinProviderClient extends BaseQyWeixinClient {
      * @see <a href="https://developer.work.weixin.qq.com/document/path/97163">接口文档</a>
      */
     default QyWeixinPermanentCodeGetResponse permanentCodeGet(QyWeixinPermanentCodeGetParameters parameters) throws ClientException {
-        return execute(parameters, QyWeixinPermanentCodeGetResponse.class, "cgi-bin/service/get_permanent_code?suite_access_token={suite_access_token}", getSuiteAccessTokenValue());
+        return execute(parameters, QyWeixinPermanentCodeGetResponse.class, "/cgi-bin/service/get_permanent_code?suite_access_token={suite_access_token}", getSuiteAccessTokenValue());
+    }
+
+    /**
+     * 获取企业授权信息
+     *
+     * @param parameters 请求参数不能为空
+     * @return 响应结果不为空
+     * @throws ClientException 执行请求的时候发生异常
+     * @see <a href="https://developer.work.weixin.qq.com/document/path/97171">接口文档</a>
+     */
+    default QyWeixinAuthInfoGetResponse authInfoGet(QyWeixinAuthInfoGetParameters parameters) throws ClientException {
+        return execute(parameters, QyWeixinAuthInfoGetResponse.class, "/cgi-bin/service/get_auth_info?suite_access_token={suite_access_token}", getSuiteAccessTokenValue());
     }
 }
