@@ -21,11 +21,6 @@ public class QyWeixinProperties {
     private List<Client> clients = new ArrayList<>();
 
     /**
-     * 是否开启服务商模式
-     */
-    private Boolean provider = false;
-
-    /**
      * 企业微信配置信息
      *
      * @author gaigeshen
@@ -49,19 +44,9 @@ public class QyWeixinProperties {
         private String corpSecret;
 
         /**
-         * 服务商的凭证密钥
+         * 应用标识
          */
-        private String providerSecret;
-
-        /**
-         * 代开发应用模板标识
-         */
-        private String suiteId;
-
-        /**
-         * 代开发应用模板凭证密钥
-         */
-        private String suiteSecret;
+        private Integer agentId;
 
         /**
          * 用于校验回调签名
@@ -72,10 +57,5 @@ public class QyWeixinProperties {
          * 用于加解密回调内容
          */
         private String aesKey;
-
-        /**
-         * 应用标识
-         */
-        private Integer agentId;
     }
 }

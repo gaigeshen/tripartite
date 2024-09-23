@@ -3,6 +3,8 @@ package work.gaigeshen.tripartite.qyweixin.openapi.config;
 import lombok.Getter;
 import work.gaigeshen.tripartite.core.client.config.Config;
 
+import java.util.Objects;
+
 /**
  * 企业微信配置信息
  *
@@ -27,19 +29,9 @@ public class QyWeixinConfig implements Config {
     private final String corpSecret;
 
     /**
-     * 服务商的凭证密钥
+     * 应用标识
      */
-    private final String providerSecret;
-
-    /**
-     * 代开发应用模板标识
-     */
-    private final String suiteId;
-
-    /**
-     * 代开发应用模板凭证密钥
-     */
-    private final String suiteSecret;
+    private final Integer agentId;
 
     /**
      * 用于校验回调签名
@@ -51,21 +43,13 @@ public class QyWeixinConfig implements Config {
      */
     private final String aesKey;
 
-    /**
-     * 应用标识
-     */
-    private final Integer agentId;
-
     private QyWeixinConfig(Builder builder) {
         this.serverHost = builder.serverHost;
         this.corpId = builder.corpId;
         this.corpSecret = builder.corpSecret;
-        this.providerSecret = builder.providerSecret;
-        this.suiteId = builder.suiteId;
-        this.suiteSecret = builder.suiteSecret;
+        this.agentId = builder.agentId;
         this.token = builder.token;
         this.aesKey = builder.aesKey;
-        this.agentId = builder.agentId;
     }
 
     public static Builder builder() {
@@ -73,8 +57,25 @@ public class QyWeixinConfig implements Config {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        QyWeixinConfig that = (QyWeixinConfig) o;
+        return Objects.equals(corpId, that.corpId) && Objects.equals(agentId, that.agentId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(corpId, agentId);
+    }
+
+    @Override
     public String toString() {
-        return "QyWeixinConfig: " + corpId;
+        return "QyWeixinConfig: " + corpId + ", " + agentId;
     }
 
     /**
@@ -88,17 +89,11 @@ public class QyWeixinConfig implements Config {
 
         private String corpSecret;
 
-        private String providerSecret;
-
-        private String suiteId;
-
-        private String suiteSecret;
+        private Integer agentId;
 
         private String token;
 
         private String aesKey;
-
-        private Integer agentId;
 
         public Builder setServerHost(String serverHost) {
             this.serverHost = serverHost;
@@ -115,18 +110,8 @@ public class QyWeixinConfig implements Config {
             return this;
         }
 
-        public Builder setProviderSecret(String providerSecret) {
-            this.providerSecret = providerSecret;
-            return this;
-        }
-
-        public Builder setSuiteId(String suiteId) {
-            this.suiteId = suiteId;
-            return this;
-        }
-
-        public Builder setSuiteSecret(String suiteSecret) {
-            this.suiteSecret = suiteSecret;
+        public Builder setAgentId(Integer agentId) {
+            this.agentId = agentId;
             return this;
         }
 
@@ -137,11 +122,6 @@ public class QyWeixinConfig implements Config {
 
         public Builder setAesKey(String aesKey) {
             this.aesKey = aesKey;
-            return this;
-        }
-
-        public Builder setAgentId(Integer agentId) {
-            this.agentId = agentId;
             return this;
         }
 

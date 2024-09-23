@@ -8,6 +8,8 @@ import work.gaigeshen.tripartite.core.util.TimestampUtils;
 import work.gaigeshen.tripartite.core.util.xml.XmlCodec;
 import work.gaigeshen.tripartite.qyweixin.openapi.config.QyWeixinConfig;
 import work.gaigeshen.tripartite.qyweixin.openapi.notify.message.ReplyMessage;
+import work.gaigeshen.tripartite.qyweixin.openapi.notify.util.SecureUtils;
+import work.gaigeshen.tripartite.qyweixin.openapi.notify.util.SignatureUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -28,7 +30,9 @@ public class QyWeixinNotifyContentFilter extends AbstractDefaultNotifyContentFil
     }
 
     @Override
-    protected void renderOnSuccess(DefaultNotifyContent notifyContent, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void renderOnSuccess(DefaultNotifyContent notifyContent,
+                                   HttpServletRequest request,
+                                   HttpServletResponse response) throws ServletException, IOException {
         String echostr = (String) notifyContent.getValue("echostr");
         if (StringUtils.isNotBlank(echostr)) {
             renderText(echostr, response);
@@ -38,7 +42,9 @@ public class QyWeixinNotifyContentFilter extends AbstractDefaultNotifyContentFil
     }
 
     @Override
-    protected void renderOnFail(DefaultNotifyContent notifyContent, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void renderOnFail(DefaultNotifyContent notifyContent,
+                                HttpServletRequest request,
+                                HttpServletResponse response) throws ServletException, IOException {
         renderReplyMessage("fail", notifyContent, response);
     }
 
@@ -46,16 +52,13 @@ public class QyWeixinNotifyContentFilter extends AbstractDefaultNotifyContentFil
         QyWeixinConfig qyWeixinConfig = (QyWeixinConfig) notifyContent.getValue("qy_weixin_config");
         String timestamp = TimestampUtils.unixTimestamp();
         String nonce = RandomStringUtils.randomAlphanumeric(16);
-
         String encrypted;
         try {
-            encrypted = QyWeixinNotifyContentReceiver.encrypt(qyWeixinConfig, replyPlainText);
+            encrypted = SecureUtils.encrypt(qyWeixinConfig.getAesKey(), qyWeixinConfig.getCorpId(), replyPlainText);
         } catch (GeneralSecurityException e) {
             throw new ServletException(e.getMessage(), e);
         }
-
-        String signature = QyWeixinNotifyContentReceiver.genSignature(qyWeixinConfig, timestamp, nonce, encrypted);
-
+        String signature = SignatureUtils.genSignature(qyWeixinConfig.getToken(), timestamp, nonce, encrypted);
         ReplyMessage replyMessage = new ReplyMessage().setEncrypt(encrypted).setMsgSignature(signature).setTimeStamp(timestamp).setNonce(nonce);
         String encodedReplyMessage = XmlCodec.instance().encode(replyMessage);
 
