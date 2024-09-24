@@ -1,6 +1,7 @@
 package work.gaigeshen.tripartite.pay.wechat.config;
 
 import org.apache.commons.io.IOUtils;
+import work.gaigeshen.tripartite.core.util.ArgumentValidate;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.GCMParameterSpec;
@@ -27,9 +28,7 @@ public class DefaultWechatSecretKey implements WechatSecretKey {
     private final byte[] secretKey;
 
     public DefaultWechatSecretKey(byte[] secretKey) throws WechatSecretKeyException {
-        if (Objects.isNull(secretKey)) {
-            throw new IllegalArgumentException("secret key cannot be null");
-        }
+        ArgumentValidate.notNull(secretKey, "secretKey cannot be null");
         if (secretKey.length != 32) {
             throw new WechatSecretKeyException("secret key length != 32");
         }
@@ -37,16 +36,12 @@ public class DefaultWechatSecretKey implements WechatSecretKey {
     }
 
     public static DefaultWechatSecretKey load(String secretKeyContent) throws WechatSecretKeyException {
-        if (Objects.isNull(secretKeyContent)) {
-            throw new IllegalArgumentException("secret key content cannot be null");
-        }
+        ArgumentValidate.notNull(secretKeyContent, "secretKeyContent cannot be null");
         return new DefaultWechatSecretKey(secretKeyContent.getBytes(StandardCharsets.UTF_8));
     }
 
     public static DefaultWechatSecretKey load(InputStream inputStream) throws WechatSecretKeyException {
-        if (Objects.isNull(inputStream)) {
-            throw new IllegalArgumentException("secret key input stream cannot be null");
-        }
+        ArgumentValidate.notNull(inputStream, "inputStream cannot be null");
         try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
             byte[] buffer = new byte[4096];
             int len;
@@ -60,9 +55,7 @@ public class DefaultWechatSecretKey implements WechatSecretKey {
     }
 
     public static DefaultWechatSecretKey loadClasspath(String classpath) throws WechatSecretKeyException {
-        if (Objects.isNull(classpath)) {
-            throw new IllegalArgumentException("secret key classpath cannot be null");
-        }
+        ArgumentValidate.notNull(classpath, "classpath cannot be null");
         try (InputStream in = DefaultWechatSecretKey.class.getClassLoader().getResourceAsStream(classpath)) {
             if (Objects.isNull(in)) {
                 throw new WechatSecretKeyException("could not read resource: " + classpath);
@@ -74,9 +67,7 @@ public class DefaultWechatSecretKey implements WechatSecretKey {
     }
 
     public static DefaultWechatSecretKey loadFile(String filename) throws WechatSecretKeyException {
-        if (Objects.isNull(filename)) {
-            throw new IllegalArgumentException("filename cannot be null");
-        }
+        ArgumentValidate.notNull(filename, "filename cannot be null");
         Path path = Paths.get(filename);
         if (!Files.isReadable(path)) {
             throw new IllegalArgumentException("file not readable: " + filename);
@@ -90,15 +81,9 @@ public class DefaultWechatSecretKey implements WechatSecretKey {
 
     @Override
     public byte[] decrypt(String cipherText, byte[] nonce, byte[] aad) throws WechatSecretKeyException {
-        if (Objects.isNull(cipherText)) {
-            throw new IllegalArgumentException("cipher text cannot be null");
-        }
-        if (Objects.isNull(nonce)) {
-            throw new IllegalArgumentException("nonce cannot be null");
-        }
-        if (Objects.isNull(aad)) {
-            throw new IllegalArgumentException("aad cannot be null");
-        }
+        ArgumentValidate.notNull(cipherText, "cipherText cannot be null");
+        ArgumentValidate.notNull(nonce, "nonce cannot be null");
+        ArgumentValidate.notNull(aad, "aad cannot be null");
         SecretKeySpec keySpec = new SecretKeySpec(secretKey, "AES");
         GCMParameterSpec parameterSpec = new GCMParameterSpec(128, nonce);
         try {

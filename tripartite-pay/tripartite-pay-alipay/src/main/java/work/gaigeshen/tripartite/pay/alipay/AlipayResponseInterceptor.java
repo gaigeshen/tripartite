@@ -2,6 +2,7 @@ package work.gaigeshen.tripartite.pay.alipay;
 
 import work.gaigeshen.tripartite.core.interceptor.AbstractInterceptor;
 import work.gaigeshen.tripartite.core.interceptor.InterceptingException;
+import work.gaigeshen.tripartite.core.util.ArgumentValidate;
 import work.gaigeshen.tripartite.core.util.json.JsonCodec;
 import work.gaigeshen.tripartite.pay.alipay.config.AlipayCertificates;
 import work.gaigeshen.tripartite.pay.alipay.config.AlipayConfig;
@@ -21,9 +22,7 @@ public class AlipayResponseInterceptor extends AbstractInterceptor {
     private final AlipayConfig config;
 
     public AlipayResponseInterceptor(AlipayConfig config) {
-        if (Objects.isNull(config)) {
-            throw new IllegalArgumentException("alipay config cannot be null");
-        }
+        ArgumentValidate.notNull(config, "config cannot be null");
         this.config = config;
     }
 

@@ -4,6 +4,7 @@ import work.gaigeshen.tripartite.core.parameter.DefaultParameters;
 import work.gaigeshen.tripartite.core.parameter.Parameter;
 import work.gaigeshen.tripartite.core.parameter.Parameters;
 import work.gaigeshen.tripartite.core.parameter.typed.ParameterResolver;
+import work.gaigeshen.tripartite.core.util.ArgumentValidate;
 
 import java.lang.reflect.Field;
 import java.util.*;
@@ -19,12 +20,8 @@ public class DefaultParameterConverter implements ParameterConverter {
 
     @Override
     public Parameter<?> convert(String name, Object rawParameter) throws ParameterConversionException {
-        if (Objects.isNull(name)) {
-            throw new IllegalArgumentException("name cannot be null");
-        }
-        if (Objects.isNull(rawParameter)) {
-            throw new IllegalArgumentException("raw parameter cannot be null");
-        }
+        ArgumentValidate.notNull(name, "name cannot be null");
+        ArgumentValidate.notNull(rawParameter, "rawParameter cannot be null");
         if (rawParameter instanceof Boolean) {
             return Parameter.bool(name, (Boolean) rawParameter);
         }

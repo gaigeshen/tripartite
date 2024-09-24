@@ -7,6 +7,7 @@ import work.gaigeshen.tripartite.core.interceptor.AbstractInterceptor;
 import work.gaigeshen.tripartite.core.parameter.converter.ParametersMetadataParametersConverter;
 import work.gaigeshen.tripartite.core.response.consumer.ResponseConsumer;
 import work.gaigeshen.tripartite.core.response.converter.ResponseConverter;
+import work.gaigeshen.tripartite.core.util.ArgumentValidate;
 import work.gaigeshen.tripartite.pay.wechat.config.WechatConfig;
 import work.gaigeshen.tripartite.pay.wechat.parameters.WechatParameters;
 import work.gaigeshen.tripartite.pay.wechat.parameters.basic.*;
@@ -41,20 +42,15 @@ public class DefaultWechatClient implements WechatClient {
     private final WebExecutor executor;
 
     protected DefaultWechatClient(WechatConfig config, WebExecutor executor) {
-        if (Objects.isNull(config)) {
-            throw new IllegalArgumentException("config cannot be null");
-        }
-        if (Objects.isNull(executor)) {
-            throw new IllegalArgumentException("web executor cannot be null");
-        }
+        ArgumentValidate.notNull(config, "config cannot be null");
+        ArgumentValidate.notNull(executor, "executor cannot be null");
         this.config = config;
         this.executor = executor;
     }
 
     public static DefaultWechatClient create(WechatConfig config, AbstractInterceptor... interceptors) {
-        if (Objects.isNull(interceptors)) {
-            throw new IllegalArgumentException("interceptors cannot be null");
-        }
+        ArgumentValidate.notNull(config, "config cannot be null");
+        ArgumentValidate.notNull(interceptors, "interceptors cannot be null");
         RestTemplateWebExecutor executor = RestTemplateWebExecutor.create();
         executor.setInterceptors(interceptors);
         executor.setParametersConverter(new ParametersMetadataParametersConverter(config));
@@ -107,12 +103,8 @@ public class DefaultWechatClient implements WechatClient {
 
     @Override
     public <R extends WechatResponse> R execute(Class<R> responseClass, String uri, Object... uriVariables) throws WechatClientException {
-        if (Objects.isNull(responseClass)) {
-            throw new IllegalArgumentException("response class cannot be null");
-        }
-        if (Objects.isNull(uri)) {
-            throw new IllegalArgumentException("uri cannot be null");
-        }
+        ArgumentValidate.notNull(responseClass, "responseClass cannot be null");
+        ArgumentValidate.notNull(uri, "uri cannot be null");
         try {
             R response = executor.execute(config.getServerHost() + uri, responseClass, uriVariables);
             return validateResponse(response);
@@ -123,12 +115,9 @@ public class DefaultWechatClient implements WechatClient {
 
     @Override
     public <R extends WechatResponse> R execute(WechatParameters parameters, Class<R> responseClass, String uri, Object... uriVariables) throws WechatClientException {
-        if (Objects.isNull(parameters)) {
-            throw new IllegalArgumentException("parameters cannot be null");
-        }
-        if (Objects.isNull(responseClass) || Objects.isNull(uri)) {
-            throw new IllegalArgumentException("response class and uri cannot be null");
-        }
+        ArgumentValidate.notNull(parameters, "parameters cannot be null");
+        ArgumentValidate.notNull(responseClass, "responseClass cannot be null");
+        ArgumentValidate.notNull(uri, "uri cannot be null");
         try {
             R response = executor.execute(config.getServerHost() + uri, parameters, responseClass, uriVariables);
             return validateResponse(response);
@@ -139,12 +128,9 @@ public class DefaultWechatClient implements WechatClient {
 
     @Override
     public <R extends WechatResponse> R execute(WechatParameters parameters, ResponseConverter<R> converter, String uri, Object... uriVariables) throws WechatClientException {
-        if (Objects.isNull(parameters)) {
-            throw new IllegalArgumentException("parameters cannot be null");
-        }
-        if (Objects.isNull(converter) || Objects.isNull(uri)) {
-            throw new IllegalArgumentException("response converter and uri cannot be null");
-        }
+        ArgumentValidate.notNull(parameters, "parameters cannot be null");
+        ArgumentValidate.notNull(converter, "converter cannot be null");
+        ArgumentValidate.notNull(uri, "uri cannot be null");
         try {
             R response = executor.execute(config.getServerHost() + uri, parameters, converter, uriVariables);
             return validateResponse(response);
@@ -155,12 +141,9 @@ public class DefaultWechatClient implements WechatClient {
 
     @Override
     public void execute(WechatParameters parameters, ResponseConsumer consumer, String uri, Object... uriVariables) throws WechatClientException {
-        if (Objects.isNull(parameters)) {
-            throw new IllegalArgumentException("parameters cannot be null");
-        }
-        if (Objects.isNull(consumer) || Objects.isNull(uri)) {
-            throw new IllegalArgumentException("response consumer and uri cannot be null");
-        }
+        ArgumentValidate.notNull(parameters, "parameters cannot be null");
+        ArgumentValidate.notNull(consumer, "consumer cannot be null");
+        ArgumentValidate.notNull(uri, "uri cannot be null");
         try {
             executor.execute(config.getServerHost() + uri, parameters, consumer, uriVariables);
         } catch (WebException e) {

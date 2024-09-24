@@ -5,6 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 import work.gaigeshen.tripartite.core.header.Headers;
 import work.gaigeshen.tripartite.core.interceptor.AbstractInterceptor;
 import work.gaigeshen.tripartite.core.interceptor.InterceptingException;
+import work.gaigeshen.tripartite.core.util.ArgumentValidate;
 import work.gaigeshen.tripartite.core.util.TimestampUtils;
 import work.gaigeshen.tripartite.pay.wechat.config.WechatCertificateException;
 import work.gaigeshen.tripartite.pay.wechat.config.WechatCertificates;
@@ -25,9 +26,7 @@ public class WechatRequestResponseInterceptor extends AbstractInterceptor {
     private final WechatConfig config;
 
     public WechatRequestResponseInterceptor(WechatConfig config) {
-        if (Objects.isNull(config)) {
-            throw new IllegalArgumentException("wechat config cannot be null");
-        }
+        ArgumentValidate.notNull(config, "config cannot be null");
         this.config = config;
     }
 

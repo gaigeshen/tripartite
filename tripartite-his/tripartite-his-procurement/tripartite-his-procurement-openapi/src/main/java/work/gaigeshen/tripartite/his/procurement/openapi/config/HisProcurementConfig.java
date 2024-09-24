@@ -1,5 +1,6 @@
 package work.gaigeshen.tripartite.his.procurement.openapi.config;
 
+import lombok.Getter;
 import work.gaigeshen.tripartite.core.client.config.Config;
 
 import java.util.Objects;
@@ -7,6 +8,7 @@ import java.util.Objects;
 /**
  * @author gaigeshen
  */
+@Getter
 public class HisProcurementConfig implements Config {
 
     public static final String CONFIG_TYPE_MAT = "mat";
@@ -48,46 +50,6 @@ public class HisProcurementConfig implements Config {
 
     public static Builder builder() {
         return new Builder();
-    }
-
-    public Integer getConnectTimeout() {
-        return connectTimeout;
-    }
-
-    public Integer getReadTimeout() {
-        return readTimeout;
-    }
-
-    public String getServerHost() {
-        return serverHost;
-    }
-
-    public String getAccessTokenUri() {
-        return accessTokenUri;
-    }
-
-    public String getServiceUri() {
-        return serviceUri;
-    }
-
-    public String getAccount() {
-        return account;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public String getAppCode() {
-        return appCode;
-    }
-
-    public String getAuthCode() {
-        return authCode;
-    }
-
-    public String getSecret() {
-        return secret;
     }
 
     @Override

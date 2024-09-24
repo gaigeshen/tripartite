@@ -1,5 +1,8 @@
 package work.gaigeshen.tripartite.pay.alipay.config;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.Objects;
 
 /**
@@ -7,6 +10,7 @@ import java.util.Objects;
  *
  * @author gaigeshen
  */
+@Getter
 public class AlipayConfig {
 
     private final String serverUrl;
@@ -34,30 +38,6 @@ public class AlipayConfig {
         return new Builder();
     }
 
-    public String getServerUrl() {
-        return serverUrl;
-    }
-
-    public String getNotifyUrl() {
-        return notifyUrl;
-    }
-
-    public String getAppId() {
-        return appId;
-    }
-
-    public AlipayPrivateKey getPrivateKey() {
-        return privateKey;
-    }
-
-    public AlipayRootCertificate getRootCertificate() {
-        return rootCertificate;
-    }
-
-    public AlipayCertificates getCertificates() {
-        return certificates;
-    }
-
     @Override
     public int hashCode() {
         return appId.hashCode();
@@ -82,6 +62,7 @@ public class AlipayConfig {
     /**
      * @author gaigeshen
      */
+    @Setter
     public static class Builder {
 
         private String serverUrl;
@@ -95,30 +76,6 @@ public class AlipayConfig {
         private AlipayRootCertificate rootCertificate;
 
         private AlipayCertificates certificates;
-
-        public void setServerUrl(String serverUrl) {
-            this.serverUrl = serverUrl;
-        }
-
-        public void setNotifyUrl(String notifyUrl) {
-            this.notifyUrl = notifyUrl;
-        }
-
-        public void setAppId(String appId) {
-            this.appId = appId;
-        }
-
-        public void setPrivateKey(AlipayPrivateKey privateKey) {
-            this.privateKey = privateKey;
-        }
-
-        public void setRootCertificate(AlipayRootCertificate rootCertificates) {
-            this.rootCertificate = rootCertificates;
-        }
-
-        public void setCertificates(AlipayCertificates certificates) {
-            this.certificates = certificates;
-        }
 
         public void setPrivateKeyContent(String privateKeyContent, String certContent) throws AlipayPrivateKeyException, AlipayCertificateException {
             setPrivateKey(DefaultAlipayPrivateKey.load(privateKeyContent, certContent));

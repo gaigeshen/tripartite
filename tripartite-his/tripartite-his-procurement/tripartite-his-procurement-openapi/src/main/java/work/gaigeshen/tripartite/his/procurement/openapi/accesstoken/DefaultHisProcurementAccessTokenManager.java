@@ -2,9 +2,9 @@ package work.gaigeshen.tripartite.his.procurement.openapi.accesstoken;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import work.gaigeshen.tripartite.core.util.ArgumentValidate;
 import work.gaigeshen.tripartite.his.procurement.openapi.config.HisProcurementConfig;
 
-import java.util.Objects;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -34,12 +34,8 @@ public class DefaultHisProcurementAccessTokenManager implements HisProcurementAc
     public DefaultHisProcurementAccessTokenManager(
             HisProcurementAccessTokenStore accessTokenStore, HisProcurementAccessTokenRefresher accessTokenRefresher)
             throws HisProcurementAccessTokenManagerException {
-        if (Objects.isNull(accessTokenStore)) {
-            throw new IllegalArgumentException("accessTokenStore cannot be null");
-        }
-        if (Objects.isNull(accessTokenRefresher)) {
-            throw new IllegalArgumentException("accessTokenRefresher cannot be null");
-        }
+        ArgumentValidate.notNull(accessTokenStore, "accessTokenStore cannot be null");
+        ArgumentValidate.notNull(accessTokenRefresher, "accessTokenRefresher cannot be null");
         this.accessTokenStore = accessTokenStore;
         this.accessTokenRefresher = accessTokenRefresher;
         createAndScheduleUpdateTasks();
@@ -48,9 +44,8 @@ public class DefaultHisProcurementAccessTokenManager implements HisProcurementAc
     @Override
     public void addNewAccessToken(HisProcurementConfig config, HisProcurementAccessToken accessToken)
             throws HisProcurementAccessTokenManagerException {
-        if (Objects.isNull(config) || Objects.isNull(accessToken)) {
-            throw new IllegalArgumentException("config and accessToken cannot be null");
-        }
+        ArgumentValidate.notNull(config, "config cannot be null");
+        ArgumentValidate.notNull(accessToken, "accessToken cannot be null");
         if (!HisProcurementAccessTokenHelper.isValid(accessToken)) {
             throw new HisProcurementAccessTokenManagerException("Could not add invalid access token: " + accessToken);
         }
@@ -69,9 +64,7 @@ public class DefaultHisProcurementAccessTokenManager implements HisProcurementAc
 
     @Override
     public HisProcurementAccessToken findAccessToken(HisProcurementConfig config) throws HisProcurementAccessTokenManagerException {
-        if (Objects.isNull(config)) {
-            throw new IllegalArgumentException("config cannot be null");
-        }
+        ArgumentValidate.notNull(config, "config cannot be null");
         try {
             return accessTokenStore.find(config);
         } catch (HisProcurementAccessTokenStoreException e) {

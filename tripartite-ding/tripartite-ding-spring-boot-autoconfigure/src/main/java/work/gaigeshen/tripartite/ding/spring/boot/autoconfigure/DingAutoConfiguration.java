@@ -1,7 +1,7 @@
 package work.gaigeshen.tripartite.ding.spring.boot.autoconfigure;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -34,18 +34,13 @@ import java.util.Map;
 @EnableConfigurationProperties({DingProperties.class})
 @ConditionalOnClass({DingClient.class})
 @Configuration
+@RequiredArgsConstructor
+@Slf4j
 public class DingAutoConfiguration {
-
-    private static final Logger log = LoggerFactory.getLogger(DingAutoConfiguration.class);
 
     private final DingProperties dingProperties;
 
     private final List<DingEventNotifyContentProcessor> processors;
-
-    public DingAutoConfiguration(DingProperties dingProperties, List<DingEventNotifyContentProcessor> processors) {
-        this.dingProperties = dingProperties;
-        this.processors = processors;
-    }
 
     @Bean
     public DingNotifyContentReceiver dingNotifyContentReceiver(Clients<DingConfig> clients) {

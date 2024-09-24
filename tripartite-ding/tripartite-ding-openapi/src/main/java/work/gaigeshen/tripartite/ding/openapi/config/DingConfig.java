@@ -1,5 +1,6 @@
 package work.gaigeshen.tripartite.ding.openapi.config;
 
+import lombok.Getter;
 import work.gaigeshen.tripartite.core.client.config.Config;
 
 import java.util.Objects;
@@ -9,6 +10,7 @@ import java.util.Objects;
  *
  * @author gaigeshen
  */
+@Getter
 public class DingConfig implements Config {
 
     /**
@@ -64,38 +66,6 @@ public class DingConfig implements Config {
 
     public static Builder builder() {
         return new Builder();
-    }
-
-    public String getApiServerHost() {
-        return apiServerHost;
-    }
-
-    public String getOapiServerHost() {
-        return oapiServerHost;
-    }
-
-    public String getAuthCorpId() {
-        return authCorpId;
-    }
-
-    public String getAgentId() {
-        return agentId;
-    }
-
-    public String getAppKey() {
-        return appKey;
-    }
-
-    public String getAppSecret() {
-        return appSecret;
-    }
-
-    public String getSecretKey() {
-        return secretKey;
-    }
-
-    public String getToken() {
-        return token;
     }
 
     @Override

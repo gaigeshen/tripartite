@@ -1,5 +1,6 @@
 package work.gaigeshen.tripartite.pay.alipay;
 
+import work.gaigeshen.tripartite.core.util.ArgumentValidate;
 import work.gaigeshen.tripartite.pay.alipay.config.AlipayConfig;
 
 import java.util.Collection;
@@ -20,9 +21,7 @@ public class DefaultAlipayClients implements AlipayClients {
     public DefaultAlipayClients() { }
 
     public DefaultAlipayClients(Collection<AlipayClient> alipayClients) {
-        if (Objects.isNull(alipayClients)) {
-            throw new IllegalArgumentException("alipay clients cannot be null");
-        }
+        ArgumentValidate.notNull(alipayClients, "alipayClients cannot be null");
         for (AlipayClient alipayClient : alipayClients) {
             this.alipayClients.put(alipayClient.getAlipayConfig(), alipayClient);
         }
@@ -30,9 +29,7 @@ public class DefaultAlipayClients implements AlipayClients {
 
     @Override
     public AlipayClient getClient(Predicate<AlipayConfig> predicate) throws AlipayClientNotFoundException {
-        if (Objects.isNull(predicate)) {
-            throw new IllegalArgumentException("predicate cannot be null");
-        }
+        ArgumentValidate.notNull(predicate, "predicate cannot be null");
         AlipayClient alipayClient = findAlipayClient(predicate);
         if (Objects.isNull(alipayClient)) {
             throw new AlipayClientNotFoundException("could not find alipay client");
@@ -50,9 +47,7 @@ public class DefaultAlipayClients implements AlipayClients {
     }
 
     private AlipayClient findAlipayClient(Predicate<AlipayConfig> predicate) {
-        if (Objects.isNull(predicate)) {
-            throw new IllegalArgumentException("predicate cannot be null");
-        }
+        ArgumentValidate.notNull(predicate, "predicate cannot be null");
         for (Map.Entry<AlipayConfig, AlipayClient> entry : alipayClients.entrySet()) {
             if (predicate.test(entry.getKey())) {
                 return entry.getValue();

@@ -1,5 +1,6 @@
 package work.gaigeshen.tripartite.pay.alipay;
 
+import work.gaigeshen.tripartite.core.util.ArgumentValidate;
 import work.gaigeshen.tripartite.pay.alipay.config.AlipayConfig;
 
 import java.util.Objects;
@@ -19,9 +20,7 @@ public interface AlipayClients {
      * @throws AlipayClientNotFoundException 没有找到对应的支付宝客户端
      */
     default AlipayConfig getConfig(String appId) throws AlipayClientNotFoundException {
-        if (Objects.isNull(appId)) {
-            throw new IllegalArgumentException("appId cannot be null");
-        }
+        ArgumentValidate.notNull(appId, "appId cannot be null");
         return getConfig(ac -> Objects.equals(ac.getAppId(), appId));
     }
 

@@ -9,6 +9,7 @@ import work.gaigeshen.tripartite.core.parameter.converter.ParametersConverter;
 import work.gaigeshen.tripartite.core.parameter.converter.ParametersMetadataParametersConverter;
 import work.gaigeshen.tripartite.core.response.consumer.ResponseConsumer;
 import work.gaigeshen.tripartite.core.response.converter.ResponseConverter;
+import work.gaigeshen.tripartite.core.util.ArgumentValidate;
 import work.gaigeshen.tripartite.pay.alipay.response.AbstractAlipayResponse;
 import work.gaigeshen.tripartite.pay.alipay.config.AlipayConfig;
 import work.gaigeshen.tripartite.pay.alipay.parameters.AlipayParameters;
@@ -26,20 +27,15 @@ public class DefaultAlipayClient implements AlipayClient {
     private final WebExecutor executor;
 
     protected DefaultAlipayClient(AlipayConfig config, WebExecutor executor) {
-        if (Objects.isNull(config)) {
-            throw new IllegalArgumentException("config cannot be null");
-        }
-        if (Objects.isNull(executor)) {
-            throw new IllegalArgumentException("web executor cannot be null");
-        }
+        ArgumentValidate.notNull(config, "config cannot be null");
+        ArgumentValidate.notNull(executor, "executor cannot be null");
         this.config = config;
         this.executor = executor;
     }
 
     public static DefaultAlipayClient create(AlipayConfig config, AbstractInterceptor... interceptors) {
-        if (Objects.isNull(interceptors)) {
-            throw new IllegalArgumentException("interceptors cannot be null");
-        }
+        ArgumentValidate.notNull(config, "config cannot be null");
+        ArgumentValidate.notNull(interceptors, "interceptors cannot be null");
         RestTemplateWebExecutor executor = RestTemplateWebExecutor.create();
         executor.setInterceptors(interceptors);
         executor.setParametersConverter(new ParametersMetadataParametersConverter(config));
@@ -57,9 +53,7 @@ public class DefaultAlipayClient implements AlipayClient {
 
     @Override
     public Parameters convertParameters(AlipayParameters parameters) throws AlipayClientException {
-        if (Objects.isNull(parameters)) {
-            throw new IllegalArgumentException("parameters cannot be null");
-        }
+        ArgumentValidate.notNull(parameters, "parameters cannot be null");
         ParametersConverter parametersConverter = executor.getParametersConverter();
         if (Objects.isNull(parametersConverter)) {
             throw new AlipayClientException("could not convert parameters because missing converter: " + parameters);
@@ -69,12 +63,8 @@ public class DefaultAlipayClient implements AlipayClient {
 
     @Override
     public <R extends AlipayResponse> R execute(AlipayParameters parameters, Class<R> responseClass) throws AlipayClientException {
-        if (Objects.isNull(parameters)) {
-            throw new IllegalArgumentException("parameters cannot be null");
-        }
-        if (Objects.isNull(responseClass)) {
-            throw new IllegalArgumentException("response class cannot be null");
-        }
+        ArgumentValidate.notNull(parameters, "parameters cannot be null");
+        ArgumentValidate.notNull(responseClass, "responseClass cannot be null");
         try {
             R response = executor.execute(config.getServerUrl(), parameters, responseClass);
             return validateResponse(response);
@@ -85,12 +75,8 @@ public class DefaultAlipayClient implements AlipayClient {
 
     @Override
     public <R extends AlipayResponse> R execute(AlipayParameters parameters, ResponseConverter<R> converter) throws AlipayClientException {
-        if (Objects.isNull(parameters)) {
-            throw new IllegalArgumentException("parameters cannot be null");
-        }
-        if (Objects.isNull(converter)) {
-            throw new IllegalArgumentException("response converter cannot be null");
-        }
+        ArgumentValidate.notNull(parameters, "parameters cannot be null");
+        ArgumentValidate.notNull(converter, "converter cannot be null");
         try {
             R response = executor.execute(config.getServerUrl(), parameters, converter);
             return validateResponse(response);
@@ -101,12 +87,8 @@ public class DefaultAlipayClient implements AlipayClient {
 
     @Override
     public void execute(AlipayParameters parameters, ResponseConsumer consumer) throws AlipayClientException {
-        if (Objects.isNull(parameters)) {
-            throw new IllegalArgumentException("parameters cannot be null");
-        }
-        if (Objects.isNull(consumer)) {
-            throw new IllegalArgumentException("response consumer cannot be null");
-        }
+        ArgumentValidate.notNull(parameters, "parameters cannot be null");
+        ArgumentValidate.notNull(consumer, "consumer cannot be null");
         try {
             executor.execute(config.getServerUrl(), parameters, consumer);
         } catch (WebException e) {

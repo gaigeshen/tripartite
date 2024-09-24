@@ -1,10 +1,14 @@
 package work.gaigeshen.tripartite.his.procurement.openapi.accesstoken;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.Date;
 
 /**
  * @author gaigeshen
  */
+@Getter
 public class HisProcurementAccessToken {
 
     private final String accessToken;
@@ -32,30 +36,6 @@ public class HisProcurementAccessToken {
         return new Builder();
     }
 
-    public String getAccessToken() {
-        return accessToken;
-    }
-
-    public String getAccount() {
-        return account;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public long getExpiresIn() {
-        return expiresIn;
-    }
-
-    public long getExpiresTimestamp() {
-        return expiresTimestamp;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
     @Override
     public String toString() {
         return "AccessToken: " + account + "/" + type;
@@ -64,6 +44,7 @@ public class HisProcurementAccessToken {
     /**
      * @author gaigeshen
      */
+    @Setter
     public static class Builder {
 
         private String accessToken;
@@ -77,30 +58,6 @@ public class HisProcurementAccessToken {
         private long expiresTimestamp;
 
         private Date updateTime;
-
-        public void setAccessToken(String accessToken) {
-            this.accessToken = accessToken;
-        }
-
-        public void setAccount(String account) {
-            this.account = account;
-        }
-
-        public void setType(String type) {
-            this.type = type;
-        }
-
-        public void setExpiresIn(long expiresIn) {
-            this.expiresIn = expiresIn;
-        }
-
-        public void setExpiresTimestamp(long expiresTimestamp) {
-            this.expiresTimestamp = expiresTimestamp;
-        }
-
-        public void setUpdateTime(Date updateTime) {
-            this.updateTime = updateTime;
-        }
 
         public HisProcurementAccessToken build() {
             return new HisProcurementAccessToken(this);

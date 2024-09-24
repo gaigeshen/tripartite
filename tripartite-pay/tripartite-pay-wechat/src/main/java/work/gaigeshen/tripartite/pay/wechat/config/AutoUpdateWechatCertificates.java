@@ -2,10 +2,10 @@ package work.gaigeshen.tripartite.pay.wechat.config;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import work.gaigeshen.tripartite.core.util.ArgumentValidate;
 
 import java.security.cert.X509Certificate;
 import java.util.Collection;
-import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -42,15 +42,9 @@ public class AutoUpdateWechatCertificates extends WechatCertificatesDecorator {
      * @param periodSeconds 更新操作的间隔时间
      */
     public void startUpdate(CertificatesFetcher fetcher, long delaySeconds, long periodSeconds) {
-        if (Objects.isNull(fetcher)) {
-            throw new IllegalArgumentException("certificate fetcher cannot be null");
-        }
-        if (delaySeconds < 0) {
-            throw new IllegalArgumentException("delay seconds is invalid");
-        }
-        if (periodSeconds <= 0) {
-            throw new IllegalArgumentException("period seconds is invalid");
-        }
+        ArgumentValidate.notNull(fetcher, "certificate fetcher cannot be null");
+        ArgumentValidate.notTrue(delaySeconds < 0, "delay seconds is invalid");
+        ArgumentValidate.notTrue(periodSeconds <= 0, "period seconds is invalid");
         if (started.compareAndSet(false, true)) {
             updateTimer.scheduleAtFixedRate(new UpdateTask(fetcher), delaySeconds * 1000, periodSeconds * 1000);
         }

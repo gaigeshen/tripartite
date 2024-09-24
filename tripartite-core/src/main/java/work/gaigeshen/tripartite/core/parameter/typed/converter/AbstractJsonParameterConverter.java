@@ -1,8 +1,7 @@
 package work.gaigeshen.tripartite.core.parameter.typed.converter;
 
 import work.gaigeshen.tripartite.core.parameter.Parameter;
-
-import java.util.Objects;
+import work.gaigeshen.tripartite.core.util.ArgumentValidate;
 
 /**
  * 这是个抽象的单个请求参数的转换器，具体请查看每个子类的实现，注意继承此类的子类必须提供默认的无参构造方法
@@ -13,12 +12,8 @@ public abstract class AbstractJsonParameterConverter implements ParameterConvert
 
     @Override
     public final Parameter<?> convert(String name, Object rawParameter) throws ParameterConversionException {
-        if (Objects.isNull(name)) {
-            throw new IllegalArgumentException("name cannot be null");
-        }
-        if (Objects.isNull(rawParameter)) {
-            throw new IllegalArgumentException("raw parameter cannot be null");
-        }
+        ArgumentValidate.notNull(name, "name cannot be null");
+        ArgumentValidate.notNull(rawParameter, "rawParameter cannot be null");
         return Parameter.string(name, convertJson(rawParameter));
     }
 

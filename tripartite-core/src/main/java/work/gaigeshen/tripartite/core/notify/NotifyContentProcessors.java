@@ -1,5 +1,7 @@
 package work.gaigeshen.tripartite.core.notify;
 
+import work.gaigeshen.tripartite.core.util.ArgumentValidate;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -20,9 +22,7 @@ class NotifyContentProcessors<C extends NotifyContent> {
      * @param processors 新的异步通知数据处理器集合不能为空
      */
     public void setProcessors(List<NotifyContentProcessor<C>> processors) {
-        if (Objects.isNull(processors)) {
-            throw new IllegalArgumentException("notify content processors cannot be null");
-        }
+        ArgumentValidate.notNull(processors, "notify content processors cannot be null");
         this.processors.clear();
         for (NotifyContentProcessor<C> processor : processors) {
             if (Objects.isNull(processor)) {
@@ -39,9 +39,7 @@ class NotifyContentProcessors<C extends NotifyContent> {
      * @throws NotifyContentProcessingException 处理异步通知数据的时候发生异常
      */
     public void process(C content) throws NotifyContentProcessingException {
-        if (Objects.isNull(content)) {
-            throw new IllegalArgumentException("notify content cannot be null");
-        }
+        ArgumentValidate.notNull(content, "notify content cannot be null");
         if (processors.isEmpty()) {
             return;
         }
@@ -63,9 +61,7 @@ class NotifyContentProcessors<C extends NotifyContent> {
 
         @Override
         public void process(C content) throws NotifyContentProcessingException {
-            if (Objects.isNull(content)) {
-                throw new NotifyContentProcessingException("notify content cannot be null");
-            }
+            ArgumentValidate.notNull(content, "notify content cannot be null");
             while (iterator.hasNext()) {
                 iterator.next().process(content, this);
             }

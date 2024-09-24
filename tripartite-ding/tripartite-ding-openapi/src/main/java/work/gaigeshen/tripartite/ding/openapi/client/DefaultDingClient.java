@@ -12,6 +12,7 @@ import work.gaigeshen.tripartite.core.header.Headers;
 import work.gaigeshen.tripartite.core.interceptor.AbstractInterceptor;
 import work.gaigeshen.tripartite.core.interceptor.InterceptingException;
 import work.gaigeshen.tripartite.core.ratelimiter.RateLimiterService;
+import work.gaigeshen.tripartite.core.util.ArgumentValidate;
 import work.gaigeshen.tripartite.ding.openapi.config.DingConfig;
 import work.gaigeshen.tripartite.ding.openapi.parameters.DingApiParameters;
 import work.gaigeshen.tripartite.ding.openapi.parameters.DingOapiParameters;
@@ -41,12 +42,8 @@ public class DefaultDingClient extends AbstractWebExecutorClient<DingConfig> imp
     private final RateLimiterService rateLimiterService;
 
     protected DefaultDingClient(DingConfig config, AccessTokenManager<DingConfig> accessTokenManager) {
-        if (Objects.isNull(config)) {
-            throw new IllegalArgumentException("config cannot be null");
-        }
-        if (Objects.isNull(accessTokenManager)) {
-            throw new IllegalArgumentException("access token manager cannot be null");
-        }
+        ArgumentValidate.notNull(config, "config cannot be null");
+        ArgumentValidate.notNull(accessTokenManager, "accessTokenManager cannot be null");
         this.config = config;
         this.accessTokenManager = accessTokenManager;
         this.rateLimiterService = RateLimiterService.create(16);

@@ -2,6 +2,7 @@ package work.gaigeshen.tripartite.his.procurement.openapi;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import work.gaigeshen.tripartite.core.util.ArgumentValidate;
 import work.gaigeshen.tripartite.his.procurement.openapi.accesstoken.HisProcurementAccessTokenManager;
 import work.gaigeshen.tripartite.his.procurement.openapi.config.HisProcurementConfig;
 
@@ -20,17 +21,14 @@ public class DefaultHisProcurementClientCreator implements HisProcurementClientC
     private final HisProcurementAccessTokenManager accessTokenManager;
 
     public DefaultHisProcurementClientCreator(HisProcurementAccessTokenManager accessTokenManager) {
-        if (Objects.isNull(accessTokenManager)) {
-            throw new IllegalArgumentException("accessTokenManager cannot be null");
-        }
+        ArgumentValidate.notNull(accessTokenManager, "accessTokenManager cannot be null");
         this.accessTokenManager = accessTokenManager;
     }
 
     @Override
     public HisProcurementBasicClient create(HisProcurementConfig config) throws HisProcurementClientCreationException {
-        if (Objects.isNull(config) || Objects.isNull(config.getType())) {
-            throw new IllegalArgumentException("config and config type cannot be null");
-        }
+        ArgumentValidate.notNull(config, "config cannot be null");
+        ArgumentValidate.notNull(config.getType(), "config type cannot be null");
         HisProcurementAccessTokenClient accessTokenClient = HisProcurementAccessTokenClient.create(config);
         HisProcurementClientAccessTokenInterceptor interceptor = new HisProcurementClientAccessTokenInterceptor(accessTokenClient, accessTokenManager);
         log.info("creating his procurement client: {}", config);

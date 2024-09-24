@@ -1,5 +1,7 @@
 package work.gaigeshen.tripartite.core.notify;
 
+import work.gaigeshen.tripartite.core.util.ArgumentValidate;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,36 +23,27 @@ public abstract class AbstractNotifyContent implements NotifyContent {
 
     @Override
     public final void putHeader(String name, String[] values) {
-        if (Objects.isNull(name)) {
-            throw new IllegalArgumentException("name cannot be null");
-        }
-        if (Objects.isNull(values) || values.length == 0) {
-            throw new IllegalArgumentException("values cannot be null or empty");
-        }
+        ArgumentValidate.notNull(name, "name cannot be null");
+        ArgumentValidate.notTrue(Objects.isNull(values) || values.length == 0,
+                "values cannot be null or empty");
         headers.put(name.toLowerCase(), values);
     }
 
     @Override
     public final boolean containsHeader(String name) {
-        if (Objects.isNull(name)) {
-            throw new IllegalArgumentException("name cannot be null");
-        }
+        ArgumentValidate.notNull(name, "name cannot be null");
         return headers.containsKey(name.toLowerCase());
     }
 
     @Override
     public final String[] getHeaderValues(String name) {
-        if (Objects.isNull(name)) {
-            throw new IllegalArgumentException("name cannot be null");
-        }
+        ArgumentValidate.notNull(name, "name cannot be null");
         return headers.get(name.toLowerCase());
     }
 
     @Override
     public final String getHeaderValue(String name) {
-        if (Objects.isNull(name)) {
-            throw new IllegalArgumentException("name cannot be null");
-        }
+        ArgumentValidate.notNull(name, "name cannot be null");
         String[] values = getHeaderValues(name);
         if (Objects.isNull(values)) {
             return null;

@@ -3,6 +3,7 @@ package work.gaigeshen.tripartite.pay.alipay.config;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
+import work.gaigeshen.tripartite.core.util.ArgumentValidate;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -34,16 +35,12 @@ public class DefaultAlipayRootCertificate implements AlipayRootCertificate {
     private final String serialNumber;
 
     public DefaultAlipayRootCertificate(String serialNumber) {
-        if (Objects.isNull(serialNumber)) {
-            throw new IllegalArgumentException("serial number cannot be null");
-        }
+        ArgumentValidate.notNull(serialNumber, "serialNumber cannot be null");
         this.serialNumber = serialNumber;
     }
 
     public static DefaultAlipayRootCertificate load(InputStream inputStream) throws AlipayCertificateException {
-        if (Objects.isNull(inputStream)) {
-            throw new IllegalArgumentException("input stream cannot be null");
-        }
+        ArgumentValidate.notNull(inputStream, "inputStream cannot be null");
         Collection<? extends Certificate> certificates;
         try {
             CertificateFactory factory = CertificateFactory.getInstance("X.509", "BC");
@@ -69,16 +66,12 @@ public class DefaultAlipayRootCertificate implements AlipayRootCertificate {
     }
 
     public static DefaultAlipayRootCertificate load(String rootCertificateContent) throws AlipayCertificateException {
-        if (Objects.isNull(rootCertificateContent)) {
-            throw new IllegalArgumentException("certificate content cannot be null");
-        }
+        ArgumentValidate.notNull(rootCertificateContent, "rootCertificateContent cannot be null");
         return load(new ByteArrayInputStream(rootCertificateContent.getBytes(StandardCharsets.UTF_8)));
     }
 
     public static DefaultAlipayRootCertificate loadClasspath(String classpath) throws AlipayCertificateException {
-        if (Objects.isNull(classpath)) {
-            throw new IllegalArgumentException("classpath cannot be null");
-        }
+        ArgumentValidate.notNull(classpath, "classpath cannot be null");
         try (InputStream in = DefaultAlipayRootCertificate.class.getClassLoader().getResourceAsStream(classpath)) {
             return load(in);
         } catch (IOException e) {
@@ -87,13 +80,9 @@ public class DefaultAlipayRootCertificate implements AlipayRootCertificate {
     }
 
     public static DefaultAlipayRootCertificate loadFile(String filename) throws AlipayCertificateException {
-        if (Objects.isNull(filename)) {
-            throw new IllegalArgumentException("filename cannot be null");
-        }
+        ArgumentValidate.notNull(filename, "filename cannot be null");
         Path path = Paths.get(filename);
-        if (!Files.isReadable(path)) {
-            throw new IllegalArgumentException("file not readable: " + filename);
-        }
+        ArgumentValidate.notTrue(!Files.isReadable(path), "file not readable: " + filename);
         try (InputStream inputStream = Files.newInputStream(path)) {
             return load(inputStream);
         } catch (IOException e) {

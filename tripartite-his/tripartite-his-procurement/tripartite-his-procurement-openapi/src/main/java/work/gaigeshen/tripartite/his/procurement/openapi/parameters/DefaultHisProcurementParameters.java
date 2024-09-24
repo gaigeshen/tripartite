@@ -1,5 +1,6 @@
 package work.gaigeshen.tripartite.his.procurement.openapi.parameters;
 
+import lombok.Getter;
 import work.gaigeshen.tripartite.core.parameter.converter.JsonParametersConverter;
 import work.gaigeshen.tripartite.core.parameter.converter.Parameters;
 import work.gaigeshen.tripartite.core.parameter.typed.Parameter;
@@ -13,6 +14,7 @@ import java.util.Objects;
         converter = JsonParametersConverter.class,
         customizer = HisProcurementParametersCustomizer.class
 )
+@Getter
 public class DefaultHisProcurementParameters implements HisProcurementParameters {
 
     @Parameter(name = "infno")
@@ -32,17 +34,10 @@ public class DefaultHisProcurementParameters implements HisProcurementParameters
         this.inputParameter = new InputParameter(inputData);
     }
 
-    public String getInterfaceCode() {
-        return interfaceCode;
-    }
-
-    public InputParameter getInputParameter() {
-        return inputParameter;
-    }
-
     /**
      * @author gaigeshen
      */
+    @Getter
     public static class InputParameter {
 
         @Parameter(name = "data")
@@ -50,10 +45,6 @@ public class DefaultHisProcurementParameters implements HisProcurementParameters
 
         public InputParameter(HisProcurementInputData inputData) {
             this.inputData = inputData;
-        }
-
-        public HisProcurementInputData getInputData() {
-            return inputData;
         }
     }
 }

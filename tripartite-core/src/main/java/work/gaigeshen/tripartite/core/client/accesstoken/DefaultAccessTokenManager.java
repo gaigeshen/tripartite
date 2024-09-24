@@ -3,7 +3,9 @@ package work.gaigeshen.tripartite.core.client.accesstoken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import work.gaigeshen.tripartite.core.client.config.Config;
+import work.gaigeshen.tripartite.core.util.ArgumentValidate;
 
+import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -33,12 +35,8 @@ public class DefaultAccessTokenManager<C extends Config> implements AccessTokenM
      */
     public DefaultAccessTokenManager(AccessTokenStore<C> accessTokenStore, AccessTokenRefresher<C> accessTokenRefresher)
             throws AccessTokenManagerException {
-        if (Objects.isNull(accessTokenStore)) {
-            throw new IllegalArgumentException("accessTokenStore cannot be null");
-        }
-        if (Objects.isNull(accessTokenRefresher)) {
-            throw new IllegalArgumentException("accessTokenRefresher cannot be null");
-        }
+        ArgumentValidate.notNull(accessTokenStore, "accessTokenStore cannot be null");
+        ArgumentValidate.notNull(accessTokenRefresher, "accessTokenRefresher cannot be null");
         this.accessTokenStore = accessTokenStore;
         this.accessTokenRefresher = accessTokenRefresher;
         createAndScheduleUpdateTasks();
@@ -46,9 +44,7 @@ public class DefaultAccessTokenManager<C extends Config> implements AccessTokenM
 
     @Override
     public void addNewAccessToken(C config, AccessToken accessToken) throws AccessTokenManagerException {
-        if (Objects.isNull(config) || Objects.isNull(accessToken)) {
-            throw new IllegalArgumentException("config and accessToken cannot be null");
-        }
+        ArgumentValidate.notTrue(Objects.isNull(config) || Objects.isNull(accessToken), "config and accessToken cannot be null");
         if (!AccessTokenHelper.isValid(accessToken)) {
             throw new AccessTokenManagerException("could not add invalid access token: " + accessToken);
         }
@@ -66,13 +62,20 @@ public class DefaultAccessTokenManager<C extends Config> implements AccessTokenM
 
     @Override
     public AccessToken findAccessToken(C config) throws AccessTokenManagerException {
-        if (Objects.isNull(config)) {
-            throw new IllegalArgumentException("config cannot be null");
-        }
+        ArgumentValidate.notNull(config, "config cannot be null");
         try {
             return accessTokenStore.find(config);
         } catch (AccessTokenStoreException e) {
             throw new AccessTokenManagerException("could not find access token: " + config, e);
+        }
+    }
+
+    @Override
+    public Map<C, AccessToken> findAllAccessTokens() throws AccessTokenManagerException {
+        try {
+            return accessTokenStore.findAll();
+        } catch (AccessTokenStoreException e) {
+            throw new AccessTokenManagerException("could not find all access tokens", e);
         }
     }
 

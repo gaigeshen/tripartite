@@ -1,11 +1,14 @@
 package work.gaigeshen.tripartite.core.client.accesstoken;
 
+import lombok.Getter;
+
 import java.util.Date;
 import java.util.Objects;
 
 /**
  * @author gaigeshen
  */
+@Getter
 public class AccessToken {
 
     private final String accessToken;
@@ -25,22 +28,6 @@ public class AccessToken {
 
     public static Builder builder() {
         return new Builder();
-    }
-
-    public String getAccessToken() {
-        return accessToken;
-    }
-
-    public long getExpiresIn() {
-        return expiresIn;
-    }
-
-    public long getExpiresTimestamp() {
-        return expiresTimestamp;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
     }
 
     @Override

@@ -1,5 +1,7 @@
 package work.gaigeshen.tripartite.core.parameter;
 
+import work.gaigeshen.tripartite.core.util.ArgumentValidate;
+
 import java.util.*;
 
 /**
@@ -14,9 +16,7 @@ public class DefaultParameters implements Parameters {
     private final Type type;
 
     public DefaultParameters(Type type) {
-        if (Objects.isNull(type)) {
-            throw new IllegalArgumentException("type cannot be null");
-        }
+        ArgumentValidate.notNull(type, "type cannot be null");
         this.type = type;
     }
 

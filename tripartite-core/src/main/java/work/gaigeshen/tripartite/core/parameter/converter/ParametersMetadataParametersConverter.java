@@ -1,8 +1,7 @@
 package work.gaigeshen.tripartite.core.parameter.converter;
 
 import work.gaigeshen.tripartite.core.parameter.Parameters;
-
-import java.util.Objects;
+import work.gaigeshen.tripartite.core.util.ArgumentValidate;
 
 /**
  * 此请求参数转换器基于请求参数元数据配置
@@ -19,9 +18,7 @@ public class ParametersMetadataParametersConverter implements ParametersConverte
 
     @Override
     public Parameters convert(Object parameters) throws ParametersConversionException {
-        if (Objects.isNull(parameters)) {
-            throw new IllegalArgumentException("parameters cannot be null");
-        }
+        ArgumentValidate.notNull(parameters, "parameters cannot be null");
         ParametersResolver.Metadata metadata = ParametersResolver.getMetadata(parameters.getClass());
         ParametersConverter converter = metadata.getConverter();
         ParametersCustomizer customizer = metadata.getCustomizer();

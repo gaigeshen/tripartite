@@ -1,5 +1,7 @@
 package work.gaigeshen.tripartite.pay.wechat.config;
 
+import work.gaigeshen.tripartite.core.util.ArgumentValidate;
+
 import javax.crypto.Cipher;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -32,34 +34,26 @@ public class DefaultWechatCertificates implements WechatCertificates {
     public DefaultWechatCertificates() { }
 
     public DefaultWechatCertificates(Collection<X509Certificate> certificates) {
-        if (Objects.isNull(certificates)) {
-            throw new IllegalArgumentException("certificates cannot be null");
-        }
+        ArgumentValidate.notNull(certificates, "certificates cannot be null");
         for (X509Certificate certificate : certificates) {
             this.certificates.put(certificate.getSerialNumber(), certificate);
         }
     }
 
     public static DefaultWechatCertificates load(String certificateContent) throws WechatCertificateException {
-        if (Objects.isNull(certificateContent)) {
-            throw new IllegalArgumentException("certificate content cannot be null");
-        }
+        ArgumentValidate.notNull(certificateContent, "certificateContent cannot be null");
         return load(new ByteArrayInputStream(certificateContent.getBytes(StandardCharsets.UTF_8)));
     }
 
     public static DefaultWechatCertificates load(InputStream inputStream) throws WechatCertificateException {
-        if (Objects.isNull(inputStream)) {
-            throw new IllegalArgumentException("certificate input stream cannot be null");
-        }
+        ArgumentValidate.notNull(inputStream, "inputStream cannot be null");
         DefaultWechatCertificates certificates = new DefaultWechatCertificates();
         certificates.loadCertificate(inputStream);
         return certificates;
     }
 
     public static DefaultWechatCertificates loadClasspath(String classpath) throws WechatCertificateException {
-        if (Objects.isNull(classpath)) {
-            throw new IllegalArgumentException("classpath cannot be null");
-        }
+        ArgumentValidate.notNull(classpath, "classpath cannot be null");
         try (InputStream in = DefaultWechatCertificates.class.getClassLoader().getResourceAsStream(classpath)) {
             if (Objects.isNull(in)) {
                 throw new WechatCertificateException("could not read resource: " + classpath);
@@ -71,9 +65,7 @@ public class DefaultWechatCertificates implements WechatCertificates {
     }
 
     public static DefaultWechatCertificates loadFile(String filename) throws WechatCertificateException {
-        if (Objects.isNull(filename)) {
-            throw new IllegalArgumentException("filename cannot be null");
-        }
+        ArgumentValidate.notNull(filename, "filename cannot be null");
         Path path = Paths.get(filename);
         if (!Files.isReadable(path)) {
             throw new IllegalArgumentException("file not readable: " + filename);
@@ -87,24 +79,16 @@ public class DefaultWechatCertificates implements WechatCertificates {
 
     @Override
     public boolean verify(String serialNumber, String sign, byte[] content) throws WechatCertificateException {
-        if (Objects.isNull(serialNumber)) {
-            throw new IllegalArgumentException("serial number cannot be null");
-        }
-        if (Objects.isNull(sign) || Objects.isNull(content)) {
-            throw new IllegalArgumentException("sign and content cannot be null");
-        }
+        ArgumentValidate.notNull(serialNumber, "serialNumber cannot be null");
+        ArgumentValidate.notTrue(Objects.isNull(sign) || Objects.isNull(content), "sign and content cannot be null");
         X509Certificate certificate = certificates.get(new BigInteger(serialNumber, 16));
         return Objects.nonNull(certificate) && verify(certificate, sign, content);
     }
 
     @Override
     public boolean verify(X509Certificate certificate, String sign, byte[] content) throws WechatCertificateException {
-        if (Objects.isNull(certificate)) {
-            throw new IllegalArgumentException("certificate cannot be null");
-        }
-        if (Objects.isNull(sign) || Objects.isNull(content)) {
-            throw new IllegalArgumentException("sign and content cannot be null");
-        }
+        ArgumentValidate.notNull(certificate, "certificate cannot be null");
+        ArgumentValidate.notTrue(Objects.isNull(sign) || Objects.isNull(content), "sign and content cannot be null");
         try {
             Signature signature = Signature.getInstance("SHA256withRSA");
             signature.initVerify(certificate);
@@ -129,12 +113,8 @@ public class DefaultWechatCertificates implements WechatCertificates {
 
     @Override
     public String encrypt(X509Certificate certificate, byte[] content) throws WechatCertificateEncryptionException {
-        if (Objects.isNull(certificate)) {
-            throw new IllegalArgumentException("certificate cannot be null");
-        }
-        if (Objects.isNull(content)) {
-            throw new IllegalArgumentException("content cannot be null");
-        }
+        ArgumentValidate.notNull(certificate, "certificate cannot be null");
+        ArgumentValidate.notNull(content, "content cannot be null");
         try {
             Cipher cipher = Cipher.getInstance("RSA/ECB/OAEPWithSHA-1AndMGF1Padding");
             cipher.init(Cipher.ENCRYPT_MODE, certificate.getPublicKey());
@@ -147,18 +127,14 @@ public class DefaultWechatCertificates implements WechatCertificates {
 
     @Override
     public X509Certificate loadCertificate(X509Certificate certificate) {
-        if (Objects.isNull(certificate)) {
-            throw new IllegalArgumentException("certificate cannot be null");
-        }
+        ArgumentValidate.notNull(certificate, "certificate cannot be null");
         certificates.put(certificate.getSerialNumber(), certificate);
         return certificate;
     }
 
     @Override
     public X509Certificate loadCertificate(InputStream inputStream) throws WechatCertificateException {
-        if (Objects.isNull(inputStream)) {
-            throw new IllegalArgumentException("certificate input stream cannot be null");
-        }
+        ArgumentValidate.notNull(inputStream, "certificate cannot be null");
         try {
             CertificateFactory factory = CertificateFactory.getInstance("X509");
             X509Certificate certificate = (X509Certificate) factory.generateCertificate(inputStream);

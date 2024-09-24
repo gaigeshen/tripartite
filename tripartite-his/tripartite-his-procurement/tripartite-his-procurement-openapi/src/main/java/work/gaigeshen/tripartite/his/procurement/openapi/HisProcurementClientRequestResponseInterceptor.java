@@ -5,6 +5,7 @@ import org.bouncycastle.util.encoders.Hex;
 import work.gaigeshen.tripartite.core.header.Headers;
 import work.gaigeshen.tripartite.core.interceptor.AbstractInterceptor;
 import work.gaigeshen.tripartite.core.interceptor.InterceptingException;
+import work.gaigeshen.tripartite.core.util.ArgumentValidate;
 import work.gaigeshen.tripartite.core.util.json.JsonCodec;
 import work.gaigeshen.tripartite.his.procurement.openapi.config.HisProcurementConfig;
 
@@ -29,9 +30,7 @@ public class HisProcurementClientRequestResponseInterceptor extends AbstractInte
     }
 
     public HisProcurementClientRequestResponseInterceptor(HisProcurementConfig hisProcurementConfig) {
-        if (Objects.isNull(hisProcurementConfig)) {
-            throw new IllegalArgumentException("his procurement config cannot be null");
-        }
+        ArgumentValidate.notNull(hisProcurementConfig, "hisProcurementConfig cannot be null");
         this.hisProcurementConfig = hisProcurementConfig;
     }
 

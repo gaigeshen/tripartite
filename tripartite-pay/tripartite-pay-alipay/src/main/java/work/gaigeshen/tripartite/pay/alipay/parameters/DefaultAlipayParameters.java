@@ -1,10 +1,13 @@
 package work.gaigeshen.tripartite.pay.alipay.parameters;
 
+import lombok.Getter;
 import work.gaigeshen.tripartite.core.parameter.converter.Parameters;
 import work.gaigeshen.tripartite.core.parameter.typed.Parameter;
 import work.gaigeshen.tripartite.core.parameter.typed.converter.DefaultJsonParameterConverter;
 
 import java.util.Objects;
+
+
 
 /**
  * 默认的支付宝请求参数
@@ -14,6 +17,7 @@ import java.util.Objects;
 @Parameters(
         customizer = AlipayParametersCustomizer.class
 )
+@Getter
 public class DefaultAlipayParameters implements AlipayParameters {
 
     @Parameter(
@@ -44,11 +48,4 @@ public class DefaultAlipayParameters implements AlipayParameters {
         this.contentParameter = contentParameter;
     }
 
-    public String getApiMethod() {
-        return apiMethod;
-    }
-
-    public AlipayContentParameter getContentParameter() {
-        return contentParameter;
-    }
 }
