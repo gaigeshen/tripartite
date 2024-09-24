@@ -103,13 +103,13 @@ public class DingAutoConfiguration {
         };
     }
 
-    @ConditionalOnMissingBean
+    @ConditionalOnMissingBean(name = "dingAccessTokenStore")
     @Bean
     public AccessTokenStore<DingConfig> dingAccessTokenStore() {
         return new DefaultAccessTokenStore<>();
     }
 
-    @ConditionalOnMissingBean
+    @ConditionalOnMissingBean(name = "dingConfigRepository")
     @Bean
     public ConfigRepository<DingConfig> dingConfigRepository() {
         return new ConfigRepository<DingConfig>() {};

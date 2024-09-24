@@ -103,13 +103,13 @@ public class QyWeixinAutoConfiguration {
         };
     }
 
-    @ConditionalOnMissingBean
+    @ConditionalOnMissingBean(name = "qyWeixinAccessTokenStore")
     @Bean
     public AccessTokenStore<QyWeixinConfig> qyWeixinAccessTokenStore() {
         return new DefaultAccessTokenStore<>();
     }
 
-    @ConditionalOnMissingBean
+    @ConditionalOnMissingBean(name = "qyWeixinConfigRepository")
     @Bean
     public ConfigRepository<QyWeixinConfig> qyWeixinConfigRepository() {
         return new ConfigRepository<QyWeixinConfig>() {};
