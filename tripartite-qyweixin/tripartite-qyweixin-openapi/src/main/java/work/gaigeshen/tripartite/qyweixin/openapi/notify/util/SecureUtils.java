@@ -45,7 +45,7 @@ public abstract class SecureUtils {
             throw new IllegalStateException(e.getMessage(), e);
         }
 
-        int padCount = 32 - (32 % byteStream.size());
+        int padCount = 32 - (byteStream.size() % 32);
         byte padChar = (byte) (padCount & 0xff);
         for (int i = 0; i < padCount; i++) {
             byteStream.write(padChar);
