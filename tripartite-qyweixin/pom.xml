@@ -5,7 +5,7 @@
     <parent>
         <artifactId>tripartite</artifactId>
         <groupId>work.gaigeshen</groupId>
-        <version>1.20.1</version>
+        <version>1.20.2</version>
     </parent>
     <modules>
         <module>tripartite-qyweixin-openapi</module>

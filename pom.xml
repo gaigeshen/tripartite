@@ -6,7 +6,7 @@
 
     <groupId>work.gaigeshen</groupId>
     <artifactId>tripartite</artifactId>
-    <version>1.20.1</version>
+    <version>1.20.2</version>
     <modules>
         <module>tripartite-core</module>
         <module>tripartite-ding</module>
