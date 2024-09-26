@@ -1,7 +1,9 @@
 package work.gaigeshen.tripartite.qyweixin.openapi.client;
 
+import lombok.extern.slf4j.Slf4j;
 import work.gaigeshen.tripartite.core.client.*;
 import work.gaigeshen.tripartite.core.client.accesstoken.AccessToken;
+import work.gaigeshen.tripartite.core.client.accesstoken.AccessTokenHelper;
 import work.gaigeshen.tripartite.core.client.accesstoken.AccessTokenManager;
 import work.gaigeshen.tripartite.core.client.accesstoken.AccessTokenManagerException;
 import work.gaigeshen.tripartite.core.client.config.ConfigException;
@@ -15,6 +17,12 @@ import work.gaigeshen.tripartite.qyweixin.openapi.response.QyWeixinResponse;
 import java.util.Collection;
 import java.util.Objects;
 
+/**
+ * 企业微信接口客户端抽象类
+ *
+ * @author gaigeshen
+ */
+@Slf4j
 public abstract class AbstractQyWeixinClient extends AbstractWebExecutorClient<QyWeixinConfig> implements BaseQyWeixinClient {
 
     private final QyWeixinConfig config;
@@ -37,6 +45,11 @@ public abstract class AbstractQyWeixinClient extends AbstractWebExecutorClient<Q
 
     @Override
     protected void initInternal() throws ClientException {
+        AccessToken accessToken = accessTokenManager.findAccessToken(config);
+        if (Objects.nonNull(accessToken) && AccessTokenHelper.isValid(accessToken)) {
+            log.info("current valid access token: {}", accessToken);
+            return;
+        }
         try {
             accessTokenManager.addNewAccessToken(config, getNewAccessToken());
         } catch (AccessTokenManagerException e) {

@@ -58,13 +58,16 @@ public class AccessTokenHelper {
     }
 
     /**
-     * 返回访问令牌是否有效，有效的访问令牌必需包含访问令牌值
+     * 返回访问令牌是否有效，有效的访问令牌必需包含访问令牌值，且未过期的
      *
      * @param accessToken 访问令牌不可为空
      * @return 是否有效
      */
     public static boolean isValid(AccessToken accessToken) {
         ArgumentValidate.notNull(accessToken, "accessToken cannot be null");
-        return !StringUtils.isAnyBlank(accessToken.getAccessToken());
+        if (isExpired(accessToken)) {
+            return false;
+        }
+        return StringUtils.isNotBlank(accessToken.getAccessToken());
     }
 }
