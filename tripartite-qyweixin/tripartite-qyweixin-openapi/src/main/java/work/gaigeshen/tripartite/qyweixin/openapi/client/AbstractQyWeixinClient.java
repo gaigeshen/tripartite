@@ -50,11 +50,13 @@ public abstract class AbstractQyWeixinClient extends AbstractWebExecutorClient<Q
             log.info("current valid access token: {}", accessToken);
             return;
         }
+        AccessToken newAccessToken = getNewAccessToken();
         try {
-            accessTokenManager.addNewAccessToken(config, getNewAccessToken());
+            accessTokenManager.addNewAccessToken(config, newAccessToken);
         } catch (AccessTokenManagerException e) {
             throw new ClientException(e.getMessage(), e);
         }
+        log.info("new access token added: {}", newAccessToken);
     }
 
     @Override

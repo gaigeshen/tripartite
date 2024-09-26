@@ -3,6 +3,7 @@ package work.gaigeshen.tripartite.core.client.accesstoken;
 import work.gaigeshen.tripartite.core.client.config.Config;
 
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * 访问令牌管理器，维护所有访问令牌的更新
@@ -28,6 +29,18 @@ public interface AccessTokenManager<C extends Config> {
      * @throws AccessTokenManagerException 无法查询访问令牌
      */
     AccessToken findAccessToken(C config) throws AccessTokenManagerException;
+
+    /**
+     * 返回是否已经存在有效的访问令牌
+     *
+     * @param config 配置信息不能为空
+     * @return 是否已经存在
+     * @throws AccessTokenManagerException 无法查询访问令牌
+     */
+    default boolean hasValidAccessToken(C config) throws AccessTokenManagerException {
+        AccessToken accessToken = findAccessToken(config);
+        return Objects.nonNull(accessToken) && AccessTokenHelper.isValid(accessToken);
+    }
 
     /**
      * 查询唯一的访问令牌，如果访问令牌数量超过一个或者不存在访问令牌则抛出异常
