@@ -41,8 +41,6 @@ public abstract class AbstractQyWeixinClient extends AbstractWebExecutorClient<Q
 
     protected abstract AccessToken getNewAccessToken() throws ClientException;
 
-    protected abstract AccessToken getNewSuiteAccessToken() throws ClientException;
-
     @Override
     protected void initInternal() throws ClientException {
         AccessToken accessToken = accessTokenManager.findAccessToken(config);

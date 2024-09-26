@@ -33,9 +33,4 @@ public class DefaultQyWeixinClient extends AbstractQyWeixinClient implements QyW
         }
         return AccessTokenHelper.createAccessToken(config, accessToken, expireIn);
     }
-
-    @Override
-    protected AccessToken getNewSuiteAccessToken() throws ClientException {
-        return null;
-    }
 }
