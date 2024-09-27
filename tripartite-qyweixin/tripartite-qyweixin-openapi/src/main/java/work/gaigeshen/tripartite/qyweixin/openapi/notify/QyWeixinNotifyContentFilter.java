@@ -1,5 +1,6 @@
 package work.gaigeshen.tripartite.qyweixin.openapi.notify;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import work.gaigeshen.tripartite.core.notify.DefaultNotifyContent;
@@ -23,6 +24,7 @@ import java.security.GeneralSecurityException;
  *
  * @author gaigeshen
  */
+@Slf4j
 public class QyWeixinNotifyContentFilter extends AbstractDefaultNotifyContentFilter {
 
     public QyWeixinNotifyContentFilter(QyWeixinNotifyContentReceiver receiver) {
@@ -36,8 +38,10 @@ public class QyWeixinNotifyContentFilter extends AbstractDefaultNotifyContentFil
         String echostr = (String) notifyContent.getValue("echostr");
         if (StringUtils.isNotBlank(echostr)) {
             renderText(echostr, response);
+            log.info("validate notify content receiver success, rendered response: {}", echostr);
         } else {
-            renderReplyMessage("success", notifyContent, response);
+            String renderedReplyMessage = renderReplyMessage("success", notifyContent, response);
+            log.info("receive and process notify content success, rendered reply message: {}", renderedReplyMessage);
         }
     }
 
@@ -48,7 +52,7 @@ public class QyWeixinNotifyContentFilter extends AbstractDefaultNotifyContentFil
         renderReplyMessage("fail", notifyContent, response);
     }
 
-    private void renderReplyMessage(String replyPlainText, DefaultNotifyContent notifyContent, HttpServletResponse response) throws ServletException, IOException {
+    private String renderReplyMessage(String replyPlainText, DefaultNotifyContent notifyContent, HttpServletResponse response) throws ServletException, IOException {
         QyWeixinConfig qyWeixinConfig = (QyWeixinConfig) notifyContent.getValue("qy_weixin_config");
         String timestamp = TimestampUtils.unixTimestamp();
         String nonce = RandomStringUtils.randomAlphanumeric(16);
@@ -63,6 +67,8 @@ public class QyWeixinNotifyContentFilter extends AbstractDefaultNotifyContentFil
         String encodedReplyMessage = XmlCodec.instance().encode(replyMessage);
 
         renderText(encodedReplyMessage, response);
+
+        return encodedReplyMessage;
     }
 
     private void renderText(String text, HttpServletResponse response) throws IOException {
