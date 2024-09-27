@@ -1,5 +1,7 @@
 package work.gaigeshen.tripartite.core;
 
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpEntity;
@@ -16,9 +18,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.*;
 import work.gaigeshen.tripartite.core.header.DefaultHeaders;
 import work.gaigeshen.tripartite.core.header.Headers;
-import work.gaigeshen.tripartite.core.interceptor.Execution;
-import work.gaigeshen.tripartite.core.interceptor.Interceptor;
-import work.gaigeshen.tripartite.core.interceptor.Interceptors;
+import work.gaigeshen.tripartite.core.interceptor.*;
 import work.gaigeshen.tripartite.core.parameter.Parameter;
 import work.gaigeshen.tripartite.core.parameter.Parameters;
 import work.gaigeshen.tripartite.core.parameter.converter.ParametersConversionException;
@@ -33,6 +33,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static org.springframework.http.HttpMethod.*;
 import static org.springframework.http.MediaType.*;
@@ -78,7 +79,7 @@ public class RestTemplateWebExecutor implements WebExecutor {
         ArgumentValidate.notNull(interceptors, "interceptors cannot be null");
         if (interceptors.length > 0) {
             Interceptors newInterceptors = new Interceptors(interceptors);
-            restTemplate.getInterceptors().add(0, new HttpInterceptorInterceptors(newInterceptors));
+            restTemplate.getInterceptors().add(new HttpInterceptorInterceptors(newInterceptors));
         }
     }
 
@@ -467,12 +468,16 @@ public class RestTemplateWebExecutor implements WebExecutor {
                 return response;
             }
             if (isLoggableContent(responseType)) {
-                HttpResponseResponse httpResponse = (HttpResponseResponse) response;
-                String responseBody = httpResponse.bodyString(StandardCharsets.UTF_8);
-                httpResponse.buffered(responseBody.getBytes(StandardCharsets.UTF_8));
-                log.debug("<<<< Body: {}", responseBody);
+                log.debug("<<<< Body: {}", getResponseBody((HttpResponseResponse) response));
             }
             return response;
+        }
+
+        private String getResponseBody(HttpResponseResponse httpResponse) throws IOException {
+            List<String> responseBodyLines = IOUtils.readLines(httpResponse.getBody(), StandardCharsets.UTF_8);
+            String responseBody = responseBodyLines.stream().map(StringUtils::trim).collect(Collectors.joining(""));
+            httpResponse.buffered(responseBody.getBytes(StandardCharsets.UTF_8));
+            return responseBody;
         }
 
         private boolean isLoggableContent(MediaType contentType) {

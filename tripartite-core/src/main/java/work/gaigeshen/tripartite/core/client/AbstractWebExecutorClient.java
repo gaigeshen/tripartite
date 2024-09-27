@@ -8,11 +8,11 @@ import work.gaigeshen.tripartite.core.client.config.Config;
 import work.gaigeshen.tripartite.core.client.parameters.ClientParameters;
 import work.gaigeshen.tripartite.core.client.response.ClientResponse;
 import work.gaigeshen.tripartite.core.interceptor.AbstractInterceptor;
+import work.gaigeshen.tripartite.core.interceptor.InterceptingException;
 import work.gaigeshen.tripartite.core.parameter.converter.ParametersConverter;
 import work.gaigeshen.tripartite.core.parameter.converter.ParametersMetadataParametersConverter;
 import work.gaigeshen.tripartite.core.ratelimiter.RateLimiterService;
 import work.gaigeshen.tripartite.core.util.ArgumentValidate;
-import work.gaigeshen.tripartite.core.util.json.JsonCodec;
 
 import java.util.Collections;
 import java.util.List;
@@ -57,11 +57,7 @@ public abstract class AbstractWebExecutorClient<C extends Config> implements Cli
         checkRateLimit(serverUrl + "_delete");
         try {
             R response = webExecutor.executeDelete(serverUrl, parameters, responseClass, uriVariables);
-            R validatedResponse = validateResponse(response);
-            log.info(">>>> Path: [DELETE] {}", path);
-            log.info(">>>> Body: {}", JsonCodec.instance().encode(parameters));
-            log.info("<<<< Body: {}", JsonCodec.instance().encode(response));
-            return validatedResponse;
+            return validateResponse(response);
         } catch (WebException e) {
             throw new ClientException(e.getMessage(), e);
         }
@@ -75,11 +71,7 @@ public abstract class AbstractWebExecutorClient<C extends Config> implements Cli
         checkRateLimit(serverUrl + "_put");
         try {
             R response = webExecutor.executePut(serverUrl, parameters, responseClass, uriVariables);
-            R validatedResponse = validateResponse(response);
-            log.info(">>>> Path: [PUT] {}", path);
-            log.info(">>>> Body: {}", JsonCodec.instance().encode(parameters));
-            log.info("<<<< Body: {}", JsonCodec.instance().encode(response));
-            return validatedResponse;
+            return validateResponse(response);
         } catch (WebException e) {
             throw new ClientException(e.getMessage(), e);
         }
@@ -93,11 +85,7 @@ public abstract class AbstractWebExecutorClient<C extends Config> implements Cli
         checkRateLimit(serverUrl + "_post");
         try {
             R response = webExecutor.execute(serverUrl, parameters, responseClass, uriVariables);
-            R validatedResponse = validateResponse(response);
-            log.info(">>>> Path: [POST] {}", path);
-            log.info(">>>> Body: {}", JsonCodec.instance().encode(parameters));
-            log.info("<<<< Body: {}", JsonCodec.instance().encode(response));
-            return validatedResponse;
+            return validateResponse(response);
         } catch (WebException e) {
             throw new ClientException(e.getMessage(), e);
         }
@@ -111,10 +99,7 @@ public abstract class AbstractWebExecutorClient<C extends Config> implements Cli
         checkRateLimit(serverUrl + "_get");
         try {
             R response = webExecutor.execute(serverUrl, responseClass, uriVariables);
-            R validatedResponse = validateResponse(response);
-            log.info(">>>> Path: [GET] {}", path);
-            log.info("<<<< Body: {}", JsonCodec.instance().encode(response));
-            return validatedResponse;
+            return validateResponse(response);
         } catch (WebException e) {
             throw new ClientException(e.getMessage(), e);
         }
@@ -155,7 +140,14 @@ public abstract class AbstractWebExecutorClient<C extends Config> implements Cli
      * @return 创建的拦截器集合
      */
     protected List<AbstractInterceptor> createInterceptors() {
-        return Collections.emptyList();
+        // 返回默认的拦截器，确保执行请求的时候正确打印日志
+        return Collections.singletonList(new AbstractInterceptor() {
+            @Override
+            protected void updateRequest(Request request) throws InterceptingException { }
+
+            @Override
+            protected void validateResponse(Request request, Response response) throws InterceptingException { }
+        });
     }
 
     /**
