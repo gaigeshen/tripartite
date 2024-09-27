@@ -8,6 +8,7 @@ import work.gaigeshen.tripartite.core.client.config.Config;
 import work.gaigeshen.tripartite.core.client.parameters.ClientParameters;
 import work.gaigeshen.tripartite.core.client.response.ClientResponse;
 import work.gaigeshen.tripartite.core.interceptor.AbstractInterceptor;
+import work.gaigeshen.tripartite.core.interceptor.InterceptingException;
 import work.gaigeshen.tripartite.core.parameter.converter.ParametersConverter;
 import work.gaigeshen.tripartite.core.parameter.converter.ParametersMetadataParametersConverter;
 import work.gaigeshen.tripartite.core.ratelimiter.RateLimiterService;
@@ -155,7 +156,14 @@ public abstract class AbstractWebExecutorClient<C extends Config> implements Cli
      * @return 创建的拦截器集合
      */
     protected List<AbstractInterceptor> createInterceptors() {
-        return Collections.emptyList();
+        // 返回默认的拦截器，确保执行请求的时候正确打印日志
+        return Collections.singletonList(new AbstractInterceptor() {
+            @Override
+            protected void updateRequest(Request request) throws InterceptingException { }
+
+            @Override
+            protected void validateResponse(Request request, Response response) throws InterceptingException { }
+        });
     }
 
     /**
