@@ -13,8 +13,6 @@ import work.gaigeshen.tripartite.qyweixin.openapi.notify.util.SecureUtils;
 import work.gaigeshen.tripartite.qyweixin.openapi.notify.util.SignatureUtils;
 
 import java.security.GeneralSecurityException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -54,8 +52,7 @@ public class QyWeixinNotifyContentReceiver extends AbstractNotifyContentReceiver
             }
             try {
                 String decrypt = SecureUtils.decrypt(config.getAesKey(), echostr);
-                Map<?, ?> validateMessage = XmlCodec.instance().decodeObject(decrypt, HashMap.class);
-                content.put("echostr", validateMessage.get("msg"));
+                content.put("echostr", decrypt);
             } catch (GeneralSecurityException e) {
                 throw new NotifyContentIncorrectException("could not decrypt: " + content, e);
             }
