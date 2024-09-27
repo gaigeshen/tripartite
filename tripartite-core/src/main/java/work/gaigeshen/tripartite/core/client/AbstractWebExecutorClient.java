@@ -13,7 +13,6 @@ import work.gaigeshen.tripartite.core.parameter.converter.ParametersConverter;
 import work.gaigeshen.tripartite.core.parameter.converter.ParametersMetadataParametersConverter;
 import work.gaigeshen.tripartite.core.ratelimiter.RateLimiterService;
 import work.gaigeshen.tripartite.core.util.ArgumentValidate;
-import work.gaigeshen.tripartite.core.util.json.JsonCodec;
 
 import java.util.Collections;
 import java.util.List;
@@ -58,11 +57,7 @@ public abstract class AbstractWebExecutorClient<C extends Config> implements Cli
         checkRateLimit(serverUrl + "_delete");
         try {
             R response = webExecutor.executeDelete(serverUrl, parameters, responseClass, uriVariables);
-            R validatedResponse = validateResponse(response);
-            log.info(">>>> Path: [DELETE] {}", path);
-            log.info(">>>> Body: {}", JsonCodec.instance().encode(parameters));
-            log.info("<<<< Body: {}", JsonCodec.instance().encode(response));
-            return validatedResponse;
+            return validateResponse(response);
         } catch (WebException e) {
             throw new ClientException(e.getMessage(), e);
         }
@@ -76,11 +71,7 @@ public abstract class AbstractWebExecutorClient<C extends Config> implements Cli
         checkRateLimit(serverUrl + "_put");
         try {
             R response = webExecutor.executePut(serverUrl, parameters, responseClass, uriVariables);
-            R validatedResponse = validateResponse(response);
-            log.info(">>>> Path: [PUT] {}", path);
-            log.info(">>>> Body: {}", JsonCodec.instance().encode(parameters));
-            log.info("<<<< Body: {}", JsonCodec.instance().encode(response));
-            return validatedResponse;
+            return validateResponse(response);
         } catch (WebException e) {
             throw new ClientException(e.getMessage(), e);
         }
@@ -94,11 +85,7 @@ public abstract class AbstractWebExecutorClient<C extends Config> implements Cli
         checkRateLimit(serverUrl + "_post");
         try {
             R response = webExecutor.execute(serverUrl, parameters, responseClass, uriVariables);
-            R validatedResponse = validateResponse(response);
-            log.info(">>>> Path: [POST] {}", path);
-            log.info(">>>> Body: {}", JsonCodec.instance().encode(parameters));
-            log.info("<<<< Body: {}", JsonCodec.instance().encode(response));
-            return validatedResponse;
+            return validateResponse(response);
         } catch (WebException e) {
             throw new ClientException(e.getMessage(), e);
         }
@@ -112,10 +99,7 @@ public abstract class AbstractWebExecutorClient<C extends Config> implements Cli
         checkRateLimit(serverUrl + "_get");
         try {
             R response = webExecutor.execute(serverUrl, responseClass, uriVariables);
-            R validatedResponse = validateResponse(response);
-            log.info(">>>> Path: [GET] {}", path);
-            log.info("<<<< Body: {}", JsonCodec.instance().encode(response));
-            return validatedResponse;
+            return validateResponse(response);
         } catch (WebException e) {
             throw new ClientException(e.getMessage(), e);
         }
