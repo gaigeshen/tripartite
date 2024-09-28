@@ -1,5 +1,6 @@
 package work.gaigeshen.tripartite.qyweixin.openapi.notify.message.notify;
 
+import org.apache.commons.lang3.StringUtils;
 import work.gaigeshen.tripartite.core.notify.AbstractNotifyContentProcessor;
 import work.gaigeshen.tripartite.core.notify.DefaultNotifyContent;
 import work.gaigeshen.tripartite.core.notify.NotifyContentProcessingException;
@@ -45,6 +46,40 @@ public abstract class QyWeixinMessageNotifyContentProcessor extends AbstractNoti
             return Collections.emptyMap();
         }
         return XmlCodec.instance().decodeObject(decrypted, HashMap.class);
+    }
+
+    /**
+     * 获取回调通知内容中的指定字段的值
+     *
+     * @param messageContent 回调通知内容
+     * @param key 指定字段
+     * @return 指定字段的值
+     */
+    protected String getMessageContentValue(Map<?, ?> messageContent, String key) {
+        return (String) messageContent.get(key);
+    }
+
+    /**
+     * 检查回调通知内容中是否存在指定字段
+     *
+     * @param messageContent 回调通知内容
+     * @param key 指定字段
+     * @return 是否存在指定字段
+     */
+    protected boolean hasMessageContentValue(Map<?, ?> messageContent, String key) {
+        return messageContent.containsKey(key);
+    }
+
+    /**
+     * 检查回调通知内容中指定字段是否存在任意特定的值（字母不区分大小写）
+     *
+     * @param messageContent 回调通知内容
+     * @param key 指定字段
+     * @param values 任意特定的值
+     * @return 是否存在任意特定的值
+     */
+    protected boolean hasAnyMessageContentValue(Map<?, ?> messageContent, String key, String... values) {
+        return StringUtils.equalsAnyIgnoreCase((CharSequence) messageContent.get(key), values);
     }
 
     /**
