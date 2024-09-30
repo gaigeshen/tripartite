@@ -107,7 +107,11 @@ public class DefaultAccessTokenManager<C extends Config> implements AccessTokenM
     }
 
     private void createAndScheduleUpdateTask(C config, long delaySeconds) {
-        executorService.schedule(createUpdateTask(config), delaySeconds, TimeUnit.SECONDS);
+        if (delaySeconds <= 0) {
+            executorService.execute(createUpdateTask(config));
+        } else {
+            executorService.schedule(createUpdateTask(config), delaySeconds, TimeUnit.SECONDS);
+        }
     }
 
     private AccessTokenUpdateTask<C> createUpdateTask(C config) {
