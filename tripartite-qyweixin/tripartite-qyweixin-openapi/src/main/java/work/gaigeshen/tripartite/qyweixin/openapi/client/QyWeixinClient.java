@@ -24,7 +24,7 @@ public interface QyWeixinClient extends BaseQyWeixinClient {
      * @see <a href="https://developer.work.weixin.qq.com/document/path/95402">接口文档</a>
      */
     default QyWeixinUserIdByMobileGetResponse userIdGetByMobile(QyWeixinUserIdByMobileGetParameters parameters) throws ClientException {
-        return execute(parameters, QyWeixinUserIdByMobileGetResponse.class, "/user/getuserid?access_token={access_token}", getAccessTokenValue());
+        return execute(parameters, QyWeixinUserIdByMobileGetResponse.class, "/cgi-bin/user/getuserid?access_token={access_token}", getAccessTokenValue());
     }
 
     /**
@@ -35,7 +35,7 @@ public interface QyWeixinClient extends BaseQyWeixinClient {
      * @throws ClientException 执行请求的时候发生异常
      * @see <a href="https://developer.work.weixin.qq.com/document/path/95895">接口文档</a>
      */
-    default QyWeixinUserIdByEmailGetResponse userIdGetByMobile(QyWeixinUserIdByEmailGetParameters parameters) throws ClientException {
+    default QyWeixinUserIdByEmailGetResponse userIdGetByEmail(QyWeixinUserIdByEmailGetParameters parameters) throws ClientException {
         return execute(parameters, QyWeixinUserIdByEmailGetResponse.class, "/cgi-bin/user/get_userid_by_email?access_token={access_token}", getAccessTokenValue());
     }
 
