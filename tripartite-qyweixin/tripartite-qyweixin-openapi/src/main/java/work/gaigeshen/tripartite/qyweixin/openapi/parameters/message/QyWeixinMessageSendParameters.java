@@ -23,9 +23,11 @@ public class QyWeixinMessageSendParameters extends QyWeixinParameters {
 
     public Integer agentid;
 
+    public Textcard textcard;
+
     public Markdown markdown;
 
-    public static class TextCard {
+    public static class Textcard {
 
         public String title;
 
