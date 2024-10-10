@@ -49,7 +49,9 @@ public class RestTemplateWebExecutor implements WebExecutor {
     protected RestTemplateWebExecutor(RestTemplate template, boolean disableSslValidation) {
         ArgumentValidate.notNull(template, "restTemplate cannot be null");
         // allows for multiple reads of the response body
-        template.setRequestFactory(new BufferingClientHttpRequestFactory(template.getRequestFactory()));
+        if (!(template.getRequestFactory() instanceof BufferingClientHttpRequestFactory)) {
+            template.setRequestFactory(new BufferingClientHttpRequestFactory(template.getRequestFactory()));
+        }
         // log requests and responses
         template.getInterceptors().add(0, new LoggerInterceptor());
         this.restTemplate = template;
