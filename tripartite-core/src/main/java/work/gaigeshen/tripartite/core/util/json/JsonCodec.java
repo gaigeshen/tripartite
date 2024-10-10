@@ -7,7 +7,7 @@ import java.util.Map;
  * @author gaigeshen
  * @see <a href="http://www.json.org/json-en.html">JSON (JavaScript Object Notation)</a>
  */
-public interface JsonCodec {
+interface JsonCodec {
 
     /**
      * 调用此方法返回默认的编解码器

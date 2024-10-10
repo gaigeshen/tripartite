@@ -3,7 +3,7 @@ package work.gaigeshen.tripartite.pay.alipay;
 import work.gaigeshen.tripartite.core.interceptor.AbstractInterceptor;
 import work.gaigeshen.tripartite.core.interceptor.InterceptingException;
 import work.gaigeshen.tripartite.core.util.ArgumentValidate;
-import work.gaigeshen.tripartite.core.util.json.JsonCodec;
+import work.gaigeshen.tripartite.core.util.json.JsonUtils;
 import work.gaigeshen.tripartite.pay.alipay.config.AlipayCertificates;
 import work.gaigeshen.tripartite.pay.alipay.config.AlipayConfig;
 
@@ -38,7 +38,7 @@ public class AlipayResponseInterceptor extends AbstractInterceptor {
         } catch (IOException e) {
             throw new InterceptingException("could not read raw response", e);
         }
-        Map<String, Object> decodedResponse = JsonCodec.instance().decodeObject(rawResponse);
+        Map<String, Object> decodedResponse = JsonUtils.decodeObject(rawResponse);
         String sign = (String) decodedResponse.get("sign");
         String alipayCertSN = (String) decodedResponse.get("alipay_cert_sn");
         if (Objects.isNull(sign) || Objects.isNull(alipayCertSN)) {
@@ -46,12 +46,12 @@ public class AlipayResponseInterceptor extends AbstractInterceptor {
         }
         for (Map.Entry<String, Object> entry : decodedResponse.entrySet()) {
             if (entry.getKey().endsWith("_response")) {
-                String alipayResponse = JsonCodec.instance().encode(entry.getValue());
+                String alipayResponse = JsonUtils.encode(entry.getValue());
                 AlipayCertificates certificates = config.getCertificates();
                 if (!certificates.verify(alipayCertSN, sign, alipayResponse.getBytes(StandardCharsets.UTF_8))) {
                     throw new InterceptingException("sign is invalid: " + rawResponse);
                 }
-                response.buffered(alipayResponse.getBytes(StandardCharsets.UTF_8));
+                response.changeBody(alipayResponse);
                 response.headers().putValue("Content-Type", "application/json;charset=utf-8");
                 return;
             }

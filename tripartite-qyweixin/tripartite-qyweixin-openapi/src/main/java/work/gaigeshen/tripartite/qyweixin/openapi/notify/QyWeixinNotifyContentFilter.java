@@ -6,7 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 import work.gaigeshen.tripartite.core.notify.DefaultNotifyContent;
 import work.gaigeshen.tripartite.core.notify.filter.AbstractDefaultNotifyContentFilter;
 import work.gaigeshen.tripartite.core.util.TimestampUtils;
-import work.gaigeshen.tripartite.core.util.xml.XmlCodec;
+import work.gaigeshen.tripartite.core.util.xml.XmlUtils;
 import work.gaigeshen.tripartite.qyweixin.openapi.config.QyWeixinConfig;
 import work.gaigeshen.tripartite.qyweixin.openapi.notify.message.ReplyMessage;
 import work.gaigeshen.tripartite.qyweixin.openapi.notify.util.SecureUtils;
@@ -64,7 +64,7 @@ public class QyWeixinNotifyContentFilter extends AbstractDefaultNotifyContentFil
         }
         String signature = SignatureUtils.genSignature(qyWeixinConfig.getToken(), timestamp, nonce, encrypted);
         ReplyMessage replyMessage = new ReplyMessage().setEncrypt(encrypted).setMsgSignature(signature).setTimeStamp(timestamp).setNonce(nonce);
-        String encodedReplyMessage = XmlCodec.instance().encode(replyMessage);
+        String encodedReplyMessage = XmlUtils.encode(replyMessage);
 
         renderText(encodedReplyMessage, response);
 

@@ -6,7 +6,7 @@ import work.gaigeshen.tripartite.core.notify.AbstractNotifyContentReceiver;
 import work.gaigeshen.tripartite.core.notify.DefaultNotifyContent;
 import work.gaigeshen.tripartite.core.notify.NotifyContentIncorrectException;
 import work.gaigeshen.tripartite.core.util.ArgumentValidate;
-import work.gaigeshen.tripartite.core.util.xml.XmlCodec;
+import work.gaigeshen.tripartite.core.util.xml.XmlUtils;
 import work.gaigeshen.tripartite.qyweixin.openapi.config.QyWeixinConfig;
 import work.gaigeshen.tripartite.qyweixin.openapi.notify.message.ReceiveMessage;
 import work.gaigeshen.tripartite.qyweixin.openapi.notify.util.SecureUtils;
@@ -62,7 +62,7 @@ public class QyWeixinNotifyContentReceiver extends AbstractNotifyContentReceiver
         if (StringUtils.isBlank(bodyString)) {
             throw new NotifyContentIncorrectException("could not find request body: " + content);
         }
-        ReceiveMessage receiveMessage = XmlCodec.instance().decodeObject(bodyString, ReceiveMessage.class);
+        ReceiveMessage receiveMessage = XmlUtils.decodeObject(bodyString, ReceiveMessage.class);
         String encrypted = receiveMessage.getEncrypt();
         if (StringUtils.isBlank(encrypted)) {
             throw new NotifyContentIncorrectException("request body field [Encrypt] is blank: " + content);

@@ -9,7 +9,7 @@ import java.util.Objects;
  *
  * @author gaigeshen
  */
-public class JacksonXmlCodec implements XmlCodec {
+class JacksonXmlCodec implements XmlCodec {
 
     public static final JacksonXmlCodec INSTANCE = new JacksonXmlCodec();
 

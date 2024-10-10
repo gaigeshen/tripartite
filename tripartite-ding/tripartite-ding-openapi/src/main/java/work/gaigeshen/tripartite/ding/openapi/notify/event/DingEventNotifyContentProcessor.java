@@ -3,7 +3,7 @@ package work.gaigeshen.tripartite.ding.openapi.notify.event;
 import work.gaigeshen.tripartite.core.notify.AbstractNotifyContentProcessor;
 import work.gaigeshen.tripartite.core.notify.DefaultNotifyContent;
 import work.gaigeshen.tripartite.core.notify.NotifyContentProcessingException;
-import work.gaigeshen.tripartite.core.util.json.JsonCodec;
+import work.gaigeshen.tripartite.core.util.json.JsonUtils;
 
 import java.util.Collections;
 import java.util.Map;
@@ -54,7 +54,7 @@ public abstract class DingEventNotifyContentProcessor extends AbstractNotifyCont
         if (Objects.isNull(decrypted)) {
             return Collections.emptyMap();
         }
-        return JsonCodec.instance().decodeObject(decrypted);
+        return JsonUtils.decodeObject(decrypted);
     }
 
     /**

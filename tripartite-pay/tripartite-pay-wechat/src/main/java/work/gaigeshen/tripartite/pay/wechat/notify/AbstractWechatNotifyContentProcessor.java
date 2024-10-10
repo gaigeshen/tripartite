@@ -5,7 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import work.gaigeshen.tripartite.core.notify.AbstractNotifyContentProcessor;
 import work.gaigeshen.tripartite.core.notify.NotifyContentProcessingException;
-import work.gaigeshen.tripartite.core.util.json.JsonCodec;
+import work.gaigeshen.tripartite.core.util.json.JsonUtils;
 
 import java.util.Objects;
 
@@ -33,7 +33,7 @@ public abstract class AbstractWechatNotifyContentProcessor extends AbstractNotif
         log.info("<<<< Event: {}, Resource: {}", content.getEventType(), resource);
         switch (content.getEventType()) {
             case WechatNotifyBody.EventType.TRANSACTION_SUCCESS:
-                WechatNotifyBody.TransactionSuccessResource transactionSuccessResource = JsonCodec.instance().decodeObject(resource, WechatNotifyBody.TransactionSuccessResource.class);
+                WechatNotifyBody.TransactionSuccessResource transactionSuccessResource = JsonUtils.decodeObject(resource, WechatNotifyBody.TransactionSuccessResource.class);
                 if (Objects.nonNull(transactionSuccessResource)) {
                     handleTransactionSuccessResource(transactionSuccessResource);
                 }
@@ -41,7 +41,7 @@ public abstract class AbstractWechatNotifyContentProcessor extends AbstractNotif
             case WechatNotifyBody.EventType.REFUND_SUCCESS:
             case WechatNotifyBody.EventType.REFUND_CLOSED:
             case WechatNotifyBody.EventType.REFUND_ABNORMAL:
-                WechatNotifyBody.RefundResource refundResource = JsonCodec.instance().decodeObject(resource, WechatNotifyBody.RefundResource.class);
+                WechatNotifyBody.RefundResource refundResource = JsonUtils.decodeObject(resource, WechatNotifyBody.RefundResource.class);
                 if (Objects.nonNull(refundResource)) {
                     handleRefundResource(refundResource);
                 }

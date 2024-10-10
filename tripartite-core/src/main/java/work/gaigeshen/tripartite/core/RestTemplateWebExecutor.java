@@ -8,10 +8,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.MediaType;
-import org.springframework.http.client.AbstractClientHttpResponse;
-import org.springframework.http.client.ClientHttpRequestExecution;
-import org.springframework.http.client.ClientHttpRequestInterceptor;
-import org.springframework.http.client.ClientHttpResponse;
+import org.springframework.http.client.*;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -51,6 +48,9 @@ public class RestTemplateWebExecutor implements WebExecutor {
 
     protected RestTemplateWebExecutor(RestTemplate template, boolean disableSslValidation) {
         ArgumentValidate.notNull(template, "restTemplate cannot be null");
+        // allows for multiple reads of the response body
+        template.setRequestFactory(new BufferingClientHttpRequestFactory(template.getRequestFactory()));
+        // log requests and responses
         template.getInterceptors().add(0, new LoggerInterceptor());
         this.restTemplate = template;
         if (disableSslValidation) {
@@ -460,24 +460,19 @@ public class RestTemplateWebExecutor implements WebExecutor {
             log.debug("<<<< Status: {}", response.getStatusCode());
             log.debug("<<<< Headers: {}", response.getHeaders());
 
-            if (!(response instanceof HttpResponseResponse)) {
-                return response;
-            }
             MediaType responseType = response.getHeaders().getContentType();
             if (Objects.isNull(responseType)) {
                 return response;
             }
             if (isLoggableContent(responseType)) {
-                log.debug("<<<< Body: {}", getResponseBody((HttpResponseResponse) response));
+                log.debug("<<<< Body: {}", getResponseBody(response));
             }
             return response;
         }
 
-        private String getResponseBody(HttpResponseResponse httpResponse) throws IOException {
+        private String getResponseBody(ClientHttpResponse httpResponse) throws IOException {
             List<String> responseBodyLines = IOUtils.readLines(httpResponse.getBody(), StandardCharsets.UTF_8);
-            String responseBody = responseBodyLines.stream().map(StringUtils::trim).collect(Collectors.joining(""));
-            httpResponse.buffered(responseBody.getBytes(StandardCharsets.UTF_8));
-            return responseBody;
+            return responseBodyLines.stream().map(StringUtils::trim).collect(Collectors.joining(""));
         }
 
         private boolean isLoggableContent(MediaType contentType) {
@@ -577,7 +572,7 @@ public class RestTemplateWebExecutor implements WebExecutor {
         }
 
         @Override
-        public void buffered(byte[] bodyBytes) {
+        public void changeBody(byte[] bodyBytes) {
             buffer = bodyBytes;
         }
 

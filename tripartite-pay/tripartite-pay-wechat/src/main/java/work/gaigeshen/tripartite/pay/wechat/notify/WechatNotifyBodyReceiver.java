@@ -3,7 +3,7 @@ package work.gaigeshen.tripartite.pay.wechat.notify;
 import work.gaigeshen.tripartite.core.notify.AbstractNotifyContentReceiver;
 import work.gaigeshen.tripartite.core.notify.NotifyContentIncorrectException;
 import work.gaigeshen.tripartite.core.util.ArgumentValidate;
-import work.gaigeshen.tripartite.core.util.json.JsonCodec;
+import work.gaigeshen.tripartite.core.util.json.JsonUtils;
 import work.gaigeshen.tripartite.pay.wechat.WechatClients;
 import work.gaigeshen.tripartite.pay.wechat.config.WechatCertificates;
 import work.gaigeshen.tripartite.pay.wechat.config.WechatConfig;
@@ -30,7 +30,7 @@ public class WechatNotifyBodyReceiver extends AbstractNotifyContentReceiver<Wech
     @Override
     protected WechatNotifyBody validate(WechatNotifyBody body) throws NotifyContentIncorrectException {
         String bodyString = body.getBodyAsString();
-        Map<String, Object> bodyDecoded = JsonCodec.instance().decodeObject(bodyString);
+        Map<String, Object> bodyDecoded = JsonUtils.decodeObject(bodyString);
 
         String eventType = (String) bodyDecoded.get("event_type");
         if (Objects.isNull(eventType)) {
