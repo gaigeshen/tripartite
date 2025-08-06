@@ -6,7 +6,7 @@
 
     <groupId>work.gaigeshen</groupId>
     <artifactId>tripartite</artifactId>
-    <version>1.22.0</version>
+    <version>1.23.0-SNAPSHOT</version>
     <modules>
         <module>tripartite-core</module>
         <module>tripartite-ding</module>
@@ -211,41 +211,14 @@
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>com.amashchenko.maven.plugin</groupId>
-                <artifactId>gitflow-maven-plugin</artifactId>
-                <version>1.18.0</version>
-                <configuration>
-                    <gitFlowConfig>
-                        <productionBranch>main</productionBranch>
-                        <versionTagPrefix>v</versionTagPrefix>
-                    </gitFlowConfig>
-                    <versionDigitToIncrement>1</versionDigitToIncrement>
-                    <commitDevelopmentVersionAtStart>true</commitDevelopmentVersionAtStart>
-                    <releaseRebase>false</releaseRebase>
-                    <skipTestProject>true</skipTestProject>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.sonatype.plugins</groupId>
-                <artifactId>nexus-staging-maven-plugin</artifactId>
-                <version>1.6.13</version>
+                <groupId>org.sonatype.central</groupId>
+                <artifactId>central-publishing-maven-plugin</artifactId>
+                <version>0.8.0</version>
                 <extensions>true</extensions>
                 <configuration>
-                    <serverId>ossrh</serverId>
-                    <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
-                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                    <publishingServerId>central</publishingServerId>
                 </configuration>
             </plugin>
         </plugins>
     </build>
-    <distributionManagement>
-        <snapshotRepository>
-            <id>ossrh</id>
-            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
-        </snapshotRepository>
-        <repository>
-            <id>ossrh</id>
-            <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-        </repository>
-    </distributionManagement>
 </project>

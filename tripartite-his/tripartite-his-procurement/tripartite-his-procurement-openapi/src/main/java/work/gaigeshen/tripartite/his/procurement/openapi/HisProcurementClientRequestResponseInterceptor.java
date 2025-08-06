@@ -6,7 +6,7 @@ import work.gaigeshen.tripartite.core.header.Headers;
 import work.gaigeshen.tripartite.core.interceptor.AbstractInterceptor;
 import work.gaigeshen.tripartite.core.interceptor.InterceptingException;
 import work.gaigeshen.tripartite.core.util.ArgumentValidate;
-import work.gaigeshen.tripartite.core.util.json.JsonCodec;
+import work.gaigeshen.tripartite.core.util.json.JsonUtils;
 import work.gaigeshen.tripartite.his.procurement.openapi.config.HisProcurementConfig;
 
 import javax.crypto.Mac;
@@ -64,7 +64,7 @@ public class HisProcurementClientRequestResponseInterceptor extends AbstractInte
         } catch (IOException e) {
             throw new InterceptingException("could not read raw response", e);
         }
-        Map<String, Object> decodedResponse = JsonCodec.instance().decodeObject(rawResponse);
+        Map<String, Object> decodedResponse = JsonUtils.decodeObject(rawResponse);
         String infcode = (String) decodedResponse.get("infcode");
         if (!Objects.equals("0", infcode)) {
             throw new InterceptingException(rawResponse);
@@ -73,6 +73,6 @@ public class HisProcurementClientRequestResponseInterceptor extends AbstractInte
         if (Objects.isNull(output) || !output.containsKey("data")) {
             throw new InterceptingException("response output or output data not found: " + rawResponse);
         }
-        response.buffered(JsonCodec.instance().encode(output.get("data")).getBytes(StandardCharsets.UTF_8));
+        response.changeBody(JsonUtils.encode(output.get("data")));
     }
 }

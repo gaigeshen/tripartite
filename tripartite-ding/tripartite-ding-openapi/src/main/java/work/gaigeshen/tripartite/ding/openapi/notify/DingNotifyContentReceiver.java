@@ -8,7 +8,7 @@ import work.gaigeshen.tripartite.core.notify.AbstractNotifyContentReceiver;
 import work.gaigeshen.tripartite.core.notify.DefaultNotifyContent;
 import work.gaigeshen.tripartite.core.notify.NotifyContentIncorrectException;
 import work.gaigeshen.tripartite.core.util.ArgumentValidate;
-import work.gaigeshen.tripartite.core.util.json.JsonCodec;
+import work.gaigeshen.tripartite.core.util.json.JsonUtils;
 import work.gaigeshen.tripartite.ding.openapi.config.DingConfig;
 
 import javax.crypto.Cipher;
@@ -62,7 +62,7 @@ public class DingNotifyContentReceiver extends AbstractNotifyContentReceiver<Def
         if (Objects.isNull(bodyString)) {
             throw new NotifyContentIncorrectException("could not find request body: " + content);
         }
-        Map<String, Object> bodyDecoded = JsonCodec.instance().decodeObject(bodyString);
+        Map<String, Object> bodyDecoded = JsonUtils.decodeObject(bodyString);
         String encrypted = (String) bodyDecoded.get("encrypt");
         if (Objects.isNull(encrypted)) {
             throw new NotifyContentIncorrectException("could not find [encrypt] field of request body: " + content);

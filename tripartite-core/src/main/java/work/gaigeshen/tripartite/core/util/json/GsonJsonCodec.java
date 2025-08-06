@@ -10,7 +10,7 @@ import java.util.*;
  * @author gaigeshen
  * @see <a href="https://github.com/google/gson">Google Gson</a>
  */
-public class GsonJsonCodec implements JsonCodec {
+class GsonJsonCodec implements JsonCodec {
 
     public static final GsonJsonCodec INSTANCE = new GsonJsonCodec();
 

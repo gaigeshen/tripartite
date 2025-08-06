@@ -4,7 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import work.gaigeshen.tripartite.core.notify.AbstractNotifyContentProcessor;
 import work.gaigeshen.tripartite.core.notify.DefaultNotifyContent;
 import work.gaigeshen.tripartite.core.notify.NotifyContentProcessingException;
-import work.gaigeshen.tripartite.core.util.xml.XmlCodec;
+import work.gaigeshen.tripartite.core.util.xml.XmlUtils;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -45,7 +45,7 @@ public abstract class QyWeixinMessageNotifyContentProcessor extends AbstractNoti
         if (Objects.isNull(decrypted)) {
             return Collections.emptyMap();
         }
-        return XmlCodec.instance().decodeObject(decrypted, HashMap.class);
+        return XmlUtils.decodeObject(decrypted, HashMap.class);
     }
 
     /**

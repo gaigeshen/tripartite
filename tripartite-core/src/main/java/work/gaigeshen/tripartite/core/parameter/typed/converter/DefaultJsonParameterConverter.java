@@ -1,6 +1,6 @@
 package work.gaigeshen.tripartite.core.parameter.typed.converter;
 
-import work.gaigeshen.tripartite.core.util.json.JsonCodec;
+import work.gaigeshen.tripartite.core.util.json.JsonUtils;
 
 /**
  * @author gaigeshen
@@ -12,7 +12,7 @@ public class DefaultJsonParameterConverter extends AbstractJsonParameterConverte
     @Override
     protected String convertJson(Object rawParameter) throws ParameterConversionException {
         try {
-            return JsonCodec.instance().encode(rawParameter);
+            return JsonUtils.encode(rawParameter);
         } catch (Exception e) {
             throw new ParameterConversionException("could not convert to json: " + rawParameter, e);
         }

@@ -73,7 +73,6 @@ public class WechatRequestResponseInterceptor extends AbstractInterceptor {
         } catch (IOException e) {
             throw new InterceptingException("could not read response: " + response, e);
         }
-        response.buffered(bodyString.getBytes(StandardCharsets.UTF_8));
         // 以下校验响应头
         Headers headers = response.headers();
         String timestamp = headers.getValue("Wechatpay-Timestamp");

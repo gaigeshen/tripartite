@@ -1,12 +1,13 @@
 package work.gaigeshen.tripartite.core.interceptor;
 
+import org.apache.commons.io.IOUtils;
 import work.gaigeshen.tripartite.core.WebExecutionException;
 import work.gaigeshen.tripartite.core.header.Headers;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
 /**
@@ -92,11 +93,22 @@ public interface Interceptor {
         Headers headers();
 
         /**
-         * 调用此缓冲方法将更改响应内容数据，传入空对象不生效
+         * 修改响应内容，传入空对象不生效
          *
          * @param bodyBytes 响应内容数据将会变更为此数据且可重复读取
          */
-        void buffered(byte[] bodyBytes);
+        void changeBody(byte[] bodyBytes);
+
+        /**
+         * 修改响应内容为指定的字符串，传入空对象不生效
+         *
+         * @param bodyString 响应内容数据将会变更为此数据且可重复读取
+         */
+        default void changeBody(String bodyString) {
+            if (Objects.nonNull(bodyString)) {
+                changeBody(bodyString.getBytes(StandardCharsets.UTF_8));
+            }
+        }
 
         /**
          * 返回响应内容数据流
@@ -105,23 +117,6 @@ public interface Interceptor {
          * @throws IOException 发生异常
          */
         InputStream bodyStream() throws IOException;
-
-        /**
-         * 返回响应内容数据字节串
-         *
-         * @return 响应内容数据字节串不会为空
-         * @throws IOException 发生异常
-         */
-        default byte[] bodyBytes() throws IOException {
-            ByteArrayOutputStream out = new ByteArrayOutputStream();
-            InputStream in = bodyStream();
-            int len;
-            byte[] buffer = new byte[4096];
-            while ((len = in.read(buffer)) != -1) {
-                out.write(buffer, 0, len);
-            }
-            return out.toByteArray();
-        }
 
         /**
          * 返回响应内容数据字符串
@@ -134,7 +129,7 @@ public interface Interceptor {
             if (Objects.isNull(charset)) {
                 throw new IllegalArgumentException("charset cannot be null");
             }
-            return new String(bodyBytes(), charset);
+            return IOUtils.toString(bodyStream(), charset);
         }
     }
 }

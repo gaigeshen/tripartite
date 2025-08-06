@@ -4,6 +4,8 @@ import work.gaigeshen.tripartite.core.parameter.converter.JsonParametersConverte
 import work.gaigeshen.tripartite.core.parameter.converter.Parameters;
 import work.gaigeshen.tripartite.qyweixin.openapi.parameters.QyWeixinParameters;
 
+import java.util.Collection;
+
 /**
  *
  * @author gaigeshen
@@ -27,6 +29,8 @@ public class QyWeixinMessageSendParameters extends QyWeixinParameters {
 
     public Markdown markdown;
 
+    public MiniprogramNotice miniprogram_notice;
+
     public static class Textcard {
 
         public String title;
@@ -41,4 +45,25 @@ public class QyWeixinMessageSendParameters extends QyWeixinParameters {
         public String content;
     }
 
+    public static class MiniprogramNotice {
+
+        public String appid;
+
+        public String page;
+
+        public String title;
+
+        public String description;
+
+        public Boolean emphasis_first_item;
+
+        public Collection<MiniprogramNoticeItem> content_item;
+    }
+
+    public static class MiniprogramNoticeItem {
+
+        public String key;
+
+        public String value;
+    }
 }

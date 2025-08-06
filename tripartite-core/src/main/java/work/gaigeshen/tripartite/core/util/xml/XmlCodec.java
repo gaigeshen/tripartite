@@ -4,7 +4,7 @@ package work.gaigeshen.tripartite.core.util.xml;
  *
  * @author gaigeshen
  */
-public interface XmlCodec {
+interface XmlCodec {
 
     static XmlCodec instance() {
         return JacksonXmlCodec.INSTANCE;
