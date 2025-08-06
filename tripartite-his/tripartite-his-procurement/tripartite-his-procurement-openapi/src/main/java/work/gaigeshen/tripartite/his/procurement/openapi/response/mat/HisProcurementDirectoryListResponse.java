@@ -68,5 +68,15 @@ public class HisProcurementDirectoryListResponse extends AbstractHisProcurementR
         private String pubonlnId;
 
         private String mcsInfoId;
+
+        private BigDecimal lmtpric;
+
+        private BigDecimal prodLowPric;
+
+        private BigDecimal prodHighPric;
+
+        private BigDecimal prodAvgPric;
+
+        private BigDecimal weightedAveragePrice;
     }
 }
