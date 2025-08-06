@@ -5,11 +5,13 @@
     <parent>
         <artifactId>tripartite-his-procurement</artifactId>
         <groupId>work.gaigeshen</groupId>
-        <version>1.23.0-SNAPSHOT</version>
+        <version>1.24.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>tripartite-his-procurement-spring-boot-autoconfigure</artifactId>
+
+    <name>${project.artifactId}</name>
 
     <dependencies>
         <dependency>
