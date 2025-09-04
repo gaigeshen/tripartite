@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>tripartite-ding-openapi</artifactId>
-
+    <name>tripartite-ding-openapi</name>
     <dependencies>
         <dependency>
             <groupId>org.projectlombok</groupId>

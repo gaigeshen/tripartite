@@ -13,5 +13,5 @@
         <module>tripartite-his-procurement</module>
     </modules>
     <artifactId>tripartite-his</artifactId>
-
+    <name>tripartite-his</name>
 </project>

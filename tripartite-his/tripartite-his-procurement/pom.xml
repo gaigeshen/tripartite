@@ -15,5 +15,5 @@
         <module>tripartite-his-procurement-spring-boot-starter</module>
     </modules>
     <artifactId>tripartite-his-procurement</artifactId>
-
+    <name>tripartite-his-procurement</name>
 </project>

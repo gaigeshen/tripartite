@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>tripartite-pay-wechat</artifactId>
-
+    <name>tripartite-pay-wechat</name>
     <dependencies>
         <dependency>
             <groupId>org.projectlombok</groupId>

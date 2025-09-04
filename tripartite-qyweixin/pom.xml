@@ -16,5 +16,5 @@
     <packaging>pom</packaging>
 
     <artifactId>tripartite-qyweixin</artifactId>
-
+    <name>tripartite-qyweixin</name>
 </project>
