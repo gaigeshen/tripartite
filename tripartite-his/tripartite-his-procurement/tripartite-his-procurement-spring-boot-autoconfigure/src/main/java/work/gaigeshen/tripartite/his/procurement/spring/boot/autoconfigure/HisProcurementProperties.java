@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * @author gaigeshen
  */
-@ConfigurationProperties("spring.his.procurement")
+@ConfigurationProperties("his.procurement")
 @Data
 public class HisProcurementProperties {
 
